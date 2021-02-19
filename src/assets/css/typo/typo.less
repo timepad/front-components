@@ -1,0 +1,119 @@
+@import "tmono"; // TODO: replace
+
+@import "tmultiline";
+
+// new typo
+@import "t-header.less";
+@import "t-subheader.less";
+@import "t-lead.less";
+@import "t-body.less";
+@import "t-caption.less";
+@import "t-small.less";
+
+/* Body */
+.typo-fs-lh {
+ .tpui-mx-fs-lh-body;
+}
+
+.typo-fonts {
+  font-family: @ff;
+  font-variant-numeric: proportional-nums;
+}
+
+.typo-links {
+  &:extend(.ext-links-decoration all);
+
+  .tpui-mx-color-base;
+  a {
+    .tpui-mx-color-links-full-base;
+  }
+}
+
+.typo {
+  &:extend(.typo-fs-lh all);
+  &:extend(.typo-fonts all);
+  &:extend(.typo-links all);
+}
+
+// /*
+//   Overriding default html styles with typography
+// */
+
+// .toverride:extend(.toverride-code all) {
+//   p:extend(.tbody all) {}
+
+//   ul, ol {
+//    .tpui-mx-tul;
+//   }
+
+//   ol {
+//    .tpui-mx-tol-bullets;
+//   }
+
+//   h1:extend(.theadline all) {}
+
+//   h2:extend(.theader all) {}
+
+//   h3:extend(.tsubheader all) {}
+
+//   img:extend(.timg all) {}
+//   figure:extend(.tfigure all) {}
+
+//   figcaption:extend(.tfigure__caption all) {}
+//   img + figcaption:extend(img + .tfigure__caption all) {}
+
+//   p iframe {
+//     width: 100%;
+//   }
+// }
+
+
+// TODO: NEW
+.typo-links {
+  &:extend(.ext-links-decoration all);
+
+  &--inverse {
+    a {
+      .tpui-mx-color-links-full-base(@c-black, @c-primary-blue)
+    }
+  }
+}
+
+.t-color-gray {
+  color: @c-gray-50;
+}
+
+.t-color-rose {
+  color: @c-light-rose;
+}
+
+.t-color-white {
+  color: @c-white;
+}
+
+.t-color-black {
+  color: @c-black;
+}
+
+.t-color-red {
+  color: @c-red;
+}
+
+.t-color-blue {
+  color: @c-primary-blue;
+}
+
+// TODO: для теста темной темы вк
+.typo .mtheme--darkpic a {
+  color: @c-white;
+}
+
+.mtheme--darkpic {
+  .typo-links {
+    color: @c-white;
+  }
+}
+
+.typo-links .mtheme--darkpic a {
+  .tpui-mx-color-links-full-base(@c-white, @c-primary-blue)
+}

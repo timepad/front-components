@@ -1,0 +1,131 @@
+/**
+ Examples:
+ .t-lead              // D+M fs+lh
+ .t-lead--brick       // D+M fs+lh+m
+
+ .t-lead-24           // D+M fs+lh+p
+ .t-lead-24--desktop  // D fs+lh+p
+ .t-lead-24--mobile   // M fs+lh+p
+
+ .t-lead-32           // D+M fs+lh+p
+ .t-lead-32--desktop  // D fs+lh+p
+ .t-lead-32--mobile   // M fs+lh+p
+ */
+
+@fs-lead-desktop: (23px);
+@lh-lead-desktop: (28px);
+
+@fs-lead-mobile: (20px);
+@lh-lead-mobile: (26px);
+
+.t-lead-fs-lh-desktop() {
+  font-size: @fs-lead-desktop;
+  line-height: @lh-lead-desktop;
+}
+
+.t-lead-fs-lh-mobile() {
+  font-size: @fs-lead-mobile;
+  line-height: @lh-lead-mobile;
+}
+
+.t-lead {
+
+  &--bold {
+    font-weight: bold;
+  }
+
+  @media (min-width: @rsp-desktop-min) {
+    .t-lead-fs-lh-desktop;
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    .t-lead-fs-lh-mobile;
+  }
+
+  &--brick {
+    display: block;
+
+    @media (min-width: @rsp-desktop-min) {
+      margin: -11px 0 -4px;
+    }
+
+    @media (max-width: @rsp-mobile-max) {
+      margin: -11px 0 -5px;
+    }
+  }
+
+  &-32 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min) {
+        padding: 23px 0 25px;
+        .t-lead-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 21px 0 26px;
+        .t-lead-fs-lh-mobile;
+      }
+    }
+  }
+
+  &-24 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min ) {
+        padding: 15px 0 17px;
+        .t-lead-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 13px 0 19px;
+        .t-lead-fs-lh-mobile;
+      }
+    }
+
+    &--portrait { // TODO: временные костыли
+      display: block;
+
+      @media (max-width: @rsp-mobile-portrait-max) {
+        padding: 13px 0 19px;
+        .t-lead-fs-lh-mobile;
+      }
+    }
+  }
+
+  &-16 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min ) {
+        padding: 6px 0 11px;
+        .t-lead-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 5px 0 11px;
+        .t-lead-fs-lh-mobile;
+      }
+    }
+  }
+}

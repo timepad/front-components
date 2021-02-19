@@ -1,0 +1,17 @@
+.tmono:extend(.tpui-mx-type-button-small) {
+  font-family: @ff-system;
+
+  &--brick {
+    display: block;
+    margin: -10px 0;
+
+    @media (max-width: @rsp-mobile-max) {
+      margin-top: -8px;
+    }
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    font-size: 13px;
+    line-height: 20px;
+  }
+}

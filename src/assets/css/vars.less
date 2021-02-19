@@ -1,0 +1,337 @@
+/* Layout */
+
+@page-top-padding: 32px;
+@page-side-padding-mobile: 16px;
+
+@grid-module-desktop-mobile: 16px;
+
+@grid-module-desktop: 48px;
+@grid-module-desktop-large: 64px;
+@grid-gap: 32px;
+
+@grid-width: @rsp-desktop-min - @grid-module-desktop * 2; //1024 - 96 = 928
+@grid-width-large: @rsp-desktop-large-min - @grid-module-desktop-large * 2; // 1248 - 128 = 1120
+
+/* Responsive */
+
+//for .tpui-iphonex children
+@iphonex-bottom-spacing:  48px;
+@iphonex-top-spacing:     48px;
+
+@rsp-desktop-min:           1024px;
+@rsp-desktop-large-min:     1248px;
+@rsp-mobile-max:            @rsp-desktop-min - 0.4px;
+@rsp-mobile-portrait-max:   736px - 0.4px;
+
+@mobile-content-max-width:  640px;
+
+@rsp-column-min:    296px;
+
+/* Colors */
+
+/* Primary */
+// @purple:              #643FFF;
+@purple-fade-80:      fade(@c-primary-blue, 80%);
+@purple-fade-20:      fade(@c-primary-blue, 20%);
+
+@purplelight:         #7060EC;
+
+/* Grays */
+// @graylight:           #F1F0F5;
+
+// @graydark:            #CECDDE;
+@graydark-fade-65:    fade(@c-dark-gray, 65%);
+@graydark-fade-50:    fade(@c-dark-gray, 50%); @graydark-fade: @graydark-fade-50;
+@graydark-fade-35:    fade(@c-dark-gray, 35%);
+@graydark-fade-20:    fade(@c-dark-gray, 20%);
+
+// @black:               #252525;
+@black-fade-80:       fade(@c-black, 80%);
+@black-opaque-fade-80:mix(@c-black, @c-white, 80%);
+@black-fade-65:       fade(@c-black, 65%);
+@black-fade-50:       fade(@c-black, 50%);    @black-fade: @black-fade-50;
+@black-fade-35:       fade(@c-black, 35%);
+@black-fade-20:       fade(@c-black, 20%);
+
+// @white:               #FFF;
+@white-fade-80:       fade(@c-white, 80%);
+@white-fade-65:       fade(@c-white, 65%);
+@white-fade-50:       fade(@c-white, 50%);    @white-fade: @white-fade-50;
+@white-fade-35:       fade(@c-white, 35%);
+@white-fade-20:       fade(@c-white, 20%);
+
+/* Opaque */
+@gray-opaque-80:      #D3D3D3;
+@gray-opaque-65:      #B2B2B2;
+@gray-opaque-50:      #929292;
+@gray-opaque-35:      #717171;
+@gray-opaque-20:      #505050;
+
+@graydark-opaque-35:  #eeeef3;
+
+// @purple-opaque-80:    #8365FF;
+
+/* Not quite really opaque :) */
+@gray-opaque-50-fade-50: fade(@gray-opaque-50, 50%);
+@gray-opaque-50-fade-35: fade(@gray-opaque-50, 35%);
+
+/* Accent */
+// @rose:                #FFC7F9;
+// @red:                 #F54614;
+// @yellow:              #FFC340;
+// @yellowlight:         #FFF2D9;
+// @green:               #00BD55;
+
+/* Dev */
+
+@bluelight:           #288EFF;
+@bluelight-fade-80:   fade(@bluelight, 80%);
+@codemirror:          mix(@c-light-gray, @c-white, 50%);
+
+/* Typography style vars */
+
+@font-face {
+  font-family: 'NeueHaasUnica';
+  font-weight: 900;
+  font-style: normal;
+  src: url('../fonts/364B57_0_0.eot');
+  src: url('../fonts/364B57_0_0.eot?#iefix') format('embedded-opentype'), url('../fonts/364B57_0_0.woff2') format('woff2'), url('../fonts/364B57_0_0.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'NeueHaasUnica';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../fonts/364B57_1_0.eot');
+  src: url('../fonts/364B57_1_0.eot?#iefix') format('embedded-opentype'), url('../fonts/364B57_1_0.woff2') format('woff2'), url('../fonts/364B57_1_0.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'NeueHaasUnica';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../fonts/364B57_2_0.eot');
+  src: url('../fonts/364B57_2_0.eot?#iefix') format('embedded-opentype'), url('../fonts/364B57_2_0.woff2') format('woff2'), url('../fonts/364B57_2_0.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'InputSansNarrow';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../fonts/InputSansNarrow-Regular.eot');
+  src: url('../fonts/InputSansNarrow-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/InputSansNarrow-Regular.woff2') format('woff2'), url('../fonts/InputSansNarrow-Regular.woff') format('woff');
+}
+
+@ff: 'NeueHaasUnica', 'HelveticaNeue', 'Helvetica', 'Arial', sans-serif;
+@ff-system: 'InputSansNarrow', 'CourierNew', monospace;
+
+/* Body */
+
+@fs-body:             (19px);
+@lh-body:             (27px);
+@paragraph-body:      (15px);
+
+@fs-body-mobile:             (17px);
+@lh-body-mobile:             (24px);
+@paragraph-body-mobile:      (16px);
+
+/* Caption */
+
+@fs-caption:          (15px);
+@lh-caption:          (22px);
+@paragraph-caption:   (18px);
+
+@fs-caption-mobile:          (14px);
+@lh-caption-mobile:          (20px);
+@paragraph-caption-mobile:   (20px);
+
+/* Small */
+
+@fs-small:            (13px);
+@lh-small:            (19px);
+@paragraph-small:     (18px);
+
+@fs-small-mobile:            (12px);
+@lh-small-mobile:            (17px);
+@paragraph-small-mobile:     (20px);
+
+/* Lead */
+
+@fs-lead:             (23px);
+@lh-lead:             (28px);
+@paragraph-lead:      16px;
+
+@fs-lead-mobile:             (20px);
+@lh-lead-mobile:             (26px);
+@paragraph-lead-mobile:      (15px);
+
+/* Heads up! Styles below has no connection with default html H1-H5 concepts */
+
+/* Headline */
+
+@fs-headline:         (126px);
+@lh-headline:         (128px);
+@paragraph-headline:  0;
+
+/* Header */
+
+@fs-header:             (63px);
+@lh-header:             (64px);
+@paragraph-header:      (32px);
+
+@fs-header-mobile:             (32px);
+@lh-header-mobile:             (36px);
+@paragraph-header-mobile:      (16px);
+
+/* Subheader */
+
+@fs-subheader-large:       (42px);
+@lh-subheader-large:       (45px);
+@ut-subheader-large:      (-12px); // until top -- margin top offset at max viewport width
+@ub-subheader-large:      (-9px); // until bottom -- margin bottom offset at max viewport width
+
+@fs-subheader:             (35px);
+@lh-subheader:             (39px);
+@ut-subheader:            (-12px); // until top -- margin top offset at 1024 viewport width
+@ub-subheader:             (-9px); // until bottom -- margin bottom offset at 1024 viewport width
+@paragraph-subheader:      (43px);
+
+@fs-subheader-mobile:             (24px);
+@lh-subheader-mobile:             (28px);
+@paragraph-subheader-mobile:      (16px);
+
+@opacity-control-normal:    .5;
+@opacity-control-hover:     1;
+
+/* System typography */
+
+/* Controls */
+
+@fs-control:        (14px);
+@fs-control-mobile: (13px);
+@lh-control:        (22px);
+@lh-control-mobile: (20px);
+@paragraph-control: (18px);
+
+@fs-control-big:        (18px);
+@lh-control-big:        (27px);
+@paragraph-control-big: (15px);
+
+/* Container props */
+
+@br-round: 400px;
+@br-rounded: 4px;
+@border-radius-container: @br-rounded;
+
+/* Animations */
+
+@ease-in: cubic-bezier(.4,0,1,.6);
+@ease-out: cubic-bezier(0,.4,.6,1);
+@ease-in-out: cubic-bezier(.4,0,.6,1);
+
+@duration-blink:    130ms;
+@duration:          300ms;
+@duration-accented: 530ms;
+
+@keyframes animation-drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes animation-crawl-from-down {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.tanimation-drop-in {
+  animation: animation-drop-in @ease-out @duration-blink;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+}
+
+.tanimation-crawl-from-down {
+  animation: animation-crawl-from-down @ease-out @duration-blink;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+}
+
+/* Z-index */
+@z-index-hidden: -100;
+@z-index:             0;
+
+@z-index-lifted:      10;
+
+@z-index-mainmenu:    100;
+@z-index-modals:      200;
+@z-index-cards:       300;
+@z-index-dropdowns:   400;
+@z-index-toasts:      500;
+@z-index-fullscreen:  600;
+
+
+//////////////////////
+// TODO: NEW
+
+@gray-opaque-50-fade-20: fade(@gray-opaque-50, 20%);
+
+//
+// Переменные из новой дизайн-библиотеки Timepad
+//
+
+// Цвета
+
+// brand
+@c-dark-gray: #CECDDE;
+@c-dark-gray-fade-35: fade(@c-dark-gray, 35%);
+@c-dark-gray-fade-20: fade(@c-dark-gray, 20%);
+
+@c-light-gray: #F1F0F5;
+
+@c-primary-blue: #643FFF;
+@c-primary-blue-80: #8365FF;
+
+// mono
+@c-black: #252525;
+
+@c-gray-75: #5D5D5D;
+@c-gray-75-fade-35: fade(@c-gray-75, 35%);
+@c-gray-75-fade-20: fade(@c-gray-75, 20%);
+
+@c-gray-50: #808080;
+@c-gray-50-fade-35: fade(@c-gray-50, 35%);
+@c-gray-50-fade-20: fade(@c-gray-50, 20%);
+
+@c-gray-35: #AAAAAA;
+@c-gray-35-fade-35: fade(@c-gray-35, 35%);
+@c-gray-35-fade-20: fade(@c-gray-35, 20%);
+
+@c-white: #FFFFFF;
+
+// accent
+@c-light-yellow: #FFF2D9;
+@c-light-rose: #FFEBFD;
+@c-yellow: #FFC340;
+@c-red: #F54614;
+@c-green: #00BD55;
+
+// Тени
+@sh-shadow: 0px 6px 14px rgba(0, 0, 0, 0.06), 0px 16px 28px rgba(0, 0, 0, 0.07);
+@box-shadow: 0 7px 14px 0 rgba(0, 0, 0, 0.1), 0 16px 28px 0 rgba(0, 0, 0, 0.1);
+
+// подложка
+@c-black-overlay: fade(@c-black, 80%);
+
+@c-white-gray: #EAEAEA;
+
+@separator-top: inset 0px 1px 0px @c-gray-50-fade-20;
+@separator-bottom: inset 0px -1px 0px @c-gray-50-fade-20;

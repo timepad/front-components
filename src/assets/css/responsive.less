@@ -1,0 +1,27 @@
+.hidden-mobile {
+  @media (max-width: @rsp-mobile-max) {
+    display: none !important;
+  }
+}
+
+.hidden-portrait { // TODO: временно, пока не расставлю брекйпоинты
+  @media (max-width: @rsp-mobile-portrait-max) {
+    display: none !important;
+  }
+}
+
+.hidden-desktop {
+  @media (min-width: @rsp-desktop-min) {
+    display: none !important;
+  }
+}
+
+.hidden-tablet {
+  @media (min-width: @rsp-mobile-portrait-max) and (max-width: @rsp-desktop-min) {
+    display: none !important;
+  }
+}
+
+.hidden {
+  display: none;
+}

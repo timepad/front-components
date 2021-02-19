@@ -1,0 +1,43 @@
+/*
+  TPUI Full Bundle
+*/
+
+/* CSS Reset, normalize.css */
+// @import '~normalize.css';
+
+@import  "./vars.less";
+@import  "./mixins.less";
+
+/* Grid system */
+ @import "./layout/lbrick";
+ @import "./layout/lmodules";
+ @import "./layout/lpage";
+ @import "./layout/lsquare";
+// // TODO: NEW
+ @import "./layout/lflex";
+ @import "./layout/lflexchild";
+ @import "./layout/lgap";
+ @import "./layout/lgrid";
+ @import "./layout/lfloat";
+
+// /* Typography bundle */
+ @import "./typo/typo";
+
+// /* Atoms */
+
+// /* Molecules */
+
+/* Responsive utils */
+ @import "./responsive.less";
+
+// TODO: NEW, найти место получше
+body {
+  font-family: @ff;
+  color: @c-black;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: proportional-nums;
+  overflow-y: auto;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // TODO: убедиться, что это нормальное решение
+}

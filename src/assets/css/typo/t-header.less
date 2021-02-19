@@ -1,0 +1,71 @@
+/**
+ Examples:
+ .t-header             // D fs+lh
+ .t-header--brick      // D fs+lh+m // TODO: и что значит это m?
+
+ .t-header-32          // D+M fs+lh+p
+ .t-header-32--desktop // D fs+lh+p
+ .t-header-32--mobile  // M fs+lh+p
+ */
+
+ @fs-header-desktop: (63px);
+ @lh-header-desktop: (64px);
+
+ @fs-header-mobile: (32px);
+ @lh-header-mobile: (36px);
+
+ .t-header-fs-lh-desktop() {
+   font-size: @fs-header-desktop;
+   line-height: @lh-header-desktop;
+ }
+
+ .t-header-fs-lh-mobile() {
+  font-size: @fs-header-mobile;
+  line-height: @lh-header-mobile;
+}
+
+ .t-header {
+   font-weight: 900;
+
+   @media (min-width: @rsp-desktop-min) {
+     .t-header-fs-lh-desktop;
+   }
+
+   @media (max-width: @rsp-mobile-max) {
+     .t-header-fs-lh-mobile;
+   }
+
+   &--brick {
+     display: block;
+
+     @media (min-width: @rsp-desktop-min) {
+       margin: -26px 0 -6px
+     }
+
+     @media (max-width: @rsp-mobile-max) {
+       margin: -15px 0 -5px
+     }
+   }
+
+   &-32 {
+     &,
+     &--desktop  {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min) {
+        padding: 7px 0 24px;
+        .t-header-fs-lh-desktop;
+      }
+    }
+
+     &,
+     &--mobile {
+       display: block;
+
+       @media (max-width: @rsp-mobile-max) {
+        padding: 17px 0 27px;
+        .t-header-fs-lh-mobile;
+       }
+     }
+   }
+ }

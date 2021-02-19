@@ -1,0 +1,98 @@
+/*
+.lgap is a horizontal space sized multiple of 16px
+format:
+.lgap[-X[-Y]][--desktop|--mobile]
+where
+X numeric [0;12] count gap width as rem
+Y 0 or 5 -- if 5 then add 1/2 rem to gap width
+--desktop size gap on desktop
+--mobile size gap on mobile
+Default: X = 1, Y = 0, mobile and desktop
+
+usage:
+.lgap // 16px
+.lgap-4 // 64px
+.lgap-4-0 // 64px
+.lgap-4-5 // 72px
+.lgap-4-5--desktop // 72px desktop only
+.lgap--mobile.lgap-3-desktop // mobile width = 16px and desktop w = 48px
+
+broken usage:
+.lgap.lgap--mobile // undefined behavior
+.lgap.lgap-3--desktop // undefined behavior
+.lgap-4.lgap-2--mobile // undefined behavior
+(if use --desktop or --mobile then do not use pair without --mobile or --desktop)
+*/
+
+.lgap {
+  display: block;
+  clear: both;
+  float: none;
+  width: 16px;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: @rsp-mobile-max) {
+    &--mobile {
+      width: 16px;
+    }
+  }
+  @media (min-width: @rsp-desktop-min) {
+    &--desktop {
+      width: 16px;
+    }
+  }
+
+  .lbrick-width-variant(@width-step) when (@width-step <= 12) {
+
+    &-@{width-step},
+    &-@{width-step}-0 {
+      width: unit(@width-step * 16, px);
+
+      @media (max-width: @rsp-mobile-max) {
+        &--mobile {
+          width: unit(@width-step * 16, px);
+        }
+      }
+      @media (min-width: @rsp-desktop-min) {
+        &--desktop {
+          width: unit(@width-step * 16, px);
+        }
+      }
+    }
+
+    &-@{width-step}-5 {
+      width: unit((@width-step + 0.5) * 16, px);
+
+      @media (max-width: @rsp-mobile-max) {
+        &--mobile {
+          width: unit((@width-step + 0.5) * 16, px);
+        }
+      }
+      @media (min-width: @rsp-desktop-min) {
+        &--desktop {
+          width: unit((@width-step + 0.5) * 16, px);
+        }
+      }
+    }
+
+    .lbrick-width-variant(@width-step + 1);
+  }
+
+  &-0-5 {
+    width: 8px;
+
+    @media (max-width: @rsp-mobile-max) {
+      &--mobile {
+        width: 8px;
+      }
+    }
+    @media (min-width: @rsp-desktop-min) {
+      &--desktop {
+        width: 8px;
+      }
+    }
+  }
+
+  .lbrick-width-variant(1)
+}

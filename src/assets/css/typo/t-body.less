@@ -1,0 +1,122 @@
+/**
+ Examples:
+ .t-body              // D+M fs+lh
+ .t-body--brick       // D+M fs+lh+m
+
+ .t-body-16           // D+M fs+lh+p
+ .t-body-16--desktop  // D fs+lh+p
+ .t-body-16--mobile   // M fs+lh+p
+
+ .t-body-24           // D+M fs+lh+p
+ .t-body-24--desktop  // D fs+lh+p
+ .t-body-24--mobile   // M fs+lh+p
+
+ .t-body-32           // D+M fs+lh+p
+ .t-body-32--desktop  // D fs+lh+p
+ .t-body-32--mobile   // M fs+lh+p
+ */
+
+@fs-body-mobile: (17px);
+@lh-body-mobile: (24px);
+
+@fs-body-desktop: (19px);
+@lh-body-desktop: (27px);
+
+.t-body-fs-lh-desktop() {
+  font-size: @fs-body-desktop;
+  line-height: @lh-body-desktop;
+}
+
+.t-body-fs-lh-mobile() {
+  font-size: @fs-body-mobile;
+  line-height: @lh-body-mobile;
+}
+
+.t-body {
+
+  @media (min-width: @rsp-desktop-min) {
+    .t-body-fs-lh-desktop;
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    .t-body-fs-lh-mobile;
+  }
+
+  &--brick {
+    display: block;
+
+    @media (min-width: @rsp-desktop-min) {
+      margin: -11px 0 -6px;
+    }
+
+    @media (max-width: @rsp-mobile-max) {
+      margin: -10px 0 -5px;
+    }
+  }
+
+  &-32 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min) {
+        padding: 22px 0 25px;
+        .t-body-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 22px 0 26px;
+        .t-body-fs-lh-mobile;
+      }
+    }
+  }
+
+  &-24 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min) {
+        padding: 14px 0 17px;
+        .t-body-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 14px 0 18px;
+        .t-body-fs-lh-mobile;
+      }
+    }
+  }
+
+  &-16 {
+    &,
+    &--desktop {
+      display: block;
+
+      @media (min-width: @rsp-desktop-min) {
+        padding: 6px 0 9px;
+        .t-body-fs-lh-desktop;
+      }
+    }
+
+    &,
+    &--mobile {
+      display: block;
+
+      @media (max-width: @rsp-mobile-max) {
+        padding: 6px 0 10px;
+        .t-body-fs-lh-mobile;
+      }
+    }
+  }
+}
