@@ -9,9 +9,12 @@ module.exports = {
         libraryTarget: 'umd',
     },
     resolve: {
+        modules: [path.resolve(__dirname, './src'), 'node_modules'],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.less'],
         alias: {
-            styles: path.resolve(__dirname, 'src/assets/css'),
+            assets: path.resolve(__dirname, 'src/assets'),
+            svg: path.resolve(__dirname, 'src/assets/svg'),
+            css: path.resolve(__dirname, 'src/assets/css'),
         }
     },
     devServer: {
@@ -27,19 +30,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [require('autoprefixer')]
-                            }
-                        }
-                    },
-                    'less-loader'
-                ],
+                use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
             },
             {
                 test: /\.svg$/,

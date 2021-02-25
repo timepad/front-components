@@ -1,4 +1,5 @@
-import 'styles/bundle.less';
-import {TestCmp} from './components/TestCmp/TestCmp';
+import {Button} from './components/button'
 
-export {TestCmp};
+export {
+    Button,
+};

@@ -1,0 +1,34 @@
+@import "../bundle.less";
+
+.cdivider {
+  display: block;
+  border: 0;
+  border-top-style: solid;
+  border-top-width: thin;
+  border-top-color: @c-gray-50-fade-20;
+  margin: 15px 0 16px 0;
+
+  @media (max-width: @rsp-mobile-max) {
+    &--full-width-mobile {
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+  }
+
+  &--thin {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &--thick {
+    box-sizing: border-box;
+    border-top: 4px solid @c-black;
+    height: 32px;
+    margin: 0;
+    background: transparent;
+
+    @media (max-width: @rsp-mobile-max) {
+      height: 24px;
+    }
+  }
+}

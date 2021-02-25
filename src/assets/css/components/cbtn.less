@@ -1,0 +1,586 @@
+@import "../bundle.less";
+
+.cbtn-disabled-state (@content) {
+  &.cbtn--disabled {
+    &, &:active {
+      @content();
+    }
+
+    .on-hover(@content);
+  }
+}
+
+.cbtn {
+  .tpui-mx-type-control;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+
+  height: 32px;
+  padding: 5px 16px;
+  margin: 0;
+
+  border: medium none;
+  border-radius: 4px;
+
+  font-family: @ff-system;
+  text-decoration: none;
+  white-space: nowrap;
+
+  user-select: none;
+
+  transition: background @duration-blink, color @duration-blink;
+
+  cursor: pointer;
+
+  @media (max-width: @rsp-mobile-max) {
+    height: 40px;
+    padding: 9px 16px;
+  }
+
+  --text-color: initial;
+  --bg-color: initial;
+  --border-color: initial;
+
+  color: var(--text-color) !important;
+  background-color: var(--bg-color);
+  border-color: var(--border-color);
+
+  svg.cicon * {
+    fill: var(--text-color);
+    transition: fill @duration-blink;
+  }
+
+  &--disabled {
+    cursor: default;
+  }
+
+  &-label {
+    display: flex;
+    justify-content: center;
+  }
+
+  &-hover-label {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  &:hover &-label--hovered {
+      visibility: hidden;
+  }
+
+  &:hover &-hover-label {
+    visibility: visible;
+
+  }
+
+
+
+  ////////////////////
+  // Button Primary //
+  ////////////////////
+
+  &--variant_primary {
+    // Button Primary — Default Theme
+    --text-color: @c-white;
+    --bg-color: @c-primary-blue;
+
+    &:active {
+      --bg-color: @c-primary-blue-80;
+    }
+
+    .on-hover({
+      --bg-color: @c-primary-blue-80;
+    });
+
+    .cbtn-disabled-state({
+      --text-color: @c-gray-35;
+      --bg-color: @c-light-gray;
+    });
+
+    // Button Primary — Light Theme
+    html body .mtheme--lightpic & {
+
+      .cbtn-disabled-state({
+          --text-color: @c-gray-35;
+          --bg-color: @c-gray-50-fade-20;
+      });
+    }
+
+    // Button Primary — Dark Theme
+    html body .mtheme--darkpic & {
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-75;
+        --bg-color: @c-gray-50-fade-20;
+      });
+    }
+  }
+
+  //////////////////////
+  // Button Secondary //
+  //////////////////////
+
+  &--variant_secondary {
+    // Button Secondary — Default Theme
+    --text-color: @c-primary-blue;
+    --bg-color: @c-dark-gray-fade-20;
+
+    .on-hover({
+      --bg-color: @c-dark-gray-fade-35;
+    });
+
+    &:active {
+      --text-color: @c-primary-blue-80;
+      --bg-color: @c-dark-gray-fade-35;
+    }
+
+    .cbtn-disabled-state({
+      --text-color: @c-gray-35;
+      --bg-color: @c-dark-gray-fade-20;
+    });
+
+    // Button Secondary — Light Theme
+    html body .mtheme--lightpic & {
+      --text-color: @c-black;
+      --bg-color: @c-gray-50-fade-20;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-35;
+      });
+
+      &:active {
+        --text-color: @c-gray-75;
+        --bg-color: @c-gray-50-fade-35;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-35;
+        --bg-color: @c-gray-50-fade-20;
+      });
+    }
+
+    // Button Secondary — Dark Theme
+    html body .mtheme--darkpic & {
+      --text-color: @c-white;
+      --bg-color: @c-gray-50-fade-20;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-35;
+      });
+
+      &:active {
+        --text-color: @c-gray-35;
+        --bg-color: @c-gray-50-fade-35;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-75;
+        --bg-color: @c-gray-50-fade-20;
+      });
+    }
+  }
+
+  ///////////////////
+  // Button Stroke //
+  ///////////////////
+
+  &--variant_stroke {
+    // Button Stroke — Default Theme
+    --text-color: @c-primary-blue;
+    --bg-color: transparent;
+    --border-color: @c-dark-gray;
+    border-width: 1px;
+    border-style: solid;
+
+    .on-hover({
+      --bg-color: @c-dark-gray-fade-35;
+      --border-color: transparent;
+    });
+
+    &:active {
+      --text-color: @c-primary-blue-80;
+      --bg-color: @c-dark-gray-fade-35;
+      --border-color: transparent;
+    }
+
+    &.cbtn--round {
+      padding: 0;
+
+      svg {
+        margin: -1px;
+      }
+    }
+
+    .cbtn-disabled-state({
+      --text-color: @c-gray-35;
+      --bg-color: transparent;
+      --border-color: @c-dark-gray-fade-35;
+    });
+
+    // Button Stroke — Light Theme
+    html body .mtheme--lightpic & {
+      --text-color: @c-black;
+      --border-color: @c-gray-50-fade-35;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-35;
+        --border-color: transparent;
+      });
+
+      &:active {
+        --text-color: @c-gray-75;
+        --bg-color: @c-gray-50-fade-35;
+        --border-color: transparent;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-35;
+        --bg-color: transparent;
+        --border-color: @c-gray-50-fade-35;
+      });
+    }
+
+    // Button Stroke — Dark Theme
+    html body .mtheme--darkpic & {
+      --text-color: @c-white;
+      --border-color: @c-gray-50-fade-35;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-35;
+        --border-color: transparent;
+      });
+
+      &:active {
+        --text-color: @c-gray-35;
+        --bg-color: @c-gray-50-fade-35;
+        --border-color: transparent;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-75;
+        --bg-color: transparent;
+        --border-color: @c-gray-50-fade-35;
+      });
+    }
+  }
+
+  ////////////////////////
+  // Button Transparent //
+  ////////////////////////
+
+  &--variant_transparent {
+    // Button Transparent — Default Theme
+    --text-color: @c-primary-blue;
+    --bg-color: transparent;
+
+    .on-hover({
+      --bg-color: @c-dark-gray-fade-20;
+    });
+
+    &:active {
+      --text-color: @c-primary-blue-80;
+      --bg-color: @c-dark-gray-fade-35;
+    }
+
+    &.cbtn--round svg {
+      margin: 0 -1px;
+    }
+
+    .cbtn-disabled-state({
+      --text-color: @c-gray-35;
+      --bg-color: transparent;
+    });
+
+    // Button Transparent — Light Theme
+    html body .mtheme--lightpic & {
+      --text-color: @c-black;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-20;
+      });
+
+      &:active {
+        --text-color: @c-gray-75;
+        --bg-color: @c-gray-50-fade-35;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-35;
+        --bg-color: transparent;
+      });
+    }
+
+    // Button Transparent — Dark Theme
+    html body .mtheme--darkpic & {
+      --text-color: @c-white;
+
+      .on-hover({
+        --bg-color: @c-gray-50-fade-20;
+      });
+
+      &:active {
+        --text-color: @c-gray-35;
+        --bg-color: @c-gray-50-fade-35;
+      }
+
+      .cbtn-disabled-state({
+        --text-color: @c-gray-75;
+        --bg-color: transparent;
+      });
+    }
+  }
+}
+
+
+/*
+ * TODO: скорее всего временное решение fixed свойства для Button
+ * подход к параметрам возможно будет изменен в будущих релизах UI
+ */
+.cbtn-fixed-params () {
+  width: 100%;
+  justify-content: center;
+  padding: 5px 4px;
+}
+
+.cbtn--fixed,
+.cbtn--fixed-tablet {
+  .cbtn-fixed-params;
+}
+
+@media (max-width: @rsp-mobile-max) {
+  .cbtn--fixed-mobile { .cbtn-fixed-params; }
+}
+@media (min-width: @rsp-desktop-min) {
+  .cbtn--fixed-desktop { .cbtn-fixed-params; }
+}
+
+.cbtn--round {
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  width: 32px;
+
+  border-radius: 50%;
+
+  &.cbtn--large {
+    width: 48px;
+    padding: 0;
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.cbtn--large {
+  height: 48px;
+  padding: 13px 24px;
+}
+
+.cbtn--huge {
+  height: 64px;
+}
+
+.cbtn--has-icon {
+  padding-left: 8px;
+}
+
+.cbtn--wrap-text {
+  white-space: normal;
+}
+
+.cbtn-slider {
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  position: relative;
+  background-color: @c-dark-gray;
+  transition: background-color @duration-blink @ease-in-out 0s;
+  cursor: pointer;
+
+  b {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: @c-white;
+    box-shadow: 2px 3px 4px rgba(37, 37, 37, 0.2);
+    transform: translate(0, 0);
+    transition: transform @duration-blink @ease-in-out 0s;
+  }
+
+  &--on {
+    background-color: @c-primary-blue;
+
+    b {
+      transform: translate(16px, 0);
+    }
+  }
+
+  &--disabled {
+    background-color: @c-dark-gray;
+    // cursor: default;
+    pointer-events: none;
+
+    b {
+      box-shadow: none;
+    }
+  }
+
+  .mtheme--lightpic & {
+    background-color: @c-gray-35;
+
+    &--on {
+      background-color: @c-primary-blue;
+    }
+
+    &--disabled {
+      background-color: @c-gray-50-fade-35;
+    }
+  }
+
+
+  html body .mtheme--darkpic & {
+    background-color: @c-gray-75;
+
+    &--on {
+      background-color: @c-primary-blue;
+    }
+
+    &--disabled {
+      background-color: @c-gray-50-fade-35;
+    }
+  }
+
+
+  @media (max-width: @rsp-mobile-max) {
+    width: 48px;
+    height: 32px;
+    border-radius: 16px;
+
+    b {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.cbtn-checkbtn {
+  .on-hover({
+    &:not(.cbtn-checkbtn--disabled) {
+      html body & {
+        border: 2px solid @c-dark-gray;
+        background-color: transparent;
+      }
+
+      html body .mtheme--lightpic & {
+        border-color: @c-gray-50-fade-35;
+      }
+
+      html body .mtheme--darkpic & {
+        border-color: @c-gray-50-fade-35;
+      }
+    }
+  });
+}
+
+// TODO: Осторожно! Вы входите на зыбкую территорию костылей! Перчатки и маска обязательны!
+.cbtn-controller {
+  border-width: 1px;
+  border-style: solid;
+
+  &--init {
+    --text-color: @c-primary-blue;
+    --bg-color: transparent;
+    --border-color: @c-dark-gray;
+
+    .on-hover({
+      --bg-color: @c-dark-gray-fade-35;
+      --border-color: transparent;
+    });
+
+    &:active {
+      --text-color: @c-primary-blue-80;
+      --bg-color: @c-dark-gray-fade-35;
+      --border-color: transparent;
+    }
+  }
+
+  &--active {
+    --text-color: @c-primary-blue-80;
+    --bg-color: @c-dark-gray-fade-35;
+    --border-color: transparent;
+  }
+
+  &--filled {
+      --text-color: @c-white;
+      --bg-color: @c-primary-blue;
+
+      &:active {
+        --bg-color: @c-primary-blue-80;
+      }
+
+      .on-hover({
+        --bg-color: @c-primary-blue-80;
+      });
+  }
+
+  &--black {
+    --text-color: @c-black;
+  }
+
+  &--narrow {
+    padding: 0 !important;
+    // TODO: border все равно делает блок высотой в 34px, пофиксить
+
+    svg.cicon {
+      transition: transform @duration-blink;
+
+      .on-hover({
+        transform: scale(1.2);
+      });
+    }
+  }
+}
+
+.cbtn--no-padding { // TODO: временное решение, починить вместе с кнопками
+  padding: 0;
+}
+
+.cbtn--primary-font {
+  font-family: @ff
+}
+
+
+.cbtn--align_left {
+  padding: 0 16px 0 0;
+
+  &.cbtn--large {
+    padding: 8px 24px 8px 8px;
+
+    .cicon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.cbtn--align_right {
+  flex-direction: row-reverse;
+  padding: 0 0 0 16px;
+
+  &.cbtn--large {
+    padding: 8px 8px 8px 24px;
+
+    .cicon {
+      margin-left: 8px;
+    }
+  }
+}
