@@ -62,7 +62,8 @@ export const Primary = () => {
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Primary disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.primary}
@@ -143,7 +144,8 @@ export const PrimaryLarge = () => {
                     large
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Primary large disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.primary}
@@ -225,7 +227,8 @@ export const Secondary = () => {
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Secondary disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.secondary}
@@ -306,7 +309,8 @@ export const SecondaryLarge = () => {
                     large
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Secondary large disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.secondary}
@@ -388,7 +392,8 @@ export const Stroke = () => {
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Stroke disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.stroke}
@@ -469,7 +474,8 @@ export const StrokeLarge = () => {
                     large
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Stroke large disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.stroke}
@@ -551,7 +557,8 @@ export const Transparent = () => {
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Transparent disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.transparent}
@@ -632,7 +639,8 @@ export const TransparentLarge = () => {
                     large
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Transparent large disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.transparent}
@@ -682,7 +690,7 @@ TransparentLarge.storyName = "Transparent large";
 export const TransparentWithHoverLabel = () => {
     return (
         <>
-            <StoryTitle>Transparent</StoryTitle>
+            <StoryTitle>Transparent with hover label</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.transparent}
@@ -719,7 +727,8 @@ export const TransparentWithHoverLabel = () => {
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
-            <div className="lbrick" />
+            <div className="lbrick-2" />
+            <StoryTitle>Transparent with hover label disabled</StoryTitle>
             <div className="lflex">
                 <Button
                     variant={ButtonVariant.transparent}
