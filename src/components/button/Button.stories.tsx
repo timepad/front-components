@@ -1,17 +1,21 @@
-import React, {PropsWithChildren} from 'react';
+import React, {ReactNode} from 'react';
 
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {Meta} from '@storybook/react/types-6-0';
 import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from './index';
 
-import "css/bundle.less";
+import 'css/bundle.less';
+
+interface IStorybookComponent extends React.FC {
+    storyName?: string;
+}
 
 export default {
     title: 'Button',
     component: Button,
 } as Meta;
 
-const StoryTitle = ({children}: PropsWithChildren<{}>) => {
+const StoryTitle = ({children}: {children: ReactNode}) => {
     return (
         <>
             <span className="t-caption t-caption-16" style={{color: '#808080'}}>
@@ -23,30 +27,22 @@ const StoryTitle = ({children}: PropsWithChildren<{}>) => {
     );
 };
 
-const Spacer = ({width = 32} : {width?: number}) => <div style={{width: width}} />
+const Spacer = ({width = 32}: {width?: number}) => <div style={{width: width}} />;
 
-const dummy = () => {};
+const dummy = () => {
+    return null;
+};
 
-export const Primary = () => {
+export const Primary: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Primary</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.primary}
-                    icon={<AddIcon />}
-                />
+                <Button variant={ButtonVariant.primary} icon={<AddIcon />} />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Auto primary"
-                />
+                <Button variant={ButtonVariant.primary} label="Auto primary" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Fixed primary"
-                    fixed
-                />
+                <Button variant={ButtonVariant.primary} label="Fixed primary" fixed />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.primary}
@@ -65,24 +61,11 @@ export const Primary = () => {
             <div className="lbrick-2" />
             <StoryTitle>Primary disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.primary}
-                    icon={<AddIcon />}
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} icon={<AddIcon />} disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Auto primary"
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} label="Auto primary" disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Fixed primary"
-                    fixed
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} label="Fixed primary" fixed disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.primary}
@@ -102,31 +85,18 @@ export const Primary = () => {
             </div>
         </>
     );
-}
+};
 
-export const PrimaryLarge = () => {
+export const PrimaryLarge: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Primary large</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.primary}
-                    icon={<AddIcon />}
-                    large
-                />
+                <Button variant={ButtonVariant.primary} icon={<AddIcon />} large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Auto primary"
-                    large
-                />
+                <Button variant={ButtonVariant.primary} label="Auto primary" large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Fixed primary"
-                    fixed
-                    large
-                />
+                <Button variant={ButtonVariant.primary} label="Fixed primary" fixed large />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.primary}
@@ -147,27 +117,11 @@ export const PrimaryLarge = () => {
             <div className="lbrick-2" />
             <StoryTitle>Primary large disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.primary}
-                    icon={<AddIcon />}
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} icon={<AddIcon />} large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Auto primary"
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} label="Auto primary" large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.primary}
-                    label="Fixed primary"
-                    fixed
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.primary} label="Fixed primary" fixed large disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.primary}
@@ -189,29 +143,19 @@ export const PrimaryLarge = () => {
             </div>
         </>
     );
-}
-PrimaryLarge.storyName = "Primary large";
+};
+PrimaryLarge.storyName = 'Primary large';
 
-export const Secondary = () => {
+export const Secondary: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Secondary</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.secondary}
-                    icon={<AddIcon />}
-                />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Auto secondary"
-                />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Fixed secondary"
-                    fixed
-                />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.secondary}
@@ -230,24 +174,11 @@ export const Secondary = () => {
             <div className="lbrick-2" />
             <StoryTitle>Secondary disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.secondary}
-                    icon={<AddIcon />}
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Auto secondary"
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Fixed secondary"
-                    fixed
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.secondary}
@@ -267,31 +198,18 @@ export const Secondary = () => {
             </div>
         </>
     );
-}
+};
 
-export const SecondaryLarge = () => {
+export const SecondaryLarge: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Secondary large</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.secondary}
-                    icon={<AddIcon />}
-                    large
-                />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Auto secondary"
-                    large
-                />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Fixed secondary"
-                    fixed
-                    large
-                />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed large />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.secondary}
@@ -312,27 +230,11 @@ export const SecondaryLarge = () => {
             <div className="lbrick-2" />
             <StoryTitle>Secondary large disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.secondary}
-                    icon={<AddIcon />}
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Auto secondary"
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.secondary}
-                    label="Fixed secondary"
-                    fixed
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed large disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.secondary}
@@ -354,29 +256,19 @@ export const SecondaryLarge = () => {
             </div>
         </>
     );
-}
-SecondaryLarge.storyName = "Secondary large";
+};
+SecondaryLarge.storyName = 'Secondary large';
 
-export const Stroke = () => {
+export const Stroke: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Stroke</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.stroke}
-                    icon={<AddIcon />}
-                />
+                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Auto stroke"
-                />
+                <Button variant={ButtonVariant.stroke} label="Auto stroke" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Fixed stroke"
-                    fixed
-                />
+                <Button variant={ButtonVariant.stroke} label="Fixed stroke" fixed />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.stroke}
@@ -395,24 +287,11 @@ export const Stroke = () => {
             <div className="lbrick-2" />
             <StoryTitle>Stroke disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.stroke}
-                    icon={<AddIcon />}
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Auto stroke"
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} label="Auto stroke" disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Fixed stroke"
-                    fixed
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} label="Fixed stroke" fixed disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.stroke}
@@ -432,31 +311,18 @@ export const Stroke = () => {
             </div>
         </>
     );
-}
+};
 
-export const StrokeLarge = () => {
+export const StrokeLarge: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Stroke large</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.stroke}
-                    icon={<AddIcon />}
-                    large
-                />
+                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Auto stroke"
-                    large
-                />
+                <Button variant={ButtonVariant.stroke} label="Auto stroke" large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Fixed stroke"
-                    fixed
-                    large
-                />
+                <Button variant={ButtonVariant.stroke} label="Fixed stroke" fixed large />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.stroke}
@@ -477,27 +343,11 @@ export const StrokeLarge = () => {
             <div className="lbrick-2" />
             <StoryTitle>Stroke large disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.stroke}
-                    icon={<AddIcon />}
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Auto stroke"
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} label="Auto stroke" large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.stroke}
-                    label="Fixed stroke"
-                    fixed
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.stroke} label="Fixed stroke" fixed large disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.stroke}
@@ -519,29 +369,19 @@ export const StrokeLarge = () => {
             </div>
         </>
     );
-}
-StrokeLarge.storyName = "Stroke large";
+};
+StrokeLarge.storyName = 'Stroke large';
 
-export const Transparent = () => {
+export const Transparent: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Transparent</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    fixed
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" fixed />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -560,24 +400,11 @@ export const Transparent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Transparent disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    fixed
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" fixed disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -597,31 +424,18 @@ export const Transparent = () => {
             </div>
         </>
     );
-}
+};
 
-export const TransparentLarge = () => {
+export const TransparentLarge: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Transparent large</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                    large
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                    large
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" large />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    fixed
-                    large
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" fixed large />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -642,27 +456,11 @@ export const TransparentLarge = () => {
             <div className="lbrick-2" />
             <StoryTitle>Transparent large disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" large disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    fixed
-                    large
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" fixed large disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -684,32 +482,19 @@ export const TransparentLarge = () => {
             </div>
         </>
     );
-}
-TransparentLarge.storyName = "Transparent large";
+};
+TransparentLarge.storyName = 'Transparent large';
 
-export const TransparentWithHoverLabel = () => {
+export const TransparentWithHoverLabel: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Transparent with hover label</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                    hoverLabel="Hover text"
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} hoverLabel="Hover text" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                    hoverLabel="Hover text"
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" hoverLabel="Hover text" />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    hoverLabel="Hover text"
-                    fixed
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" hoverLabel="Hover text" fixed />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -730,24 +515,11 @@ export const TransparentWithHoverLabel = () => {
             <div className="lbrick-2" />
             <StoryTitle>Transparent with hover label disabled</StoryTitle>
             <div className="lflex">
-                <Button
-                    variant={ButtonVariant.transparent}
-                    icon={<AddIcon />}
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Auto transparent"
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Auto transparent" disabled />
                 <Spacer />
-                <Button
-                    variant={ButtonVariant.transparent}
-                    label="Fixed transparent"
-                    fixed
-                    disabled
-                />
+                <Button variant={ButtonVariant.transparent} label="Fixed transparent" fixed disabled />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
@@ -767,10 +539,10 @@ export const TransparentWithHoverLabel = () => {
             </div>
         </>
     );
-}
-TransparentWithHoverLabel.storyName = "Transparent with hover label";
+};
+TransparentWithHoverLabel.storyName = 'Transparent with hover label';
 
-export const Tumbler = () => {
+export const Tumbler: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Tumbler</StoryTitle>
@@ -788,4 +560,4 @@ export const Tumbler = () => {
             </div>
         </>
     );
-}
+};

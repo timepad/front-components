@@ -62,7 +62,7 @@ const keysToExclude = new Set([
     'iconAlignment',
 ]);
 
-export function Button(props: IButtonProps) {
+export function Button(props: IButtonProps): JSX.Element {
     const variant = props.variant || 'primary';
     const hasIconWithLabel = props.icon && props.label;
     const iconAlignedLeft = hasIconWithLabel && props.iconAlignment === ButtonIconAlignment.left;
@@ -88,10 +88,10 @@ export function Button(props: IButtonProps) {
 
     const finalClasses = cx(buttonClasses, props.className);
 
-    const buttonProps: {[idx: string]: any} = {};
-    Object.keys(props).map(key => {
+    const buttonProps: {[idx: string]: unknown} = {};
+    Object.keys(props).map((key) => {
         if (!keysToExclude.has(key)) {
-            buttonProps[key] = (props as {[idx: string]: any})[key];
+            buttonProps[key] = (props as {[idx: string]: unknown})[key];
         }
     });
 
