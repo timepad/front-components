@@ -1,3 +1,13 @@
-import {Button} from './components/button';
+import {
+    Button,
+    ButtonVariant,
+    ButtonIconAlignment,
+    FixedVariant,
+    SliderButton,
+    ISliderButtonProps,
+    IButtonProps,
+} from './components/button';
 
-export {Button};
+export type {ISliderButtonProps, IButtonProps};
+
+export {Button, ButtonVariant, ButtonIconAlignment, FixedVariant, SliderButton};
