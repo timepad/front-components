@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "jsx": "react",
     "removeComments": true,
-    "outDir": "./dist",
+    "outDir": "./src",
     "baseUrl": "./src",
     "typeRoots": ["./types"]
   },

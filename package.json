@@ -2,7 +2,7 @@
   "name": "front-components",
   "version": "1.0.0",
   "description": "Timepad UI kit",
-  "main": "./dist/front-components.js",
+  "main": "./src/index.tsx",
   "repository": "git@github.com:timepad/front-components.git",
   "author": "Timepad",
   "private": true,

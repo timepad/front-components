@@ -1,5 +1,5 @@
 import React, {MouseEventHandler, useState} from 'react';
-import {component} from 'services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 
 export interface ISliderButtonProps {
     value: boolean;

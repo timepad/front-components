@@ -1,8 +1,8 @@
 import React, {Fragment, PropsWithChildren} from 'react';
 import cx from 'classnames';
-import {component} from 'services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 
-import 'css/components/cbtn.less';
+import '../../assets/css/components/cbtn.less';
 
 export enum ButtonVariant {
     primary = 'primary',
