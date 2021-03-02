@@ -8,6 +8,8 @@ import {
     IButtonProps,
 } from './components/button';
 
+import {component} from './services/helpers/classHelpers';
+
 export type {ISliderButtonProps, IButtonProps};
 
-export {Button, ButtonVariant, ButtonIconAlignment, FixedVariant, SliderButton};
+export {Button, ButtonVariant, ButtonIconAlignment, FixedVariant, SliderButton, component};
