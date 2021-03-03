@@ -15,7 +15,7 @@ module.exports = {
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
-    svgRule.exclude = [path.join(__dirname, '../src/assets/svg')];
+    svgRule.test = /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|cur|ani|pdf)(\?.*)?$/;
 
     // prevent error on require 'fs', 'net', 'tls'
     config.node = {
