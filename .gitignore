@@ -1,5 +1,6 @@
 node_modules
 dist/storybook
+.vscode/
 
 .DS_Store
 .env
@@ -36,9 +37,22 @@ cmake-build-*/
 
 # File-based project format
 *.iws
+*.ipr
+*.iml
 
 # IntelliJ
 out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
+
+# idea gitignore
+.idea/commandlinetools
+.idea/jsLibraryMappings.xml
+.idea/dataSources.xml
+.idea/blade.xml
+.idea/watcherTasks.xml
+.idea/copyright/
+.idea/deployment.xml
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
