@@ -8,7 +8,7 @@ import {
     IButtonProps,
 } from './components/button';
 
-import {component} from './services/helpers/classHelpers';
+import {component} from './services/helpers/ClassHelper';
 
 export type {ISliderButtonProps, IButtonProps};
 

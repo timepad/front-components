@@ -1,0 +1,48 @@
+@import "../../src/assets/css/vars";
+
+.stb-wrapper {
+  margin: 32px auto;
+  max-width: 33%;
+
+  @media (max-width: @rsp-mobile-max) {
+    max-width: 100%;
+  }
+}
+
+
+.stp-event-poster {
+  margin: 16px;
+}
+
+.stb-padded {
+  display: flex;
+  margin: auto;
+  max-width: 1200px;
+  padding: 32px;
+
+  .modal-open & {
+    overflow-y: scroll;
+  }
+}
+
+.stb-full-width {
+  width: 100%;
+}
+
+.stb-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.stb-line-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  @media (max-width: @rsp-mobile-max) {
+    display: block;
+  }
+}
