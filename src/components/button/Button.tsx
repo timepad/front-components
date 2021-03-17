@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Fragment, PropsWithChildren} from 'react';
 import cx from 'classnames';
-import {component} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/ClassHelper';
 
 import '../../assets/css/components/cbtn.less';
 
@@ -63,7 +63,7 @@ const keysToExclude = new Set([
     'iconAlignment',
 ]);
 
-export function Button(props: IButtonProps): JSX.Element {
+export const Button = (props: IButtonProps): JSX.Element => {
     const variant = props.variant || 'primary';
     const hasIconWithLabel = props.icon && props.label;
     const iconAlignedLeft = hasIconWithLabel && props.iconAlignment === ButtonIconAlignment.left;
@@ -116,7 +116,7 @@ export function Button(props: IButtonProps): JSX.Element {
             )}
         </button>
     );
-}
+};
 
 Button.variant = ButtonVariant;
 Button.alignment = ButtonIconAlignment;
