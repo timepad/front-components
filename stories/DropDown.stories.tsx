@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {Dropdown} from '../src/components/Dropdown';
+import {Dropdown} from '../src';
 import {Button, ButtonVariant, Userpic} from '../src';
 
 import IconTicket from '../src/assets/svg/24/icon-ticket-24.svg';
@@ -177,7 +177,7 @@ interface IWithHeaderAndButtonProps {
     buttons: string[];
 }
 
-export const WithHeaderAndButton = ({buttons, phone}: IWithHeaderAndButtonProps): React.ReactElement => {
+export const WithHeaderAndButton = ({buttons, phone, links}: IWithHeaderAndButtonProps): React.ReactElement => {
     const ref = useRef(null);
     const [show, setShow] = useState(true);
 
@@ -205,9 +205,9 @@ export const WithHeaderAndButton = ({buttons, phone}: IWithHeaderAndButtonProps)
                         </div>
                     </span>
                 </Dropdown.Row>
-                {/*{links.map((linkLabel, index) => (
+                {links.map((linkLabel, index) => (
                     <Dropdown.Link key={index} label={linkLabel} href="#" />
-                ))}*/}
+                ))}
                 {buttons.map((buttonLabel, index) => (
                     <Dropdown.Button key={index} label={buttonLabel} onClick={action(buttonLabel)} />
                 ))}
@@ -231,6 +231,7 @@ export const WithHeaderAndButton2 = ({
     name,
     phone,
     picURL,
+    links,
 }: IWithHeaderAndButton2Props): React.ReactElement => {
     const ref = useRef(null);
     const [show, setShow] = useState(true);
@@ -260,9 +261,9 @@ export const WithHeaderAndButton2 = ({
                         </div>
                     </span>
                 </Dropdown.Row>
-                {/*{links.map((linkLabel, index) => (
+                {links.map((linkLabel, index) => (
                     <Dropdown.Link key={index} label={linkLabel} href="#" />
-                ))}*/}
+                ))}
                 {buttons.map((buttonLabel, index) => (
                     <Dropdown.Button key={index} label={buttonLabel} onClick={action(buttonLabel)} />
                 ))}
@@ -309,9 +310,9 @@ export const WithHeaderAndIconItemList = ({buttons, phone}: IWithHeaderAndIconIt
                         </div>
                     </span>
                 </Dropdown.Row>
-                {/*{defaultStoryArgs.linksWithIcons.map((item, index) => (
-                    <Dropdown.Link key={index} label={item.label} href="#" subitem icon={item.icon} />
-                ))}*/}
+                {defaultStoryArgs.linksWithIcons.map((item, index) => (
+                    <Dropdown.Link key={index} label={item.label} href="#" subitem icon={item.icon ?? undefined} />
+                ))}
                 {buttons.map((buttonLabel, index) => (
                     <Dropdown.Button key={index} label={buttonLabel} onClick={action(buttonLabel)} />
                 ))}

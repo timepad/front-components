@@ -9,10 +9,12 @@
   "license": "UNLICENSED",
   "dependencies": {
     "framer-motion": "^1.10.3",
+    "history": "^4.10.1",
     "lodash.uniqueid": "^4.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-modal": "^3.12.1"
+    "react-modal": "^3.12.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -27,10 +29,12 @@
     "@storybook/react": "^6.1.18",
     "@svgr/webpack": "^5.5.0",
     "@types/classnames": "^2.2.11",
+    "@types/history": "^4.7.8",
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
     "@types/react-modal": "^3.12.0",
+    "@types/react-router-dom": "^5.1.7",
     "@types/storybook-react-router": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
