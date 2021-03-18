@@ -34,7 +34,7 @@ export interface IButtonProps
     fixed?: boolean | string[];
     large?: boolean;
     wrapText?: boolean;
-    buttonRef?: React.MutableRefObject<HTMLButtonElement>;
+    buttonRef?: React.MutableRefObject<HTMLButtonElement | null>;
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     iconAlignment?: ButtonIconAlignment;
     iconAdditionalClasses?: string[];

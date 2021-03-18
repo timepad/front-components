@@ -8,9 +8,11 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
+    "framer-motion": "^1.10.3",
     "lodash.uniqueid": "^4.0.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-modal": "^3.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -28,6 +30,8 @@
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "@types/react-modal": "^3.12.0",
+    "@types/storybook-react-router": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "autoprefixer": "^9.7.3",
@@ -46,6 +50,8 @@
     "less-loader": "^5.0.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.2.1",
+    "react-router": "^5.2.0",
+    "storybook-react-router": "^1.0.8",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.5",
