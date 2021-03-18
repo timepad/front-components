@@ -10,6 +10,12 @@ import {
 
 export {Orgpic, Userpic} from './components/Userpic';
 
+export {Input} from './components/Forms';
+export {RadioButton} from './components/Forms/RadioButton';
+export {Checkbox} from './components/Forms/Checkbox';
+export {Radio} from './components/Forms/Radio';
+export {Textarea} from './components/Forms';
+
 import {component} from './services/helpers/ClassHelper';
 
 export type {ISliderButtonProps, IButtonProps};
