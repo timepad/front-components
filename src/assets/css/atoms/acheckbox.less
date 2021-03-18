@@ -1,0 +1,140 @@
+.acheckbox {
+  user-select: none;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 52px;
+    padding: 16px 0;
+
+    cursor: pointer;
+  }
+
+  input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  &__icon {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-right: 16px;
+
+    border: 1px solid @c-dark-gray;
+    border-radius: 4px;
+
+    svg {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      opacity: 0;
+
+      * {
+        fill: @c-white;
+      }
+    }
+
+    label:hover & {
+      // TODO: приспособить миксин под такие кейсы
+      border-width: 2px;
+    }
+
+    &--checked {
+      border: none;
+      background-color: @c-primary-blue;
+
+      label:hover & {
+        // TODO: приспособить миксин под такие кейсы
+        border-color: transparent;
+      }
+
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__text {
+    display: block;
+    position: relative;
+    top: 1px;
+  }
+
+  &&--disabled {
+    label {
+      cursor: default;
+    }
+
+    .acheckbox__icon {
+      border-width: 1px;
+      border-color: @c-dark-gray-fade-35;
+
+      &--checked {
+        border: none;
+        background-color: @c-dark-gray;
+      }
+    }
+
+    .acheckbox__text {
+      color: @c-gray-35;
+    }
+  }
+
+  .mtheme--lightpic & {
+    .acheckbox__icon {
+      border-color: @c-gray-50-fade-35;
+    }
+
+    &--disabled {
+      .acheckbox__icon {
+        border-width: 1px;
+        border-color: @c-gray-50-fade-20;
+
+        &--checked {
+          border: none;
+          background-color: @c-gray-50-fade-20;
+
+          svg * {
+            fill: @c-gray-35;
+          }
+        }
+      }
+    }
+  }
+
+  .mtheme--darkpic & {
+    .acheckbox__icon {
+      border-color: @c-gray-50-fade-35;
+    }
+
+    &--disabled {
+      .acheckbox__icon {
+        border-width: 1px;
+        border-color: @c-gray-50-fade-20;
+
+        &--checked {
+          border: none;
+          background-color: @c-gray-50-fade-20;
+
+          svg * {
+            fill: @c-gray-50;
+          }
+        }
+      }
+
+      .acheckbox__text {
+        color: @c-gray-75;
+      }
+    }
+  }
+}

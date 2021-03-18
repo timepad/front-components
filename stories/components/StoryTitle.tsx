@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {Brick} from 'components/utility/Modifiers/Brick';
+import {Brick} from '../../src/components/utility/Modifiers/Brick';
 
 export const StoryTitle = ({children}: PropsWithChildren<unknown>): React.ReactElement => {
     return (

@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
-import {molecule} from 'services/helpers/ClassHelper';
+import {molecule} from '../../services/helpers/ClassHelper';
 
-import CheckSvg from 'assets/svg/16/icon-check-16.svg';
+import CheckSvg from '../../assets/svg/16/icon-check-16.svg';
 
 enum State {
     disabled = 'disabled',

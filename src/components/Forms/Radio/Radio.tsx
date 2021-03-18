@@ -1,7 +1,7 @@
 import React, {ChangeEvent, ChangeEventHandler} from 'react';
-import {atom} from 'services/helpers/ClassHelper';
+import {atom} from '../../../services/helpers/ClassHelper';
 
-import BulletSvg from 'assets/svg/16/icon-bullet-16.svg';
+import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 
 export interface IRadioProps {
     name: string;

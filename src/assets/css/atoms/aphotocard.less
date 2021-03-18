@@ -1,0 +1,59 @@
+.aphotocard {
+  padding: 8px;
+  box-shadow: @sh-shadow;
+  margin-bottom: 2px;
+
+  width: 160px;
+  height: 160px;
+
+  box-sizing: border-box;
+
+  .aphotocard__row {
+    height: 10px;
+    margin-top: 7px;
+    margin-bottom: 4px;
+    width: 100%;
+    background-color: @c-light-gray;
+    border-radius: 2px;
+  }
+
+  .aphotocard__photo {
+    width: 100%;
+    height: 53.3%;
+  }
+
+  .aphotocard__row.aphotocard__row--high {
+    height: 14px;
+  }
+
+  .aphotocard__row.aphotocard__row--narrow {
+    margin-top: 10px;
+    width: 27%;
+  }
+
+}
+
+.aphotocard.aphotocard--small {
+  width: 120px;
+  height: 120px;
+
+  .aphotocard__row {
+    height: 7.5px;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    border-radius: 1.5px;
+  }
+
+  .aphotocard__row.aphotocard__row--high {
+    height: 10.5px;
+  }
+
+  .aphotocard__row.aphotocard__row--narrow {
+    margin-top: 7.5px;
+    width: 27%;
+  }
+}
+
+.aphotocard.aphotocard--mt-quarter {
+  margin-top: 4px;
+}

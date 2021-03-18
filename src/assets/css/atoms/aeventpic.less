@@ -1,0 +1,25 @@
+.aeventpic {
+  border: none;
+  border-radius: 4px;
+  color: @c-white;
+  background-color: @gray-opaque-80;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+
+  &--stretch {
+    height: 100%;
+    width: 100%;
+  }
+
+  &--normal {
+    height: 32px;
+    width: 56px;
+
+    @media (max-width: @rsp-mobile-max) {
+      height: 28px;
+      width: 48px;
+    }
+  }
+}

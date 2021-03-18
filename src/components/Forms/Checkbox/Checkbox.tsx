@@ -1,7 +1,7 @@
 import React, {ChangeEvent, ChangeEventHandler} from 'react';
-import {atom} from 'services/helpers/ClassHelper';
+import {atom} from '../../../services/helpers/ClassHelper';
 
-import CheckSvg from 'assets/svg/24/icon-check-24.svg';
+import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
 export interface ICheckboxProps {
     name: string;
