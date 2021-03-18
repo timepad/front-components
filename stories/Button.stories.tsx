@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react';
 
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import AddIcon from '../src/assets/svg/24/icon-plus-24.svg';
 import {Meta} from '@storybook/react/types-6-0';
 import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from '../src';
 
-import 'css/bundle.less';
+import '../src/assets/css/bundle.less';
 
 interface IStorybookComponent extends React.FC {
     storyName?: string;
