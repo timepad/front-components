@@ -11,6 +11,7 @@ import {Theme} from '../utility/Modifiers';
 import {motion, AnimatePresence} from 'framer-motion';
 import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/helpers/AnimationHelper/animationHelper';
 import {useClickOutside} from '../../services/hooks/useClickOutside';
+import {Link} from './Link';
 
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
@@ -375,5 +376,6 @@ export const Dropdown = ({
 
 Dropdown.Hr = Hr;
 Dropdown.Row = Row;
+Dropdown.Link = Link;
 Dropdown.Button = ButtonRow;
 Dropdown.Option = Option;
