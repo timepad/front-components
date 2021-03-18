@@ -3,7 +3,7 @@ import StoryRouter from 'storybook-react-router';
 
 // import {Provider} from 'mobx-react';
 import {action} from '@storybook/addon-actions';
-import {Modal} from '../src/components/Modal';
+import {Modal} from '../src';
 import {withKnobs} from '@storybook/addon-knobs';
 
 const argTypes = {
