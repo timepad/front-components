@@ -1,7 +1,7 @@
 import 'app/styles.less';
 import './lib/main.less';
 import React from 'react';
-import {Userpic} from '../src/components/TPUI/Userpic';
+import {Userpic} from '../src';
 import {StoryTitle} from './components/StoryTitle';
 import {Brick} from './Elements/helpers';
 

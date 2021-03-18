@@ -2,7 +2,7 @@ import React from 'react';
 import {Brick} from '../src/components/utility/Modifiers/Brick';
 import {Gap} from '../src/components/utility/Modifiers/Gap';
 import './lib/userpics.less';
-import {Userpic, Orgpic} from '../src/components/TPUI/Userpic';
+import {Userpic, Orgpic} from '../src';
 import {withKnobs, text} from '@storybook/addon-knobs';
 
 export default {
