@@ -16,6 +16,7 @@ export {Checkbox} from './components/Forms/Checkbox';
 export {Radio} from './components/Forms/Radio';
 export {Textarea} from './components/Forms';
 export {Dropdown} from './components/Dropdown';
+export {Modal} from './components/Modal';
 
 import {component} from './services/helpers/ClassHelper';
 
