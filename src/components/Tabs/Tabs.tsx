@@ -4,7 +4,7 @@ import {TabContent} from './TabContent';
 import {TabList} from './TabList';
 import cx from 'classnames';
 
-import './ctabBar.less';
+import './ctabs.less';
 
 export interface ITabsContext {
     duration: number;

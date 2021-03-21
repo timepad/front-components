@@ -23,12 +23,12 @@ interface IStorybookComponent extends FC {
 }
 
 export default {
-    title: 'TabBar',
+    title: 'Tabs',
     component: Tabs,
 } as Meta;
 
 export const Primary: IStorybookComponent = () => {
-    const [activeId, setActiveId] = useState<TId>('wwx2');
+    const [activeId, setActiveId] = useState<TId>(1);
     const testTabclick = (id: TId) => {
         //this is a custom click handler
         setActiveId(id);
@@ -36,22 +36,22 @@ export const Primary: IStorybookComponent = () => {
     const items: {id: TId; label: string; content: string; onTabClick?: (id: TId) => void}[] = [
         {
             id: 0,
-            label: 'first',
+            label: 'First',
             content: 'firstContent',
         },
         {
             id: 1,
-            label: 'second',
+            label: 'Second',
             content: 'secondContent',
         },
         {
             id: 3,
-            label: 'third',
+            label: 'Third',
             content: 'thirdContent',
         },
         {
-            id: 'wwx2',
-            label: 'string Id',
+            id: 'Fourth',
+            label: 'Fourth',
             content: 'some stringId content',
             onTabClick: testTabclick,
         },

@@ -1,6 +1,8 @@
 @import "../../assets/css/bundle.less";
 
 .ctab-bar {
+  font-family: @ff;
+
   .ctab-bar__list {
     position: relative;
     display: flex;
@@ -18,7 +20,7 @@
     }
     &--is-active {
       .ctab-bar__button {
-        color: @black-fade-80;
+        color: @c-black;
       }
     }
   }
@@ -28,6 +30,8 @@
     background-color: transparent;
     border: 0;
     font-size: 19px;
+    line-height: 27px;
+    font-weight: normal;
     color: @c-gray-50;
     cursor: pointer;
     transition: inherit;
@@ -38,7 +42,7 @@
     top: calc(100% - 1px);
     display: block;
     height: 1px;
-    background: @black-fade-80;
+    background: @c-black;
     transform: translateX(0px);
     transition: inherit;
   }
