@@ -1,11 +1,7 @@
 import React, {FC, HTMLAttributes, memo, useContext, useEffect, useRef, useState} from 'react';
 import cx from 'classnames';
-import {TId} from './Tab';
-import {DurationContext} from './Tabs';
+import {TabsContext} from './Tabs';
 
-interface ITabList extends Omit<HTMLAttributes<HTMLUListElement>, 'id'> {
-    activeId: TId;
-}
 interface IHighlighterStyle {
     transform: string;
     width: string;
@@ -16,12 +12,12 @@ const initialStyles = {
     width: '0',
 };
 
-export const TabList: FC<ITabList> = memo(({children, className, activeId, ...restProps}) => {
+export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, className, ...restProps}) => {
     const ulClasses = cx('ctab-bar__list', className);
     const ulRef = useRef<HTMLUListElement>(null);
     const highlighterRef = useRef<HTMLSpanElement>(null);
     const [highlighterStyles, setHighlighterStyles] = useState<IHighlighterStyle>(initialStyles);
-    const duration = useContext(DurationContext);
+    const {duration, activeId} = useContext(TabsContext);
     const getHighlighterStyles = (): IHighlighterStyle => {
         let value = {...initialStyles};
         const activeEl = ulRef?.current?.querySelector<HTMLLIElement>('.ctab-bar__li--is-active');

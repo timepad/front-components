@@ -1,14 +1,17 @@
-import React, {FC, HTMLAttributes} from 'react';
+import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
+import {TabsContext} from './Tabs';
+import {TId} from './Tab';
 
-interface ITabContentProps extends HTMLAttributes<HTMLDivElement> {
-    isActive: boolean;
+export interface ITabContent extends Omit<HTMLAttributes<HTMLDivElement>, 'id'> {
+    id: TId;
 }
 
-export const TabContent: FC<ITabContentProps> = ({children, className, isActive, ...restProps}) => {
+export const TabContent: FC<ITabContent> = ({children, id, className, ...restProps}) => {
     const divClasses = cx('ctab-bar__content', className);
+    const {activeId} = useContext(TabsContext);
 
-    return isActive ? (
+    return activeId === id ? (
         <div {...restProps} className={divClasses}>
             {children}
         </div>

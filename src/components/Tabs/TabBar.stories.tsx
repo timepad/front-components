@@ -60,16 +60,16 @@ export const Primary: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Tabs</StoryTitle>
-            <Tabs duration={150}>
-                <Tabs.List activeId={activeId}>
+            <Tabs duration={150} activeId={activeId}>
+                <Tabs.List>
                     {items.map(({id, label, onTabClick = setActiveId}) => (
-                        <Tabs.Tab key={id} id={id} isActive={id === activeId} onTabClick={onTabClick}>
+                        <Tabs.Tab key={id} id={id} onTabClick={onTabClick}>
                             {label}
                         </Tabs.Tab>
                     ))}
                 </Tabs.List>
                 {items.map(({id, content}) => (
-                    <Tabs.Content key={id} isActive={id === activeId}>
+                    <Tabs.Content key={id} id={id}>
                         {content}
                     </Tabs.Content>
                 ))}

@@ -1,15 +1,20 @@
 import React, {createContext, FC, HTMLAttributes} from 'react';
-import {Tab} from './Tab';
+import {Tab, TId} from './Tab';
 import {TabContent} from './TabContent';
 import {TabList} from './TabList';
 import cx from 'classnames';
 
 import './ctabBar.less';
 
-export const DurationContext = createContext<number>(0);
+export interface ITabsContext {
+    duration: number;
+    activeId: TId;
+}
+export const TabsContext = createContext<ITabsContext>({duration: 150, activeId: 0});
 
 export interface ITabProps extends HTMLAttributes<HTMLDivElement> {
     duration?: number;
+    activeId: TId;
 }
 
 const tabComponents = {
@@ -18,12 +23,12 @@ const tabComponents = {
     List: TabList,
 };
 
-const BaseTabBar: FC<ITabProps> = ({children, duration = 150, className, ...restProps}) => {
+const BaseTabBar: FC<ITabProps> = ({children, duration = 150, activeId, className, ...restProps}) => {
     const divClasses = cx('ctab-bar', className);
 
     return (
         <div {...restProps} className={divClasses}>
-            <DurationContext.Provider value={duration}>{children}</DurationContext.Provider>
+            <TabsContext.Provider value={{duration, activeId}}>{children}</TabsContext.Provider>
         </div>
     );
 };
