@@ -20,8 +20,9 @@ export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, cl
     const getHighlighterStyles = (): IHighlighterStyle => {
         let value = {...initialStyles};
         const activeEl = boxRef?.current?.querySelector<HTMLLIElement>('.ctab-bar__li--is-active');
-        if (activeEl) {
-            const transform = `translateX(${activeEl.offsetLeft - (boxRef?.current?.offsetLeft || 0)}px)`;
+        const ulEl = boxRef?.current?.querySelector<HTMLUListElement>('.ctab-bar__list');
+        if (activeEl && ulEl) {
+            const transform = `translateX(${activeEl.offsetLeft - ulEl.offsetLeft}px)`;
             const width = `${activeEl.offsetWidth}px`;
             value = {width, transform};
         }
