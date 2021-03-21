@@ -1,3 +1,52 @@
+@import "../../assets/css/bundle.less";
+
 .ctab-bar {
-  //
+  --duration: 150ms;
+
+  .ctab-bar__list {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  }
+
+  .ctab-bar__li {
+    margin-right: 16px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &--is-active {
+      .ctab-bar__button {
+        color: @black-fade-80;
+      }
+    }
+  }
+
+  .ctab-bar__button {
+    padding: 20px 0 23px 0;
+    background-color: transparent;
+    border: 0;
+    font-size: 19px;
+    color: @c-gray-50;
+    cursor: pointer;
+    transition: inherit;
+  }
+
+  .ctab-bar__highlighter {
+    position: absolute;
+    top: calc(100% - 1px);
+    display: block;
+    height: 1px;
+    background: @black-fade-80;
+    transform: translateX(0px);
+    transition: inherit;
+  }
+
+  .ctab-bar__highlightBox {
+    position: relative;
+    width: 100%;
+  }
 }

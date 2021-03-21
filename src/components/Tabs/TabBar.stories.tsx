@@ -1,12 +1,22 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactNode, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Tabs} from './Tabs';
-
-import 'css/bundle.less';
-//todo:@glotov refacror after storybookHelpers pr
-import {StoryTitle} from '../button/Button.stories';
 import {TId} from './Tab';
+import 'css/bundle.less';
+
+//todo:@glotov refacror after storybookHelpers pr
+const StoryTitle = ({children}: {children: ReactNode}) => {
+    return (
+        <>
+            <span className="t-caption t-caption-16" style={{color: '#808080'}}>
+                {children}
+            </span>
+            <hr className="cdivider cdivider--thin" />
+            <div className="lbrick-2" />
+        </>
+    );
+};
 
 interface IStorybookComponent extends FC {
     storyName?: string;
@@ -20,8 +30,8 @@ export default {
 export const Primary: IStorybookComponent = () => {
     const [activeId, setActiveId] = useState<TId>('wwx2');
     const testTabclick = (id: TId) => {
+        //this is a custom click handler
         setActiveId(id);
-        alert(`id of this item is ${id}`);
     };
     const items: {id: TId; label: string; content: string; onTabClick?: (id: TId) => void}[] = [
         {
@@ -50,8 +60,8 @@ export const Primary: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Tabs</StoryTitle>
-            <Tabs>
-                <Tabs.List>
+            <Tabs duration={150}>
+                <Tabs.List activeId={activeId}>
                     {items.map(({id, label, onTabClick = setActiveId}) => (
                         <Tabs.Tab key={id} id={id} isActive={id === activeId} onTabClick={onTabClick}>
                             {label}
