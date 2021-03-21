@@ -14,15 +14,14 @@ const initialStyles = {
 
 export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, className, ...restProps}) => {
     const ulClasses = cx('ctab-bar__list', className);
-    const ulRef = useRef<HTMLUListElement>(null);
-    const highlighterRef = useRef<HTMLSpanElement>(null);
+    const boxRef = useRef<HTMLDivElement>(null);
     const [highlighterStyles, setHighlighterStyles] = useState<IHighlighterStyle>(initialStyles);
     const {duration, activeId} = useContext(TabsContext);
     const getHighlighterStyles = (): IHighlighterStyle => {
         let value = {...initialStyles};
-        const activeEl = ulRef?.current?.querySelector<HTMLLIElement>('.ctab-bar__li--is-active');
+        const activeEl = boxRef?.current?.querySelector<HTMLLIElement>('.ctab-bar__li--is-active');
         if (activeEl) {
-            const transform = `translateX(${activeEl.offsetLeft - (ulRef?.current?.offsetLeft || 0)}px)`;
+            const transform = `translateX(${activeEl.offsetLeft - (boxRef?.current?.offsetLeft || 0)}px)`;
             const width = `${activeEl.offsetWidth}px`;
             value = {width, transform};
         }
@@ -31,15 +30,15 @@ export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, cl
 
     useEffect(() => {
         setHighlighterStyles(getHighlighterStyles());
-    }, [activeId, ulRef, highlighterRef]);
+    }, [activeId]);
 
     return (
-        <div className="ctab-bar__highlightBox" style={{transition: `all ${duration}ms`}}>
-            <ul {...restProps} className={ulClasses} ref={ulRef}>
+        <div className="ctab-bar__highlightBox" style={{transition: `all ${duration}ms`}} ref={boxRef}>
+            <ul {...restProps} className={ulClasses}>
                 {children}
             </ul>
 
-            <span className="ctab-bar__highlighter" ref={highlighterRef} style={highlighterStyles} />
+            <span className="ctab-bar__highlighter" style={highlighterStyles} />
         </div>
     );
 });
