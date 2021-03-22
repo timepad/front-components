@@ -1,4 +1,4 @@
-import React, {FC, HTMLAttributes, ReactNode, useContext} from 'react';
+import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {component} from '../../services/helpers/classHelpers';
