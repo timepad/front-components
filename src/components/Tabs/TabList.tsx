@@ -13,20 +13,25 @@ const initialStyles = {
     width: '0',
 };
 
+const activeElSelector = `.${component(
+    'tab-bar',
+    'li',
+)({['is-active']: true})
+    .split(' ')
+    .join('.')}`;
+const ulElSelector = `.${component('tab-bar', 'list')()}`;
+const highlighterBoxClasses = component('tab-bar', 'highlightBox')();
+const spanClasses = component('tab-bar', 'highlighter')();
+
 export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, className, ...restProps}) => {
     const ulClasses = cx('ctab-bar__list', className);
     const boxRef = useRef<HTMLDivElement>(null);
     const {duration, activeId} = useContext(TabsContext);
-    const highlighterBoxClasses = component('ctab-bar', 'highlightBox')();
-    const spanClasses = component('ctab-bar', 'highlighter')();
-
     const [highlighterStyles, setHighlighterStyles] = useState<IHighlighterStyle>(initialStyles);
     const getHighlighterStyles = (): IHighlighterStyle => {
         let value = {...initialStyles};
-        const activeEl = boxRef?.current?.querySelector<HTMLLIElement>(
-            `.${component('ctab-bar', 'li')({['is-active']: true})}`,
-        );
-        const ulEl = boxRef?.current?.querySelector<HTMLUListElement>(`.${component('ctab-bar', 'list')}`);
+        const activeEl = boxRef?.current?.querySelector<HTMLLIElement>(activeElSelector);
+        const ulEl = boxRef?.current?.querySelector<HTMLUListElement>(ulElSelector);
         if (activeEl && ulEl) {
             const transform = `translateX(${activeEl.offsetLeft - ulEl.offsetLeft}px)`;
             const width = `${activeEl.offsetWidth}px`;

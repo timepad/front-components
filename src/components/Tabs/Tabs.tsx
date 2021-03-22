@@ -25,7 +25,7 @@ const tabComponents = {
 };
 
 const BaseTabBar: FC<ITabProps> = ({children, duration = 150, activeId, className, ...restProps}) => {
-    const divClasses = cx(component('ctab-bar')(), className);
+    const divClasses = cx(component('tab-bar')(), className);
 
     return (
         <div {...restProps} className={divClasses}>

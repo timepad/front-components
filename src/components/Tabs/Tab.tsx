@@ -12,8 +12,8 @@ interface ITabProps extends Omit<HTMLAttributes<HTMLLIElement>, 'id'> {
 
 export const Tab: FC<ITabProps> = ({children, className, id, onTabClick, ...restProps}) => {
     const {activeId} = useContext(TabsContext);
-    const liClasses = cx(component('ctab-bar', 'li')({['is-active']: activeId === id}), className);
-    const buttonClasses = component('ctab-bar', 'button')();
+    const liClasses = cx(component('tab-bar', 'li')({['is-active']: activeId === id}), className);
+    const buttonClasses = component('tab-bar', 'button')();
 
     return (
         <li {...restProps} className={liClasses}>
