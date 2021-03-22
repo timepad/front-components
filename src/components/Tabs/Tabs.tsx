@@ -5,6 +5,7 @@ import {TabList} from './TabList';
 import cx from 'classnames';
 
 import './ctabs.less';
+import {component} from '../../services/helpers/classHelpers';
 
 export interface ITabsContext {
     duration: number;
@@ -24,7 +25,7 @@ const tabComponents = {
 };
 
 const BaseTabBar: FC<ITabProps> = ({children, duration = 150, activeId, className, ...restProps}) => {
-    const divClasses = cx('ctab-bar', className);
+    const divClasses = cx(component('ctab-bar')(), className);
 
     return (
         <div {...restProps} className={divClasses}>
