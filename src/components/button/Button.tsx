@@ -3,7 +3,7 @@ import {Fragment, PropsWithChildren} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/ClassHelper';
 
-import '../../assets/css/components/cbtn.less';
+import './cbtn.less';
 
 export enum ButtonVariant {
     primary = 'primary',
