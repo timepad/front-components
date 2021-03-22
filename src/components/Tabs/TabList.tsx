@@ -24,7 +24,7 @@ const highlighterBoxClasses = component('tab-bar', 'highlightBox')();
 const spanClasses = component('tab-bar', 'highlighter')();
 
 export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, className, ...restProps}) => {
-    const ulClasses = cx('ctab-bar__list', className);
+    const ulClasses = cx(component('tab-bar', 'list')(), className);
     const boxRef = useRef<HTMLDivElement>(null);
     const {duration, activeId} = useContext(TabsContext);
     const [highlighterStyles, setHighlighterStyles] = useState<IHighlighterStyle>(initialStyles);
