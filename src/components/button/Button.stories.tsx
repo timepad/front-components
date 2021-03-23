@@ -1,37 +1,16 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {Meta} from '@storybook/react/types-6-0';
 import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from './index';
+import {dummy, IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-
-interface IStorybookComponent extends React.FC {
-    storyName?: string;
-}
 
 export default {
     title: 'Button',
     component: Button,
 } as Meta;
-
-const StoryTitle = ({children}: {children: ReactNode}) => {
-    return (
-        <>
-            <span className="t-caption t-caption-16" style={{color: '#808080'}}>
-                {children}
-            </span>
-            <hr className="cdivider cdivider--thin" />
-            <div className="lbrick-2" />
-        </>
-    );
-};
-
-const Spacer = ({width = 32}: {width?: number}) => <div style={{width: width}} />;
-
-const dummy = () => {
-    return null;
-};
 
 export const Primary: IStorybookComponent = () => {
     return (
