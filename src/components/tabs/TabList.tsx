@@ -1,4 +1,4 @@
-import React, {FC, HTMLAttributes, memo, useContext, useEffect, useRef, useState} from 'react';
+import React, {FC, HTMLAttributes, useContext, useEffect, useRef, useState} from 'react';
 import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {component} from '../../services/helpers/classHelpers';
@@ -52,4 +52,4 @@ export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, cl
             <span className={spanClasses} style={highlighterStyles} />
         </div>
     );
-});
+};
