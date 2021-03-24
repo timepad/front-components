@@ -1,4 +1,5 @@
-import React, {FC, HTMLAttributes, useContext} from 'react';
+import * as React from 'react';
+import {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {TId} from './Tab';

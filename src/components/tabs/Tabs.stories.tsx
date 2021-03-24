@@ -1,22 +1,10 @@
-import React, {FC, ReactNode, useState} from 'react';
-
+import * as React from 'react';
+import {FC, useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {Tabs} from './Tabs';
 import {TId} from './Tab';
 import 'css/bundle.less';
-
-//todo:@glotov refacror after storybookHelpers pr
-const StoryTitle = ({children}: {children: ReactNode}) => {
-    return (
-        <>
-            <span className="t-caption t-caption-16" style={{color: '#808080'}}>
-                {children}
-            </span>
-            <hr className="cdivider cdivider--thin" />
-            <div className="lbrick-2" />
-        </>
-    );
-};
+import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 interface IStorybookComponent extends FC {
     storyName?: string;

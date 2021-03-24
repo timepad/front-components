@@ -1,11 +1,12 @@
-import React, {createContext, FC, HTMLAttributes} from 'react';
+import * as React from 'react';
+import {createContext, FC, HTMLAttributes} from 'react';
 import {Tab, TId} from './Tab';
 import {TabContent} from './TabContent';
 import {TabList} from './TabList';
 import cx from 'classnames';
+import {component} from '../../services/helpers/classHelpers';
 
 import './ctabs.less';
-import {component} from '../../services/helpers/classHelpers';
 
 export interface ITabsContext {
     duration: number;
