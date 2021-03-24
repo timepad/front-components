@@ -23,7 +23,7 @@ const ulElSelector = `.${component('tab-bar', 'list')()}`;
 const highlighterBoxClasses = component('tab-bar', 'highlightBox')();
 const spanClasses = component('tab-bar', 'highlighter')();
 
-export const TabList: FC<HTMLAttributes<HTMLUListElement>> = memo(({children, className, ...restProps}) => {
+export const TabList: FC<HTMLAttributes<HTMLUListElement>> = ({children, className, ...restProps}) => {
     const ulClasses = cx(component('tab-bar', 'list')(), className);
     const boxRef = useRef<HTMLDivElement>(null);
     const {duration, activeId} = useContext(TabsContext);
