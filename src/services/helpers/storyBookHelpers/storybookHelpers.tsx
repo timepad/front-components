@@ -7,10 +7,17 @@ export interface IStorybookComponent extends React.FC {
 export const StoryTitle: FC = ({children}) => {
     return (
         <>
-            <span className="t-caption t-caption-16" style={{color: '#808080'}}>
-                {children}
-            </span>
+            <span className="t-caption t-caption-16">{children}</span>
             <hr className="cdivider cdivider--thin" />
+            <div className="lbrick-2" />
+        </>
+    );
+};
+
+export const StoryDescription: FC = ({children}) => {
+    return (
+        <>
+            <span className="t-small t-small--brick">{children}</span>
             <div className="lbrick-2" />
         </>
     );

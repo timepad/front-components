@@ -48,7 +48,9 @@
     "typescript": "^4.1.5",
     "webpack": "^4.41.2",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4"
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",

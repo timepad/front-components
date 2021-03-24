@@ -2,20 +2,21 @@ import * as React from 'react';
 import {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {TabsContext} from './Tabs';
-import {TId} from './Tab';
+import {TabId} from './Tab';
 import {component} from '../../services/helpers/classHelpers';
+import {observer} from 'mobx-react';
 
-export interface ITabContent extends Omit<HTMLAttributes<HTMLDivElement>, 'id'> {
-    id: TId;
+export interface ITabContent extends HTMLAttributes<HTMLDivElement> {
+    tabId: TabId;
 }
 
-export const TabContent: FC<ITabContent> = ({children, id, className, ...restProps}) => {
+export const TabContent: FC<ITabContent> = observer(({children, tabId, className, ...restProps}) => {
+    const {tabsStore} = useContext(TabsContext);
     const divClasses = cx(component('ctab-bar', 'content')(), className);
-    const {activeId} = useContext(TabsContext);
 
-    return activeId === id ? (
+    return tabsStore.activeTabId === tabId ? (
         <div {...restProps} className={divClasses}>
             {children}
         </div>
     ) : null;
-};
+});

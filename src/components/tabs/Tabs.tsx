@@ -1,38 +1,68 @@
 import * as React from 'react';
-import {createContext, FC, HTMLAttributes} from 'react';
-import {Tab, TId} from './Tab';
+import {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import {Tab, TabId} from './Tab';
 import {TabContent} from './TabContent';
 import {TabList} from './TabList';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
+import {action, observable} from 'mobx';
 
 import './ctabs.less';
 
-export interface ITabsContext {
-    duration: number;
-    activeId: TId;
+class TabsStore {
+    constructor(activeTabId = '') {
+        this.activeTabId = activeTabId;
+    }
+
+    @observable activeTabId: string;
+    @action.bound setActiveTabId(id: string) {
+        this.activeTabId = id;
+    }
 }
-export const TabsContext = createContext<ITabsContext>({duration: 150, activeId: 0});
+
+interface ITabsStoreContext {
+    tabsStore: TabsStore;
+    handleOnTabClick: TabClickHandler;
+}
+
+export const TabsContext = createContext<ITabsStoreContext>({} as ITabsStoreContext);
+
+type TabClickHandler = (TabId: string) => void;
 
 export interface ITabProps extends HTMLAttributes<HTMLDivElement> {
-    duration?: number;
-    activeId: TId;
+    activeTabId: TabId;
+    onTabClick?: (TabId: string, setActiveTabId: (id: string) => void) => void;
 }
 
-const tabComponents = {
+const TabsBase: FC<ITabProps> = ({children, activeTabId, onTabClick, className, ...rest}) => {
+    const divClasses = cx(component('tab-bar')(), className);
+    const tabsStore = useMemo(() => new TabsStore(activeTabId), [activeTabId]);
+    const handleOnTabClick: TabClickHandler = onTabClick
+        ? (TabId: string) => {
+              onTabClick(TabId, tabsStore.setActiveTabId);
+          }
+        : (TabId: string) => {
+              tabsStore.setActiveTabId(TabId);
+          };
+
+    return (
+        <div {...rest} className={divClasses}>
+            <TabsContext.Provider
+                value={{
+                    tabsStore: tabsStore,
+                    handleOnTabClick: handleOnTabClick,
+                }}
+            >
+                {children}
+            </TabsContext.Provider>
+        </div>
+    );
+};
+
+const tabsChildren = {
     Tab,
     Content: TabContent,
     List: TabList,
 };
 
-const BaseTabBar: FC<ITabProps> = ({children, duration = 150, activeId, className, ...restProps}) => {
-    const divClasses = cx(component('tab-bar')(), className);
-
-    return (
-        <div {...restProps} className={divClasses}>
-            <TabsContext.Provider value={{duration, activeId}}>{children}</TabsContext.Provider>
-        </div>
-    );
-};
-
-export const Tabs = Object.assign(BaseTabBar, tabComponents);
+export const Tabs = Object.assign(TabsBase, tabsChildren);
