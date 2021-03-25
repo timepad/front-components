@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
-    "front-shared": "https://github.com/timepad/front-shared.git#f9e7363ba4dc26050fdeb01f2d25315e39c21bcb",
+    "front-shared": "https://github.com/timepad/front-shared.git#4e63fee0b9ff0945742c243106db6567f0e1b332",
     "html-webpack-plugin": "^5.1.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
