@@ -21,7 +21,8 @@
     "removeComments": true,
     "outDir": "./src",
     "baseUrl": "./src",
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types"],
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",
