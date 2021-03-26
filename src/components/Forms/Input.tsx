@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useCallback} from 'react';
+import React, {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {molecule} from '../../services/helpers/ClassHelper';
 
 import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
@@ -46,7 +46,7 @@ export const Input = (props: IProps): React.ReactElement => {
         onErrorTruncation,
     } = props;
 
-    const randomName = name || String(Math.random());
+    const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
 
     const fakeErrorLabelRef = useRef<HTMLLabelElement | null>(null);
 
@@ -128,8 +128,8 @@ export const Input = (props: IProps): React.ReactElement => {
         <div className={inputClasses}>
             <input
                 ref={inputRef}
-                name={randomName.toString()}
-                id={randomName + '_id_field'}
+                name={fieldName}
+                id={fieldName + '_id_field'}
                 placeholder={label}
                 value={value}
                 onChange={onChange}
@@ -142,7 +142,7 @@ export const Input = (props: IProps): React.ReactElement => {
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}
             </label>
-            <label htmlFor={randomName + '_id_field'}>
+            <label htmlFor={fieldName + '_id_field'}>
                 {inputState === State.error && !isTruncated ? error : label}
             </label>
             <span className="mform__gm-input__icon">
