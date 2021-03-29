@@ -17,7 +17,7 @@ const onChange = (v: number) => {
 export const Light: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Primary</StoryTitle>
+            <StoryTitle>Light</StoryTitle>
             <div className="lflex">
                 <Pagination activePage={1} total={999} onChange={onChange}>
                     <Pagination.Prev />
@@ -40,32 +40,9 @@ export const Light: IStorybookComponent = () => {
 export const Dark: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Primary</StoryTitle>
+            <StoryTitle>Dark</StoryTitle>
             <div className="lflex">
                 <Pagination activePage={16} total={999} theme="dark">
-                    <Pagination.Prev />
-                    <Pagination.Container>
-                        <Pagination.Item page={1} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={15} />
-                        <Pagination.Item page={16} />
-                        <Pagination.Item page={17} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={999} />
-                    </Pagination.Container>
-                    <Pagination.Next />
-                </Pagination>
-            </div>
-        </>
-    );
-};
-
-export const WithHook: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>Primary</StoryTitle>
-            <div className="lflex">
-                <Pagination activePage={16} total={999}>
                     <Pagination.Prev />
                     <Pagination.Container>
                         <Pagination.Item page={1} />
