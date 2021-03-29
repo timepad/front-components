@@ -1,0 +1,149 @@
+@import "../../assets/css/bundle.less";
+
+.cpagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 8px;
+  padding: 32px 34px;
+  max-width: 400px;
+  font-family: @ff-system;
+
+  button {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  div {
+    cursor: default;
+  }
+
+  @media (max-width: @rsp-mobile-portrait-max) {
+    max-width: 320px;
+    padding: 5px;
+  }
+}
+
+
+.cpagination--light {
+  background: transparent;
+
+  .cpagination__item {
+    color: @c-primary-blue;
+  }
+
+  .cpagination__ellipsis {
+    color: @c-primary-blue;
+  }
+}
+
+.cpagination--dark {
+  background: @c-black;
+
+  .cpagination__item {
+    color: @c-white;
+  }
+
+  .cpagination__ellipsis {
+    color: @c-white;
+  }
+}
+
+.cpagination__item {
+  &:hover {
+    background-color: rgba(206, 205, 222, 0.2);
+  }
+}
+
+.cpagination__item.cpagination__item--is-active {
+  color:@c-white;
+  background-color: @c-primary-blue;
+}
+
+.cpagination__prev, .cpagination__next {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: rgba(206, 205, 222, 0.2);
+  }
+
+  @media (max-width: @rsp-mobile-portrait-max) {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.cpagination__prev svg {
+  @media (max-width: @rsp-mobile-portrait-max) {
+   position: relative;
+    right: 9px;
+  }
+}
+
+.cpagination__next svg {
+  @media (max-width: @rsp-mobile-portrait-max) {
+    position: relative;
+    left: -9px;
+  }
+}
+
+.cpagination__prev, .cpagination__next {
+  svg {
+    fill: @c-primary-blue;
+  }
+}
+
+.cpagination__prev svg {
+
+}
+
+.cpagination__prev.cpagination__prev--is-disabled svg {
+  fill: rgba(206, 205, 222, 0.5);
+}
+
+.cpagination__next.cpagination__next--is-disabled svg {
+  fill: rgba(206, 205, 222, 0.5);
+}
+
+.cpagination__item {
+  margin-right: 8px;
+  padding: 10px;
+  border-radius: 4px;
+  min-width: 32px;
+  height: 32px;
+  font-size: 14px;
+
+  @media (max-width: @rsp-mobile-portrait-max) {
+    margin-right: 0;
+    font-size: 13px;
+  }
+}
+
+.cpagination__ellipsis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  padding: 0;
+  border-radius: 4px;
+  min-width: 32px;
+  height: 32px;
+  font-size: 14px;
+
+  @media (max-width: @rsp-mobile-portrait-max) {
+    min-width: 12px;
+    margin-right: 0;
+    font-size: 13px;
+  }
+}
+
+.cpagination__container {
+  display: flex;
+  margin: 0 5px;
+}
