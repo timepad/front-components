@@ -1,6 +1,6 @@
 import React from 'react';
 import uniqueId from 'lodash.uniqueid';
-import {atom} from '../../../services/helpers/ClassHelper';
+import {atom} from '../../../services/helpers/classHelpers';
 
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 

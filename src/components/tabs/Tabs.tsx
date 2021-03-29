@@ -6,7 +6,6 @@ import {TabList} from './TabList';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {action, observable} from 'mobx';
-
 import './ctabs.less';
 
 class TabsStore {

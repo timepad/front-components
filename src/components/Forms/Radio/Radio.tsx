@@ -1,5 +1,5 @@
 import React, {ChangeEvent, ChangeEventHandler} from 'react';
-import {atom} from '../../../services/helpers/ClassHelper';
+import {atom} from '../../../services/helpers/classHelpers';
 
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 

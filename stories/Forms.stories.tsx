@@ -5,4 +5,4 @@ export default {
     title: 'Forms',
 };
 
-export {Inputs, MultilineInput, RadioAndCheckboxes} from './forms';
+export {Inputs, MultilineInput, RadioAndCheckboxes, PhoneInputs} from './forms';

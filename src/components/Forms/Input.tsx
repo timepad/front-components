@@ -1,5 +1,5 @@
 import React, {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useCallback, useMemo} from 'react';
-import {molecule} from '../../services/helpers/ClassHelper';
+import {molecule} from '../../services/helpers/classHelpers';
 
 import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
 

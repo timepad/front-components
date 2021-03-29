@@ -11,6 +11,7 @@ import {IThemeProps} from '../../src/components/utility/Modifiers';
 import {Checkbox} from '../../src';
 import {Radio} from '../../src';
 import {RadioButton} from '../../src';
+import {CheckboxGroup} from '../../src/components/Forms/Checkbox';
 
 const backgroundColor = {
     default: '#FFFFFF',
@@ -153,6 +154,22 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                             <RadioButton value="s" checked disabled label="Auto Disabled" />
                         </div>
                         <Brick size={2} />
+                    </ComponentBlock>
+                    <ComponentBlock title={'CheckboxGroup'}>
+                        <CheckboxGroup
+                            name={'name'}
+                            config={[
+                                {
+                                    title: 'string',
+                                    value: 'string',
+                                },
+                                {
+                                    title: 'string',
+                                    value: 'string',
+                                },
+                            ]}
+                            label={'label'}
+                        />
                     </ComponentBlock>
                 </div>
             </div>

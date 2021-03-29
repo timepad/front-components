@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Fragment, PropsWithChildren} from 'react';
 import cx from 'classnames';
-import {component} from '../../services/helpers/ClassHelper';
+import {component} from '../../services/helpers/classHelpers';
 
 import './cbtn.less';
 

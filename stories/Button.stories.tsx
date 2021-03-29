@@ -2,8 +2,8 @@ import React from 'react';
 
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {Meta} from '@storybook/react/types-6-0';
-import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from './index';
-import {dummy, IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from '../src';
+import {dummy, IStorybookComponent, Spacer, StoryTitle} from '../src/services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
 

@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {molecule} from '../../../services/helpers/ClassHelper';
+import {molecule} from '../../../services/helpers/classHelpers';
 import {RequireOnlyOne} from '../../../interfaces/misc/requireOnlyOne';
 
 export interface IThemeProps {
