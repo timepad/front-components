@@ -4,6 +4,8 @@ import {component} from '../../../services/helpers/classHelpers';
 
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 
+import './cradio.less';
+
 export interface IRadioProps {
     name: string;
     label: string;

@@ -4,6 +4,8 @@ import {component} from '../../../services/helpers/classHelpers';
 
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
+import './ccheckbox.less';
+
 export interface ICheckboxProps {
     name: string;
     label: string;
