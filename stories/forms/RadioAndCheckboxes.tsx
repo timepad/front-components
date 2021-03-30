@@ -155,22 +155,6 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                         </div>
                         <Brick size={2} />
                     </ComponentBlock>
-                    <ComponentBlock title={'CheckboxGroup'}>
-                        <CheckboxGroup
-                            name={'name'}
-                            config={[
-                                {
-                                    title: 'string',
-                                    value: 'string',
-                                },
-                                {
-                                    title: 'string',
-                                    value: 'string',
-                                },
-                            ]}
-                            label={'label'}
-                        />
-                    </ComponentBlock>
                 </div>
             </div>
         </Theme>
