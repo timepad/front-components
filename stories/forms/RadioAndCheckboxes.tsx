@@ -1,4 +1,5 @@
-import React, {PropsWithChildren, useState} from 'react';
+import * as React from 'react';
+import {PropsWithChildren, useState} from 'react';
 
 import '../../src/assets/css/bundle.less';
 import '../../src/app/styles.less';

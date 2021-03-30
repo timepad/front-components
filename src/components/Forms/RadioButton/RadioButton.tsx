@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import uniqueId from 'lodash.uniqueid';
 import {atom} from '../../../services/helpers/classHelpers';
 

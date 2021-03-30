@@ -1,4 +1,5 @@
-import React, {useEffect, useState, FC} from 'react';
+import * as React from 'react';
+import {useEffect, useState, FC} from 'react';
 import cx from 'classnames';
 import {molecule} from '../../../services/helpers/classHelpers';
 

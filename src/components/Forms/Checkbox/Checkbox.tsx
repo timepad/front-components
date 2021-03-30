@@ -1,4 +1,5 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
+import * as React from 'react';
+import {ChangeEvent, ChangeEventHandler} from 'react';
 import {atom} from '../../../services/helpers/classHelpers';
 
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';

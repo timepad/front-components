@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import * as React from 'react';
+import {useState} from 'react';
 import cx from 'classnames';
 import {molecule} from '../../../services/helpers/classHelpers';
 

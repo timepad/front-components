@@ -1,4 +1,5 @@
-import React, {useRef, useState, useEffect, useCallback} from 'react';
+import * as React from 'react';
+import {useRef, useState, useEffect, useCallback} from 'react';
 import {molecule} from '../../services/helpers/classHelpers';
 
 import CheckSvg from '../../assets/svg/16/icon-check-16.svg';
