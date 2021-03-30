@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {getSizeForSpacer} from '../../../services/helpers/SpacerHelper';
 
 interface IGapProps {
@@ -6,6 +6,6 @@ interface IGapProps {
     plusHalf?: boolean;
 }
 
-export const Gap = ({size, plusHalf}: IGapProps): React.ReactElement => {
+export const Gap: React.FC<IGapProps> = ({size, plusHalf}: IGapProps) => {
     return <div className={getSizeForSpacer('lgap', size, plusHalf)} />;
 };

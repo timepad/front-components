@@ -1,4 +1,5 @@
-import React, {MouseEventHandler} from 'react';
+import * as React from 'react';
+import {MouseEventHandler} from 'react';
 import {Pic} from './Pic';
 
 interface IProps {

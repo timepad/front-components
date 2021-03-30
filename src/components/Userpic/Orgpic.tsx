@@ -1,4 +1,5 @@
-import React, {MouseEventHandler} from 'react';
+import * as React from 'react';
+import {MouseEventHandler} from 'react';
 import {Pic} from './Pic';
 
 interface IProps {
@@ -15,6 +16,6 @@ interface IProps {
     className?: string;
 }
 
-export const Orgpic = (props: IProps): React.ReactElement => {
+export const Orgpic: React.FC<IProps> = (props: IProps) => {
     return <Pic {...props} shape="square" />;
 };

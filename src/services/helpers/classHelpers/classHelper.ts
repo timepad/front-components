@@ -17,14 +17,10 @@ const defaultPreset: Preset = {
     v: '_',
 };
 
-const atomPreset: Preset = {...defaultPreset, n: 'a'};
 const componentPreset: Preset = {...defaultPreset, n: 'c'};
 const layoutPreset: Preset = {...defaultPreset, n: 'l'};
-const moleculePreset: Preset = {...defaultPreset, n: 'm'};
 
 export const cn = withNaming(defaultPreset);
 
-export const atom = withNaming(atomPreset);
 export const component = withNaming(componentPreset);
 export const layout = withNaming(layoutPreset);
-export const molecule = withNaming(moleculePreset);

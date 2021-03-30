@@ -1,4 +1,5 @@
-import React, {PropsWithChildren} from 'react';
+import * as React from 'react';
+import {PropsWithChildren} from 'react';
 import {Brick} from 'components/utility/Modifiers/Brick';
 
 export const Title = ({children}: PropsWithChildren<unknown>): React.ReactElement => {

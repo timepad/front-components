@@ -1,7 +1,8 @@
-import React, {PropsWithChildren} from 'react';
+import * as React from 'react';
+import {PropsWithChildren} from 'react';
 import {Brick} from 'components/utility/Modifiers/Brick';
 
-export const StoryTitle = ({children}: PropsWithChildren<unknown>): React.ReactElement => {
+export const StoryTitle: React.FC<PropsWithChildren<unknown>> = ({children}: PropsWithChildren<unknown>) => {
     return (
         <>
             <span className="t-caption t-caption-16" style={{color: '#808080'}}>

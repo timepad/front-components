@@ -1,4 +1,5 @@
-import React, {CSSProperties, MouseEventHandler, ReactNode} from 'react';
+import * as React from 'react';
+import {CSSProperties, MouseEventHandler, ReactNode} from 'react';
 import cx from 'classnames';
 
 import IconProfile from 'assets/svg/24/icon-profile-24.svg';
@@ -19,7 +20,7 @@ export interface IProps {
 }
 
 // this component is not exported outside folder (see index.ts)
-export const Pic = ({fillURL, fillChar, size, shape, onClick, className}: IProps): React.ReactElement => {
+export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}: IProps) => {
     let classNames = cx('auserpic', className, {
         'auserpic--interactive': onClick != null,
         'auserpic--square': shape === 'square',

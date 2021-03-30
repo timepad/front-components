@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {getSizeForSpacer} from '../../../services/helpers/SpacerHelper';
 
 interface IBrickProps {
@@ -6,6 +6,6 @@ interface IBrickProps {
     plusHalf?: boolean;
 }
 
-export const Brick = ({size, plusHalf}: IBrickProps): React.ReactElement => {
+export const Brick: React.FC<IBrickProps> = ({size, plusHalf}: IBrickProps) => {
     return <div className={getSizeForSpacer('lbrick', size, plusHalf)} />;
 };
