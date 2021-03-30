@@ -1,1 +1,1 @@
-export {cn, component, layout, molecule, atom} from './classHelper';
+export {cn, component, layout} from './classHelper';

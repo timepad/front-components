@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState, FC} from 'react';
 import cx from 'classnames';
-import {molecule} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 import {Checkbox} from './Checkbox';
 
@@ -38,7 +38,7 @@ export const CheckboxGroup: FC<ICheckboxGroupProps> = (props) => {
         });
     }, [name, onChange, values]);
 
-    const formLabelClasses = molecule('form', 'label')({error: !!error && touched});
+    const formLabelClasses = component('form', 'label')({error: !!error && touched});
 
     const labelClasses = cx('t-small', 't-color-gray', formLabelClasses);
 

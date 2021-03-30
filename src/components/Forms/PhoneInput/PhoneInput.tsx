@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FC} from 'react';
-import {molecule} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 import MaskedInput from 'react-input-mask';
 import CheckSvg from 'assets/svg/16/icon-check-16.svg';
@@ -21,7 +21,8 @@ export const PhoneInput: FC<IPhoneInputProps> = (props) => {
 
     const success = (!error && !!value) || disabled;
 
-    const inputClasses = molecule('form', 'input')({error: !!error && touched, success: success, disabled: disabled});
+    const inputClasses = component('form', 'input')({error: !!error && touched, success: success, disabled: disabled});
+    const iconClasses = component('form', 'input-icon')({ success: true });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange?.(name, e.target.value);
 
@@ -40,7 +41,7 @@ export const PhoneInput: FC<IPhoneInputProps> = (props) => {
             />
             <label htmlFor={name}>{label}</label>
             {success && (
-                <span className="mform__input-icon mform__input-icon--success" title="">
+                <span className={iconClasses} title="">
                     <CheckSvg className="aicon" />
                 </span>
             )}

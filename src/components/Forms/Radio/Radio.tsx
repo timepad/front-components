@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent, ChangeEventHandler} from 'react';
-import {atom} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 
@@ -18,9 +18,9 @@ export interface IRadioProps {
 export const Radio = ({name, label, value, checked, disabled, id, error, onChange}: IRadioProps) => {
     const idx = id || name + '_field_checkbox';
 
-    const wrapperClasses = atom('radio')({error: !!error, disabled: disabled});
+    const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
 
-    const radioClasses = atom('radio', 'icon')({checked: checked});
+    const radioClasses = component('radio', 'icon')({checked: checked});
 
     const onChangeLocal = (e: ChangeEvent<HTMLInputElement>) => {
         onChange?.(e);
@@ -33,7 +33,7 @@ export const Radio = ({name, label, value, checked, disabled, id, error, onChang
                 <span className={radioClasses}>
                     <BulletSvg />
                 </span>
-                <span className="aradio__text t-caption t-caption--brick">{label}</span>
+                <span className="cradio__text t-caption t-caption--brick">{label}</span>
             </label>
         </div>
     );

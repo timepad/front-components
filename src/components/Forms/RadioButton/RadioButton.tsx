@@ -1,6 +1,6 @@
 import * as React from 'react';
 import uniqueId from 'lodash.uniqueid';
-import {atom} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
@@ -19,7 +19,7 @@ export const RadioButton = (props: IRadioButtonProps): React.ReactElement => {
 
     const id: string = uniqueId('field-');
 
-    const checkboxClasses = atom('radiobutton')({disabled: disabled, labeled: !!label});
+    const checkboxClasses = component('radiobutton')({disabled: disabled, labeled: !!label});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChangeHandler?.(name, value, e.target.checked);
 
@@ -37,9 +37,9 @@ export const RadioButton = (props: IRadioButtonProps): React.ReactElement => {
             />
             <label htmlFor={id}>
                 {label ? (
-                    <span className="aradiobutton__text">{label}</span>
+                    <span className="cradiobutton__text">{label}</span>
                 ) : (
-                    <span className="aradiobutton__icon">
+                    <span className="cradiobutton__icon">
                         <CheckSvg className="aicon" />
                     </span>
                 )}

@@ -1,8 +1,8 @@
-.mtheme {}
+.ctheme {}
 
-.mtheme__bg {}
+.ctheme__bg {}
 
-.mtheme__bg-label {
+.ctheme__bg-label {
   opacity: .50;
 }
 
@@ -10,29 +10,29 @@
   На фоне ТЕМНОЙ картинки-текстуры
   Например, в шапке страницы события или организации
 */
-.mtheme--darkpic {
+.ctheme--darkpic {
   //background-color: @c-black;
 
   /*
     Ссылки и текст
    */
-  .mtheme__typo {
+  .ctheme__typo {
     .func-color(@c-white);
     a {
       .func-color-links-full (@purplelight, @c-white);
     }
   }
 
-  .mtheme__bg {
+  .ctheme__bg {
     // TODO
     //background-image: url('/img/theme-darkpic-bg.png');
   }
 
-  .mtheme--bg--demo {
+  .ctheme--bg--demo {
     background-color: @c-black;
   }
 
-  .tpui-demo & .mtheme__bg {
+  .tpui-demo & .ctheme__bg {
     position: relative;
     background: transparent;
 
@@ -60,33 +60,33 @@
     }
   }
 
-  .tpui-demo &.f-var-2 .mtheme__bg:after {
+  .tpui-demo &.f-var-2 .ctheme__bg:after {
     // TODO
     //background-image: url('/img/dark_img2.jpg');
   }
 
-  .tpui-demo &.f-var-3 .mtheme__bg:after {
+  .tpui-demo &.f-var-3 .ctheme__bg:after {
     // TODO
     //background-image: url('/img/dark_img3.jpg');
   }
 
-  .tpui-demo &.f-var-4 .mtheme__bg:after {
+  .tpui-demo &.f-var-4 .ctheme__bg:after {
     // TODO
     //background: url('/img/theme-darkpic-bg.png') scroll repeat 0 0 transparent;
   }
 
-  .tpui-demo &.f-var-4 .mtheme__bg:before {
+  .tpui-demo &.f-var-4 .ctheme__bg:before {
     background: transparent;
   }
 
-  .mtheme__bg-label {
+  .ctheme__bg-label {
     color: @c-white;
   }
 
   /*
     Логотип
    */
-  .mtheme__alogo {
+  .ctheme__alogo {
     &.alogo svg {
       fill: @c-white;
     }
@@ -102,7 +102,7 @@
   // /*
   //   Кнопки
   //  */
-  // .mtheme__cbtn {
+  // .ctheme__cbtn {
   //   /*
   //     Кнопка-ссылка
   //    */
@@ -161,13 +161,13 @@
   //   }
   // }
 
-  .mtheme__mbtn-inline.mbtns-inline {
+  .ctheme__mbtn-inline.mbtns-inline {
     .mbtns-inline__text {
       color: @c-white;
     }
   }
 
-  .mform__input {
+  .cform__input {
 
     label {
       color: @white-fade-80;
@@ -199,8 +199,8 @@
       fill: @c-white;
     }
 
-    &.mform__input--disabled,
-    &.mform__input--readonly {
+    &.cform__input--disabled,
+    &.cform__input--readonly {
       label,
       input,
       textarea {
@@ -213,7 +213,7 @@
         border-bottom-color: @white-fade-35 !important;
       }
 
-      .mform__input-icon {
+      .cform__input-icon {
 
         svg {
           fill: @white-fade-65;
@@ -232,12 +232,12 @@
     }
   }
 
-  .mform__field + .adescription {
+  .cform__field + .adescription {
     color: @white-fade-80;
   }
 
-  .mform__checkbox,
-  .mform__radio {
+  .cform__checkbox,
+  .cform__radio {
 
     label b {
       border-color: @white-fade-80;
@@ -252,8 +252,8 @@
       border-color: @c-primary-blue;
     }
 
-    &.mform__field--disabled,
-    &.mform__field--readonly {
+    &.cform__field--disabled,
+    &.cform__field--readonly {
       color: @white-fade-50 !important;
       cursor: default;
 
@@ -268,19 +268,19 @@
   На фоне СВЕТЛОЙ картинки-текстуры
   Например, в шапке страницы события или организации
 */
-.mtheme--lightpic {
+.ctheme--lightpic {
   //background-color: @c-light-yellow;
 
-  .mtheme__bg{
+  .ctheme__bg{
     // TODO
     //background-image: url('/img/theme-lightpic-bg.png');
   }
 
-  .mtheme--bg--demo {
+  .ctheme--bg--demo {
     background-color: @c-light-yellow;
   }
 
-  .tpui-demo & .mtheme__bg {
+  .tpui-demo & .ctheme__bg {
     position: relative;
     background: transparent;
 
@@ -308,29 +308,29 @@
     }
   }
 
-  .tpui-demo &.f-var-2 .mtheme__bg:after {
+  .tpui-demo &.f-var-2 .ctheme__bg:after {
     // TODO
     //background-image: url('/img/light_img2.jpg');
   }
 
-  .tpui-demo &.f-var-3 .mtheme__bg:after {
+  .tpui-demo &.f-var-3 .ctheme__bg:after {
     // TODO
     //background-image: url('/img/light_img3.jpg');
   }
 
-  .tpui-demo &.f-var-4 .mtheme__bg:after {
+  .tpui-demo &.f-var-4 .ctheme__bg:after {
     // TODO
     //background: url('/img/theme-lightpic-bg.png') scroll repeat 0 0 transparent;
   }
 
-  .tpui-demo &.f-var-4 .mtheme__bg:before {
+  .tpui-demo &.f-var-4 .ctheme__bg:before {
     background: transparent;
   }
 
 //   /*
 //   Кнопки
 //  */
-//   .mtheme__cbtn {
+//   .ctheme__cbtn {
 //     /*
 //       Кнопка-ссылка
 //      */
@@ -376,7 +376,7 @@
 //     &.cbtn.cbtn--switcher-stealth-selected:extend(&.cbtn.cbtn--controller-active all) {}
 //   }
 
-  .mform__input {
+  .cform__input {
 
     input,
     textarea {
@@ -400,8 +400,8 @@
       }
     }
 
-    &.mform__input--disabled,
-    &.mform__input--readonly {
+    &.cform__input--disabled,
+    &.cform__input--readonly {
       label,
       input,
       textarea {
@@ -414,7 +414,7 @@
         border-bottom-color: @black-fade-35 !important;
       }
 
-      .mform__input-icon {
+      .cform__input-icon {
 
         svg {
           fill: @black-fade-65;
@@ -433,12 +433,12 @@
     }
   }
 
-  .mform__field + .adescription {
+  .cform__field + .adescription {
     color: @black-fade-80;
   }
 
-  .mform__checkbox,
-  .mform__radio {
+  .cform__checkbox,
+  .cform__radio {
 
     label b {
       border-color: @black-fade-80;
@@ -453,8 +453,8 @@
       border-color: @c-primary-blue;
     }
 
-    &.mform__field--disabled,
-    &.mform__field--readonly {
+    &.cform__field--disabled,
+    &.cform__field--readonly {
       color: @black-fade-50 !important;
       cursor: default;
 

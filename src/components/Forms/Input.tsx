@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useCallback, useMemo} from 'react';
-import {molecule} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 
 import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
 
@@ -56,8 +56,8 @@ export const Input = (props: IProps): React.ReactElement => {
     const [isTruncated, setIsTruncated] = useState(false);
 
     const inputClasses =
-        'mform__gm-input ' +
-        molecule(
+        'cform__gm-input ' +
+        component(
             'form',
             'gm-input-single',
         )({
@@ -146,7 +146,7 @@ export const Input = (props: IProps): React.ReactElement => {
             <label htmlFor={fieldName + '_id_field'}>
                 {inputState === State.error && !isTruncated ? error : label}
             </label>
-            <span className="mform__gm-input__icon">
+            <span className="cform__gm-input__icon">
                 {customIcon ? customIcon : inputState === State.success && <CheckSvg className="aicon" />}
             </span>
         </div>

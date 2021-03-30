@@ -11,11 +11,11 @@ const themes = {
     },
     light: {
         title: 'Light theme',
-        containerClasses: ['mtheme--lightpic'],
+        containerClasses: ['сtheme--lightpic'],
     },
     dark: {
         title: 'Dark theme',
-        containerClasses: ['mtheme--darkpic'],
+        containerClasses: ['сtheme--darkpic'],
     },
 };
 
@@ -118,7 +118,7 @@ const TextareaContainer = (props: ITextareaContainerProps) => {
     const {data, themeID} = props;
     return (
         <div className={themes[themeID].containerClasses.join(' ')}>
-            <div className="mtheme__typo mtheme--bg--demo">
+            <div className="сtheme__typo сtheme--bg--demo">
                 <Brick size={4} />
                 <div className="lflex">
                     <Gap size={4} />

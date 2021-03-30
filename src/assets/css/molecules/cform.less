@@ -3,7 +3,7 @@
 @input-lh-mobile: (20px);
 
 
-.mform {
+.cform {
 
   &__title {
     position: relative;
@@ -152,8 +152,8 @@
   }
 }
 
-.mform.mform--white {
-  .mform__input {
+.cform.cform--white {
+  .cform__input {
     input,
     textarea,
     select {
@@ -180,29 +180,29 @@
     }
   }
 
-  .mform__label {
+  .cform__label {
     color: @white-fade;
   }
 
-  .mform__description {
+  .cform__description {
     color: @white-fade;
   }
 }
 
 
-.mform__fieldset {
+.cform__fieldset {
   border: 0;
   padding: 0.01em 0 0 0;
   margin: 0;
 }
 
-.mform__fieldset .mform__field:last-child {
-  .mform__description {
+.cform__fieldset .cform__field:last-child {
+  .cform__description {
     margin-bottom: -6px;
   }
 }
 
-.mform__recaptcha {
+.cform__recaptcha {
   max-width: 100%;
   box-sizing: border-box;
 
@@ -214,7 +214,7 @@
   }
 }
 
-.mform__label {
+.cform__label {
   margin: 10px 0 0 0;
   display: block;
 
@@ -228,14 +228,14 @@
 
   &--slim {
 
-    .mform__radio & {
+    .cform__radio & {
       min-height: 32px;
 
-      .mform__radio-icon {
+      .cform__radio-icon {
         margin: 8px 16px 8px 0;
       }
 
-      .mform__radio-text {
+      .cform__radio-text {
         min-height: 32px;
         padding: 4px 16px 4px 0;
       }
@@ -243,7 +243,7 @@
   }
 }
 
-.mform__label--error {
+.cform__label--error {
   color: @c-red !important;
 
   &--center {
@@ -252,7 +252,7 @@
   }
 }
 
-.mform__input {
+.cform__input {
   position: relative;
   display: flex;
   flex-flow: column-reverse;
@@ -279,7 +279,7 @@
   }
 
   label {
-    .mform__label;
+    .cform__label;
   }
 
   input,
@@ -331,7 +331,7 @@
   textarea:not(:placeholder-shown) ~ label,
   input:focus ~ label,
   textarea:focus ~ label {
-    .mform__label;
+    .cform__label;
     color: @gray-opaque-50;
     font-size: @fs-caption;
     line-height: @lh-caption;
@@ -412,7 +412,7 @@
       border-bottom-color: @c-dark-gray !important;
     }
 
-    &.mform__input--success {
+    &.cform__input--success {
 
       input,
       textarea {
@@ -420,7 +420,7 @@
       }
     }
 
-    .mform__input-icon {
+    .cform__input-icon {
 
       svg {
         fill: @c-gray-35;
@@ -439,7 +439,7 @@
   }
 }
 
-.mform__input--locked {
+.cform__input--locked {
   position: absolute;
   top: 32px;
   right: 0;
@@ -451,7 +451,7 @@
   background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4gIDxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6IHJnYmEoMzcsMzcsMzcsLjMpOyAgICAgICAgZmlsbC1ydWxlOiBldmVub2RkOyAgICAgIH0gICAgPC9zdHlsZT4gIDwvZGVmcz4gIDx0aXRsZT5pY29uLWxvY2stMTY8L3RpdGxlPiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQsMTVoNFYxM2EyLDIsMCwwLDAtNCwwWm0tMSwwVjEzYTMsMywwLDAsMSw2LDB2MmguNUExLjUsMS41LDAsMCwxLDIxLDE2LjV2NEExLjUsMS41LDAsMCwxLDE5LjUsMjJoLTdBMS41LDEuNSwwLDAsMSwxMSwyMC41di00QTEuNSwxLjUsMCwwLDEsMTIuNSwxNVoiLz48L3N2Zz4=');
 }
 
-.mform__additional-text {
+.cform__additional-text {
   position: absolute;
   right: 0;
   bottom: 10px;
@@ -459,30 +459,30 @@
   color: @black-fade-50;
 }
 
-.mform__input--error input {
+.cform__input--error input {
   border-bottom-color: @c-red !important;
 }
 
-.mform__input--error textarea {
+.cform__input--error textarea {
   border-bottom-color: @c-red !important;
 }
 
-.mform__input--error label {
+.cform__input--error label {
   color: @c-red !important;
 }
 
-.mform__description {
+.cform__description {
   font-size: @fs-small;
   line-height: @lh-small;
   color: @black-fade;
   margin: 10px 0 11px 0;
 }
 
-.mform__description--error {
+.cform__description--error {
   color: @c-red !important;
 }
 
-.mform__errors {
+.cform__errors {
   & > *:first-child {
     margin-top: 10px !important;
   }
@@ -494,7 +494,7 @@
   }
 }
 
-.mform__unit {
+.cform__unit {
   display: flex;
   flex-direction: column;
 
@@ -506,8 +506,8 @@
   }
 }
 
-.mform__checkbox,
-.mform__radio {
+.cform__checkbox,
+.cform__radio {
   display: flex;
   flex-direction: column;
 
@@ -520,8 +520,8 @@
     touch-action: manipulation;
     user-select: none;
 
-    .mform__radio-icon.mform__radio-icon--disabled,
-    .mform__radio-text.mform__radio-text--disabled {
+    .cform__radio-icon.cform__radio-icon--disabled,
+    .cform__radio-text.cform__radio-text--disabled {
       cursor: default;
     }
 
@@ -533,12 +533,12 @@
       }
     });
 
-    .mform__radio-text .t-caption {
+    .cform__radio-text .t-caption {
       margin: 0;
     }
   }
 
-  .mform__radio-field {
+  .cform__radio-field {
     position: relative;
     display: flex;
   }
@@ -633,8 +633,8 @@
     }
   }
 
-  &.mform__field--disabled,
-  &.mform__field--readonly {
+  &.cform__field--disabled,
+  &.cform__field--readonly {
     color: @c-gray-35 !important;
     cursor: default;
 
@@ -648,7 +648,7 @@
   }
 }
 
-.mform__checkbox {
+.cform__checkbox {
 
   & &-icon {
 
@@ -681,7 +681,7 @@
     }
   }
 
-  .mform__description {
+  .cform__description {
     margin: 8px 0;
   }
 
@@ -690,7 +690,7 @@
   }
 }
 
-.mform__radio {
+.cform__radio {
 
   & &-icon {
 
@@ -716,7 +716,7 @@
   }
 }
 
-.mform__subtitle {
+.cform__subtitle {
   .tpui-mx-fs-lh-body;
 
   font-weight: bold;
@@ -733,7 +733,7 @@
 //////////////////////////
 // TODO: NEW
 
-.mform {
+.cform {
   padding: 8px;
 
   &__payment {
@@ -752,11 +752,11 @@
       }
     }
 
-    .mform__field {
+    .cform__field {
       label {
         min-height: 0;
 
-        .mform__checkbox-icon{
+        .cform__checkbox-icon{
           margin: 0;
           height: 24px;
           width: 24px;
@@ -859,7 +859,7 @@
       color: @gray-opaque-50;
       cursor: default;
 
-      .mform__input {
+      .cform__input {
 
         input,
         label {
@@ -1067,7 +1067,7 @@
           color: @c-primary-blue;
         }
 
-        & ~ .mform__gm-input__icon {
+        & ~ .cform__gm-input__icon {
           svg * {
             fill: @c-primary-blue;
           }
@@ -1107,7 +1107,7 @@
     }
 
     // THEMES
-    .mtheme--lightpic & {
+    .ctheme--lightpic & {
       input {
         box-shadow: inset 0 -1px @c-gray-50-fade-35;
 
@@ -1137,7 +1137,7 @@
       }
     }
 
-    .mtheme--darkpic & {
+    .ctheme--darkpic & {
       input {
         color: @c-white;
         box-shadow: inset 0 -1px @c-gray-50-fade-35;
@@ -1231,7 +1231,7 @@
       }
 
       &:focus {
-        & ~ .mform__gm-input-multi-underline {
+        & ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -2px @c-primary-blue;
         }
 
@@ -1241,7 +1241,7 @@
           .t-small;
         }
 
-        & ~ .mform__gm-input__icon {
+        & ~ .cform__gm-input__icon {
           svg * {
             fill: @c-primary-blue;
           }
@@ -1281,7 +1281,7 @@
     }
 
     &--error textarea {
-      & ~ .mform__gm-input-multi-underline {
+      & ~ .cform__gm-input-multi-underline {
         box-shadow: inset 0 -1px @c-red;
       }
 
@@ -1292,7 +1292,7 @@
     }
 
     &--success {
-      textarea ~ .mform__gm-input-multi-underline {
+      textarea ~ .cform__gm-input-multi-underline {
         box-shadow: inset 0 -1px @c-green;
       }
 
@@ -1314,10 +1314,10 @@
     }
 
     // THEMES
-    .mtheme--lightpic & {
+    .ctheme--lightpic & {
 
       textarea {
-        & ~ .mform__gm-input-multi-underline {
+        & ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-gray-50-fade-35;
         }
 
@@ -1326,7 +1326,7 @@
         }
 
         &:focus {
-          & ~ .mform__gm-input-multi-underline {
+          & ~ .cform__gm-input-multi-underline {
             box-shadow: inset 0 -2px @c-primary-blue;
           }
 
@@ -1337,7 +1337,7 @@
       }
 
       &--error textarea {
-        & ~ .mform__gm-input-multi-underline {
+        & ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-red;
         }
 
@@ -1347,17 +1347,17 @@
       }
 
       &--success {
-        textarea ~ .mform__gm-input-multi-underline {
+        textarea ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-green;
         }
       }
     }
 
-    .mtheme--darkpic & {
+    .ctheme--darkpic & {
       textarea {
         color: @c-white;
 
-        & ~ .mform__gm-input-multi-underline {
+        & ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-gray-50-fade-35;
         }
 
@@ -1366,7 +1366,7 @@
         }
 
         &:focus {
-          & ~ .mform__gm-input-multi-underline {
+          & ~ .cform__gm-input-multi-underline {
             box-shadow: inset 0 -2px @c-primary-blue-80;
           }
 
@@ -1377,7 +1377,7 @@
       }
 
       &--error textarea {
-        & ~ .mform__gm-input-multi-underline {
+        & ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-red;
         }
 
@@ -1387,7 +1387,7 @@
       }
 
       &--success {
-        textarea ~ .mform__gm-input-multi-underline {
+        textarea ~ .cform__gm-input-multi-underline {
           box-shadow: inset 0 -1px @c-green;
         }
       }
@@ -1435,14 +1435,14 @@
   }
 }
 
-.mform__input--success input {
+.cform__input--success input {
   .on-hover({
     border-bottom-color: @c-green;
   });
   border-bottom-color: @c-green;
 }
 
-.mform__icon {
+.cform__icon {
   &--close {
     position: absolute;
     width: 32px;
@@ -1481,7 +1481,7 @@
   }
 }
 
-.mform__radio {
+.cform__radio {
   &&--error b {
     border-color: @c-red;
   }

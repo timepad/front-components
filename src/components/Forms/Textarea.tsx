@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useRef, useState, useEffect, useCallback} from 'react';
-import {molecule} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 
 import CheckSvg from '../../assets/svg/16/icon-check-16.svg';
 
@@ -150,7 +150,7 @@ export const Textarea = (props: ITextareaProps): React.ReactElement => {
 
     const inputClasses =
         'mform__gm-input ' +
-        molecule(
+        component(
             'form',
             'gm-input-multi',
         )({

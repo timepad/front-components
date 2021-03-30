@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {molecule} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 import {RequireOnlyOne} from '../../../interfaces/misc/requireOnlyOne';
 
 export interface IThemeProps {
@@ -9,6 +9,6 @@ export interface IThemeProps {
 }
 
 export const Theme = ({light, dark, children}: PropsWithChildren<RequireOnlyOne<IThemeProps>>): React.ReactElement => {
-    const classes = molecule('theme')({lightpic: light, darkpic: dark});
+    const classes = component('theme')({lightpic: light, darkpic: dark});
     return <div className={classes}>{children}</div>;
 };

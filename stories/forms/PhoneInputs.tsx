@@ -3,6 +3,8 @@ import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import './inputs.less';
 import {Gap} from '../../src/components/utility/Modifiers/Gap';
 import {PhoneInput} from '../../src';
+import {IThemeProps, Theme} from "../../src/components/utility/Modifiers";
+import {RequireOnlyOne} from "../../src/interfaces/misc/requireOnlyOne";
 
 const themes = {
     default: {
@@ -11,12 +13,18 @@ const themes = {
     },
     light: {
         title: 'Light theme',
-        containerClasses: ['mtheme--lightpic'],
+        containerClasses: ['сtheme--lightpic'],
     },
     dark: {
         title: 'Dark theme',
-        containerClasses: ['mtheme--darkpic'],
+        containerClasses: ['сtheme--darkpic'],
     },
+};
+
+const backgroundColor = {
+    default: '#FFFFFF',
+    light: '#FFF2D9',
+    dark: '#252525',
 };
 
 interface IInputData {
@@ -106,37 +114,49 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {data, themeColor} = props;
+    const themeArgs: RequireOnlyOne<IThemeProps> = {[themeColor]: true} as any;
+
     return (
-        <div className={themes[themeColor].containerClasses.join(' ')}>
-            <div className="mtheme__typo mtheme--bg--demo">
-                <Brick size={2} />
-                <div className="lflex">
-                    <Gap size={4} />
-                    <div>
-                        <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
-                        <div className="inputs-container lfelx-y-axis">
-                            {data.map((input, index) => (
-                                <div key={index}>
-                                    <InputRow
-                                        name={'phone-input' + index}
-                                        label={input.label}
-                                        value={input.value}
-                                        disabled={input.disabled}
-                                        success={input.success}
-                                        error={input.error}
-                                        autoFocus={input.autoFocus}
-                                        touched={input.touched}
-                                    />
-                                    <Brick size={2} />
+        <Theme {...themeArgs}>
+            <div
+                style={{
+                    padding: '32px 0 32px 64px',
+                    background: backgroundColor[themeColor],
+                    color: themeColor === 'dark' ? '#FFFFFF' : '#252525',
+                }}
+            >
+                <div className={themes[themeColor].containerClasses.join(' ')}>
+                    <div className="сtheme__typo сtheme--bg--demo">
+                        <Brick size={2}/>
+                        <div className="lflex">
+                            <Gap size={4}/>
+                            <div>
+                                <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
+                                <div className="inputs-container lfelx-y-axis">
+                                    {data.map((input, index) => (
+                                        <div key={index}>
+                                            <InputRow
+                                                name={'phone-input' + index}
+                                                label={input.label}
+                                                value={input.value}
+                                                disabled={input.disabled}
+                                                success={input.success}
+                                                error={input.error}
+                                                autoFocus={input.autoFocus}
+                                                touched={input.touched}
+                                            />
+                                            <Brick size={2}/>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+                            <Gap size={4}/>
                         </div>
+                        <Brick size={2}/>
                     </div>
-                    <Gap size={4} />
                 </div>
-                <Brick size={2} />
             </div>
-        </div>
+        </Theme>
     );
 };
 
@@ -145,7 +165,7 @@ export const PhoneInputs = (): React.ReactElement => {
     return (
         <div className="sb-forms-inputs">
             {Object.keys(themes).map((themeColor, index) => (
-                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index} />
+                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index}/>
             ))}
         </div>
     );

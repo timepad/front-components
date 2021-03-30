@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import cx from 'classnames';
-import {molecule} from '../../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 import {RadioButton} from './RadioButton';
 
@@ -34,7 +34,7 @@ export function RadioGroup(props: IRadioGroupProps) {
 
     const [selectedValue, setSelectedValue] = useState<string | null>(defaultSelected);
 
-    const formLabelClasses = molecule('form', 'label')({error: !!error && touched});
+    const formLabelClasses = component('form', 'label')({error: !!error && touched});
 
     const labelClasses = cx('t-small', 't-color-gray', formLabelClasses);
 
