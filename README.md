@@ -12,14 +12,14 @@ src/
 ├── assets/
 │   ├── css/         # LESS-код
 │   │   │
-│   │   ├── components/     # функциональные компоненты
 │   │   ├── layout/         # компоненты разметки и сетки
 │   │   ├── typo/           # типографика
 │   │
-├── components/      # ⚛️-компоненты, каждая папка внутри components должна иметь свой index с экспортами
+├── components/      # ⚛️-компоненты, каждая папка внутри components должна иметь свой index с экспортами, а также файлы со стилями, хуками и storybook stories
 ├── services/  
 │   ├── helpers/     # хелперы
 │   │   ├── classHelpers/     # хелперы для соблюдения согласий по селекторам в LESS
+│   │   │── storyBookHelpers/ # хелперы для storybook
 │   │   
 types/               # типы
 ```
