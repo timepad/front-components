@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import './inputs.less';
 import {Gap} from '../../src/components/utility/Modifiers/Gap';
-import {Textarea} from '../../src';
+import {Form} from '../../src';
 
 const themes = {
     default: {
@@ -97,7 +97,7 @@ const TextareaRow = (props: ITextareaData) => {
     const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
     const [value, setValue] = useState(valueDefault);
     return (
-        <Textarea
+        <Form.Textarea
             label={label}
             value={value}
             disabled={disabled}

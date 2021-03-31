@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import './inputs.less';
 import {Gap} from '../../src/components/utility/Modifiers/Gap';
-import {PhoneInput} from '../../src';
+import {Form} from '../../src';
 import {IThemeProps, Theme} from "../../src/components/utility/Modifiers";
 import {RequireOnlyOne} from "../../src/interfaces/misc/requireOnlyOne";
 
@@ -95,7 +95,7 @@ const InputRow = (props: IInputData) => {
     const {label, value: valueDefault, disabled, error, name = 'name', touched = false} = props;
     const [value, setValue] = useState(valueDefault);
     return (
-        <PhoneInput
+        <Form.PhoneInput
             name={name}
             label={label}
             value={String(value)}

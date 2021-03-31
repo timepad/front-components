@@ -9,10 +9,7 @@ import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import {Theme} from '../../src/components/utility/Modifiers';
 import {RequireOnlyOne} from '../../src/interfaces/misc/requireOnlyOne';
 import {IThemeProps} from '../../src/components/utility/Modifiers';
-import {Checkbox} from '../../src';
-import {Radio} from '../../src';
-import {RadioButton} from '../../src';
-import {CheckboxGroup} from '../../src/components/Forms/Checkbox';
+import {Form} from '../../src';
 
 const backgroundColor = {
     default: '#FFFFFF',
@@ -58,7 +55,7 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                 <div className="lflex">
                     <ComponentBlock title="Checkbox">
                         <Brick size={2} />
-                        <Checkbox
+                        <Form.Checkbox
                             name={`${theme}-checkbox-one`}
                             label={checkedOne ? 'Checked' : 'Active'}
                             checked={checkedOne}
@@ -67,7 +64,7 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                             }}
                         />
                         <Brick size={2} />
-                        <Checkbox
+                        <Form.Checkbox
                             name={`${theme}-checkbox-two`}
                             label={checkedTwo ? 'Checked' : 'Active'}
                             checked={checkedTwo}
@@ -76,14 +73,14 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                             }}
                         />
                         <Brick size={2} />
-                        <Checkbox name="n3" label="Disabled" value="v1" checked={false} disabled />
+                        <Form.Checkbox name="n3" label="Disabled" value="v1" checked={false} disabled />
                         <Brick size={2} />
-                        <Checkbox name="n4" label="Checked disabled" value="v1" checked={true} disabled />
+                        <Form.Checkbox name="n4" label="Checked disabled" value="v1" checked={true} disabled />
                         <Brick size={2} />
                     </ComponentBlock>
                     <ComponentBlock title="Radio button">
                         <Brick size={2} />
-                        <Radio
+                        <Form.Radio
                             name="radio-1"
                             label={selectedRadio === 'option-1' ? 'Checked' : 'Active'}
                             value="option-1"
@@ -93,7 +90,7 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                             }}
                         />
                         <Brick size={2} />
-                        <Radio
+                        <Form.Radio
                             name="radio-1"
                             label={selectedRadio === 'option-2' ? 'Checked' : 'Active'}
                             value="option-2"
@@ -103,34 +100,34 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                             }}
                         />
                         <Brick size={2} />
-                        <Radio name="radio-2" label="Disabled" value="option-1" checked={false} disabled />
+                        <Form.Radio name="radio-2" label="Disabled" value="option-1" checked={false} disabled />
                         <Brick size={2} />
-                        <Radio name="radio-3" label="Checked disabled" value="option-1" checked={true} disabled />
+                        <Form.Radio name="radio-3" label="Checked disabled" value="option-1" checked={true} disabled />
                         <Brick size={2} />
                     </ComponentBlock>
                     <ComponentBlock title="Button icon">
                         <Brick size={2} />
-                        <RadioButton
+                        <Form.RadioButton
                             value="s"
                             checked={checkedRadioOne}
                             onChangeHandler={() => setCheckedRadioOne(!checkedRadioOne)}
                         />
                         <Brick size={2} />
-                        <RadioButton value="s" disabled />
+                        <Form.RadioButton value="s" disabled />
                         <Brick size={2} />
-                        <RadioButton
+                        <Form.RadioButton
                             value="s"
                             checked={checkedRadioTwo}
                             onChangeHandler={() => setCheckedRadioTwo(!checkedRadioTwo)}
                         />
                         <Brick size={2} />
-                        <RadioButton value="s" checked disabled />
+                        <Form.RadioButton value="s" checked disabled />
                         <Brick size={2} />
                     </ComponentBlock>
                     <ComponentBlock title="Button text">
                         <Brick size={2} />
                         <div>
-                            <RadioButton
+                            <Form.RadioButton
                                 value="s"
                                 checked={checkedRadioOneLabeled}
                                 label="Auto Active"
@@ -139,11 +136,11 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                         </div>
                         <Brick size={2} />
                         <div>
-                            <RadioButton value="s" disabled label="Auto Disabled" />
+                            <Form.RadioButton value="s" disabled label="Auto Disabled" />
                         </div>
                         <Brick size={2} />
                         <div>
-                            <RadioButton
+                            <Form.RadioButton
                                 value="s"
                                 checked={checkedRadioTwoLabeled}
                                 label="Auto Active"
@@ -152,7 +149,7 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
                         </div>
                         <Brick size={2} />
                         <div>
-                            <RadioButton value="s" checked disabled label="Auto Disabled" />
+                            <Form.RadioButton value="s" checked disabled label="Auto Disabled" />
                         </div>
                         <Brick size={2} />
                     </ComponentBlock>

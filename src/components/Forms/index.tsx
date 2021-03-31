@@ -1,6 +1,14 @@
-export {Input} from './Input';
-export {Textarea} from './Textarea';
-export {RadioButton, RadioGroup} from './RadioButton';
-export {Radio} from './Radio';
-export {Checkbox, CheckboxGroup} from './Checkbox';
-export {PhoneInput} from './PhoneInput';
+import {Input} from './Input';
+import {Textarea} from './Textarea';
+import {RadioButton} from './RadioButton';
+import {Radio} from './Radio';
+import {Checkbox} from './Checkbox';
+import {PhoneInput} from './PhoneInput';
+export default {
+    Input,
+    Textarea,
+    RadioButton,
+    Radio,
+    Checkbox,
+    PhoneInput
+}

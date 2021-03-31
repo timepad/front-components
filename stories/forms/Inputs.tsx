@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import './inputs.less';
 import {Gap} from '../../src/components/utility/Modifiers/Gap';
-import {Input} from '../../src';
+import {Form} from '../../src';
 
 const themes = {
     default: {
@@ -84,7 +84,7 @@ const InputRow = (props: IInputData) => {
     const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
     const [value, setValue] = useState(valueDefault);
     return (
-        <Input
+        <Form.Input
             label={label}
             value={value}
             disabled={disabled}
