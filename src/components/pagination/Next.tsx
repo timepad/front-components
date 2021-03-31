@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FC, HTMLAttributes, useContext, useMemo} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import Right from '../../assets/svg/pagination/right.svg';
+import Right from '../../assets/svg/48/shape-right.svg';
 import {PaginationContext} from './Pagination';
 
 export const Next: FC<HTMLAttributes<HTMLButtonElement>> = ({className, ...restProps}) => {
