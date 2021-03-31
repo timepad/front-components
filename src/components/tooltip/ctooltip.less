@@ -1,0 +1,24 @@
+.ctooltip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+
+  .ctooltip__message {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    order: 0;
+  }
+
+  .ctooltip__message.ctooltip__message--is-active {
+    display: flex;
+  }
+
+  .ctooltip__title {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
