@@ -18,7 +18,8 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     transition = 300,
     ...resrProps
 }) => {
-    const {isActive} = useContext(TooltipContext);
+    const {isActive, setIsActive} = useContext(TooltipContext);
+
     const spanClasses = useMemo<string>(() => {
         return cx(
             component(
@@ -28,6 +29,7 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
             className,
         );
     }, [className, isActive, direction]);
+
     const messageRef = useRef<HTMLDivElement>(null);
     const calculatePosition = useCallback((): void => {
         const div = messageRef.current;
@@ -46,8 +48,6 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
             window.removeEventListener('resize', calculatePosition);
         };
     }, [messageRef, calculatePosition]);
-
-    const {setIsActive} = useContext(TooltipContext);
 
     return (
         <div
