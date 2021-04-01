@@ -23,28 +23,16 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     }, [className, isActive]);
 
     const messageRef = useRef<HTMLSpanElement>(null);
-    const calculateXPosition = useCallback((): void => {
+    const calculatePosition = useCallback((): void => {
         const span = messageRef.current;
-        if (span) {
+        const parent = span?.closest('.ctooltip');
+
+        if (span && parent) {
             const xOffset = span.getClientRects()[0].left;
             if (xOffset < 0) {
                 span.style.transform = 'translateX(0)';
                 span.style.left = '0';
             }
-        }
-    }, [messageRef]);
-    useEffect(() => {
-        calculateXPosition();
-        window.addEventListener('resize', calculateXPosition);
-        return () => {
-            window.removeEventListener('resize', calculateXPosition);
-        };
-    }, [messageRef, calculateXPosition]);
-    const calculateYPosition = useCallback((): void => {
-        const span = messageRef.current;
-        const parent = span?.closest('.ctooltip');
-
-        if (span && parent) {
             const messageHeight = span.clientHeight;
             const {top} = parent.getClientRects()[0];
             const offsetVal = top + 25;
@@ -54,12 +42,15 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
         }
     }, [messageRef]);
     useEffect(() => {
-        calculateYPosition();
-        document.addEventListener('scroll', calculateYPosition);
+        calculatePosition();
+        window.addEventListener('resize', calculatePosition);
+        document.addEventListener('scroll', calculatePosition);
+
         return () => {
-            document.removeEventListener('scroll', calculateYPosition);
+            window.removeEventListener('resize', calculatePosition);
+            window.removeEventListener('scroll', calculatePosition);
         };
-    }, [messageRef, calculateYPosition]);
+    }, [messageRef, calculatePosition]);
 
     return (
         <span
