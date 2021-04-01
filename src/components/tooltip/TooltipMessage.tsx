@@ -6,12 +6,10 @@ import {TooltipContext} from './Tooltip';
 
 export interface ITooltipMessage extends HTMLAttributes<HTMLSpanElement> {
     width?: number;
-    direction?: 'top' | 'bottom';
     transition?: number;
 }
 
 export const TooltipMessage: FC<ITooltipMessage> = ({
-    direction = 'top',
     width = 300,
     children,
     className,
@@ -21,14 +19,8 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     const {isActive, setIsActive} = useContext(TooltipContext);
 
     const spanClasses = useMemo<string>(() => {
-        return cx(
-            component(
-                'tooltip',
-                'message',
-            )({['is-active']: isActive, ['top']: direction === 'top', ['bottom']: direction === 'bottom'}),
-            className,
-        );
-    }, [className, isActive, direction]);
+        return cx(component('tooltip', 'message')({['is-active']: isActive}), className);
+    }, [className, isActive]);
 
     const messageRef = useRef<HTMLSpanElement>(null);
     const calculateXPosition = useCallback((): void => {
