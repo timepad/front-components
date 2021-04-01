@@ -21,7 +21,7 @@ export const Simple: IStorybookComponent = () => {
             <p>
                 Some text
                 <Tooltip>
-                    <Tooltip.Title>Tooltip</Tooltip.Title>
+                    <Tooltip.Title style={{color: 'red'}}>Tooltip</Tooltip.Title>
                     <Tooltip.Message>
                         Объемный текст в котором подробно рассказанопроисходящем на экране
                     </Tooltip.Message>
