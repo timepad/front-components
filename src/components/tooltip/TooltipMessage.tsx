@@ -4,7 +4,7 @@ import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {TooltipContext} from './Tooltip';
 
-export interface ITooltipMessage extends HTMLAttributes<HTMLDivElement> {
+export interface ITooltipMessage extends HTMLAttributes<HTMLSpanElement> {
     width?: number;
     direction?: 'top' | 'bottom';
     transition?: number;
