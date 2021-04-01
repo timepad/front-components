@@ -1,36 +1,38 @@
 import * as React from 'react';
-import {createContext, FC, HTMLAttributes, useEffect, useMemo, useRef, useState} from 'react';
+import {FC, HTMLAttributes, ReactNode, useEffect, useMemo, useRef, useState} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import {TootltipTitle} from './TooltipTitle';
-import {TooltipMessage} from './TooltipMessage';
 
 import './ctooltip.less';
+import {usePopper} from 'react-popper';
 
-export interface ITooltipContext {
-    isActive: boolean;
-    setIsActive: (bool: boolean) => void;
-}
-export const TooltipContext = createContext<ITooltipContext>({
-    isActive: false,
-    setIsActive: () => {
-        //
-    },
-});
 export interface ITooltip extends HTMLAttributes<HTMLSpanElement> {
     active?: boolean;
+    message?: ReactNode;
+    transition?: number;
 }
 
-const BaseTooltip: FC<ITooltip> = ({children, active = false, className, ...restProps}) => {
-    const divClasses = useMemo<string>(() => {
-        return cx(component('tooltip')(), className);
-    }, [className]);
+const titleClasses = component('tooltip', 'title')();
 
+export const Tooltip: FC<ITooltip> = ({
+    transition = 300,
+    message = '',
+    children,
+    active = false,
+    className,
+    ...restProps
+}) => {
     const [isActive, setIsActive] = useState<boolean>(active);
     useEffect(() => {
         if (active !== isActive) setIsActive(active);
         //eslint-disable-next-line
     }, [active]);
+
+    const [referenceElement, setReferenceElement] = useState<HTMLSpanElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+    const {styles, attributes} = usePopper(referenceElement, popperElement, {
+        placement: 'top-start',
+    });
 
     const ref = useRef<HTMLSpanElement>(null);
     const onClickOutside = (e: MouseEvent): void => {
@@ -46,16 +48,33 @@ const BaseTooltip: FC<ITooltip> = ({children, active = false, className, ...rest
         };
     }, [ref]);
 
+    const divClasses = useMemo<string>(() => {
+        return cx(component('tooltip')(), className);
+    }, [className]);
+    const messageClasses = useMemo<string>(() => {
+        return component('tooltip', 'message')({['is-active']: isActive});
+    }, [isActive]);
+
     return (
-        <span {...restProps} className={divClasses} ref={ref}>
-            <TooltipContext.Provider value={{isActive, setIsActive}}>{children}</TooltipContext.Provider>
+        <span
+            {...restProps}
+            style={{...restProps.style, transition: 'all ease ' + transition + 'ms'}}
+            className={divClasses}
+            ref={ref}
+        >
+            <div ref={setReferenceElement} className={titleClasses} onClick={() => setIsActive(true)}>
+                {children}
+            </div>
+
+            <div
+                ref={setPopperElement}
+                className={messageClasses}
+                style={styles.popper}
+                {...attributes.popper}
+                onClick={() => setIsActive(true)}
+            >
+                {message}
+            </div>
         </span>
     );
 };
-
-const tooltipComponents = {
-    Title: TootltipTitle,
-    Message: TooltipMessage,
-};
-
-export const Tooltip = Object.assign(BaseTooltip, tooltipComponents);
