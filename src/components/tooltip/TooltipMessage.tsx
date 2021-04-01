@@ -16,7 +16,7 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     children,
     className,
     transition = 300,
-    ...resrProps
+    ...restProps
 }) => {
     const {isActive, setIsActive} = useContext(TooltipContext);
 
@@ -51,10 +51,10 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
 
     return (
         <div
-            {...resrProps}
+            {...restProps}
             className={spanClasses}
             ref={messageRef}
-            style={{width: `${width}px`, transition: `opacity ease ${transition}ms`}}
+            style={{...restProps.style, width: `${width}px`, transition: `opacity ease ${transition}ms`}}
             onClick={() => setIsActive(true)}
         >
             {children}
