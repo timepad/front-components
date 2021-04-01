@@ -17,7 +17,7 @@ export const TooltipContext = createContext<ITooltipContext>({
         //
     },
 });
-export interface ITooltip extends HTMLAttributes<HTMLDivElement> {
+export interface ITooltip extends HTMLAttributes<HTMLSpanElement> {
     active?: boolean;
 }
 
@@ -32,26 +32,24 @@ const BaseTooltip: FC<ITooltip> = ({children, active = false, className, ...rest
         //eslint-disable-next-line
     }, [active]);
 
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLSpanElement>(null);
     const onClickOutside = (e: Event): void => {
         const node = e?.target as Node;
         if (!ref?.current?.contains(node)) setIsActive(false);
     };
-
     useEffect(() => {
         if (ref.current) {
             document.addEventListener('click', onClickOutside);
         }
-
         return () => {
             document.removeEventListener('click', onClickOutside);
         };
     }, [ref]);
 
     return (
-        <div {...restProps} className={divClasses} ref={ref}>
+        <span {...restProps} className={divClasses} ref={ref}>
             <TooltipContext.Provider value={{isActive, setIsActive}}>{children}</TooltipContext.Provider>
-        </div>
+        </span>
     );
 };
 

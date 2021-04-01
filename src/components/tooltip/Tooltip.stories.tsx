@@ -18,10 +18,16 @@ export const Simple: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Simple Tooltip Example</StoryTitle>
-            <Tooltip active={false} style={{maxWidth: '300px'}}>
-                <Tooltip.Title>Title text</Tooltip.Title>
-                <Tooltip.Message>Tooltip some message</Tooltip.Message>
-            </Tooltip>
+            <p>
+                Some text
+                <Tooltip>
+                    <Tooltip.Title>Tooltip</Tooltip.Title>
+                    <Tooltip.Message>
+                        Объемный текст в котором подробно рассказанопроисходящем на экране
+                    </Tooltip.Message>
+                </Tooltip>
+                <h1>Other...</h1>
+            </p>
         </>
     );
 };
