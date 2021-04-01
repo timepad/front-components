@@ -30,7 +30,7 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
         );
     }, [className, isActive, direction]);
 
-    const messageRef = useRef<HTMLDivElement>(null);
+    const messageRef = useRef<HTMLSpanElement>(null);
     const calculatePosition = useCallback((): void => {
         const div = messageRef.current;
         if (div) {
@@ -50,7 +50,7 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     }, [messageRef, calculatePosition]);
 
     return (
-        <div
+        <span
             {...restProps}
             className={spanClasses}
             ref={messageRef}
@@ -58,6 +58,6 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
             onClick={() => setIsActive(true)}
         >
             {children}
-        </div>
+        </span>
     );
 };
