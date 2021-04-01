@@ -6,7 +6,6 @@ import {TooltipContext} from './Tooltip';
 
 export interface ITooltipMessage extends HTMLAttributes<HTMLDivElement> {
     width?: number;
-    height?: number;
     direction?: 'top' | 'bottom';
     transition?: number;
 }
