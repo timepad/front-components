@@ -2,17 +2,15 @@ import * as React from 'react';
 import {FC, HTMLAttributes, ReactNode, useEffect, useMemo, useRef, useState} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
+import {usePopper} from 'react-popper';
 
 import './ctooltip.less';
-import {usePopper} from 'react-popper';
 
 export interface ITooltip extends HTMLAttributes<HTMLSpanElement> {
     active?: boolean;
     message?: ReactNode;
     transition?: number;
 }
-
-const titleClasses = component('tooltip', 'title')();
 
 export const Tooltip: FC<ITooltip> = ({
     transition = 300,
@@ -54,11 +52,14 @@ export const Tooltip: FC<ITooltip> = ({
     const messageClasses = useMemo<string>(() => {
         return component('tooltip', 'message')({['is-active']: isActive});
     }, [isActive]);
+    const titleClasses = useMemo<string>(() => {
+        return component('tooltip', 'title')();
+    }, []);
 
     return (
         <span
             {...restProps}
-            style={{...restProps.style, transition: 'all ease ' + transition + 'ms'}}
+            style={{...restProps.style, transition: `all ease ${transition}ms`}}
             className={divClasses}
             ref={ref}
         >
