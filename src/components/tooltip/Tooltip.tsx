@@ -46,7 +46,7 @@ export const Tooltip: FC<ITooltip> = ({
         };
     }, [ref]);
 
-    const divClasses = useMemo<string>(() => {
+    const componentClasses = useMemo<string>(() => {
         return cx(component('tooltip')(), className);
     }, [className]);
     const messageClasses = useMemo<string>(() => {
@@ -60,7 +60,7 @@ export const Tooltip: FC<ITooltip> = ({
         <span
             {...restProps}
             style={{...restProps.style, transition: `all ease ${transition}ms`}}
-            className={divClasses}
+            className={componentClasses}
             ref={ref}
         >
             <div ref={setReferenceElement} className={titleClasses} onClick={() => setIsActive(true)}>
