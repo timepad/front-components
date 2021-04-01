@@ -31,23 +31,43 @@ export const TooltipMessage: FC<ITooltipMessage> = ({
     }, [className, isActive, direction]);
 
     const messageRef = useRef<HTMLSpanElement>(null);
-    const calculatePosition = useCallback((): void => {
-        const div = messageRef.current;
-        if (div) {
-            const xOffset = div.getClientRects()[0].left;
+    const calculateXPosition = useCallback((): void => {
+        const span = messageRef.current;
+        if (span) {
+            const xOffset = span.getClientRects()[0].left;
             if (xOffset < 0) {
-                div.style.transform = 'translateX(0)';
-                div.style.left = '0';
+                span.style.transform = 'translateX(0)';
+                span.style.left = '0';
             }
         }
     }, [messageRef]);
     useEffect(() => {
-        calculatePosition();
-        window.addEventListener('resize', calculatePosition);
+        calculateXPosition();
+        window.addEventListener('resize', calculateXPosition);
         return () => {
-            window.removeEventListener('resize', calculatePosition);
+            window.removeEventListener('resize', calculateXPosition);
         };
-    }, [messageRef, calculatePosition]);
+    }, [messageRef, calculateXPosition]);
+    const calculateYPosition = useCallback((): void => {
+        const span = messageRef.current;
+        const parent = span?.closest('.ctooltip');
+
+        if (span && parent) {
+            const messageHeight = span.clientHeight;
+            const {top} = parent.getClientRects()[0];
+            const offsetVal = top + 25;
+            if (messageHeight < offsetVal) {
+                span.style.top = `${-messageHeight}px`;
+            }
+        }
+    }, [messageRef]);
+    useEffect(() => {
+        calculateYPosition();
+        document.addEventListener('scroll', calculateYPosition);
+        return () => {
+            document.removeEventListener('scroll', calculateYPosition);
+        };
+    }, [messageRef, calculateYPosition]);
 
     return (
         <span

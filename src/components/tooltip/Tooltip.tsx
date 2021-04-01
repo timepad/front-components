@@ -33,7 +33,7 @@ const BaseTooltip: FC<ITooltip> = ({children, active = false, className, ...rest
     }, [active]);
 
     const ref = useRef<HTMLSpanElement>(null);
-    const onClickOutside = (e: Event): void => {
+    const onClickOutside = (e: MouseEvent): void => {
         const node = e?.target as Node;
         if (!ref?.current?.contains(node)) setIsActive(false);
     };
