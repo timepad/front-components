@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CSSProperties, MouseEventHandler, ReactNode} from 'react';
+import {MouseEventHandler, ReactNode} from 'react';
 import cx from 'classnames';
 
 import IconProfile from 'assets/svg/24/icon-profile-24.svg';
@@ -21,20 +21,19 @@ export interface IProps {
 
 // this component is not exported outside folder (see index.ts)
 export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}: IProps) => {
-    let classNames = cx('auserpic', className, {
-        'auserpic--interactive': onClick != null,
-        'auserpic--square': shape === 'square',
-        'auserpic--small': size === 'small',
-        'auserpic--big': size === 'big',
-        'auserpic--bigger': size === 'bigger',
-        'auserpic--biggest': size === 'biggest',
+    let classNames = cx('cuserpic', className, {
+        'cuserpic--interactive': onClick !== undefined,
+        'cuserpic--square': shape === 'square',
+        'cuserpic--small': size === 'small',
+        'cuserpic--big': size === 'big',
+        'cuserpic--bigger': size === 'bigger',
+        'cuserpic--biggest': size === 'biggest',
     });
 
     let display: ReactNode;
-    const bg: CSSProperties | undefined = undefined;
 
     if (fillURL) {
-        classNames = cx(classNames, 'auserpic--pic');
+        classNames = cx(classNames, 'cuserpic--pic');
         display = (
             <b
                 style={{
@@ -45,11 +44,11 @@ export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, 
     } else if (fillChar) {
         display = <span>{fillChar[0].toUpperCase()}</span>;
     } else {
-        display = <IconProfile className="aicon" />;
+        display = <IconProfile className="cicon" />;
     }
 
     return (
-        <div className={classNames} onClick={onClick} style={bg}>
+        <div className={classNames} onClick={onClick}>
             {display}
         </div>
     );
