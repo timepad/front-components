@@ -39,9 +39,9 @@ export const usePagination = ({coefficient, activePage, total}: IUsePaginationEn
         const result: TPage[] = [];
         const startPosition = 1;
         const endPosition = startPosition + validCoef;
-        const [firsCenterItem] = centerItems;
+        const [{id}] = centerItems;
         for (let i = startPosition; i < endPosition; i++) {
-            if (i > 0 && i < firsCenterItem.id) result.push({id: i});
+            if (i > 0 && i < id) result.push({id: i});
         }
 
         return result;
@@ -53,7 +53,7 @@ export const usePagination = ({coefficient, activePage, total}: IUsePaginationEn
         const startPosition = endPosition - validCoef + 1;
         const {id} = centerItems[centerItems.length - 1];
         for (let i = startPosition; i <= endPosition; i++) {
-            if (i > id && i > 0) result.push({id: i});
+            if (i > 0 && i > id) result.push({id: i});
         }
 
         return result;
