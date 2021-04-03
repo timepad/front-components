@@ -52,8 +52,8 @@ export const usePagination = ({coefficient, activePage, total}: IUsePaginationEn
         const endPosition = total;
         const startPosition = endPosition - validCoef + 1;
         const {id} = centerItems[centerItems.length - 1];
-        for (let i = startPosition; i <= endPosition && i > id; i++) {
-            result.push({id: i});
+        for (let i = startPosition; i <= endPosition; i++) {
+            if (i > id && i > 0) result.push({id: i});
         }
 
         return result;
