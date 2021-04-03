@@ -6,19 +6,19 @@ export interface IUsePaginationEntry {
     total: number;
 }
 
-export interface IUsePaginationOutput {
+export type TUsePaginationOutput = {
     centerItems: TPage[];
     startItems: TPage[];
     endItems: TPage[];
     isStartEllipsis: boolean;
     isEndEllipsis: boolean;
-}
+};
 
 export type TPage = {
     id: number;
 };
 
-export const usePagination = ({coefficient, activePage, total}: IUsePaginationEntry): IUsePaginationOutput => {
+export const usePagination = ({coefficient, activePage, total}: IUsePaginationEntry): TUsePaginationOutput => {
     const validCoef = useMemo<number>(() => (coefficient * 2 + 1 > total ? (total - 1) / 2 : coefficient), [
         coefficient,
         total,
