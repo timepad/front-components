@@ -5,11 +5,13 @@ import {component} from '../../services/helpers/classHelpers';
 import {usePopper} from 'react-popper';
 
 import './ctooltip.less';
+import * as PopperJS from '@popperjs/core';
 
 export interface ITooltip extends HTMLAttributes<HTMLSpanElement> {
     active?: boolean;
     message?: ReactNode;
     transition?: number;
+    options?: Partial<PopperJS.Options>;
 }
 
 export const Tooltip: FC<ITooltip> = ({
@@ -18,6 +20,7 @@ export const Tooltip: FC<ITooltip> = ({
     children,
     active = false,
     className,
+    options,
     ...restProps
 }) => {
     const [isActive, setIsActive] = useState<boolean>(active);
@@ -29,7 +32,8 @@ export const Tooltip: FC<ITooltip> = ({
     const [referenceElement, setReferenceElement] = useState<HTMLSpanElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
     const {styles, attributes} = usePopper(referenceElement, popperElement, {
-        placement: 'top-start',
+        ...options,
+        placement: options?.placement ?? 'top-start',
     });
 
     const ref = useRef<HTMLSpanElement>(null);

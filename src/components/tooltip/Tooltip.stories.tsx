@@ -20,12 +20,7 @@ export const Simple: IStorybookComponent = () => {
             <StoryTitle>First Tooltip Example</StoryTitle>
             <p>
                 Some text Some text Some text
-                <Tooltip
-                    message={
-                        'бъемныйб ъемны йбъемны йбъемныйбъемный b текст в котором подробно рассказанопроисходящем на экране'
-                    }
-                    style={{color: 'red'}}
-                >
+                <Tooltip message={'Текст в котором подробно рассказанопроисходящем на экране'} style={{color: 'red'}}>
                     Tooltip
                 </Tooltip>
                 <h1>Other...</h1>
@@ -37,7 +32,7 @@ export const Simple: IStorybookComponent = () => {
             <p>
                 Объемный текст в текст в котором
                 <Tooltip
-                    message={'бъемный текст в котором подробно рассказанопроисходящем на экране'}
+                    message={'Oбъемный текст в котором подробно рассказанопроисходящем на экране'}
                     style={{color: 'red'}}
                 >
                     Tooltip
@@ -50,7 +45,7 @@ export const Simple: IStorybookComponent = () => {
             <p>
                 Объемный текст в котором подробно рассказанопроисходящем на экране
                 <Tooltip
-                    message={'бъемный текст в котором подробно рассказанопроисходящем на экране'}
+                    message={'Oбъемный текст в котором подробно рассказанопроисходящем на экране'}
                     style={{color: 'red'}}
                 >
                     Tooltip
