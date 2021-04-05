@@ -12,8 +12,6 @@ export default {
     component: Button,
 } as Meta;
 
-import;
-
 export const Primary: IStorybookComponent = () => {
     return (
         <>
