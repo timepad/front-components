@@ -526,9 +526,9 @@ export const Tumbler: IStorybookComponent = () => {
         <>
             <StoryTitle>Tumbler</StoryTitle>
             <div className="lflex">
-                <SliderButton value={false} onChange={dummy} />
-                <Spacer />
                 <SliderButton value={true} onChange={dummy} />
+                <Spacer />
+                <SliderButton value={false} onChange={dummy} />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Tumbler disabled</StoryTitle>
@@ -540,7 +540,3 @@ export const Tumbler: IStorybookComponent = () => {
         </>
     );
 };
-
-interface Keks {
-    peks: string;
-}
