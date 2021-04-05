@@ -7,12 +7,12 @@ import {dummy, IStorybookComponent, Spacer, StoryTitle} from '../../services/hel
 
 import 'css/bundle.less';
 
-import 'lodash';
-
 export default {
     title: 'Button',
     component: Button,
 } as Meta;
+
+import;
 
 export const Primary: IStorybookComponent = () => {
     return (
