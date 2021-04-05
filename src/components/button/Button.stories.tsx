@@ -540,3 +540,7 @@ export const Tumbler: IStorybookComponent = () => {
         </>
     );
 };
+
+interface Keks {
+    peks: string;
+}
