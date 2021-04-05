@@ -526,9 +526,9 @@ export const Tumbler: IStorybookComponent = () => {
         <>
             <StoryTitle>Tumbler</StoryTitle>
             <div className="lflex">
-                <SliderButton value={true} onChange={dummy} />
-                <Spacer />
                 <SliderButton value={false} onChange={dummy} />
+                <Spacer />
+                <SliderButton value={true} onChange={dummy} />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Tumbler disabled</StoryTitle>
