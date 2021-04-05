@@ -19,31 +19,25 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>First Tooltip Example</StoryTitle>
             <p>
-                Some text Some text Some text
                 <Tooltip message={'Текст в котором подробно рассказанопроисходящем на экране'} style={{color: 'red'}}>
                     Tooltip
                 </Tooltip>
-                <h1>Other...</h1>
+                Объемный текст в тексте
             </p>
 
-            <StoryTitle>Second Tooltip Example</StoryTitle>
-            <h1>Other...</h1>
-            <h1>Other...</h1>
             <p>
-                Объемный текст в текст в котором
+                Объемный текст в котором
                 <Tooltip
                     message={'Oбъемный текст в котором подробно рассказанопроисходящем на экране'}
                     style={{color: 'red'}}
                 >
                     Tooltip
                 </Tooltip>
-                Объемный текст в котором
+                Объемный подробно рассказан о происходящем на экране
             </p>
 
-            <StoryTitle>Third Tooltip Example</StoryTitle>
-            <h1>Other...</h1>
             <p>
-                Объемный текст в котором подробно рассказанопроисходящем на экране
+                Объемный текст в котором подробно рассказан о происходящем на экране
                 <Tooltip
                     message={'Oбъемный текст в котором подробно рассказанопроисходящем на экране'}
                     style={{color: 'red'}}
