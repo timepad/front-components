@@ -7,9 +7,9 @@ import {Prev} from './Prev';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {Container} from './Container';
+import {usePagination} from './usePagination';
 
 import './cpagination.less';
-import {usePagination} from './usePagination';
 
 export type TOnChange = (page: number) => void;
 
