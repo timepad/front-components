@@ -2,12 +2,12 @@
 
 .cpagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
   border-radius: 8px;
   padding: 32px 34px;
-  max-width: 400px;
+  max-width: 100%;
   font-family: @ff-system;
 
   button {
@@ -22,7 +22,6 @@
   }
 
   @media (max-width: @rsp-mobile-portrait-max) {
-    max-width: 320px;
     padding: 5px;
   }
 }
@@ -79,17 +78,25 @@
   }
 }
 
-.cpagination__prev svg {
-  @media (max-width: @rsp-mobile-portrait-max) {
-   position: relative;
-    right: 9px;
+.cpagination__prev {
+  margin-right: auto;
+
+  svg {
+    @media (max-width: @rsp-mobile-portrait-max) {
+      position: relative;
+      right: 9px;
+    }
   }
 }
 
-.cpagination__next svg {
-  @media (max-width: @rsp-mobile-portrait-max) {
-    position: relative;
-    left: -9px;
+.cpagination__next {
+  margin-left: auto;
+
+  svg {
+    @media (max-width: @rsp-mobile-portrait-max) {
+      position: relative;
+      left: -9px;
+    }
   }
 }
 

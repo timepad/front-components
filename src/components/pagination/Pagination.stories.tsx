@@ -21,15 +21,13 @@ export const Light: IStorybookComponent = () => {
             <div className="lflex">
                 <Pagination activePage={15} total={999} onChange={onChange}>
                     <Pagination.Prev />
-                    <Pagination.Container>
-                        <Pagination.Item page={1} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={15} />
-                        <Pagination.Item page={16} />
-                        <Pagination.Item page={17} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={999} />
-                    </Pagination.Container>
+                    <Pagination.Item page={1} />
+                    <Pagination.Ellipsis />
+                    <Pagination.Item page={15} />
+                    <Pagination.Item page={16} />
+                    <Pagination.Item page={17} />
+                    <Pagination.Ellipsis />
+                    <Pagination.Item page={999} />
                     <Pagination.Next />
                 </Pagination>
             </div>
@@ -44,15 +42,13 @@ export const Dark: IStorybookComponent = () => {
             <div className="lflex">
                 <Pagination activePage={16} total={999} theme="dark">
                     <Pagination.Prev />
-                    <Pagination.Container>
-                        <Pagination.Item page={1} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={15} />
-                        <Pagination.Item page={16} />
-                        <Pagination.Item page={17} />
-                        <Pagination.Ellipsis />
-                        <Pagination.Item page={999} />
-                    </Pagination.Container>
+                    <Pagination.Item page={1} />
+                    <Pagination.Ellipsis />
+                    <Pagination.Item page={15} />
+                    <Pagination.Item page={16} />
+                    <Pagination.Item page={17} />
+                    <Pagination.Ellipsis />
+                    <Pagination.Item page={999} />
                     <Pagination.Next />
                 </Pagination>
             </div>

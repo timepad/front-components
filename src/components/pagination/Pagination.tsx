@@ -6,7 +6,6 @@ import {Next} from './Next';
 import {Prev} from './Prev';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import {Container} from './Container';
 import {usePagination} from './usePagination';
 
 import './cpagination.less';
@@ -72,19 +71,17 @@ const BasePagination: FC<IPagination> = ({
                 ) : (
                     <>
                         <Prev />
-                        <Container>
-                            {startItems.map(({id}) => (
-                                <Item page={id} key={id} />
-                            ))}
-                            {isStartEllipsis && <Ellipsis />}
-                            {centerItems.map(({id}) => (
-                                <Item page={id} key={id} />
-                            ))}
-                            {isEndEllipsis && <Ellipsis />}
-                            {endItems.map(({id}) => (
-                                <Item page={id} key={id} />
-                            ))}
-                        </Container>
+                        {startItems.map(({id}) => (
+                            <Item page={id} key={id} />
+                        ))}
+                        {isStartEllipsis && <Ellipsis />}
+                        {centerItems.map(({id}) => (
+                            <Item page={id} key={id} />
+                        ))}
+                        {isEndEllipsis && <Ellipsis />}
+                        {endItems.map(({id}) => (
+                            <Item page={id} key={id} />
+                        ))}
                         <Next />
                     </>
                 )}
@@ -97,7 +94,6 @@ const paginationComponents = {
     Item,
     Prev,
     Next,
-    Container,
     Ellipsis,
 };
 
