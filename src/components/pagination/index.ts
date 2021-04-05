@@ -1,4 +1,3 @@
-export * from './PaginationDefault';
 export * from './Item';
 export * from './Prev';
 export * from './Next';

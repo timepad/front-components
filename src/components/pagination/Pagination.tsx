@@ -1,17 +1,63 @@
 import * as React from 'react';
-import {FC, HTMLAttributes} from 'react';
-import {PaginationDefault, TOnChange} from './PaginationDefault';
+import {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import {Item} from './Item';
+import {Ellipsis} from './Ellipsis';
+import {Next} from './Next';
+import {Prev} from './Prev';
+import cx from 'classnames';
+import {component} from '../../services/helpers/classHelpers';
+import {Container} from './Container';
+
+import './cpagination.less';
 import {usePagination} from './usePagination';
 
+export type TOnChange = (page: number) => void;
+
 export interface IPagination extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
-    onChange: TOnChange;
+    theme?: 'dark' | 'light';
     activePage: number;
     total: number;
+    onChange?: TOnChange;
     coefficient?: number;
-    theme?: 'light' | 'dark';
 }
 
-export const Pagination: FC<IPagination> = ({onChange, activePage, total, coefficient = 1, theme}) => {
+export interface IPaginationDefaultContext {
+    activePage: number;
+    total: number;
+    onChange: TOnChange;
+}
+
+const defaultChange = () => {
+    //
+};
+
+export const PaginationContext = createContext<IPaginationDefaultContext>({
+    activePage: 0,
+    total: 0,
+    onChange: defaultChange,
+});
+
+const BasePagination: FC<IPagination> = ({
+    activePage,
+    total,
+    children,
+    onChange,
+    theme = 'light',
+    className,
+    coefficient = 1,
+    ...restProps
+}) => {
+    const paginationClassName = useMemo<string>(
+        () =>
+            cx(
+                component('pagination')({
+                    [theme]: true,
+                }),
+                className,
+            ),
+        [className, theme],
+    );
+
     const {startItems, centerItems, endItems, isEndEllipsis, isStartEllipsis} = usePagination({
         activePage,
         total,
@@ -19,22 +65,40 @@ export const Pagination: FC<IPagination> = ({onChange, activePage, total, coeffi
     });
 
     return (
-        <PaginationDefault activePage={activePage} total={total} onChange={onChange} theme={theme}>
-            <PaginationDefault.Prev />
-            <PaginationDefault.Container>
-                {startItems.map(({id}) => (
-                    <PaginationDefault.Item page={id} key={id} />
-                ))}
-                {isStartEllipsis && <PaginationDefault.Ellipsis />}
-                {centerItems.map(({id}) => (
-                    <PaginationDefault.Item page={id} key={id} />
-                ))}
-                {isEndEllipsis && <PaginationDefault.Ellipsis />}
-                {endItems.map(({id}) => (
-                    <PaginationDefault.Item page={id} key={id} />
-                ))}
-            </PaginationDefault.Container>
-            <PaginationDefault.Next />
-        </PaginationDefault>
+        <div {...restProps} className={paginationClassName}>
+            <PaginationContext.Provider value={{activePage, total, onChange: onChange || defaultChange}}>
+                {children ? (
+                    children
+                ) : (
+                    <>
+                        <Prev />
+                        <Container>
+                            {startItems.map(({id}) => (
+                                <Item page={id} key={id} />
+                            ))}
+                            {isStartEllipsis && <Ellipsis />}
+                            {centerItems.map(({id}) => (
+                                <Item page={id} key={id} />
+                            ))}
+                            {isEndEllipsis && <Ellipsis />}
+                            {endItems.map(({id}) => (
+                                <Item page={id} key={id} />
+                            ))}
+                        </Container>
+                        <Next />
+                    </>
+                )}
+            </PaginationContext.Provider>
+        </div>
     );
 };
+
+const paginationComponents = {
+    Item,
+    Prev,
+    Next,
+    Container,
+    Ellipsis,
+};
+
+export const Pagination = Object.assign(BasePagination, paginationComponents);

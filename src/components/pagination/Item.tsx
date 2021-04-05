@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FC, HTMLAttributes, useContext, useMemo} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import {PaginationContext} from './PaginationDefault';
+import {PaginationContext} from './Pagination';
 
 export interface IPaginationItem extends HTMLAttributes<HTMLButtonElement> {
     disabled?: boolean;

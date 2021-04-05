@@ -3,7 +3,7 @@ import {FC, HTMLAttributes, useContext, useMemo} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import Right from '../../assets/svg/48/shape-right-48.svg';
-import {PaginationContext} from './PaginationDefault';
+import {PaginationContext} from './Pagination';
 
 export const Next: FC<HTMLAttributes<HTMLButtonElement>> = ({className, ...restProps}) => {
     const {activePage, total, onChange} = useContext(PaginationContext);
