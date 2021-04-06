@@ -1,15 +1,3 @@
-import {
-    Button,
-    ButtonVariant,
-    ButtonIconAlignment,
-    FixedVariant,
-    SliderButton,
-    ISliderButtonProps,
-    IButtonProps,
-} from './components/button';
-
-import {component} from './services/helpers/classHelpers';
-
-export type {ISliderButtonProps, IButtonProps};
-
-export {Button, ButtonVariant, ButtonIconAlignment, FixedVariant, SliderButton, component};
+export * from './components/button';
+export * from './components/tabs';
+export * from './services/helpers/classHelpers';

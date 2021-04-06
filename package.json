@@ -29,6 +29,7 @@
     "@typescript-eslint/parser": "^4.15.2",
     "autoprefixer": "^9.7.3",
     "babel-loader": "^8.2.2",
+    "chromatic": "^5.7.1",
     "classnames": "^2.2.6",
     "css-loader": "^5.0.2",
     "eslint": "^7.20.0",
@@ -37,10 +38,12 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
-    "front-shared": "https://github.com/timepad/front-shared.git#f9e7363ba4dc26050fdeb01f2d25315e39c21bcb",
+    "front-shared": "https://github.com/timepad/front-shared.git#4e63fee0b9ff0945742c243106db6567f0e1b332",
     "html-webpack-plugin": "^5.1.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
@@ -52,7 +55,9 @@
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o ./dist/storybook",
     "lint": "eslint --ext js,jsx,ts,tsx ./",
-    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./"
+    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
+    "chromatic": "npx chromatic --project-token 58cee8519832"
   }
 }
