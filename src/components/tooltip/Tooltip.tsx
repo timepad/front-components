@@ -37,13 +37,13 @@ export const Tooltip: FC<ITooltip> = ({
         ...options,
         placement: options?.placement ?? 'top',
         modifiers: [
-            ...(options?.modifiers || []),
             {
                 name: 'offset',
                 options: {
-                    offset: [13, 13],
+                    offset: [0, 13],
                 },
             },
+            ...(options?.modifiers || []),
         ],
     });
 
