@@ -36,6 +36,15 @@ export const Tooltip: FC<ITooltip> = ({
     const {styles, attributes} = usePopper(referenceElement, popperElement, {
         ...options,
         placement: options?.placement ?? 'top',
+        modifiers: [
+            ...(options?.modifiers || []),
+            {
+                name: 'offset',
+                options: {
+                    offset: [13, 13],
+                },
+            },
+        ],
     });
 
     const ref = useRef<HTMLSpanElement>(null);
