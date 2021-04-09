@@ -17,11 +17,7 @@
     padding: 8px;
     z-index: -1;
     color: @c-black;
-    width: 380px;
-
-    @media (max-width: @mobile-content-max-width) {
-      width: 220px;
-    }
+    margin: 16px;
   }
 
   .ctooltip__message.ctooltip__message--is-active {
@@ -37,11 +33,11 @@
 
   .ctooltip__title:hover + .ctooltip__message {
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
   }
 
   .ctooltip__message:hover {
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
   }
 }

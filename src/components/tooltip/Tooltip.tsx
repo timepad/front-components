@@ -3,15 +3,16 @@ import {FC, HTMLAttributes, ReactNode, useEffect, useMemo, useRef, useState} fro
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {usePopper} from 'react-popper';
+import {Options} from '@popperjs/core';
 
 import './ctooltip.less';
-import * as PopperJS from '@popperjs/core';
 
 export interface ITooltip extends HTMLAttributes<HTMLSpanElement> {
     active?: boolean;
     message?: ReactNode;
     transition?: number;
-    options?: Partial<PopperJS.Options>;
+    options?: Partial<Options>;
+    width?: number;
 }
 
 export const Tooltip: FC<ITooltip> = ({
@@ -21,6 +22,7 @@ export const Tooltip: FC<ITooltip> = ({
     active = false,
     className,
     options,
+    width = 320,
     ...restProps
 }) => {
     const [isActive, setIsActive] = useState<boolean>(active);
@@ -33,7 +35,7 @@ export const Tooltip: FC<ITooltip> = ({
     const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
     const {styles, attributes} = usePopper(referenceElement, popperElement, {
         ...options,
-        placement: options?.placement ?? 'top-start',
+        placement: options?.placement ?? 'top',
     });
 
     const ref = useRef<HTMLSpanElement>(null);
@@ -70,11 +72,10 @@ export const Tooltip: FC<ITooltip> = ({
             <div ref={setReferenceElement} className={titleClasses} onClick={() => setIsActive(true)}>
                 {children}
             </div>
-
             <div
                 ref={setPopperElement}
                 className={messageClasses}
-                style={styles.popper}
+                style={{...styles.popper, width: `${width}px`}}
                 {...attributes.popper}
                 onClick={() => setIsActive(true)}
             >

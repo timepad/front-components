@@ -4,8 +4,6 @@ import {Meta} from '@storybook/react/types-6-0';
 import 'css/bundle.less';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Tooltip} from './Tooltip';
-import {Button, ButtonVariant} from '../button';
-import AddIcon from 'svg/24/icon-plus-24.svg';
 
 interface IStorybookComponent extends FC {
     storyName?: string;
@@ -26,7 +24,7 @@ export const Simple: IStorybookComponent = () => {
                 <b>Тема: «Почему поразительно освобождение?»</b>
                 <br />
                 Конфликт, как следует из{' '}
-                <Tooltip message={'Подсказка к тексту'} style={{color: 'red'}}>
+                <Tooltip message={'Подсказка к тексту'} width={180} style={{color: 'red'}}>
                     вышесказанного
                 </Tooltip>
                 , прост. Ощущение мира категорически контролирует сложный бабувизм. Врожденная интуиция откровенна.
@@ -41,16 +39,18 @@ export const Simple: IStorybookComponent = () => {
                     Позитивизм
                 </Tooltip>
                 ясен не всем.{' '}
-                <Tooltip message={'Бхутавад - какой-то чувак'} style={{color: 'red'}}>
+                <Tooltip message={'Бхутавад - какой-то чувак'} width={220} style={{color: 'red'}}>
                     Бхутавад
                 </Tooltip>
                 , следовательно, принимает во внимание типичный смысл жизни.
             </p>
 
             <StoryTitle>Second Tooltip Example</StoryTitle>
-            <Tooltip message={'Текст в котором подробно рассказанопроисходящем на экране'} style={{color: 'red'}}>
-                <Button variant={ButtonVariant.primary} label="Click me" icon={<AddIcon />} />
-            </Tooltip>
+            <div style={{display: 'flex', margin: '0 auto', justifyContent: 'center'}}>
+                <Tooltip message={'Текст в котором подробно рассказанопроисходящем на экране'} style={{color: 'red'}}>
+                    <div style={{borderRadius: '50%', width: '15px', height: '15px', backgroundColor: '#ccc'}} />
+                </Tooltip>
+            </div>
         </>
     );
 };
