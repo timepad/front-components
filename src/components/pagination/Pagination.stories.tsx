@@ -19,15 +19,13 @@ export const Light: IStorybookComponent = () => {
         <>
             <StoryTitle>Light</StoryTitle>
             <div className="lflex">
-                <Pagination activePage={15} total={999} onChange={onChange}>
+                <Pagination activePage={1} total={5} onChange={onChange}>
                     <Pagination.Prev />
                     <Pagination.Item page={1} />
-                    <Pagination.Ellipsis />
-                    <Pagination.Item page={15} />
-                    <Pagination.Item page={16} />
-                    <Pagination.Item page={17} />
-                    <Pagination.Ellipsis />
-                    <Pagination.Item page={999} />
+                    <Pagination.Item page={2} />
+                    <Pagination.Item page={3} />
+                    <Pagination.Item page={4} />
+                    <Pagination.Item page={5} />
                     <Pagination.Next />
                 </Pagination>
             </div>
@@ -40,15 +38,13 @@ export const Dark: IStorybookComponent = () => {
         <>
             <StoryTitle>Dark</StoryTitle>
             <div className="lflex">
-                <Pagination activePage={16} total={999} theme="dark">
+                <Pagination activePage={5} total={999} theme="dark">
                     <Pagination.Prev />
                     <Pagination.Item page={1} />
-                    <Pagination.Ellipsis />
-                    <Pagination.Item page={15} />
-                    <Pagination.Item page={16} />
-                    <Pagination.Item page={17} />
-                    <Pagination.Ellipsis />
-                    <Pagination.Item page={999} />
+                    <Pagination.Item page={2} />
+                    <Pagination.Item page={3} />
+                    <Pagination.Item page={4} />
+                    <Pagination.Item page={5} />
                     <Pagination.Next />
                 </Pagination>
             </div>
