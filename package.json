@@ -30,6 +30,7 @@
     "@typescript-eslint/parser": "^4.15.2",
     "autoprefixer": "^9.7.3",
     "babel-loader": "^8.2.2",
+    "chromatic": "^5.7.1",
     "classnames": "^2.2.6",
     "css-loader": "^5.0.2",
     "eslint": "^7.20.0",
@@ -55,7 +56,9 @@
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o ./dist/storybook",
     "lint": "eslint --ext js,jsx,ts,tsx ./",
-    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./"
+    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
+    "chromatic": "npx chromatic --project-token 58cee8519832"
   }
 }
