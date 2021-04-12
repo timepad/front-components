@@ -1,4 +1,4 @@
-import 'app/styles.less';
+import '../src/assets/css/bundle.less';
 import './lib/main.less';
 import React from 'react';
 import {Userpic} from '../src';
