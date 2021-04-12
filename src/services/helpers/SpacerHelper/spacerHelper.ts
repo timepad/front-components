@@ -4,7 +4,7 @@ export const getSizeForSpacer = (
     plusHalf: boolean | undefined,
 ): string => {
     if (size || size === 0 || plusHalf) {
-        return className + `-${size === 0 ? 0 : size || 1}${plusHalf ? '-5' : ''}`;
+        return className + `-${size ?? 1}${plusHalf ? '-5' : ''}`;
     } else {
         return className;
     }
