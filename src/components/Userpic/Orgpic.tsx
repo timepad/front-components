@@ -16,6 +16,6 @@ interface IProps {
     className?: string;
 }
 
-export const Orgpic: React.FC<IProps> = (props) => {
+export const Orgpic: React.FC<IProps> = (props: IProps) => {
     return <Pic {...props} shape="square" />;
 };

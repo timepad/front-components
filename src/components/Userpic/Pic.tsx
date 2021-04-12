@@ -20,7 +20,7 @@ export interface IProps {
 }
 
 // this component is not exported outside folder (see index.ts)
-export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}) => {
+export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}: IProps) => {
     let classNames = cx('cuserpic', className, {
         'cuserpic--interactive': onClick !== undefined,
         'cuserpic--square': shape === 'square',
