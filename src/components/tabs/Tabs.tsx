@@ -30,13 +30,19 @@ export const TabsContext = createContext<ITabsStoreContext>({} as ITabsStoreCont
 type TabClickHandler = (TabId: string) => void;
 
 export interface ITabProps extends HTMLAttributes<HTMLDivElement> {
-    activeTabId: TabId;
+    defaultTabId?: TabId;
+    activeTabId?: TabId;
     onTabClick?: (TabId: string, setActiveTabId: (id: string) => void) => void;
 }
 
-const TabsBase: FC<ITabProps> = ({children, activeTabId, onTabClick, className, ...rest}) => {
+const TabsBase: FC<ITabProps> = ({children, defaultTabId, activeTabId, onTabClick, className, ...rest}) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initialTabId = useMemo(() => defaultTabId, []);
     const divClasses = cx(component('tab-bar')(), className);
-    const tabsStore = useMemo(() => new TabsStore(activeTabId), [activeTabId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const tabsStore = useMemo(() => new TabsStore(initialTabId !== undefined ? initialTabId : activeTabId), [
+        activeTabId,
+    ]);
     const handleOnTabClick: TabClickHandler = onTabClick
         ? (TabId: string) => {
               onTabClick(TabId, tabsStore.setActiveTabId);
