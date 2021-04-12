@@ -14,6 +14,6 @@ interface IProps {
     onClick?: MouseEventHandler;
 }
 
-export const Userpic = (props: IProps): React.ReactElement => {
+export const Userpic: React.FC<IProps> = (props) => {
     return <Pic {...props} />;
 };

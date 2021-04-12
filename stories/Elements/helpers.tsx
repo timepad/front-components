@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {PropsWithChildren} from 'react';
 import {Brick} from 'components/utility/Modifiers/Brick';
 
-export const Title = ({children}: PropsWithChildren<Record<string, never>>): React.ReactElement => {
+export const Title: React.FC = ({children}) => {
     return (
         <>
             <span className="t-caption t-caption-16 t-color-gray">{children}</span>
