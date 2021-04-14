@@ -3,8 +3,8 @@ import {Brick} from '../../src/components/utility/Modifiers/Brick';
 import './inputs.less';
 import {Gap} from '../../src/components/utility/Modifiers/Gap';
 import {Form} from '../../src';
-import {IThemeProps, Theme} from "../../src/components/utility/Modifiers";
-import {RequireOnlyOne} from "../../src/interfaces/misc/requireOnlyOne";
+import {IThemeProps, Theme} from '../../src/components/utility/Modifiers';
+import {RequireOnlyOne} from '../../src/interfaces/misc/requireOnlyOne';
 
 const themes = {
     default: {
@@ -114,7 +114,9 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {data, themeColor} = props;
-    const themeArgs: RequireOnlyOne<IThemeProps> = {[themeColor]: true} as any;
+    const themeArgs: RequireOnlyOne<IThemeProps> = Object.create(null, {
+        [themeColor]: {writable: true, value: true},
+    });
 
     return (
         <Theme {...themeArgs}>
@@ -127,9 +129,9 @@ const InputsContainer = (props: IInputsContainerProps) => {
             >
                 <div className={themes[themeColor].containerClasses.join(' ')}>
                     <div className="сtheme__typo сtheme--bg--demo">
-                        <Brick size={2}/>
+                        <Brick size={2} />
                         <div className="lflex">
-                            <Gap size={4}/>
+                            <Gap size={4} />
                             <div>
                                 <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                                 <div className="inputs-container lfelx-y-axis">
@@ -145,14 +147,14 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                                 autoFocus={input.autoFocus}
                                                 touched={input.touched}
                                             />
-                                            <Brick size={2}/>
+                                            <Brick size={2} />
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <Gap size={4}/>
+                            <Gap size={4} />
                         </div>
-                        <Brick size={2}/>
+                        <Brick size={2} />
                     </div>
                 </div>
             </div>
@@ -165,7 +167,7 @@ export const PhoneInputs = (): React.ReactElement => {
     return (
         <div className="sb-forms-inputs">
             {Object.keys(themes).map((themeColor, index) => (
-                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index}/>
+                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </div>
     );

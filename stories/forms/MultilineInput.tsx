@@ -93,7 +93,7 @@ const textareaData: ITextareaData[] = [
     },
 ];
 
-const TextareaRow = (props: ITextareaData) => {
+const TextareaRow: React.FC<ITextareaData> = (props) => {
     const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
     const [value, setValue] = useState(valueDefault);
     return (
@@ -114,7 +114,7 @@ interface ITextareaContainerProps {
     themeID: keyof typeof themes;
 }
 
-const TextareaContainer = (props: ITextareaContainerProps) => {
+const TextareaContainer: React.FC<ITextareaContainerProps> = (props) => {
     const {data, themeID} = props;
     return (
         <div className={themes[themeID].containerClasses.join(' ')}>

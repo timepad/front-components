@@ -17,7 +17,7 @@ export interface IRadioProps {
     onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Radio = ({name, label, value, checked, disabled, id, error, onChange}: IRadioProps) => {
+export const Radio: React.FC<IRadioProps> = ({name, label, value, checked, disabled, id, error, onChange}) => {
     const idx = id || name + '_field_checkbox';
 
     const wrapperClasses = component('radio')({error: !!error, disabled: disabled});

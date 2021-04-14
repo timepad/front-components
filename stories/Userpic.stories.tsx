@@ -1,4 +1,3 @@
-import '../src/app/styles.less';
 import './lib/main.less';
 import React from 'react';
 import {Userpic} from '../src';

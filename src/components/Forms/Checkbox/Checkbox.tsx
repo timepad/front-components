@@ -17,7 +17,7 @@ export interface ICheckboxProps {
     onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Checkbox = ({name, label, value, checked, disabled, id, error, onChange}: ICheckboxProps) => {
+export const Checkbox: React.FC<ICheckboxProps> = ({name, label, value, checked, disabled, id, error, onChange}) => {
     const idx = id || name + '_field_checkbox';
 
     const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});

@@ -29,7 +29,7 @@ interface IProps {
     onErrorTruncation?: (truncated: boolean) => void;
 }
 
-export const Input = (props: IProps): React.ReactElement => {
+export const Input: React.FC<IProps> = (props) => {
     const {
         name,
         label,
@@ -112,15 +112,16 @@ export const Input = (props: IProps): React.ReactElement => {
     }, [focused, isTruncated, onErrorTruncation]);
 
     useEffect(() => {
+        const fakeErrorLabel = fakeErrorLabelRef?.current;
         if (error) {
             checkErrorTruncation();
-            fakeErrorLabelRef?.current?.addEventListener('transitionend', checkErrorTruncation);
+            fakeErrorLabel?.addEventListener('transitionend', checkErrorTruncation);
             // TODO: вызывается для каждого анимируемого свойства, возможно стоит оптимизировать
             window.addEventListener('resize', checkErrorTruncation);
         }
 
         return () => {
-            fakeErrorLabelRef?.current?.removeEventListener('transitionend', checkErrorTruncation);
+            fakeErrorLabel?.removeEventListener('transitionend', checkErrorTruncation);
             window.removeEventListener('resize', checkErrorTruncation);
         };
     }, [checkErrorTruncation, error, inputState]);

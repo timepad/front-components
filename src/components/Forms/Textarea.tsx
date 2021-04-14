@@ -39,7 +39,7 @@ const getTALinesNumber = (ta: HTMLTextAreaElement, div: HTMLDivElement): number 
     return Math.floor(divHeight / lineHeight);
 };
 
-export const Textarea = (props: ITextareaProps): React.ReactElement => {
+export const Textarea: React.FC<ITextareaProps> = (props) => {
     const {
         name: defaultName,
         label,
@@ -135,15 +135,16 @@ export const Textarea = (props: ITextareaProps): React.ReactElement => {
     });
 
     useEffect(() => {
+        const fakeErrorLabel = fakeErrorLabelRef?.current;
         if (error) {
             checkErrorTruncation();
-            fakeErrorLabelRef?.current?.addEventListener('transitionend', checkErrorTruncation);
+            fakeErrorLabel?.addEventListener('transitionend', checkErrorTruncation);
             // TODO: вызывается для каждого анимируемого свойства, возможно стоит оптимизировать
             window.addEventListener('resize', checkErrorTruncation);
         }
 
         return () => {
-            fakeErrorLabelRef?.current?.removeEventListener('transitionend', checkErrorTruncation);
+            fakeErrorLabel?.removeEventListener('transitionend', checkErrorTruncation);
             window.removeEventListener('resize', checkErrorTruncation);
         };
     }, [checkErrorTruncation, error, inputState]);

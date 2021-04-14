@@ -80,7 +80,7 @@ const inputsData: IInputData[] = [
     },
 ];
 
-const InputRow = (props: IInputData) => {
+const InputRow: React.FC<IInputData> = (props) => {
     const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
     const [value, setValue] = useState(valueDefault);
     return (
@@ -101,7 +101,7 @@ interface IInputsContainerProps {
     themeColor: keyof typeof themes;
 }
 
-const InputsContainer = (props: IInputsContainerProps) => {
+const InputsContainer: React.FC<IInputsContainerProps> = (props) => {
     const {data, themeColor} = props;
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>

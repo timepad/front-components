@@ -2,7 +2,6 @@ import * as React from 'react';
 import {PropsWithChildren, useState} from 'react';
 
 import '../../src/assets/css/bundle.less';
-import '../../src/app/styles.less';
 import '../lib/main.less';
 
 import {Brick} from '../../src/components/utility/Modifiers/Brick';
@@ -37,8 +36,9 @@ const ThemedBlock = ({theme}: {theme: keyof typeof backgroundColor}) => {
     const [checkedRadioOneLabeled, setCheckedRadioOneLabeled] = useState(false);
     const [checkedRadioTwo, setCheckedRadioTwo] = useState(true);
     const [checkedRadioTwoLabeled, setCheckedRadioTwoLabeled] = useState(true);
-    // TODO: change types, support default color?
-    const themeArgs: RequireOnlyOne<IThemeProps> = {[theme]: true} as any;
+    const themeArgs: RequireOnlyOne<IThemeProps> = Object.create(null, {
+        [theme]: {writable: true, value: true},
+    });
 
     return (
         <Theme {...themeArgs}>

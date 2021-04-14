@@ -16,7 +16,7 @@ interface IRadioButtonProps {
     onBlurHandler?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
-export const RadioButton = (props: IRadioButtonProps): React.ReactElement => {
+export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
     const {checked, name, label, value, disabled, onChangeHandler, onBlurHandler} = props;
 
     const id: string = uniqueId('field-');
