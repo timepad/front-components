@@ -10,5 +10,5 @@ export default {
     RadioButton,
     Radio,
     Checkbox,
-    PhoneInput
-}
+    PhoneInput,
+};
