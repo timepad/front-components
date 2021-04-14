@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {MouseEventHandler, ReactNode} from 'react';
 import cx from 'classnames';
+import './cuserpic.less';
 
-import IconProfile from 'assets/svg/24/icon-profile-24.svg';
+import IconProfile from '../../assets/svg/24/icon-profile-24.svg';
 
 export interface IProps {
     // image url to use as a background of component

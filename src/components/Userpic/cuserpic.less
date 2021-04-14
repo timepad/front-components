@@ -1,0 +1,205 @@
+@import "../../assets/css/bundle.less";
+
+.size(@value) { width: @value; height: @value; }
+
+.cuserpic {
+  .size(32px);
+  font-family: @ff;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background-color: @c-white;
+  box-shadow: inset 0 0 0 100px @c-gray-50-fade-20;
+  background-size: cover;
+  color: @c-gray-35;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 22px;
+  flex-shrink: 0;
+  cursor: default;
+  transition: @duration-blink;
+
+  &:not(&--small):not(&--big):not(&--bigger):not(&--biggest):not(&--square) {
+    span {
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  svg * {
+    fill: @c-gray-35;
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    .size(40px);
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  &--pic {
+    b,
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+    }
+
+    b {
+      z-index: @z-index;
+      background: transparent center center no-repeat;
+      background-size: cover;
+    }
+
+    &:after {
+       content: '';
+       display: block;
+       z-index: @z-index-lifted;
+       border: 1px solid @c-gray-50-fade-20;
+       box-sizing: border-box;
+     }
+  }
+
+  &--interactive {
+    cursor: pointer;
+
+    .on-hover({
+      background-color: @c-gray-50-fade-35;
+      color: @c-gray-75;
+
+      svg * {
+        fill: @c-gray-75;
+      }
+    });
+
+    &:active {
+      background-color: @c-gray-50-fade-35;
+      color: @c-gray-50;
+
+      svg * {
+        fill: @c-gray-50;
+      }
+    }
+  }
+
+  &--interactive&--pic {
+    .on-hover({
+      &:after {
+        background-color: @c-gray-50-fade-20;
+      }
+    });
+
+    &:active:after {
+      background-color: @c-gray-50-fade-35;
+    }
+  }
+
+  &--square {
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+
+  &&--small {
+    .size(24px);
+    background-size: 24px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  &&--big {
+    .size(48px);
+    font-size: 22.5px;
+    line-height: 33px;
+
+    /* TODO: решение для размеров не является верным.
+     * Дизайнеры предполагают, что атомарный объект не имеет своих размеров, на них полностью влияет их контекст
+     * Поэтому пока оставлем так, а новый подход требует обсуждения
+     */
+    @media (max-width: @rsp-mobile-max) {
+      font-size: 20.4px;
+      line-height: 26px;
+
+      width: 40px;
+      height: 40px;
+    }
+
+    span {
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  &&--bigger {
+    .size(128px);
+    font-size: 60px;
+    line-height: 22px;
+
+    border-radius: 8px;
+  }
+
+  &&--biggest {
+    .size(160px);
+    font-size: 75px;
+    line-height: 22px;
+    border-radius: 8px;
+  }
+
+  &&--bigger,
+  &&--biggest {
+
+    @media (min-width: @rsp-desktop-min) {
+      span {
+        position: relative;
+        top: -4px;
+      }
+    }
+
+    @media (max-width: @rsp-mobile-max) {
+      .size(64px);
+
+      border-radius: 6px;
+
+      font-size: 30px;
+      line-height: 22px;
+    }
+  }
+
+  &--square&--small {
+    border-radius: 3px;
+  }
+
+  &--square&--small&--pic {
+    border-radius: 4px;
+  }
+
+  &--square&--big {
+    border-radius: 6px;
+    @media (max-width: @rsp-mobile-max) {
+      border-radius: 4px;
+    }
+  }
+  &--square&--big&--pic {
+    border-radius: 4px;
+  }
+
+  &__link {
+    display: flex;
+    z-index: 1;
+    position: relative;
+
+    & + & {
+      margin-left: 8px;
+    }
+
+    & .auserpic {
+      cursor: pointer;
+    }
+  }
+}
