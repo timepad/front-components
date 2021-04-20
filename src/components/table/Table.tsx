@@ -1,17 +1,9 @@
-import React, {
-    createContext,
-    FC,
-    HTMLAttributes,
-    ReactElement,
-    ReactNode,
-    MouseEvent,
-    useEffect,
-    useState,
-} from 'react';
+import * as React from 'react';
+import {createContext, FC, HTMLAttributes, ReactElement, ReactNode, MouseEvent, useEffect, useState} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 
-import './ctable.less';
+import './index.less';
 
 import {Row, ICellProps} from './Row';
 import {Col, IColProps} from './Col';
@@ -27,7 +19,7 @@ interface ITableProps extends HTMLAttributes<HTMLTableElement> {
 
 export const TableContext = createContext({} as ITableProps);
 
-const getChildrenByType = (children: ReactNode, type: React.ReactNode) =>
+const getChildrenByType = (children: ReactNode, type: ReactNode) =>
     React.Children.toArray(children).filter((child: ReactNode) => {
         if (typeof child === 'object' && child !== null) {
             return 'type' in child ? child?.type === type : child;

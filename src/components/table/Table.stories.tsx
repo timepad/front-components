@@ -1,4 +1,5 @@
-import React, {FC} from 'react';
+import * as React from 'react';
+import {FC} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {Table} from './Table';
 import 'css/bundle.less';
@@ -77,7 +78,7 @@ export const ComponentOnly: IStorybookComponent = () => {
 
             <Table>
                 <Table.Col id="id" label="ID" align="right" width="40px" />
-                <Table.Col id="title" label="Заголовок" width="200px" />
+                <Table.Col id="evettitle" label="Заголовок" width="200px" />
                 <Table.Col id="actions" label="Действия" />
                 <Table.Col id="id" label="ID" format={(value) => value + ' %'} />
                 {tableData.data.map((item, idx) => (
