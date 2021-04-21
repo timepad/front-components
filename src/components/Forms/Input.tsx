@@ -27,6 +27,7 @@ interface IProps {
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onStateChange?: (state: State) => void;
     onErrorTruncation?: (truncated: boolean) => void;
+    type?: string;
 }
 
 export const Input: React.FC<IProps> = (props) => {
@@ -45,6 +46,7 @@ export const Input: React.FC<IProps> = (props) => {
         customIcon,
         onStateChange,
         onErrorTruncation,
+        type,
     } = props;
 
     const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
@@ -140,6 +142,7 @@ export const Input: React.FC<IProps> = (props) => {
                 onKeyPress={onPress}
                 disabled={disabled}
                 autoFocus={autoFocus}
+                type={type}
             />
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}
