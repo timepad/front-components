@@ -6,7 +6,19 @@ import IconProfile from '../../assets/svg/24/icon-profile-24.svg';
 
 import './index.less';
 
-export interface IProps {
+export enum PicShape {
+    round = 'round',
+    square = 'square',
+}
+
+export enum PicSize {
+    small = 'small',
+    big = 'big',
+    bigger = 'bigger',
+    biggest = 'biggest',
+}
+
+interface IProps {
     // image url to use as a background of component
     // has priority on fillChar
     fillURL?: string;
@@ -15,27 +27,30 @@ export interface IProps {
     // if a string is passed fist char will be used
     // if a char is lowercase, will be automatically converted to uppercase
     fillChar?: string;
-    shape?: 'round' | 'square';
-    size?: 'small' | 'medium' | 'big' | 'bigger' | 'biggest';
+    shape?: PicShape;
+    size?: PicSize;
     onClick?: MouseEventHandler;
     className?: string;
 }
 
 // this component is not exported outside folder (see index.ts)
 export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}: IProps) => {
-    let classNames = cx('cuserpic', className, {
-        'cuserpic--interactive': onClick !== undefined,
-        'cuserpic--square': shape === 'square',
-        'cuserpic--small': size === 'small',
-        'cuserpic--big': size === 'big',
-        'cuserpic--bigger': size === 'bigger',
-        'cuserpic--biggest': size === 'biggest',
-    });
+    const classNames = cx(
+        className,
+        component('userpic')({
+            interactive: onClick !== undefined,
+            square: shape === PicShape.square,
+            small: size === PicSize.small,
+            big: size === PicSize.big,
+            bigger: size === PicSize.bigger,
+            biggest: size === PicSize.biggest,
+            pic: !!fillURL,
+        }),
+    );
 
     let display: ReactNode;
 
     if (fillURL) {
-        classNames = cx(classNames, 'cuserpic--pic');
         display = (
             <b
                 style={{
@@ -46,7 +61,7 @@ export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, 
     } else if (fillChar) {
         display = <span>{fillChar[0].toUpperCase()}</span>;
     } else {
-        display = <IconProfile className="cicon" />;
+        display = <IconProfile className={component('icon')()} />;
     }
 
     return (

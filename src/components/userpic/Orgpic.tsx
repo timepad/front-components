@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {MouseEventHandler} from 'react';
-import {Pic} from './Pic';
+import {Pic, PicShape, PicSize} from './Pic';
 
 interface IProps {
     // image url to use as a background of component
@@ -12,10 +12,10 @@ interface IProps {
     // if a char is lowercase, will be automatically converted to uppercase
     fillChar?: string;
     onClick?: MouseEventHandler;
-    size?: 'small' | 'medium' | 'big' | 'bigger' | 'biggest';
+    size?: PicSize;
     className?: string;
 }
 
 export const Orgpic: React.FC<IProps> = (props: IProps) => {
-    return <Pic {...props} shape="square" />;
+    return <Pic {...props} shape={PicShape.square} />;
 };

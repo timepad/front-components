@@ -1,8 +1,9 @@
 import '../../assets/css/bundle.less';
-import React from 'react';
+import * as React from 'react';
 import {Userpic} from './Userpic';
 import {StoryTitle, dummy, Spacer} from '../../services/helpers/storyBookHelpers';
 import {Orgpic} from './Orgpic';
+import {PicSize} from './Pic';
 
 const argTypes = {
     fillUrl: {
@@ -55,101 +56,64 @@ export const Interactive: React.FC = () => {
     );
 };
 
-export const Variants: React.FC = () => {
+export const WithImage: React.FC = () => {
     return (
-        <div className="lflex lflex--y-axis">
-            <StoryTitle>Userpic with image</StoryTitle>
-            <Userpic fillURL={imageUrl} onClick={dummy} />
-            <div className="lbrick-2" />
-            <StoryTitle>Userpic with character</StoryTitle>
-            <Userpic fillChar="A" onClick={dummy} />
+        <div>
+            <Userpic fillURL={imageUrl} />
         </div>
     );
 };
 
-type size = 'small' | 'medium' | 'big' | 'bigger' | 'biggest';
+export const WithCharacter: React.FC = () => {
+    return (
+        <div>
+            <Userpic fillChar={char} />
+        </div>
+    );
+};
 
-enum fillType {
-    CHAR,
-    URL,
-}
-
-const squareButtons = [
-    [
-        {onClick: dummy, fillType: fillType.CHAR, size: 'small'},
-        {onClick: dummy, fillType: fillType.URL, size: 'small'},
-    ],
-    [
-        {onClick: dummy, fillType: fillType.CHAR, size: 'medium'},
-        {onClick: dummy, fillType: fillType.URL, size: 'medium'},
-    ],
-    [
-        {onClick: dummy, fillType: fillType.CHAR, size: 'big'},
-        {onClick: dummy, fillType: fillType.URL, size: 'big'},
-    ],
-];
-
-const organizationPagePic = [
-    [
-        {onClick: undefined, fillType: fillType.CHAR, size: 'bigger'},
-        {onClick: undefined, fillType: fillType.URL, size: 'bigger'},
-    ],
-    [
-        {onClick: undefined, fillType: fillType.CHAR, size: 'biggest'},
-        {onClick: undefined, fillType: fillType.URL, size: 'biggest'},
-    ],
-];
-
-export const Userpics: React.FC = () => {
-    const fill = (type: fillType) => {
-        switch (type) {
-            case fillType.CHAR:
-                return {fillChar: char};
-            case fillType.URL:
-                return {fillURL: imageUrl};
-            default:
-                return undefined;
-        }
-    };
-
+export const Orgpics: React.FC = () => {
     return (
         <>
-            <StoryTitle>Buttons</StoryTitle>
-            {squareButtons.map((buttons, index) => (
-                <>
-                    <div className="lflex" key={index}>
-                        {buttons.map((button, index) => (
-                            <React.Fragment key={index}>
-                                <Orgpic
-                                    onClick={button.onClick}
-                                    {...fill(button.fillType)}
-                                    size={button.size as size}
-                                />
-                                <Spacer />
-                            </React.Fragment>
-                        ))}
-                    </div>
-                    <div className="lbrick-2" />
-                </>
-            ))}
-            <StoryTitle>Organization page</StoryTitle>
-            {organizationPagePic.map((buttons, index) => (
-                <>
-                    <div className="lflex" key={index}>
-                        {buttons.map((button, index) => (
-                            <React.Fragment key={index}>
-                                <Orgpic
-                                    onClick={button.onClick}
-                                    {...fill(button.fillType)}
-                                    size={button.size as size}
-                                />
-                                <Spacer />
-                            </React.Fragment>
-                        ))}
-                    </div>
-                    <div className="lbrick-2" />
-                </>
-            ))}
+            <StoryTitle>Organization square default icon</StoryTitle>
+            <div className="lflex">
+                <Orgpic fillChar={char} />
+                <Spacer />
+                <Orgpic fillURL={imageUrl} />
+            </div>
+            <div className="lbrick-2" />
+
+            <StoryTitle>Organization square small icon</StoryTitle>
+            <div className="lflex">
+                <Orgpic fillChar={char} size={PicSize.small} />
+                <Spacer />
+                <Orgpic fillURL={imageUrl} size={PicSize.small} />
+            </div>
+            <div className="lbrick-2" />
+
+            <StoryTitle>Organization square big icon</StoryTitle>
+            <div className="lflex">
+                <Orgpic fillChar={char} size={PicSize.big} />
+                <Spacer />
+                <Orgpic fillURL={imageUrl} size={PicSize.big} />
+            </div>
+            <div className="lbrick-2" />
+
+            <StoryTitle>Organization square bigger icon</StoryTitle>
+            <div className="lflex">
+                <Orgpic fillChar={char} size={PicSize.bigger} />
+                <Spacer />
+                <Orgpic fillURL={imageUrl} size={PicSize.bigger} />
+            </div>
+            <div className="lbrick-2" />
+
+            <StoryTitle>Organization square biggest icon</StoryTitle>
+            <div className="lflex">
+                <Orgpic fillChar={char} size={PicSize.biggest} />
+                <Spacer />
+                <Orgpic fillURL={imageUrl} size={PicSize.biggest} />
+            </div>
+            <div className="lbrick-2" />
         </>
     );
 };
