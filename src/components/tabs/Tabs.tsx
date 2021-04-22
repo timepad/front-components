@@ -7,7 +7,7 @@ import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {action, observable} from 'mobx';
 
-import './ctabs.less';
+import './index.less';
 
 class TabsStore {
     constructor(activeTabId = '') {
