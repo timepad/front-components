@@ -1,0 +1,1 @@
+export {RichLink} from './RichLink';
