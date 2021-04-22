@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    '../stories/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+    "../src/**/*.stories.mdx",
+    "../src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-links",
@@ -10,7 +11,6 @@ module.exports = {
     "@storybook/addon-controls",
     "@storybook/addon-viewport",
     "@storybook/addon-storysource",
-    '@storybook/addon-knobs/register', // addon управления параметрами во вкладке,
   ],
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
