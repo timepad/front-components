@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {MouseEventHandler, ReactNode} from 'react';
 import cx from 'classnames';
+import {component} from '../../services/helpers/classHelpers';
 import './cuserpic.less';
 
 import IconProfile from '../../assets/svg/24/icon-profile-24.svg';

@@ -1,9 +1,9 @@
-import '../src/assets/css/bundle.less';
-import './lib/main.less';
+import '../../assets/css/bundle.less';
+import './stories/lib/main.less';
 import React from 'react';
-import {Userpic} from '../src';
-import {StoryTitle} from './components/StoryTitle';
-import {Brick} from './Elements/helpers';
+import {Userpic} from './Userpic';
+import {StoryTitle} from './stories/components/StoryTitle';
+import {Brick} from './stories/Elements/helpers';
 
 const imageUrl = 'https://ucarecdn.com/a6b28451-2340-4b61-9776-8e186bf976fa/';
 
@@ -34,7 +34,6 @@ const argTypes = {
     },
 };
 
-// TODO: Отрефакторить
 // eslint-disable-next-line
 const dummy = () => {};
 

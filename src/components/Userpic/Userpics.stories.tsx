@@ -1,13 +1,11 @@
 import React from 'react';
-import {Brick} from '../src/components/utility/Modifiers/Brick';
-import {Gap} from '../src/components/utility/Modifiers/Gap';
-import './lib/userpics.less';
-import {Userpic, Orgpic} from '../src';
-import {withKnobs, text} from '@storybook/addon-knobs';
+import {Brick} from '../utility/Modifiers/Brick';
+import {Gap} from '../utility/Modifiers/Gap';
+import './stories/lib/userpics.less';
+import {Userpic, Orgpic} from '../../index';
 
 export default {
     title: 'Userpics',
-    decorators: [withKnobs],
 };
 
 type size = 'small' | 'medium' | 'big' | 'bigger' | 'biggest';
@@ -15,7 +13,6 @@ enum fillType {
     CHAR,
     URL,
 }
-// TODO: Отрефакторить
 // eslint-disable-next-line
 const clickHandler = () => {};
 const char = 'A';
@@ -56,8 +53,8 @@ const organizationPagePic = [
 ];
 
 export const Userpics: React.FC = () => {
-    const urlKnob = text('URL', url);
-    const charKnob = text('Char', char);
+    const urlKnob = url;
+    const charKnob = char;
     const fill = (type: fillType | undefined) => {
         switch (type) {
             case fillType.CHAR:
