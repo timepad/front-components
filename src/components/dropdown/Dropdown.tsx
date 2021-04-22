@@ -13,6 +13,8 @@ import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/he
 import {useClickOutside} from '../../services/hooks/useClickOutside';
 import {Link} from './Link';
 
+import './index.less';
+
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
 │   tl  │ │   │    │   │ │  tr   │
@@ -43,7 +45,7 @@ const TOP_SHIFT = 2;
 
 const TOP_PADDING = 16;
 
-const AUTOPOSITION_CLASS = 'mdrop__drop--autoposition';
+const AUTOPOSITION_CLASS = 'cdrop__drop--autoposition';
 
 // Возвращает позицию DD относительно родителя с учётом выбранного позиционирования.
 // Функция очень не KISS но на века (надеюсь). Возможные позиции см `DropdownPosition`
@@ -214,14 +216,14 @@ export const Dropdown = ({
     const [applyAutoPosition, setApplyAutoPosition] = useState(false);
     const [scrollable, setScrollable] = useState(false);
 
-    const dropClassName = cx('mdrop__drop', {
-        'mdrop__drop--right': false,
-        'mdrop__drop--scrollable': scrollable,
-        'mdrop__drop--show': show,
-        'mdrop__drop--white': white,
+    const dropClassName = cx('cdrop__drop', {
+        'cdrop__drop--right': false,
+        'cdrop__drop--scrollable': scrollable,
+        'cdrop__drop--show': show,
+        'cdrop__drop--white': white,
         [autopositionClassName]: applyAutoPosition,
-        'mdrop__drop--scrolledtobottom': scrolledToBottom,
-        'mdrop__drop--with-icons': withIcons,
+        'cdrop__drop--scrolledtobottom': scrolledToBottom,
+        'cdrop__drop--with-icons': withIcons,
     });
 
     const ddRef = useRef<HTMLDivElement | null>(null);
@@ -264,7 +266,7 @@ export const Dropdown = ({
             // top и left добавляются в динамически созданный класс, который навешивается на дропдаун
             // вместо того, чтобы задавать это через  dropdownElement.style
             // т.о. когда длинный дропадун будет пролистан до низу,
-            // позиционирование будет переопределено в классе mdrop__drop--scrolledtobottom
+            // позиционирование будет переопределено в классе cdrop__drop--scrolledtobottom
             const style = document.createElement('style');
             style.type = 'text/css';
             style.id = `${autopositionClassName}-id`;
@@ -310,7 +312,7 @@ export const Dropdown = ({
         <AnimatePresence>
             {show && (
                 <motion.div
-                    className="mdrop-bg"
+                    className="cdrop-bg"
                     onClick={(e: React.MouseEvent) => {
                         if (doNotCloseMobileDDOnAnyClick) {
                             e.target === e.currentTarget && onCloseHandler();
@@ -332,7 +334,7 @@ export const Dropdown = ({
                         transition={transitionNormalEaseOut}
                     >
                         <div
-                            className="mdrop__scroll"
+                            className="cdrop__scroll"
                             onScroll={(event) => {
                                 // set scroll bottom flag just before actually scroll to bottom,
                                 // f.e. there is a possible situation when scrolled to buttom, but
@@ -355,17 +357,17 @@ export const Dropdown = ({
                                 // --
                             }}
                         >
-                            <ul ref={ddListRef} className="mdrop__list">
+                            <ul ref={ddListRef} className="cdrop__list">
                                 {children}
                             </ul>
                         </div>
                         <div className="hidden-desktop hidden-tablet">
                             <Theme dark={!white}>
-                                <div className="mdrop__hr--wrapper">
-                                    <span className="mdrop__hr" />
+                                <div className="cdrop__hr--wrapper">
+                                    <span className="cdrop__hr" />
                                 </div>
-                                <div className="mdrop__cancel">
-                                    <div className="mdrop__cancel--wrapper">
+                                <div className="cdrop__cancel">
+                                    <div className="cdrop__cancel--wrapper">
                                         <Button
                                             label="Отменить"
                                             variant={Button.variant.transparent}
