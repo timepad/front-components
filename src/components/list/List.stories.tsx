@@ -55,6 +55,21 @@ export const Menu: IStorybookComponent = () => {
                     Организация
                 </List.Item>
             </List>
+            <div className="lbrick-2" />
+            <StoryTitle>Menu Divider</StoryTitle>
+            <List>
+                <List.Item>Главная</List.Item>
+                <List.Divider />
+                <List.Item as={'a'} href={'#'} prefix={Prefix} suffix={Suffix} label={'События'} />
+                <List.Divider />
+                <List.Item prefix={Prefix}>Рассылки</List.Item>
+                <List.Divider />
+                <List.Item suffix={Suffix}>Участники</List.Item>
+                <List.Divider />
+                <List.Item href={'#'} as={'a'}>
+                    Организация
+                </List.Item>
+            </List>
         </Theme>
     );
 };

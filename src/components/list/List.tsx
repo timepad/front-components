@@ -1,8 +1,8 @@
 import * as React from 'react';
-import cx from 'classnames';
-import './index.less';
 import {Item} from './Item';
 import {component} from '../../services/helpers/classHelpers';
+import {Divider} from './Divider';
+import './index.less';
 
 export interface IList {
     className?: string;
@@ -35,6 +35,7 @@ const ListBase: React.FC<IList> = ({
 
 const listChildren = {
     Item,
+    Divider,
 };
 
 export const List = Object.assign(ListBase, listChildren);

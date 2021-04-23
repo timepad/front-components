@@ -2,7 +2,6 @@ import React, {ReactNode, useEffect, useRef, useState, useCallback} from 'react'
 import cx from 'classnames';
 import ReactDOM from 'react-dom';
 
-import {Hr} from './Hr';
 import {Row} from './Row';
 import {Button as ButtonRow} from './Button';
 import {Option} from './Option';
@@ -11,7 +10,6 @@ import {Theme} from '../utility/Modifiers';
 import {motion, AnimatePresence} from 'framer-motion';
 import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/helpers/AnimationHelper/animationHelper';
 import {useClickOutside} from '../../services/hooks/useClickOutside';
-import {Link} from './Link';
 
 import './index.less';
 
@@ -386,8 +384,6 @@ export const Dropdown = ({
     );
 };
 
-Dropdown.Hr = Hr;
 Dropdown.Row = Row;
-Dropdown.Link = Link;
 Dropdown.Button = ButtonRow;
 Dropdown.Option = Option;
