@@ -14,14 +14,11 @@ export default {
 } as Meta;
 
 const DropBtn = ({...props}) => {
-    const ref = useRef();
     const [show, setShow] = useState(false);
     return (
         <>
-            <Button type={'button'} buttonRef={ref} onClick={() => setShow(!show)}>
-                parent
-            </Button>
-            <Dropdown parent={ref} show={show} onClose={() => setShow(false)} {...props}>
+            <Dropdown show={show} onClose={() => setShow(false)} {...props}>
+                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List mod={'dark'}>
                         <List.Item>Главная</List.Item>
@@ -35,21 +32,18 @@ const DropBtn = ({...props}) => {
 };
 
 const DropCustomBody = ({...props}) => {
-    const ref = useRef();
     const [show, setShow] = useState(false);
     return (
         <>
-            <Button type={'button'} buttonRef={ref} onClick={() => setShow(!show)}>
-                parent
-            </Button>
-            <Dropdown parent={ref} show={show} onClose={() => setShow(false)} {...props}>
-                <div className="my-super-class">
+            <Dropdown show={show} onClose={() => setShow(false)} {...props}>
+                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+                <Dropdown.Body className="my-super-class">
                     <List>
                         <List.Item>Главная</List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
                     </List>
-                </div>
+                </Dropdown.Body>
             </Dropdown>
         </>
     );

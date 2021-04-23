@@ -13,6 +13,8 @@ import {useClickOutside} from '../../services/hooks/useClickOutside';
 
 import './index.less';
 import {Body} from './Body';
+import {DropDownManagerContext} from './ManagerContext';
+import {ToggleButton} from './ToggleButton';
 
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
@@ -30,7 +32,7 @@ interface IProps {
     show: boolean;
     white?: boolean;
     onClose: () => void;
-    parent: React.MutableRefObject<HTMLElement | null>;
+    parent?: React.MutableRefObject<HTMLElement | null>;
     children?: ReactNode;
     priorityPositions?: DropdownPosition[];
     // enable with icons dropdown style
@@ -188,7 +190,7 @@ const smartPositionResolve = (
 };
 
 export const Dropdown = ({
-    show,
+    // show,
     white,
     onClose,
     parent,
@@ -214,6 +216,7 @@ export const Dropdown = ({
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
     const [applyAutoPosition, setApplyAutoPosition] = useState(false);
     const [scrollable, setScrollable] = useState(false);
+    const [show, setShow] = useState(false);
 
     const dropClassName = cx('cdrop__drop', {
         'cdrop__drop--right': false,
@@ -227,6 +230,7 @@ export const Dropdown = ({
 
     const ddRef = useRef<HTMLDivElement | null>(null);
     const ddListRef = useRef<HTMLDivElement | null>(null);
+    const ddBtnRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (!show) {
@@ -237,21 +241,24 @@ export const Dropdown = ({
 
     const onCloseHandler = useCallback(() => {
         onClose();
+        setShow(false);
         document.body.classList.remove('dd-open');
     }, [onClose]);
 
-    useClickOutside(ddRef, () => onCloseHandler());
+    // @ts-ignore
+    useClickOutside(ddRef, () => onCloseHandler(), ddBtnRef);
 
     useEffect(() => {
         const currentDdRef = ddRef?.current;
         const onResize = () => {
-            if (!show || !currentDdRef || !parent.current || !ddListRef.current) {
+            const realParent = parent ? parent : ddBtnRef;
+            if (!show || !currentDdRef || !realParent.current || !ddListRef.current) {
                 return;
             }
 
             const dropdownElement = currentDdRef;
             const rectDropDown = ddListRef.current.getBoundingClientRect();
-            const rectParent = parent.current.getBoundingClientRect();
+            const rectParent = realParent.current.getBoundingClientRect();
 
             document.body.classList.add('dd-open');
 
@@ -307,79 +314,27 @@ export const Dropdown = ({
         }
     }, [onCloseHandler, show]);
 
-    return ReactDOM.createPortal(
-        <AnimatePresence>
-            {show && (
-                <motion.div
-                    className="cdrop-bg"
-                    onClick={(e: React.MouseEvent) => {
-                        if (doNotCloseMobileDDOnAnyClick) {
-                            e.target === e.currentTarget && onCloseHandler();
-                        } else {
-                            onCloseHandler();
-                        }
-                    }}
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    exit={{opacity: 0}}
-                    transition={transitionBlinkEaseOut}
-                >
-                    <motion.div
-                        className={dropClassName}
-                        ref={ddRef}
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        transition={transitionNormalEaseOut}
-                    >
-                        <div
-                            className="cdrop__scroll"
-                            onScroll={(event) => {
-                                // set scroll bottom flag just before actually scroll to bottom,
-                                // f.e. there is a possible situation when scrolled to buttom, but
-                                // event.currentTarget.scrollTop less than (event.currentTarget.scrollHeight - event.currentTarget.offsetHeight)
-                                // in 1px
-                                setScrolledToBottom(
-                                    event.currentTarget.scrollTop + 10 >=
-                                        event.currentTarget.scrollHeight - event.currentTarget.offsetHeight,
-                                );
-                                // prevent extra scroll
-                                if (event.currentTarget.scrollTop < 0) {
-                                    event.currentTarget.scrollTop = 0;
-                                } else if (
-                                    event.currentTarget.scrollTop >
-                                    event.currentTarget.scrollHeight - event.currentTarget.offsetHeight
-                                ) {
-                                    event.currentTarget.scrollTop =
-                                        event.currentTarget.scrollHeight - event.currentTarget.offsetHeight;
-                                }
-                                // --
-                            }}
-                        >
-                            <div ref={ddListRef}>{children}</div>
-                        </div>
-                        <div className="hidden-desktop hidden-tablet">
-                            <Theme dark={!white}>
-                                <div className="cdrop__hr--wrapper">
-                                    <span className="cdrop__hr" />
-                                </div>
-                                <div className="cdrop__cancel">
-                                    <div className="cdrop__cancel--wrapper">
-                                        <Button
-                                            label="Отменить"
-                                            variant={Button.variant.transparent}
-                                            onClick={onCloseHandler}
-                                            fixed
-                                        />
-                                    </div>
-                                </div>
-                            </Theme>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>,
-        document.body,
+    const toggle = () => {
+        setShow(!show);
+    };
+
+    return (
+        <DropDownManagerContext.Provider
+            value={{
+                toggle,
+                show,
+                ddRef,
+                ddBtnRef,
+                doNotCloseMobileDDOnAnyClick,
+                onCloseHandler,
+                setScrolledToBottom,
+                ddListRef,
+                white,
+                dropClassName,
+            }}
+        >
+            {children}
+        </DropDownManagerContext.Provider>
     );
 };
 
@@ -387,3 +342,4 @@ Dropdown.Row = Row;
 Dropdown.Button = ButtonRow;
 Dropdown.Option = Option;
 Dropdown.Body = Body;
+Dropdown.ToggleButton = ToggleButton;
