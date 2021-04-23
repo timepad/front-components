@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 
 export interface IItem {
@@ -12,7 +11,7 @@ export interface IItem {
     children?: React.ReactChild | React.ReactChild[];
 }
 
-const Item: React.FC<IItem & React.HTMLAttributes<any>> = ({
+const Item: React.FC<IItem & React.HTMLAttributes<HTMLElement>> = ({
     children,
     as: Tag = 'div',
     className = '',

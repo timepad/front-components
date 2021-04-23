@@ -1,4 +1,4 @@
-import {createContext, Ref, RefObject} from 'react';
+import {createContext, Ref} from 'react';
 
 interface IContext {
     toggle: () => void;
@@ -6,7 +6,7 @@ interface IContext {
     setScrolledToBottom: (value: boolean) => void;
     show: boolean;
     ddRef?: Ref<HTMLDivElement>;
-    ddBtnRef?: Ref<any>;
+    ddBtnRef?: Ref<HTMLElement>;
     ddListRef?: Ref<HTMLDivElement>;
     doNotCloseMobileDDOnAnyClick?: boolean;
     white?: boolean;

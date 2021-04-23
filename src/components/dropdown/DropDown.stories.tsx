@@ -1,11 +1,10 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-import {Button} from '../button';
 import {List} from '../list';
 
 export default {

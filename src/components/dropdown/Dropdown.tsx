@@ -1,14 +1,9 @@
 import React, {ReactNode, useEffect, useRef, useState, useCallback} from 'react';
 import cx from 'classnames';
-import ReactDOM from 'react-dom';
 
 import {Row} from './Row';
 import {Button as ButtonRow} from './Button';
 import {Option} from './Option';
-import {Button} from '../button';
-import {Theme} from '../utility/Modifiers';
-import {motion, AnimatePresence} from 'framer-motion';
-import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/helpers/AnimationHelper/animationHelper';
 import {useClickOutside} from '../../services/hooks/useClickOutside';
 
 import './index.less';
