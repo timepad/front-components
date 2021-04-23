@@ -24,9 +24,9 @@ import {ToggleButton} from './ToggleButton';
 type DropdownPosition = 'tl' | 'rt' | 'br' | 'lb' | 'lt' | 'tr' | 'rb' | 'bl';
 
 interface IProps {
-    show: boolean;
+    show?: boolean;
     white?: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     parent?: React.MutableRefObject<HTMLElement | null>;
     children?: ReactNode;
     priorityPositions?: DropdownPosition[];
@@ -185,7 +185,7 @@ const smartPositionResolve = (
 };
 
 export const Dropdown = ({
-    // show,
+    show: propShow = false,
     white,
     onClose,
     parent,
@@ -211,7 +211,7 @@ export const Dropdown = ({
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
     const [applyAutoPosition, setApplyAutoPosition] = useState(false);
     const [scrollable, setScrollable] = useState(false);
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(propShow);
 
     const dropClassName = cx('cdrop__drop', {
         'cdrop__drop--right': false,
@@ -225,7 +225,7 @@ export const Dropdown = ({
 
     const ddRef = useRef<HTMLDivElement | null>(null);
     const ddListRef = useRef<HTMLDivElement | null>(null);
-    const ddBtnRef = useRef<HTMLElement | null>(null);
+    const ddBtnRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
     useEffect(() => {
         if (!show) {
@@ -234,14 +234,20 @@ export const Dropdown = ({
         }
     }, [show]);
 
+    useEffect(() => {
+        setShow(propShow);
+    }, [propShow]);
+
     const onCloseHandler = useCallback(() => {
-        onClose();
+        if (onClose) {
+            onClose();
+        }
         setShow(false);
         document.body.classList.remove('dd-open');
     }, [onClose]);
 
-    // @ts-ignore
-    useClickOutside(ddRef, () => onCloseHandler(), ddBtnRef);
+    const target = parent ? parent : ddBtnRef;
+    useClickOutside(ddRef, () => onCloseHandler(), target as React.MutableRefObject<HTMLButtonElement>);
 
     useEffect(() => {
         const currentDdRef = ddRef?.current;

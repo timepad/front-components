@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -6,6 +6,7 @@ import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookH
 
 import 'css/bundle.less';
 import {List} from '../list';
+import {Button} from '../button';
 
 export default {
     title: 'DropDown',
@@ -13,10 +14,9 @@ export default {
 } as Meta;
 
 const DropBtn = ({...props}) => {
-    const [show, setShow] = useState(false);
     return (
         <>
-            <Dropdown show={show} onClose={() => setShow(false)} {...props}>
+            <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List mod={'dark'}>
@@ -31,11 +31,35 @@ const DropBtn = ({...props}) => {
 };
 
 const DropCustomBody = ({...props}) => {
-    const [show, setShow] = useState(false);
     return (
         <>
-            <Dropdown show={show} onClose={() => setShow(false)} {...props}>
+            <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+                <Dropdown.Body className="my-super-class">
+                    <List>
+                        <List.Item>Главная</List.Item>
+                        <List.Item>Организация</List.Item>
+                        <List.Item>Рассылки</List.Item>
+                    </List>
+                </Dropdown.Body>
+            </Dropdown>
+        </>
+    );
+};
+
+const DropShowBtn = () => {
+    const [show, setShow] = useState(false);
+    const ref = useRef<HTMLButtonElement | null>(null);
+
+    const toggleShow = () => setShow(!show);
+    const handleClose = () => setShow(false);
+
+    return (
+        <>
+            <Button buttonRef={ref as React.MutableRefObject<HTMLButtonElement>} onClick={toggleShow}>
+                Open
+            </Button>
+            <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body className="my-super-class">
                     <List>
                         <List.Item>Главная</List.Item>
@@ -59,6 +83,9 @@ export const Default: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Custom body</StoryTitle>
             <DropCustomBody />
+            <div className="lbrick-2" />
+            <StoryTitle>Outside open</StoryTitle>
+            <DropShowBtn />
         </>
     );
 };
