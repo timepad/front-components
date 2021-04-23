@@ -15,7 +15,7 @@ interface IProps {
 
 export const Option: React.FC<IProps> = (props) => {
     const rowClass = cx(props.rowClass || null, {
-        'mdrop__list--subitem': props.subitem,
+        'cdrop__list--subitem': props.subitem,
     });
 
     return (

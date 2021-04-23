@@ -12,7 +12,7 @@ export const Button: React.FC<IProps> = (props) => {
     const rowClass = props.rowClass || '';
     return (
         <li className={rowClass}>
-            <span className="mdrop__btn mdrop__btn--wrapper">
+            <span className="cdrop__btn cdrop__btn--wrapper">
                 <TPUIButton label={props.label} variant={props.variant} onClick={props.onClick} />
             </span>
         </li>
