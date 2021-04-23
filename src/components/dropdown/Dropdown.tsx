@@ -12,6 +12,7 @@ import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/he
 import {useClickOutside} from '../../services/hooks/useClickOutside';
 
 import './index.less';
+import {Body} from './Body';
 
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
@@ -225,7 +226,7 @@ export const Dropdown = ({
     });
 
     const ddRef = useRef<HTMLDivElement | null>(null);
-    const ddListRef = useRef<HTMLUListElement | null>(null);
+    const ddListRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         if (!show) {
@@ -355,9 +356,7 @@ export const Dropdown = ({
                                 // --
                             }}
                         >
-                            <ul ref={ddListRef} className="cdrop__list">
-                                {children}
-                            </ul>
+                            <div ref={ddListRef}>{children}</div>
                         </div>
                         <div className="hidden-desktop hidden-tablet">
                             <Theme dark={!white}>
@@ -387,3 +386,4 @@ export const Dropdown = ({
 Dropdown.Row = Row;
 Dropdown.Button = ButtonRow;
 Dropdown.Option = Option;
+Dropdown.Body = Body;
