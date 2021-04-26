@@ -8,7 +8,6 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
-    "framer-motion": "^1.10.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

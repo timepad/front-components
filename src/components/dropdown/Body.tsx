@@ -1,8 +1,6 @@
 import React, {PropsWithChildren, useContext} from 'react';
 import cx from 'classnames';
 import ReactDOM from 'react-dom';
-import {AnimatePresence, motion} from 'framer-motion';
-import {transitionBlinkEaseOut, transitionNormalEaseOut} from '../../services/helpers/AnimationHelper/animationHelper';
 import {Theme} from '../utility/Modifiers';
 import {Button} from '../button';
 import {DropDownManagerContext} from './ManagerContext';
@@ -31,9 +29,14 @@ export const Body: React.FC<IProps> = ({children, className}) => {
     } = context;
     return ReactDOM.createPortal(
         <div className={classNames}>
-            <AnimatePresence>
+            <div
+                className={cx({
+                    'cdrop-animate': true,
+                    'cdrop-animate--show': show,
+                })}
+            >
                 {show && (
-                    <motion.div
+                    <div
                         className="cdrop-bg"
                         onClick={(e: React.MouseEvent) => {
                             if (doNotCloseMobileDDOnAnyClick) {
@@ -42,19 +45,8 @@ export const Body: React.FC<IProps> = ({children, className}) => {
                                 onCloseHandler();
                             }
                         }}
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        transition={transitionBlinkEaseOut}
                     >
-                        <motion.div
-                            className={dropClassName}
-                            ref={ddRef}
-                            initial={{opacity: 0}}
-                            animate={{opacity: 1}}
-                            exit={{opacity: 0}}
-                            transition={transitionNormalEaseOut}
-                        >
+                        <div className={dropClassName} ref={ddRef}>
                             <div
                                 className="cdrop__scroll"
                                 onScroll={(event) => {
@@ -98,10 +90,10 @@ export const Body: React.FC<IProps> = ({children, className}) => {
                                     </div>
                                 </Theme>
                             </div>
-                        </motion.div>
-                    </motion.div>
+                        </div>
+                    </div>
                 )}
-            </AnimatePresence>
+            </div>
         </div>,
         document.body,
     );
