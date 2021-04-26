@@ -1,3 +1,1 @@
-export {Orgpic} from './Orgpic';
-export {Userpic} from './Userpic';
-export {PicSize, PicShape} from './Pic';
+export {PicSize, PicShape, Pic} from './Pic';
