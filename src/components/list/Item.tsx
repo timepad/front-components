@@ -6,12 +6,12 @@ export interface IItem {
     secondaryText?: string;
     label?: string;
     as?: keyof JSX.IntrinsicElements;
-    prefix?: typeof React.Component;
-    suffix?: typeof React.Component;
+    prefix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
+    suffix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
     children?: React.ReactChild | React.ReactChild[];
 }
 
-const Item: React.FC<IItem & React.HTMLAttributes<HTMLElement>> = ({
+const Item: React.FC<IItem | any> = ({
     children,
     as: Tag = 'div',
     className = '',
