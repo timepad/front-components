@@ -1,4 +1,5 @@
-import React, {PropsWithChildren} from 'react';
+import * as React from 'react';
+import {PropsWithChildren} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import {RequireOnlyOne} from '../../../interfaces/misc/requireOnlyOne';
 
