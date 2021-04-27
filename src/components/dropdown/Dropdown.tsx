@@ -1,4 +1,5 @@
-import React, {ReactNode, useEffect, useRef, useState, useCallback} from 'react';
+import * as React from 'react';
+import {ReactNode, useEffect, useRef, useState, useCallback} from 'react';
 import cx from 'classnames';
 
 import {Row} from './Row';

@@ -1,5 +1,6 @@
+import * as React from 'react';
+import {useContext} from 'react';
 import {Button} from '../button';
-import React, {useContext} from 'react';
 import {DropDownManagerContext} from './ManagerContext';
 
 export const ToggleButton = ({customButton, children, ...props}: any) => {

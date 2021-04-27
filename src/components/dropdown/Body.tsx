@@ -1,4 +1,5 @@
-import React, {PropsWithChildren, useContext} from 'react';
+import * as React from 'react';
+import {PropsWithChildren, useContext} from 'react';
 import cx from 'classnames';
 import ReactDOM from 'react-dom';
 import {Theme} from '../utility/Modifiers';

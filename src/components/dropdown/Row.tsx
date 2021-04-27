@@ -1,4 +1,5 @@
-import React, {MouseEventHandler, ReactNode} from 'react';
+import * as React from 'react';
+import {MouseEventHandler, ReactNode} from 'react';
 
 interface IProps {
     className?: string;

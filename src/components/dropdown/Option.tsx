@@ -1,4 +1,5 @@
-import React, {MouseEventHandler} from 'react';
+import * as React from 'react';
+import {MouseEventHandler} from 'react';
 import cx from 'classnames';
 import IconBullet from '../../assets/svg/16/icon-bullet-16.svg';
 import {component} from '../../services/helpers/classHelpers';
