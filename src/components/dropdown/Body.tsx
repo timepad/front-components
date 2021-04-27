@@ -1,7 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import {PropsWithChildren, useContext} from 'react';
 import cx from 'classnames';
-import ReactDOM from 'react-dom';
 import {Theme} from '../utility/Modifiers';
 import {Button} from '../button';
 import {DropDownManagerContext} from './ManagerContext';
