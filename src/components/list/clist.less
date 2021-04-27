@@ -25,6 +25,17 @@
   &:hover {
     background: rgba(206, 205, 222, 0.35);
   }
+  & a,
+  a& {
+    cursor: pointer;
+    text-decoration: none;
+  }
+  & button,
+  button& {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
 }
 
 .clist-item__tag {
@@ -35,13 +46,6 @@
   height: 100%;
   line-height: 1;
   font-size: 15px;
-  a& {
-    text-decoration: none;
-  }
-  button& {
-    background-color: transparent;
-    border: none;
-  }
 }
 
 .clist--mod_dark .clist-item {
@@ -49,12 +53,18 @@
   &:hover {
     background-color: @c-gray-75;
   }
+  & path {
+    fill: @c-white;
+  }
 }
 
 .clist--mod_white .clist-item {
   background-color: @c-white;
   &:hover {
     background: rgba(206, 205, 222, 0.35);
+  }
+  & path {
+    fill: @c-black;
   }
 }
 
@@ -91,4 +101,11 @@
   margin: 0;
   height: 1px;
   background-color: @c-gray-50-fade-20;
+}
+
+.clist-item__secondary-text {
+  display: block;
+  font-size: 15px;
+  color: @c-gray-50;
+  margin-top: 2px;
 }

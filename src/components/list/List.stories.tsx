@@ -23,13 +23,15 @@ export const Menu: IStorybookComponent = () => {
         <Theme light={true}>
             <StoryTitle>Menu</StoryTitle>
             <List as={'nav'}>
-                <List.Item>Главная</List.Item>
-                <List.Item as={'a'} href={'#'} prefix={Prefix} suffix={Suffix} label={'События'} />
-                <List.Item prefix={Prefix}>Рассылки</List.Item>
-                <List.Item as={'button'} type={'button'} suffix={Suffix}>
+                <List.Group as={'a'} href={'#'} prefix={Prefix} suffix={Suffix}>
+                    Главная
+                </List.Group>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
+                <List.Item as={'button'} type={'button'} suffix={<AddIcon />}>
                     Участники
                 </List.Item>
-                <List.Item href={'#'} as={'a'}>
+                <List.Item as={'a'} href={'#'}>
                     Организация
                 </List.Item>
             </List>
@@ -37,9 +39,9 @@ export const Menu: IStorybookComponent = () => {
             <StoryTitle>Menu full</StoryTitle>
             <List full={true}>
                 <List.Item>Главная</List.Item>
-                <List.Item as={'a'} href={'#'} prefix={Prefix} suffix={Suffix} label={'События'} />
-                <List.Item prefix={Prefix}>Рассылки</List.Item>
-                <List.Item suffix={Suffix}>Участники</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
+                <List.Item suffix={<AddIcon />}>Участники</List.Item>
                 <List.Item href={'#'} as={'a'}>
                     Организация
                 </List.Item>
@@ -48,9 +50,9 @@ export const Menu: IStorybookComponent = () => {
             <StoryTitle>Menu Dark</StoryTitle>
             <List mod={'dark'}>
                 <List.Item>Главная</List.Item>
-                <List.Item as={'a'} href={'#'} prefix={Prefix} suffix={Suffix} label={'События'} />
-                <List.Item prefix={Prefix}>Рассылки</List.Item>
-                <List.Item suffix={Suffix}>Участники</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
+                <List.Item suffix={<AddIcon />}>Участники</List.Item>
                 <List.Item href={'#'} as={'a'}>
                     Организация
                 </List.Item>
@@ -60,16 +62,24 @@ export const Menu: IStorybookComponent = () => {
             <List>
                 <List.Item>Главная</List.Item>
                 <List.Divider />
-                <List.Item as={'a'} href={'#'} prefix={Prefix} suffix={Suffix} label={'События'} />
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
                 <List.Divider />
-                <List.Item prefix={Prefix}>Рассылки</List.Item>
+                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
                 <List.Divider />
-                <List.Item suffix={Suffix}>Участники</List.Item>
+                <List.Item suffix={<AddIcon />}>Участники</List.Item>
                 <List.Divider />
                 <List.Item href={'#'} as={'a'}>
                     Организация
                 </List.Item>
             </List>
+            <div className="lbrick-2" />
+            <StoryTitle>Menu secondary text</StoryTitle>
+            <List>
+                <List.Item as={'a'} href={'#'} secondaryText={'Наша супер главная страница'}>
+                    Главная
+                </List.Item>
+            </List>
+            <div className="lbrick-2" />
         </Theme>
     );
 };

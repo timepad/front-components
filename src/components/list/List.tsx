@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Item} from './Item';
-import {component} from '../../services/helpers/classHelpers';
+import {Group} from './Group';
 import {Divider} from './Divider';
+import {component} from '../../services/helpers/classHelpers';
+
 import './index.less';
 
 export interface IList {
@@ -35,6 +37,7 @@ const ListBase: React.FC<IList> = ({
 
 const listChildren = {
     Item,
+    Group,
     Divider,
 };
 
