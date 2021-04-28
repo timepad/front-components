@@ -12,44 +12,41 @@ export interface IItem {
     children?: React.ReactChild | React.ReactChild[];
 }
 
-const Item: React.FC<IItem | any> = ({
-    children,
-    as: Tag = 'div',
-    className = '',
-    secondaryText,
-    prefix,
-    suffix,
-    label,
-    ...props
-}: IItem): JSX.Element => {
-    const classNames = component('list-item')({
-        'has-prefix': !!prefix,
-        'has-suffix': !!suffix,
-        [className]: !!className,
-    });
+const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
+    (
+        {children, as = 'div', className = '', secondaryText, prefix, suffix, label, ...props}: IItem,
+        ref,
+    ): JSX.Element => {
+        const classNames = component('list-item')({
+            'has-prefix': !!prefix,
+            'has-suffix': !!suffix,
+            [className]: !!className,
+        });
 
-    const mainText = label ? label : children;
-    return (
-        <Tag className={classNames} {...props}>
-            {prefix
-                ? React.cloneElement(prefix, {
-                      className: cx(component('icon')(), component('list-item', 'row-icon')()),
-                  })
-                : null}
-            <div className={'clist-item__tag'}>
-                {secondaryText ? (
-                    <div className={'clist-item__secondary-text'}>{secondaryText}</div>
-                ) : (
-                    <div>{mainText}</div>
-                )}
-            </div>
-            {suffix
-                ? React.cloneElement(suffix, {
-                      className: cx(component('icon')(), component('list-item', 'row-icon')()),
-                  })
-                : null}
-        </Tag>
-    );
-};
+        const Tag: any = as;
+        const mainText = label ? label : children;
+        return (
+            <Tag ref={ref} className={classNames} {...props}>
+                {prefix
+                    ? React.cloneElement(prefix, {
+                          className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                      })
+                    : null}
+                <div className={'clist-item__tag'}>
+                    {secondaryText ? (
+                        <div className={'clist-item__secondary-text'}>{secondaryText}</div>
+                    ) : (
+                        <div>{mainText}</div>
+                    )}
+                </div>
+                {suffix
+                    ? React.cloneElement(suffix, {
+                          className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                      })
+                    : null}
+            </Tag>
+        );
+    },
+);
 
 export {Item};

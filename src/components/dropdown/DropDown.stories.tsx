@@ -72,6 +72,34 @@ const DropShowBtn = () => {
     );
 };
 
+const DropItemBtn = () => {
+    const [show, setShow] = React.useState(false);
+    const ref = React.useRef<HTMLButtonElement | null>(null);
+
+    const toggleShow = () => {
+        setShow(!show);
+    };
+
+    return (
+        <>
+            <List>
+                <List.Item ref={ref} as={'button'} type={'button'} onClick={toggleShow}>
+                    Btn
+                </List.Item>
+            </List>
+            <Dropdown parent={ref} show={show} onClose={toggleShow}>
+                <Dropdown.Body className="my-super-class">
+                    <List>
+                        <List.Item>Главная</List.Item>
+                        <List.Item>Организация</List.Item>
+                        <List.Item>Рассылки</List.Item>
+                    </List>
+                </Dropdown.Body>
+            </Dropdown>
+        </>
+    );
+};
+
 export const Default: IStorybookComponent = () => {
     return (
         <>
@@ -86,6 +114,9 @@ export const Default: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Outside open</StoryTitle>
             <DropShowBtn />
+            <div className="lbrick-2" />
+            <StoryTitle>List item as button</StoryTitle>
+            <DropItemBtn />
         </>
     );
 };
