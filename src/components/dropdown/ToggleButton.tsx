@@ -1,9 +1,16 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {MutableRefObject, PropsWithChildren, useContext} from 'react';
 import {Button} from '../button';
 import {DropDownManagerContext} from './ManagerContext';
 
-export const ToggleButton = ({customButton, children, ...props}: any) => {
+interface IToggleButton
+    extends PropsWithChildren<
+        React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+    > {
+    customButton?: keyof JSX.IntrinsicElements;
+}
+
+export const ToggleButton: React.FC<IToggleButton> = ({customButton, children, ...props}) => {
     const context = useContext(DropDownManagerContext);
     if (!context) {
         return null;
@@ -13,7 +20,7 @@ export const ToggleButton = ({customButton, children, ...props}: any) => {
         toggle();
     };
     if (customButton) {
-        const CustomButton = customButton;
+        const CustomButton: any = customButton;
         return (
             <CustomButton ref={ddBtnRef} onClick={handleClick} {...props}>
                 {children}
@@ -21,7 +28,11 @@ export const ToggleButton = ({customButton, children, ...props}: any) => {
         );
     }
     return (
-        <Button buttonRef={ddBtnRef} onClick={handleClick} {...props}>
+        <Button
+            buttonRef={ddBtnRef as MutableRefObject<HTMLButtonElement> | undefined}
+            onClick={handleClick}
+            {...props}
+        >
             {children}
         </Button>
     );
