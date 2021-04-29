@@ -59,7 +59,7 @@ export const Menu: IStorybookComponent = () => {
             </List>
             <div className="lbrick-2" />
             <StoryTitle>Menu Divider</StoryTitle>
-            <List>
+            <List size="lg">
                 <List.Item>Главная</List.Item>
                 <List.Divider />
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
@@ -74,7 +74,7 @@ export const Menu: IStorybookComponent = () => {
             </List>
             <div className="lbrick-2" />
             <StoryTitle>Menu secondary text</StoryTitle>
-            <List>
+            <List size="lg">
                 <List.Item as={'a'} href={'#'} secondaryText={'Наша супер главная страница'}>
                     Главная
                 </List.Item>

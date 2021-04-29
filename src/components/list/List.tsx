@@ -12,6 +12,7 @@ export interface IList {
     as?: keyof JSX.IntrinsicElements;
     full?: boolean;
     mod?: 'white' | 'dark';
+    size?: 'lg';
 }
 
 const ListBase: React.FC<IList> = ({
@@ -20,12 +21,14 @@ const ListBase: React.FC<IList> = ({
     className = '',
     full,
     mod = 'white',
+    size,
     ...props
 }): JSX.Element => {
     const Tag = as;
     const classNames = component('list')({
         full: full,
         mod,
+        size,
         [className]: !!className,
     });
     return (

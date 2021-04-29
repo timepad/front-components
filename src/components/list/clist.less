@@ -4,10 +4,15 @@
 
 .clist {
   display: inline-block;
+  --spacing-horizontal: 8px;
 }
 
 .clist--full {
   width: 100%;
+}
+
+.clist--size_lg {
+  --spacing-horizontal: 16px;
 }
 
 .clist-item {
@@ -42,7 +47,7 @@
   display: flex;
   flex: 1;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 var(--spacing-horizontal);
   height: 100%;
   line-height: 1;
   font-size: 15px;
@@ -77,18 +82,18 @@
 }
 
 .clist-item--has-prefix {
-  padding-left: 16px;
+  padding-left: var(--spacing-horizontal);
   box-sizing: border-box;
   & .clist-item__tag {
-    padding-left: 16px;
+    padding-left: var(--spacing-horizontal);
   }
 }
 
 .clist-item--has-suffix {
-  padding-right: 16px;
+  padding-right: var(--spacing-horizontal);
   box-sizing: border-box;
   & .clist-item__tag {
-    padding-right: 16px;
+    padding-right: var(--spacing-horizontal);
   }
 }
 
