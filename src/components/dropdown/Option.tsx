@@ -18,7 +18,7 @@ export const Option: React.FC<IProps> = (props) => {
     const rowClass = cx(
         props.rowClass || null,
         component(
-            'cdrop',
+            'drop',
             'list',
         )({
             subitem: props.subitem,

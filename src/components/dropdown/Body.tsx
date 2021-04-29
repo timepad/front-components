@@ -75,11 +75,11 @@ export const Body: React.FC<IProps> = ({children, className}) => {
                             </div>
                             <div className="hidden-desktop hidden-tablet">
                                 <Theme dark={!white}>
-                                    <div className="cdrop__hr--wrapper">
-                                        <span className="cdrop__hr" />
+                                    <div className={component('drop', 'hr-wrapper')()}>
+                                        <span className={component('drop', 'hr')()} />
                                     </div>
-                                    <div className="cdrop__cancel">
-                                        <div className="cdrop__cancel--wrapper">
+                                    <div className={component('drop', 'cancel')()}>
+                                        <div className={component('drop', 'cancel-wrapper')()}>
                                             <Button
                                                 label="Отменить"
                                                 variant={Button.variant.transparent}
