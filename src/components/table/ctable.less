@@ -1,0 +1,46 @@
+.ctable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ctable__row {
+  color: @c-black;
+}
+
+.ctable__cell {
+  font-size: @fs-caption-mobile;
+  line-height: @lh-caption-mobile;
+  font-weight: normal;
+  text-align: left;
+  padding: 0 10px;
+  height: 42px;
+  border-top: 1px solid @c-gray-50-fade-20;
+
+  &:first-child {
+    padding-left: 2px;
+  }
+
+  &:last-child {
+    padding-right: 2px;
+  }
+}
+
+.ctable__header-cell {
+  height: 43px;
+  .ctable__cell;
+  color: @c-gray-50;
+  border-top: none;
+
+  &:hover {
+    cursor: pointer;
+    color: @c-primary-blue;
+  }
+}
+
+.ctable__header-cell--active {
+  color: @c-primary-blue;
+}
+
+.ctable__foot {
+  background-color: #CECDDE;
+}
