@@ -11,6 +11,7 @@ import './index.less';
 import {Body} from './Body';
 import {DropDownManagerContext} from './ManagerContext';
 import {ToggleButton} from './ToggleButton';
+import {component} from '../../services/helpers/classHelpers';
 
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
@@ -214,15 +215,22 @@ export const Dropdown = ({
     const [scrollable, setScrollable] = useState(false);
     const [show, setShow] = useState(propShow);
 
-    const dropClassName = cx('cdrop__drop', {
-        'cdrop__drop--right': false,
-        'cdrop__drop--scrollable': scrollable,
-        'cdrop__drop--show': show,
-        'cdrop__drop--white': white,
-        [autopositionClassName]: applyAutoPosition,
-        'cdrop__drop--scrolledtobottom': scrolledToBottom,
-        'cdrop__drop--with-icons': withIcons,
-    });
+    const dropClassName = cx(
+        component(
+            'drop',
+            'drop',
+        )({
+            right: false,
+            scrollable: scrollable,
+            show: show,
+            white: white,
+            scrolledtobottom: scrolledToBottom,
+            'with-icons': withIcons,
+        }),
+        {
+            [autopositionClassName]: applyAutoPosition,
+        },
+    );
 
     const ddRef = useRef<HTMLDivElement | null>(null);
     const ddListRef = useRef<HTMLDivElement | null>(null);

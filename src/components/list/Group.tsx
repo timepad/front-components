@@ -33,9 +33,9 @@ const Group: React.FC<IItem | any> = ({
     return (
         <div className={classNames}>
             {Prefix ? <Prefix /> : null}
-            <Tag className={'clist-item__tag'} {...props}>
+            <Tag className={component('list-item', 'tag')()} {...props}>
                 {secondaryText ? (
-                    <div className={'clist-item__secondary-text'}>{secondaryText}</div>
+                    <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
                 ) : (
                     <div>{mainText}</div>
                 )}

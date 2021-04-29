@@ -32,9 +32,9 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                           className: cx(component('icon')(), component('list-item', 'row-icon')()),
                       })
                     : null}
-                <div className={'clist-item__tag'}>
+                <div className={component('list-item', 'tag')()}>
                     {secondaryText ? (
-                        <div className={'clist-item__secondary-text'}>{secondaryText}</div>
+                        <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
                     ) : (
                         <div>{mainText}</div>
                     )}

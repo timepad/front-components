@@ -15,9 +15,15 @@ interface IProps {
 }
 
 export const Option: React.FC<IProps> = (props) => {
-    const rowClass = cx(props.rowClass || null, {
-        'cdrop__list--subitem': props.subitem,
-    });
+    const rowClass = cx(
+        props.rowClass || null,
+        component(
+            'cdrop',
+            'list',
+        )({
+            subitem: props.subitem,
+        }),
+    );
 
     return (
         <li className={cx(component('drop', 'option-wrapper')(), rowClass)}>
