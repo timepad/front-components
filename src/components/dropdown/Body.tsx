@@ -5,6 +5,7 @@ import cx from 'classnames';
 import {Theme} from '../utility/Modifiers';
 import {Button} from '../button';
 import {DropDownManagerContext} from './ManagerContext';
+import {component} from '../../services/helpers/classHelpers';
 
 interface IProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> {
@@ -12,7 +13,7 @@ interface IProps
 }
 
 export const Body: React.FC<IProps> = ({children, className}) => {
-    const classNames = cx(className ? className : 'cdrop__list');
+    const classNames = className ? className : component('drop', 'list')();
     const context = useContext(DropDownManagerContext);
 
     if (!context) {
@@ -31,14 +32,13 @@ export const Body: React.FC<IProps> = ({children, className}) => {
     return ReactDOM.createPortal(
         <div className={classNames}>
             <div
-                className={cx({
-                    'cdrop-animate': true,
-                    'cdrop-animate--show': show,
+                className={component('drop-animate')({
+                    show: show,
                 })}
             >
                 {show && (
                     <div
-                        className="cdrop-bg"
+                        className={component('drop-bg')()}
                         onClick={(e: React.MouseEvent) => {
                             if (doNotCloseMobileDDOnAnyClick) {
                                 e.target === e.currentTarget && onCloseHandler();
@@ -49,7 +49,7 @@ export const Body: React.FC<IProps> = ({children, className}) => {
                     >
                         <div className={dropClassName} ref={ddRef}>
                             <div
-                                className="cdrop__scroll"
+                                className={component('drop', 'scroll')()}
                                 onScroll={(event) => {
                                     // set scroll bottom flag just before actually scroll to bottom,
                                     // f.e. there is a possible situation when scrolled to buttom, but
