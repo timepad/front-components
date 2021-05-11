@@ -17,11 +17,13 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
         {children, as = 'div', className = '', secondaryText, prefix, suffix, label, ...props}: IItem,
         ref,
     ): JSX.Element => {
-        const classNames = component('list-item')({
-            'has-prefix': !!prefix,
-            'has-suffix': !!suffix,
-            [className]: !!className,
-        });
+        const classNames = cx(
+            component('list-item')({
+                'has-prefix': !!prefix,
+                'has-suffix': !!suffix,
+            }),
+            className,
+        );
 
         const Tag: any = as;
         const mainText = label ? label : children;

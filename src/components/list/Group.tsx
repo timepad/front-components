@@ -1,4 +1,5 @@
 import * as React from 'react';
+import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 
 export interface IItem {
@@ -23,11 +24,13 @@ const Group: React.FC<IItem | any> = ({
 }: IItem): JSX.Element => {
     const Prefix = prefix,
         Suffix = suffix,
-        classNames = component('list-item')({
-            'has-prefix': !!Prefix,
-            'has-suffix': !!Suffix,
-            [className]: !!className,
-        });
+        classNames = cx(
+            component('list-item')({
+                'has-prefix': !!Prefix,
+                'has-suffix': !!Suffix,
+            }),
+            className,
+        );
 
     const mainText = label ? label : children;
     return (

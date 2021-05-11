@@ -1,4 +1,5 @@
 import * as React from 'react';
+import cx from 'classnames';
 import {Item} from './Item';
 import {Group} from './Group';
 import {Divider} from './Divider';
@@ -25,12 +26,14 @@ const ListBase: React.FC<IList> = ({
     ...props
 }): JSX.Element => {
     const Tag = as;
-    const classNames = component('list')({
-        full: full,
-        variant: variant,
-        size,
-        [className]: !!className,
-    });
+    const classNames = cx(
+        component('list')({
+            full: full,
+            variant: variant,
+            size,
+        }),
+        className,
+    );
     return (
         <Tag className={classNames} {...props}>
             {children}
