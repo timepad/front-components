@@ -51,4 +51,6 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
     },
 );
 
+Item.displayName = 'Item';
+
 export {Item};
