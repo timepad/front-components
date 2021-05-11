@@ -3,6 +3,8 @@
 }
 
 .clist {
+  min-width: 120px;
+  max-width: 400px;
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -67,6 +69,7 @@
   button& {
     cursor: pointer;
     border: none;
+    background-color: transparent;
   }
 }
 
@@ -98,18 +101,18 @@
 }
 
 .clist-item--has-prefix {
-  padding-left: var(--spacing-horizontal);
+  padding-left: calc(var(--spacing-horizontal) / 2);
   box-sizing: border-box;
   & .clist-item__tag {
-    padding-left: var(--spacing-horizontal);
+    padding-left: calc(var(--spacing-horizontal) / 2);
   }
 }
 
 .clist-item--has-suffix {
-  padding-right: var(--spacing-horizontal);
+  padding-right: calc(var(--spacing-horizontal) / 2);
   box-sizing: border-box;
   & .clist-item__tag {
-    padding-right: var(--spacing-horizontal);
+    padding-right: calc(var(--spacing-horizontal) / 2);
   }
 }
 
