@@ -1,6 +1,8 @@
+import * as React from 'react';
 import LogoMobile from '../../assets/svg/logo/logo.svg';
 import LogoDesktop from '../../assets/svg/logo/logo-big.svg';
-import React from 'react';
+import {component} from '../../services/helpers/classHelpers';
+import cx from 'classnames';
 
 export enum Theme {
     default = 'default',
@@ -19,36 +21,74 @@ interface ILogo {
     device?: Device;
 }
 
-export const Logo = ({coverTheme = Theme.default, link, device}: ILogo): React.ReactElement => {
+export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}) => {
+    const themeClassName = component('theme');
+    const themeLogoClassName = component('theme', 'logo');
+    const logoClassName = component('logo');
+
     if (link) {
         // Логотип-ссылка
-
         if (device && device == Device.desktop) {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <a href={link} className="mtheme__alogo alogo alogo--desktop alogo--hoverable">
+                <div className={themeClassName(coverTheme)}>
+                    <a
+                        href={link}
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                desktop: true,
+                                hoverable: true,
+                            }),
+                        )}
+                    >
                         <LogoDesktop />
                     </a>
                 </div>
             );
         } else if (device && device == Device.mobile) {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <a href={link} className="mtheme__alogo alogo alogo--mobile alogo--hoverable">
+                <div className={themeClassName(coverTheme)}>
+                    <a
+                        href={link}
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                mobile: true,
+                                hoverable: true,
+                            }),
+                        )}
+                    >
                         <LogoMobile />
                     </a>
                 </div>
             );
         } else {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <a href={link} className="mtheme__alogo alogo alogo--desktop alogo--hoverable hidden-portrait">
+                <div className={themeClassName(coverTheme)}>
+                    <a
+                        href={link}
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                desktop: true,
+                                hoverable: true,
+                            }),
+                            'hidden-portrait',
+                        )}
+                    >
                         <LogoDesktop />
                     </a>
 
                     <a
                         href={link}
-                        className="mtheme__alogo alogo alogo--mobile alogo--hoverable hidden-desktop hidden-tablet"
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                mobile: true,
+                                hoverable: true,
+                            }),
+                            'hidden-desktop hidden-tablet',
+                        )}
                     >
                         <LogoMobile />
                     </a>
@@ -57,31 +97,60 @@ export const Logo = ({coverTheme = Theme.default, link, device}: ILogo): React.R
         }
     } else {
         // Просто логотип
-
         if (device && device == Device.desktop) {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <div className="mtheme__alogo alogo alogo--desktop">
+                <div className={themeClassName(coverTheme)}>
+                    <div
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                desktop: true,
+                            }),
+                        )}
+                    >
                         <LogoDesktop />
                     </div>
                 </div>
             );
         } else if (device && device == Device.mobile) {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <div className="mtheme__alogo alogo alogo--mobile">
+                <div className={themeClassName(coverTheme)}>
+                    <div
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                mobile: true,
+                            }),
+                        )}
+                    >
                         <LogoMobile />
                     </div>
                 </div>
             );
         } else {
             return (
-                <div className={`mtheme mtheme--${coverTheme}`}>
-                    <div className="mtheme__alogo alogo alogo--desktop hidden-portrait">
+                <div className={themeClassName(coverTheme)}>
+                    <div
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                desktop: true,
+                            }),
+                            'hidden-portrait',
+                        )}
+                    >
                         <LogoDesktop />
                     </div>
 
-                    <div className="mtheme__alogo alogo alogo--mobile hidden-desktop hidden-tablet">
+                    <div
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                mobile: true,
+                            }),
+                            'hidden-desktop hidden-tablet',
+                        )}
+                    >
                         <LogoMobile />
                     </div>
                 </div>
