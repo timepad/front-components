@@ -12,7 +12,7 @@ export interface IList {
     children?: React.ReactChild | React.ReactChild[];
     as?: keyof JSX.IntrinsicElements;
     full?: boolean;
-    variant?: 'white' | 'dark';
+    variant?: 'white' | 'dark' | 'transparent';
     size?: 'lg' | 'sm';
 }
 
@@ -21,7 +21,7 @@ const ListBase: React.FC<IList> = ({
     as = 'div',
     className = '',
     full,
-    variant = 'white',
+    variant = 'transparent',
     size,
     ...props
 }): JSX.Element => {

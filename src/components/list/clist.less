@@ -6,6 +6,7 @@
   display: inline-block;
   margin: 0;
   padding: 0;
+  background-color: @c-white;
   --spacing-horizontal: 16px;
 }
 
@@ -25,6 +26,20 @@
 
 .clist--size_lg {
   --spacing-horizontal: 32px;
+}
+
+.clist--variant_dark .clist-item {
+  background-color: transparent;
+  & path {
+    fill: @c-white;
+  }
+}
+
+.clist--variant_white .clist-item {
+  background-color: transparent;
+  & path {
+    fill: @c-black;
+  }
 }
 
 .clist-item {
@@ -65,24 +80,12 @@
   font-size: 15px;
 }
 
-.clist--variant_dark .clist-item {
+.clist--variant_dark {
   background-color: @c-black;
-  &:hover {
-    background-color: @c-gray-75;
-  }
-  & path {
-    fill: @c-white;
-  }
 }
 
-.clist--variant_white .clist-item {
+.clist--variant_transparent {
   background-color: transparent;
-  &:hover {
-    background: rgba(206, 205, 222, 0.35);
-  }
-  & path {
-    fill: @c-black;
-  }
 }
 
 .clist--variant_dark .clist-item__tag {
