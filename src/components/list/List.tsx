@@ -11,8 +11,8 @@ export interface IList {
     children?: React.ReactChild | React.ReactChild[];
     as?: keyof JSX.IntrinsicElements;
     full?: boolean;
-    mod?: 'white' | 'dark';
-    size?: 'lg';
+    variant?: 'white' | 'dark';
+    size?: 'lg' | 'sm';
 }
 
 const ListBase: React.FC<IList> = ({
@@ -20,14 +20,14 @@ const ListBase: React.FC<IList> = ({
     as = 'div',
     className = '',
     full,
-    mod = 'white',
+    variant = 'white',
     size,
     ...props
 }): JSX.Element => {
     const Tag = as;
     const classNames = component('list')({
         full: full,
-        mod,
+        variant: variant,
         size,
         [className]: !!className,
     });

@@ -13,13 +13,13 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const DropBtn = ({...props}) => {
+const DropBtn: React.FC = (props) => {
     return (
         <>
             <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
-                    <List mod={'dark'}>
+                    <List variant={'dark'}>
                         <List.Item>Главная</List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
@@ -30,7 +30,7 @@ const DropBtn = ({...props}) => {
     );
 };
 
-const DropCustomBody = ({...props}) => {
+const DropCustomBody: React.FC = (props) => {
     return (
         <>
             <Dropdown {...props}>
@@ -47,7 +47,7 @@ const DropCustomBody = ({...props}) => {
     );
 };
 
-const DropShowBtn = () => {
+const DropShowBtn: React.FC = () => {
     const [show, setShow] = useState(false);
     const ref = useRef<HTMLButtonElement | null>(null);
 
@@ -72,7 +72,7 @@ const DropShowBtn = () => {
     );
 };
 
-const DropItemBtn = () => {
+const DropItemBtn: React.FC = () => {
     const [show, setShow] = React.useState(false);
     const ref = React.useRef<HTMLButtonElement | null>(null);
 
