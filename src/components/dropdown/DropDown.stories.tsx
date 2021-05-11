@@ -7,13 +7,14 @@ import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookH
 import 'css/bundle.less';
 import {List} from '../list';
 import {Button} from '../button';
+import {IDropdownProps} from './Dropdown';
 
 export default {
     title: 'DropDown',
     component: Dropdown,
 } as Meta;
 
-const DropBtn: React.FC = (props) => {
+const DropBtn: React.FC<IDropdownProps> = (props) => {
     return (
         <>
             <Dropdown {...props}>
@@ -107,7 +108,7 @@ export const Default: IStorybookComponent = () => {
             <DropBtn />
             <div className="lbrick-2" />
             <StoryTitle>Top right position</StoryTitle>
-            <DropBtn priorityPositions={'tr'} />
+            <DropBtn priorityPositions={['tr']} />
             <div className="lbrick-2" />
             <StoryTitle>Custom body</StoryTitle>
             <DropCustomBody />

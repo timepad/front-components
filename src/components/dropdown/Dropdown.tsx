@@ -25,7 +25,7 @@ import {component} from '../../services/helpers/classHelpers';
 */
 type DropdownPosition = 'tl' | 'rt' | 'br' | 'lb' | 'lt' | 'tr' | 'rb' | 'bl';
 
-interface IProps {
+export interface IDropdownProps {
     show?: boolean;
     white?: boolean;
     onClose?: () => void;
@@ -195,7 +195,7 @@ export const Dropdown = ({
     priorityPositions,
     withIcons,
     doNotCloseMobileDDOnAnyClick,
-}: IProps): React.ReactElement => {
+}: IDropdownProps): React.ReactElement => {
     // generate unique name for autoposition class
     // so that different dropdowns will have different autoposition class
     // which is convinient when few dropdowns should be opened altogether
