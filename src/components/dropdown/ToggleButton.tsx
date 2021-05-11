@@ -1,12 +1,9 @@
 import * as React from 'react';
-import {MutableRefObject, PropsWithChildren, useContext} from 'react';
-import {Button} from '../button';
+import {MutableRefObject, useContext} from 'react';
+import {Button, IButtonProps} from '../button';
 import {DropDownManagerContext} from './ManagerContext';
 
-interface IToggleButton
-    extends PropsWithChildren<
-        React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
-    > {
+interface IToggleButton extends IButtonProps {
     customButton?: keyof JSX.IntrinsicElements;
 }
 
