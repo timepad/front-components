@@ -193,7 +193,15 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
             <label htmlFor={`${name}_id_field`}>{inputState === State.error ? error : label}</label>
             <div className={component('form', 'gm-input-multi-underline')()} />
             {inputState === State.success && (
-                <span className={component('form', 'input-icon')('success')} title="">
+                <span
+                    className={component(
+                        'form',
+                        'input-icon',
+                    )({
+                        success: true,
+                    })}
+                    title=""
+                >
                     <CheckSvg className={component('icon')()} />
                 </span>
             )}
