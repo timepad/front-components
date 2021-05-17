@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useRef, useState, useEffect, useCallback} from 'react';
-import {component} from '../../services/helpers/classHelpers';
+import {useRef, useState, useEffect, useCallback, ChangeEventHandler} from 'react';
+import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
-import CheckSvg from '../../assets/svg/16/icon-check-16.svg';
+import CheckSvg from '../../../assets/svg/16/icon-check-16.svg';
 
 enum State {
     disabled = 'disabled',
@@ -20,8 +20,8 @@ interface ITextareaProps {
     disabled?: boolean;
     success?: boolean;
     autoFocus?: boolean;
-    onChangeHandler?: (name: string, value: string) => void;
-    onBlurHandler?: (event: React.FormEvent<HTMLTextAreaElement>) => void;
+    onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+    onBlur?: (event: React.FormEvent<HTMLTextAreaElement>) => void;
     onStateChange?: (state: State) => void;
     onErrorTruncation?: (truncated: boolean) => void;
 }
@@ -48,8 +48,8 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
         disabled,
         success,
         autoFocus = false,
-        onChangeHandler,
-        onBlurHandler,
+        onChange,
+        onBlur,
         onStateChange,
         onErrorTruncation,
     } = props;
@@ -71,13 +71,13 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
 
     const onLocalBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
         setFocused(false);
-        onChangeHandler?.(name, e.target.value);
-        onBlurHandler?.(e);
+        onChange?.(e as React.ChangeEvent<HTMLTextAreaElement>);
+        onBlur?.(e);
     };
 
     const onPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.keyCode === 13) {
-            onLocalBlur((e as unknown) as React.FocusEvent<HTMLTextAreaElement>);
+            onLocalBlur(e as unknown as React.FocusEvent<HTMLTextAreaElement>);
         }
     };
 
@@ -164,7 +164,7 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
         }),
     );
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeHandler?.(name, e.target.value);
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => onChange?.(e);
 
     return (
         <div className={inputClasses}>

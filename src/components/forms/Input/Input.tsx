@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useCallback, useMemo} from 'react';
-import {component} from '../../services/helpers/classHelpers';
+import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
-import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
+import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
 export enum State {
     disabled = 'disabled',
@@ -12,7 +12,7 @@ export enum State {
     idle = 'idle',
 }
 
-interface IProps {
+export interface IInputProps {
     label: string;
     value: string | number;
     name?: string | number;
@@ -30,7 +30,7 @@ interface IProps {
     type?: string;
 }
 
-export const Input: React.FC<IProps> = (props) => {
+export const Input: React.FC<IInputProps> = (props) => {
     const {
         name,
         label,
@@ -58,7 +58,7 @@ export const Input: React.FC<IProps> = (props) => {
     const [isTruncated, setIsTruncated] = useState(false);
 
     const inputClasses = cx(
-        component('form', 'gm-input'),
+        component('form', 'gm-input')(),
         component(
             'form',
             'gm-input-single',
@@ -82,7 +82,7 @@ export const Input: React.FC<IProps> = (props) => {
 
     const onPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode === 13) {
-            onLocalBlur((e as unknown) as React.FocusEvent<HTMLInputElement>);
+            onLocalBlur(e as unknown as React.FocusEvent<HTMLInputElement>);
         }
     };
 
@@ -127,12 +127,13 @@ export const Input: React.FC<IProps> = (props) => {
         };
     }, [checkErrorTruncation, error, inputState]);
 
+    const id = `${fieldName}_id_field`;
     return (
         <div className={inputClasses}>
             <input
                 ref={inputRef}
                 name={fieldName}
-                id={`${fieldName}_id_field`}
+                id={id}
                 placeholder={label}
                 value={value}
                 onChange={onChange}
@@ -146,9 +147,7 @@ export const Input: React.FC<IProps> = (props) => {
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}
             </label>
-            <label htmlFor={`${fieldName}_id_field`}>
-                {inputState === State.error && !isTruncated ? error : label}
-            </label>
+            <label htmlFor={id}>{inputState === State.error && !isTruncated ? error : label}</label>
             <span className={component('form', 'gm-input__icon')()}>
                 {customIcon ? customIcon : inputState === State.success && <CheckSvg className={component('icon')()} />}
             </span>

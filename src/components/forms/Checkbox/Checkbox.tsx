@@ -5,6 +5,8 @@ import cx from 'classnames';
 
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
+import './index.less';
+
 export interface ICheckboxProps {
     name: string;
     label: string;

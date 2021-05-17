@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
+import {uniqueId} from '../../../services/helpers/uniqueId';
+const {useState} = React;
+
+import './cradiobutton.less';
 
 interface IRadioButtonProps {
     checked?: boolean;
@@ -14,8 +18,7 @@ interface IRadioButtonProps {
 
 export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
     const {checked, name, label, value, disabled, onChangeHandler, onBlurHandler} = props;
-
-    const id: string = Date.now().valueOf().toString();
+    const [id] = useState<string>(uniqueId());
 
     const checkboxClasses = component('radiobutton')({disabled: disabled, labeled: !!label});
 
