@@ -62,7 +62,7 @@ export const WindowComponent: React.FC<IWindowComponentProps> = ({
     }, [noModal]);
 
     return (
-        <div className={cx(component('form', 'window'), layout('flex')('y-axis'))} ref={wrapperRef}>
+        <div className={cx(component('form', 'window')(), layout('flex')({'y-axis': true}))} ref={wrapperRef}>
             {title && (
                 <div className={titleClass}>
                     {backHandler && (
@@ -73,13 +73,13 @@ export const WindowComponent: React.FC<IWindowComponentProps> = ({
                             onClick={backHandler}
                         />
                     )}
-                    <div className={layout('flex')('y-axis')}>
+                    <div className={layout('flex')({'y-axis': true})}>
                         <div className={cx(layout('brick')(), layout('brick-1-5')())} />
                         <h3 className={cx('t-lead', 't-lead--brick', component('form', 'title-text')())}>{title}</h3>
                         {description && (
                             <Fragment>
                                 <div className={layout('brick')()} />
-                                <p className={cx('t-caption', 't-caption--brick', component('form', 'title-desc'))}>
+                                <p className={cx('t-caption', 't-caption--brick', component('form', 'title-desc')())}>
                                     {description}
                                 </p>
                             </Fragment>
@@ -90,7 +90,7 @@ export const WindowComponent: React.FC<IWindowComponentProps> = ({
                         <Button
                             variant={Button.variant.transparent}
                             icon={<CloseSvg />}
-                            className={component('form', 'icon')('close')}
+                            className={component('form', 'icon')({close: true})}
                             onClick={closeHandler}
                         />
                     )}
