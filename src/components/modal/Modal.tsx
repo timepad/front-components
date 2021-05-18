@@ -2,10 +2,9 @@ import * as React from 'react';
 import {useRef, ReactNode, useEffect, MutableRefObject} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-
 import ReactModal from 'react-modal';
-
 import {WindowComponent} from './WindowComponent';
+import './index.less';
 
 const useClickOutside = (
     ref: MutableRefObject<HTMLElement | null>,
@@ -56,7 +55,7 @@ export interface IModalProps {
     cancelDisabled?: boolean;
 }
 
-export const Popup: React.FC<IModalProps> = (props) => {
+export const Modal: React.FC<IModalProps> = (props) => {
     const {
         children,
         title,
