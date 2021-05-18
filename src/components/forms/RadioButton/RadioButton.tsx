@@ -12,17 +12,17 @@ interface IRadioButtonProps {
     label?: string;
     value: string;
     disabled?: boolean;
-    onChangeHandler?: (name: string | undefined, value: string, checked: boolean) => void;
-    onBlurHandler?: (event: React.FormEvent<HTMLInputElement>) => void;
+    onChange?: (name: string | undefined, value: string, checked: boolean) => void;
+    onBlur?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
-    const {checked, name, label, value, disabled, onChangeHandler, onBlurHandler} = props;
+    const {checked, name, label, value, disabled, onChange, onBlur} = props;
     const [id] = useState<string>(uniqueId());
 
     const checkboxClasses = component('radiobutton')({disabled: disabled, labeled: !!label});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChangeHandler?.(name, value, e.target.checked);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange?.(name, value, e.target.checked);
 
     return (
         <div className={checkboxClasses}>
@@ -34,7 +34,7 @@ export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
                 value={value}
                 disabled={disabled}
                 onChange={handleChange}
-                onBlur={onBlurHandler}
+                onBlur={onBlur}
             />
             <label htmlFor={id}>
                 {label ? (

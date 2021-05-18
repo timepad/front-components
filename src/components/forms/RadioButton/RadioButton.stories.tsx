@@ -64,7 +64,7 @@ const RadioButtonContainer = (props: IInputsContainerProps) => {
                                 <RadioButton
                                     value="s"
                                     checked={checkedRadioOne}
-                                    onChangeHandler={() => setCheckedRadioOne(!checkedRadioOne)}
+                                    onChange={() => setCheckedRadioOne(!checkedRadioOne)}
                                 />
                                 <div className="lbrick-2" />
                                 <RadioButton value="s" disabled />
@@ -72,7 +72,7 @@ const RadioButtonContainer = (props: IInputsContainerProps) => {
                                 <RadioButton
                                     value="s"
                                     checked={checkedRadioTwo}
-                                    onChangeHandler={() => setCheckedRadioTwo(!checkedRadioTwo)}
+                                    onChange={() => setCheckedRadioTwo(!checkedRadioTwo)}
                                 />
                                 <div className="lbrick-2" />
                                 <RadioButton value="s" checked disabled />
@@ -85,7 +85,7 @@ const RadioButtonContainer = (props: IInputsContainerProps) => {
                                         value="s"
                                         checked={checkedRadioOneLabeled}
                                         label="Auto Active"
-                                        onChangeHandler={() => setCheckedRadioOneLabeled(!checkedRadioOneLabeled)}
+                                        onChange={() => setCheckedRadioOneLabeled(!checkedRadioOneLabeled)}
                                     />
                                 </div>
                                 <div className="lbrick-2" />
@@ -98,7 +98,7 @@ const RadioButtonContainer = (props: IInputsContainerProps) => {
                                         value="s"
                                         checked={checkedRadioTwoLabeled}
                                         label="Auto Active"
-                                        onChangeHandler={() => setCheckedRadioTwoLabeled(!checkedRadioTwoLabeled)}
+                                        onChange={() => setCheckedRadioTwoLabeled(!checkedRadioTwoLabeled)}
                                     />
                                 </div>
                                 <div className="lbrick-2" />
