@@ -3,6 +3,7 @@ import LogoMobile from '../../assets/svg/logo/logo.svg';
 import LogoDesktop from '../../assets/svg/logo/logo-big.svg';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
+import './index.less';
 
 export enum Theme {
     default = 'default',
