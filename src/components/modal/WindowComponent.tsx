@@ -69,7 +69,7 @@ export const WindowComponent: React.FC<IWindowComponentProps> = ({
                         <Button
                             variant={Button.variant.transparent}
                             icon={<BackSvg />}
-                            className={component('form', 'icon')('back')}
+                            className={component('form', 'icon')({back: true})}
                             onClick={backHandler}
                         />
                     )}
