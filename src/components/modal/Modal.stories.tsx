@@ -2,7 +2,6 @@ import * as React from 'react';
 import {action} from '@storybook/addon-actions';
 import {Modal} from './Modal';
 import {Meta} from '@storybook/react/types-6-0';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import '../../assets/css/bundle.less';
 
 export default {
@@ -10,20 +9,9 @@ export default {
     component: Modal,
 } as Meta;
 
-const Child = () => <div style={{width: '100px', height: '100px'}} />;
+const Child: React.FC = () => <div style={{width: '100px', height: '100px'}} />;
 
-export const Default: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>Simple Modal Example</StoryTitle>
-            <Modal isOpen={true} title="Модальное окно">
-                <Child />
-            </Modal>
-        </>
-    );
-};
-
-export const Basic = () => {
+export const Basic: React.FC = () => {
     return (
         <Modal isOpen={true} title="Модальное окно">
             <Child />
@@ -31,7 +19,7 @@ export const Basic = () => {
     );
 };
 
-export const WithDescription = () => {
+export const WithDescription: React.FC = () => {
     return (
         <Modal isOpen={true} title="Модальное окно" description="Описание заголовка">
             <Child />
@@ -39,7 +27,7 @@ export const WithDescription = () => {
     );
 };
 
-export const Closable = () => {
+export const Closable: React.FC = () => {
     return (
         <Modal isOpen={true} title="Модальное окно" onRequestClose={action('close-button-click')}>
             <Child />
@@ -47,7 +35,7 @@ export const Closable = () => {
     );
 };
 
-export const WithBackButton = () => {
+export const WithBackButto: React.FC = () => {
     return (
         <Modal isOpen={true} title="Модальное окно" backHandler={action('back-button-click')}>
             <Child />
@@ -55,7 +43,7 @@ export const WithBackButton = () => {
     );
 };
 
-export const WithButtons = () => {
+export const WithButtons: React.FC = () => {
     return (
         <Modal
             isOpen={true}
@@ -70,7 +58,7 @@ export const WithButtons = () => {
     );
 };
 
-export const WithDisabledButtons = () => {
+export const WithDisabledButtons: React.FC = () => {
     return (
         <Modal
             isOpen={true}

@@ -2,38 +2,6 @@
   overflow: hidden;
 }
 
-.cportal {
-  padding: 32px 0;
-  margin: auto;
-
-  &:focus {
-    outline: none;
-  }
-
-  &__overlay {
-    display: flex;
-    overflow: auto;
-
-    padding: 0 16px;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    // TODO: разобраться с индексами нормально
-    // z-index: @z-index-modals;
-    z-index: @z-index-dropdowns;
-    background-color: @black-fade-80;
-  }
-
-  @media (max-width: @rsp-mobile-max) {
-    width: 100%;
-  }
-}
-
-
 @keyframes animation-modal-backdrop-in {
   0%    { opacity: 0; }
   60%   { opacity: 1; }
@@ -451,6 +419,35 @@
 .ctheme--darkpic .cmodal__affect {
   background: @c-black;
   color: @c-white;
+}
+
+.cportal {
+  padding: 32px 0;
+  margin: auto;
+
+  &:focus {
+    outline: none;
+  }
+
+  &__overlay {
+    display: flex;
+    overflow: auto;
+
+    padding: 0 16px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: @z-index-dropdowns;
+    background-color: @black-fade-80;
+  }
+
+  @media (max-width: @rsp-mobile-max) {
+    width: 100%;
+  }
 }
 
 .cform {
