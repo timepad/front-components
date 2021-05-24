@@ -10,11 +10,12 @@ export interface IItem {
     prefix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     suffix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     children?: React.ReactChild | React.ReactChild[];
+    textPosition?: 'start' | 'center' | 'end';
 }
 
 const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
     (
-        {children, as = 'div', className = '', secondaryText, prefix, suffix, label, ...props}: IItem,
+        {children, as = 'div', className = '', secondaryText, prefix, suffix, label, textPosition, ...props}: IItem,
         ref,
     ): JSX.Element => {
         const classNames = cx(
@@ -25,6 +26,13 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
             className,
         );
 
+        const tagClassNames = component(
+            'list-item',
+            'tag',
+        )({
+            'text-position': textPosition,
+        });
+
         const Tag: any = as;
         const mainText = label ? label : children;
         return (
@@ -34,7 +42,7 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                           className: cx(component('icon')(), component('list-item', 'row-icon')()),
                       })
                     : null}
-                <div className={component('list-item', 'tag')()}>
+                <div className={tagClassNames}>
                     {secondaryText ? (
                         <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
                     ) : (

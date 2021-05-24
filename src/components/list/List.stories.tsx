@@ -80,6 +80,14 @@ export const Menu: IStorybookComponent = () => {
                 </List.Item>
             </List>
             <div className="lbrick-2" />
+            <StoryTitle>Text position</StoryTitle>
+            <List full={true}>
+                <List.Item>Default</List.Item>
+                <List.Item textPosition={'start'}>Left</List.Item>
+                <List.Item textPosition={'center'}>Center</List.Item>
+                <List.Item textPosition={'end'}>Right</List.Item>
+            </List>
+            <div className="lbrick-2" />
         </Theme>
     );
 };
