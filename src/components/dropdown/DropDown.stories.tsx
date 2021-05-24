@@ -21,7 +21,9 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List variant={'dark'}>
-                        <List.Item>Главная</List.Item>
+                        <List.Item as={'button'} type={'button'}>
+                            Главная
+                        </List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
                     </List>
