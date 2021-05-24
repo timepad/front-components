@@ -29,7 +29,7 @@ export const Body: React.FC<IProps> = ({children, className}) => {
         dropClassName,
     } = context;
     return ReactDOM.createPortal(
-        <div className={classNames}>
+        <div className={component('drop-bg')()}>
             <div
                 className={component('drop-animate')({
                     show: show,
@@ -37,7 +37,7 @@ export const Body: React.FC<IProps> = ({children, className}) => {
             >
                 {show && (
                     <div
-                        className={component('drop-bg')()}
+                        className={classNames}
                         onClick={(e: React.MouseEvent) => {
                             if (doNotCloseMobileDDOnAnyClick) {
                                 e.target === e.currentTarget && onCloseHandler();

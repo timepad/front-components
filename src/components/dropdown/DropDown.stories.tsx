@@ -37,7 +37,7 @@ const DropCustomBody: React.FC = (props) => {
             <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
-                    <List>
+                    <List variant={'white'}>
                         <List.Item>Главная</List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
@@ -61,7 +61,7 @@ const DropShowBtn: React.FC = () => {
                 Open
             </Button>
             <Dropdown parent={ref} show={show} onClose={handleClose}>
-                <Dropdown.Body className="my-super-class">
+                <Dropdown.Body>
                     <List>
                         <List.Item>Главная</List.Item>
                         <List.Item>Организация</List.Item>
@@ -89,8 +89,8 @@ const DropItemBtn: React.FC = () => {
                 </List.Item>
             </List>
             <Dropdown parent={ref} show={show} onClose={toggleShow}>
-                <Dropdown.Body className="my-super-class">
-                    <List>
+                <Dropdown.Body>
+                    <List variant={'white'}>
                         <List.Item>Главная</List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
