@@ -6,7 +6,7 @@ import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 
 import './index.less';
 
-export interface IRadioProps {
+export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
     value: string;
@@ -17,7 +17,17 @@ export interface IRadioProps {
     onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Radio: React.FC<IRadioProps> = ({name, label, value, checked, disabled, id, error, onChange}) => {
+export const Radio: React.FC<IRadioProps> = ({
+    name,
+    label,
+    value,
+    checked,
+    disabled,
+    id,
+    error,
+    onChange,
+    ...othersProps
+}) => {
     const idx = id || name + '_field_checkbox';
 
     const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
@@ -31,7 +41,15 @@ export const Radio: React.FC<IRadioProps> = ({name, label, value, checked, disab
     return (
         <div className={wrapperClasses}>
             <label>
-                <input id={idx} type="radio" name={name} checked={checked} value={value} onChange={onChangeLocal} />
+                <input
+                    id={idx}
+                    type="radio"
+                    name={name}
+                    checked={checked}
+                    value={value}
+                    onChange={onChangeLocal}
+                    {...othersProps}
+                />
                 <span className={radioClasses}>
                     <BulletSvg />
                 </span>

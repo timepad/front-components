@@ -12,7 +12,7 @@ enum State {
     idle = 'idle',
 }
 
-interface ITextareaProps {
+interface ITextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     name?: string;
     label?: string;
     value?: string;
@@ -52,6 +52,7 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
         onBlur,
         onStateChange,
         onErrorTruncation,
+        ...othersProps
     } = props;
 
     const ref = useRef<HTMLTextAreaElement | null>(null);
@@ -186,6 +187,7 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
                 onKeyPress={onPress}
                 disabled={disabled}
                 autoFocus={autoFocus}
+                {...othersProps}
             />
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}

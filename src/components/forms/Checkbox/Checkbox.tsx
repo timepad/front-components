@@ -7,7 +7,7 @@ import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
 import './index.less';
 
-export interface ICheckboxProps {
+export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
     value?: string;
@@ -18,7 +18,17 @@ export interface ICheckboxProps {
     onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Checkbox: React.FC<ICheckboxProps> = ({name, label, value, checked, disabled, id, error, onChange}) => {
+export const Checkbox: React.FC<ICheckboxProps> = ({
+    name,
+    label,
+    value,
+    checked,
+    disabled,
+    id,
+    error,
+    onChange,
+    ...props
+}) => {
     const idx = id || name + '_field_checkbox';
 
     const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});
@@ -32,7 +42,15 @@ export const Checkbox: React.FC<ICheckboxProps> = ({name, label, value, checked,
     return (
         <div className={wrapperClasses}>
             <label htmlFor={idx}>
-                <input type="checkbox" name={name} id={idx} checked={checked} value={value} onChange={onChangeLocal} />
+                <input
+                    type="checkbox"
+                    name={name}
+                    id={idx}
+                    checked={checked}
+                    value={value}
+                    onChange={onChangeLocal}
+                    {...props}
+                />
                 <span className={checkboxClasses}>
                     <CheckSvg />
                 </span>

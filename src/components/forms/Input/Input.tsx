@@ -12,10 +12,10 @@ export enum State {
     idle = 'idle',
 }
 
-export interface IInputProps {
+export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
     value: string | number;
-    name?: string | number;
+    name?: string;
     error?: string;
     disabled?: boolean;
     success?: boolean;
@@ -47,6 +47,7 @@ export const Input: React.FC<IInputProps> = (props) => {
         onStateChange,
         onErrorTruncation,
         type,
+        ...othersProps
     } = props;
 
     const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
@@ -143,6 +144,7 @@ export const Input: React.FC<IInputProps> = (props) => {
                 disabled={disabled}
                 autoFocus={autoFocus}
                 type={type}
+                {...othersProps}
             />
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}
