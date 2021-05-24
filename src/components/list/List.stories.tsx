@@ -38,7 +38,9 @@ export const Menu: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Menu full</StoryTitle>
             <List full={true}>
-                <List.Item>Главная</List.Item>
+                <List.Item>
+                    <button type="button">Главная btn</button>
+                </List.Item>
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
                 <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
                 <List.Item suffix={<AddIcon />}>Участники</List.Item>
