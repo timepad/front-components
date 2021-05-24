@@ -90,10 +90,12 @@ const DropItemBtn: React.FC = () => {
             </List>
             <Dropdown parent={ref} show={show} onClose={toggleShow}>
                 <Dropdown.Body>
-                    <List variant={'white'}>
-                        <List.Item>Главная</List.Item>
+                    <List variant={'dark'}>
+                        <List.Item>Открыть главную страницу профиля</List.Item>
                         <List.Item>Организация</List.Item>
                         <List.Item>Рассылки</List.Item>
+                        <List.Item>Рассылки</List.Item>
+                        <Dropdown.Button textPosition={'center'} label="Стать организатором" />
                     </List>
                 </Dropdown.Body>
             </Dropdown>
