@@ -83,7 +83,7 @@ export const Modal: React.FC<IModalProps> & {
                         className={cx(component('form', 'window')(), layout('flex')({'y-axis': true}))}
                         ref={wrapperRef}
                     >
-                        {isOpen && children}
+                        {children}
                     </div>
                 ) : (
                     <div ref={wrapperRef}>{isOpen && children}</div>
