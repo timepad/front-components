@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {useRef, ReactNode, useEffect, MutableRefObject} from 'react';
+import {useRef, useEffect, MutableRefObject} from 'react';
 import cx from 'classnames';
-import {component} from '../../services/helpers/classHelpers';
+import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
-import {WindowComponent} from './WindowComponent';
+import {Header, IHeaderComponentProps} from './ModalHeader';
+import {Footer, IFooterComponentProps} from './ModalFooter';
+import {Body} from './ModalBody';
 import './index.less';
 
 const useClickOutside = (
@@ -37,44 +39,20 @@ const useClickOutside = (
 ReactModal.setAppElement('#root');
 
 export interface IModalProps {
-    title?: string;
-    titleIsTransparent?: boolean;
-    description?: string;
-    headerContent?: ReactNode;
+    isClean?: boolean;
     className?: string;
     overlayClassName?: string;
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onRequestClose?: () => void;
-    backHandler?: () => void;
-    submitLabel?: string;
-    submitHandler?: () => void;
-    submitDisabled?: boolean;
-    cancelLabel?: string;
-    cancelHandler?: () => void;
-    cancelDisabled?: boolean;
 }
 
-export const Modal: React.FC<IModalProps> = (props) => {
-    const {
-        children,
-        title,
-        description,
-        headerContent,
-        className,
-        overlayClassName,
-        isOpen,
-        blockCloseOnOutsideClick,
-        onRequestClose,
-        backHandler,
-        submitLabel,
-        submitHandler,
-        submitDisabled,
-        cancelLabel,
-        cancelHandler,
-        cancelDisabled,
-        titleIsTransparent,
-    } = props;
+export const Modal: React.FC<IModalProps> & {
+    Header: React.FC<IHeaderComponentProps>;
+    Body: React.FC;
+    Footer: React.FC<IFooterComponentProps>;
+} = (props) => {
+    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onRequestClose} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -84,6 +62,11 @@ export const Modal: React.FC<IModalProps> = (props) => {
             onRequestClose && onRequestClose();
         }
     });
+
+    useEffect(() => {
+        document.body.classList.add('modal-open');
+        return () => document.body.classList.remove('modal-open');
+    }, []);
 
     return (
         <ReactModal
@@ -95,27 +78,20 @@ export const Modal: React.FC<IModalProps> = (props) => {
         >
             {isOpen &&
                 children &&
-                (title ? (
-                    <WindowComponent
-                        title={title}
-                        titleIsTransparent={titleIsTransparent}
-                        description={description}
-                        headerContent={headerContent}
-                        wrapperRef={wrapperRef}
-                        closeHandler={onRequestClose}
-                        backHandler={backHandler}
-                        submitLabel={submitLabel}
-                        submitHandler={submitHandler}
-                        submitDisabled={submitDisabled}
-                        cancelLabel={cancelLabel}
-                        cancelHandler={cancelHandler}
-                        cancelDisabled={cancelDisabled}
+                (!isClean ? (
+                    <div
+                        className={cx(component('form', 'window')(), layout('flex')({'y-axis': true}))}
+                        ref={wrapperRef}
                     >
                         {isOpen && children}
-                    </WindowComponent>
+                    </div>
                 ) : (
                     <div ref={wrapperRef}>{isOpen && children}</div>
                 ))}
         </ReactModal>
     );
 };
+
+Modal.Header = Header;
+Modal.Body = Body;
+Modal.Footer = Footer;
