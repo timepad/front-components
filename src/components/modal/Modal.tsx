@@ -86,7 +86,7 @@ export const Modal: React.FC<IModalProps> & {
                         {children}
                     </div>
                 ) : (
-                    <div ref={wrapperRef}>{isOpen && children}</div>
+                    <div ref={wrapperRef}>{children}</div>
                 ))}
         </ReactModal>
     );
