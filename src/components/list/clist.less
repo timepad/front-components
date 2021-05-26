@@ -62,6 +62,12 @@
   &:focus-within {
     background: rgba(206, 205, 222, 0.35);
   }
+  &:focus,
+  &:focus-within {
+    & .clist-item__tag {
+      color: @c-gray-35;
+    }
+  }
   & a,
   a& {
     cursor: pointer;
