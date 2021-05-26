@@ -3,8 +3,8 @@ import {useRef, useEffect, MutableRefObject} from 'react';
 import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
-import {Header, IHeaderComponentProps} from './ModalHeader';
-import {Footer, IFooterComponentProps} from './ModalFooter';
+import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
+import {Footer} from './ModalFooter';
 import {Body} from './ModalBody';
 import './index.less';
 
@@ -50,7 +50,9 @@ export interface IModalProps {
 export const Modal: React.FC<IModalProps> & {
     Header: React.FC<IHeaderComponentProps>;
     Body: React.FC;
-    Footer: React.FC<IFooterComponentProps>;
+    Footer: React.FC;
+    Title: React.FC;
+    Description: React.FC;
 } = (props) => {
     const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onRequestClose} = props;
 
@@ -95,3 +97,5 @@ export const Modal: React.FC<IModalProps> & {
 Modal.Header = Header;
 Modal.Body = Body;
 Modal.Footer = Footer;
+Modal.Title = Title;
+Modal.Description = Description;

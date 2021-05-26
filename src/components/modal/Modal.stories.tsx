@@ -15,7 +15,9 @@ const Child: React.FC = () => <div style={{width: '100px', height: '100px'}} />;
 export const Basic: React.FC = () => {
     return (
         <Modal isOpen={true}>
-            <Modal.Header title="Модальное окно" />
+            <Modal.Header>
+                <Modal.Title>Модальное окно</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <Child />
             </Modal.Body>
@@ -26,7 +28,10 @@ export const Basic: React.FC = () => {
 export const WithDescription: React.FC = () => {
     return (
         <Modal isOpen={true}>
-            <Modal.Header title="Модальное окно" description="Описание заголовка" />
+            <Modal.Header>
+                <Modal.Title>Модальное окно</Modal.Title>
+                <Modal.Description>Описание заголовка</Modal.Description>
+            </Modal.Header>
             <Modal.Body>
                 <Child />
             </Modal.Body>
@@ -37,7 +42,9 @@ export const WithDescription: React.FC = () => {
 export const Closable: React.FC = () => {
     return (
         <Modal isOpen={true} onRequestClose={action('close-button-click')}>
-            <Modal.Header title="Модальное окно" />
+            <Modal.Header>
+                <Modal.Title>Модальное окно</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <Child />
             </Modal.Body>
@@ -48,7 +55,9 @@ export const Closable: React.FC = () => {
 export const WithBackButto: React.FC = () => {
     return (
         <Modal isOpen={true}>
-            <Modal.Header title="Модальное окно" backHandler={action('back-button-click')} />
+            <Modal.Header backHandler={action('back-button-click')}>
+                <Modal.Title>Модальное окно</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <Child />
             </Modal.Body>
@@ -59,7 +68,9 @@ export const WithBackButto: React.FC = () => {
 export const WithButtons: React.FC = () => {
     return (
         <Modal isOpen={true}>
-            <Modal.Header title="Модальное окно" />
+            <Modal.Header>
+                <Modal.Title>Модальное окно</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <Child />
             </Modal.Body>
