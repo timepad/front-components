@@ -3,6 +3,7 @@ import {action} from '@storybook/addon-actions';
 import {Modal} from './Modal';
 import {Meta} from '@storybook/react/types-6-0';
 import '../../assets/css/bundle.less';
+import {Button} from '../button';
 
 export default {
     title: 'Modal',
@@ -62,31 +63,22 @@ export const WithButtons: React.FC = () => {
             <Modal.Body>
                 <Child />
             </Modal.Body>
-            <Modal.Footer
-                submitLabel="OK"
-                submitHandler={action('submit-button-click')}
-                cancelLabel="Cancel"
-                cancelHandler={action('cancel-button-click')}
-            />
-        </Modal>
-    );
-};
-
-export const WithDisabledButtons: React.FC = () => {
-    return (
-        <Modal isOpen={true}>
-            <Modal.Header title="Модальное окно" />
-            <Modal.Body>
-                <Child />
-            </Modal.Body>
-            <Modal.Footer
-                submitLabel="OK"
-                submitHandler={action('submit-button-click')}
-                submitDisabled={true}
-                cancelLabel="Cancel"
-                cancelHandler={action('cancel-button-click')}
-                cancelDisabled={true}
-            />
+            <Modal.Footer>
+                <Button
+                    variant={Button.variant.primary}
+                    label="OK"
+                    onClick={action('submit-button-click')}
+                    fixed
+                    large
+                />
+                <Button
+                    variant={Button.variant.secondary}
+                    label="Cancel"
+                    onClick={action('cancel-button-click')}
+                    fixed
+                    large
+                />
+            </Modal.Footer>
         </Modal>
     );
 };

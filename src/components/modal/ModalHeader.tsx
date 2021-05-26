@@ -7,7 +7,6 @@ import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
 
 export interface IHeaderComponentProps {
-    title: string;
     titleIsTransparent?: boolean;
     description?: string;
     headerContent?: ReactNode;
@@ -16,12 +15,12 @@ export interface IHeaderComponentProps {
 }
 
 export const Header: React.FC<IHeaderComponentProps> = ({
-    title,
     backHandler,
     closeHandler,
     titleIsTransparent,
     description,
     headerContent,
+    children,
 }) => {
     const titleClass = component(
         'form',
@@ -45,7 +44,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({
             )}
             <div className={layout('flex')({'y-axis': true})}>
                 <div className={cx(layout('brick')(), layout('brick-1-5')())} />
-                <h3 className={cx('t-lead', 't-lead--brick', component('form', 'title-text')())}>{title}</h3>
+                <h3 className={cx('t-lead', 't-lead--brick', component('form', 'title-text')())}>{children}</h3>
                 {description && (
                     <Fragment>
                         <div className={layout('brick')()} />
