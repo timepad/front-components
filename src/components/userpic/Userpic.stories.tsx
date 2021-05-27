@@ -1,6 +1,7 @@
 import '../../assets/css/bundle.less';
 import * as React from 'react';
-import {StoryTitle, dummy, Spacer} from '../../services/helpers/storyBookHelpers';
+import {action} from '@storybook/addon-actions';
+import {StoryTitle, Spacer} from '../../services/helpers/storyBookHelpers';
 import {PicSize, PicShape, Pic} from './Pic';
 
 const argTypes = {
@@ -46,10 +47,18 @@ export const Basic: React.FC = () => {
     );
 };
 
-export const Interactive: React.FC = () => {
+export const InteractiveStyle: React.FC = () => {
     return (
         <div>
-            <Pic onClick={dummy} />
+            <Pic interactive />
+        </div>
+    );
+};
+
+export const WithOnClickCallback: React.FC = () => {
+    return (
+        <div>
+            <Pic onClick={action('pic-click')} />
         </div>
     );
 };
