@@ -8,11 +8,15 @@ import 'css/bundle.less';
 import {List} from '../list';
 import {Button} from '../button';
 import {IDropdownProps} from './Dropdown';
+import AddIcon from 'svg/24/icon-plus-24.svg';
 
 export default {
     title: 'DropDown',
     component: Dropdown,
 } as Meta;
+
+const Prefix: React.FC = () => <AddIcon />;
+const Suffix: React.FC = () => <AddIcon />;
 
 const DropBtn: React.FC<IDropdownProps> = (props) => {
     return (
@@ -105,6 +109,39 @@ const DropItemBtn: React.FC = () => {
     );
 };
 
+const DropProfile: React.FC = (props) => {
+    return (
+        <>
+            <Dropdown {...props}>
+                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+                <Dropdown.Body>
+                    <List variant="dark" size="lg" fontSize="sm">
+                        <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
+                            <div className="lflex lflex--y-axis">
+                                <div className="lflex lflex--y-axis mdrop__profile--name">
+                                    <span className="mdrop__profile--main">Алексей</span>
+                                    <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
+                                </div>
+                            </div>
+                        </List.Group>
+                        <List.Item to={'#'} as={'a'}>
+                            Мои события
+                        </List.Item>
+                        <List.Item to={'#'} as={'a'}>
+                            Мои подписки
+                        </List.Item>
+                        <List.Item to={'#'} as={'a'}>
+                            Избранное
+                        </List.Item>
+                        <List.Item as={'button'} type={'button'} label="Выход" />
+                        <Dropdown.Button textPosition={'center'} label="Стать организатором" />
+                    </List>
+                </Dropdown.Body>
+            </Dropdown>
+        </>
+    );
+};
+
 export const Default: IStorybookComponent = () => {
     return (
         <>
@@ -122,6 +159,9 @@ export const Default: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>List item as button</StoryTitle>
             <DropItemBtn />
+            <div className="lbrick-2" />
+            <StoryTitle>Profile Drop</StoryTitle>
+            <DropProfile />
         </>
     );
 };

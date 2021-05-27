@@ -11,17 +11,30 @@ export interface IItem {
     suffix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     children?: React.ReactChild | React.ReactChild[];
     textPosition?: 'start' | 'center' | 'end';
+    header?: boolean;
 }
 
 const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
     (
-        {children, as = 'div', className = '', secondaryText, prefix, suffix, label, textPosition, ...props}: IItem,
+        {
+            children,
+            as = 'div',
+            className = '',
+            secondaryText,
+            prefix,
+            suffix,
+            label,
+            textPosition,
+            header,
+            ...props
+        }: IItem,
         ref,
     ): JSX.Element => {
         const classNames = cx(
             component('list-item')({
                 'has-prefix': !!prefix,
                 'has-suffix': !!suffix,
+                header,
             }),
             className,
         );

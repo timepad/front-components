@@ -10,6 +10,7 @@ export interface IItem {
     prefix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
     suffix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
     children?: React.ReactChild | React.ReactChild[];
+    header?: boolean;
 }
 
 const Group: React.FC<IItem | any> = ({
@@ -20,6 +21,7 @@ const Group: React.FC<IItem | any> = ({
     prefix,
     suffix,
     label,
+    header,
     ...props
 }: IItem): JSX.Element => {
     const Prefix = prefix,
@@ -28,6 +30,7 @@ const Group: React.FC<IItem | any> = ({
             component('list-item')({
                 'has-prefix': !!Prefix,
                 'has-suffix': !!Suffix,
+                header,
             }),
             className,
         );
