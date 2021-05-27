@@ -13,6 +13,7 @@ interface IRadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> 
     label?: string;
     value: string;
     disabled?: boolean;
+    error?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: (event: React.FormEvent<HTMLInputElement>) => void;
 }

@@ -13,7 +13,7 @@ export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement>
     checked?: boolean;
     disabled?: boolean;
     id?: string;
-    error?: boolean;
+    error?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
