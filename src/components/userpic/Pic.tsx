@@ -30,15 +30,16 @@ interface IProps {
     shape?: PicShape;
     size?: PicSize;
     onClick?: MouseEventHandler;
+    interactive?: boolean;
     className?: string;
 }
 
 // this component is not exported outside folder (see index.ts)
-export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className}: IProps) => {
+export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, className, interactive}: IProps) => {
     const classNames = cx(
         className,
         component('userpic')({
-            interactive: onClick !== undefined,
+            interactive: onClick !== undefined || interactive,
             square: shape === PicShape.square,
             small: size === PicSize.small,
             big: size === PicSize.big,
