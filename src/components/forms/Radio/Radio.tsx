@@ -13,8 +13,9 @@ export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement>
     checked?: boolean;
     disabled?: boolean;
     id?: string;
-    error?: string;
+    error?: boolean;
     onChange?: ChangeEventHandler<HTMLInputElement>;
+    onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Radio: React.FC<IRadioProps> = ({
@@ -26,6 +27,7 @@ export const Radio: React.FC<IRadioProps> = ({
     id,
     error,
     onChange,
+    onBlur,
     ...othersProps
 }) => {
     const idx = id || name + '_field_checkbox';
@@ -48,6 +50,7 @@ export const Radio: React.FC<IRadioProps> = ({
                     checked={checked}
                     value={value}
                     onChange={onChangeLocal}
+                    onBlur={onBlur}
                     {...othersProps}
                 />
                 <span className={radioClasses}>
