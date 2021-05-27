@@ -14,6 +14,7 @@ export interface IList {
     full?: boolean;
     variant?: 'white' | 'dark' | 'transparent';
     size?: 'lg' | 'sm';
+    fontSize?: 'sm';
 }
 
 const ListBase: React.FC<IList> = ({
@@ -23,6 +24,7 @@ const ListBase: React.FC<IList> = ({
     full,
     variant = 'transparent',
     size,
+    fontSize,
     ...props
 }): JSX.Element => {
     const Tag = as;
@@ -31,6 +33,7 @@ const ListBase: React.FC<IList> = ({
             full: full,
             variant: variant,
             size,
+            [`font-size_${fontSize}`]: !!fontSize,
         }),
         className,
     );

@@ -37,6 +37,10 @@
   --spacing-horizontal: 32px;
 }
 
+.clist--font-size_sm {
+  --font-size: 14px;
+}
+
 .clist--variant_dark .clist-item {
   background-color: transparent;
   & path {
@@ -94,7 +98,7 @@
   padding: 0 var(--spacing-horizontal);
   height: 100%;
   line-height: 1;
-  font-size: 15px;
+  font-size: var(--font-size, 15px);
   button& {
     cursor: pointer;
     border: none;

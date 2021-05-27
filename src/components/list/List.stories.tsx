@@ -88,6 +88,14 @@ export const Menu: IStorybookComponent = () => {
                 <List.Item textPosition={'end'}>Right</List.Item>
             </List>
             <div className="lbrick-2" />
+            <StoryTitle>Font-size slime</StoryTitle>
+            <List full={true} fontSize={'sm'}>
+                <List.Item>Главная</List.Item>
+                <List.Item>События</List.Item>
+                <List.Item>Рассылки</List.Item>
+                <List.Item>Участники</List.Item>
+            </List>
+            <div className="lbrick-2" />
         </Theme>
     );
 };
