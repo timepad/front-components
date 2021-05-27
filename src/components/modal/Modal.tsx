@@ -44,7 +44,7 @@ export interface IModalProps {
     overlayClassName?: string;
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
-    onRequestClose?: () => void;
+    onClose?: () => void;
 }
 
 export const Modal: React.FC<IModalProps> & {
@@ -54,14 +54,14 @@ export const Modal: React.FC<IModalProps> & {
     Title: React.FC;
     Description: React.FC;
 } = (props) => {
-    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onRequestClose} = props;
+    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     useClickOutside(wrapperRef, () => {
         const hasDropdown = document.body.classList.contains('dd-open');
         if (!hasDropdown && !blockCloseOnOutsideClick) {
-            onRequestClose && onRequestClose();
+            onClose && onClose();
         }
     });
 
@@ -75,7 +75,7 @@ export const Modal: React.FC<IModalProps> & {
             className={cx(component('portal')(), className)}
             overlayClassName={cx(component('portal', 'overlay')(), overlayClassName)}
             isOpen={isOpen}
-            onRequestClose={onRequestClose}
+            onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
         >
             {isOpen &&
