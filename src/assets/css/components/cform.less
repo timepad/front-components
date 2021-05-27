@@ -1442,45 +1442,6 @@
   border-bottom-color: @c-green;
 }
 
-.cform__icon {
-  &--close {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 14px;
-    right: 16px;
-    cursor: pointer;
-
-    & > svg.cicon * {
-      fill: @c-black;
-    }
-
-    @media (max-width: @rsp-mobile-max) {
-      top: 12px;
-      right: 12px;
-    }
-  }
-
-  &--back {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 14px;
-    left: 18px;
-    transform: rotate(90deg) translateY(2px);
-    cursor: pointer;
-
-    & > svg.cicon * {
-      fill: @c-black;
-    }
-
-    @media (max-width: @rsp-mobile-max) {
-      top: 12px;
-      left: 12px;
-    }
-  }
-}
-
 .cform__radio {
   &&--error b {
     border-color: @c-red;

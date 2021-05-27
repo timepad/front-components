@@ -16,6 +16,7 @@ export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputEleme
     id?: string;
     error?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
+    onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Checkbox: React.FC<ICheckboxProps> = ({
@@ -27,6 +28,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     id,
     error,
     onChange,
+    onBlur,
     ...props
 }) => {
     const idx = id || name + '_field_checkbox';
@@ -49,6 +51,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
                     checked={checked}
                     value={value}
                     onChange={onChangeLocal}
+                    onBlur={onBlur}
                     {...props}
                 />
                 <span className={checkboxClasses}>
