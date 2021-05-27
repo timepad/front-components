@@ -492,69 +492,6 @@
   }
 }
 
-// TODO: NEW
-
-.cdrop__profile {
-  .cdrop__drop & {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-
-    // @media (max-width: @rsp-mobile-max) { TODO: временно
-    @media (max-width: @rsp-mobile-portrait-max) {
-      padding: 16px;
-    }
-  }
-
-  &--open {
-    overflow: hidden;
-  }
-
-  &--info {
-    width: 100%;
-    margin: -5px 0 -4px 16px;
-  }
-
-  &--main {
-    line-height: @lh-caption;
-    font-size: @fs-caption;
-    font-weight: bold;
-    font-family: @ff;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 256px;
-
-    + span {
-      .tpui-mx-fs-lh-small;
-      font-family: @ff;
-    }
-
-    // @media (max-width: @rsp-mobile-max) { TODO: временно
-    @media (max-width: @rsp-mobile-portrait-max) {
-      font-size: @fs-body-mobile;
-      line-height: @lh-body-mobile;
-    }
-  }
-  &--icon--edit {
-    margin-left: 16px;
-    display: flex;
-    .cbtn:hover {
-      background: @c-gray-50-fade-20;
-    }
-    .cbtn:active {
-      background: @c-gray-50-fade-35;
-    }
-  }
-
-  &--name {
-
-    // @media (max-width: @rsp-mobile-max) { TODO: временно
-    @media (max-width: @rsp-mobile-portrait-max) {
-      margin-top: -2px;
-    }
-  }
-}
-
 // TODO: фикс цвета для календаря и будущих боттомшитов-модалок
 
 .cdrop__drop.cdrop__drop--white {
