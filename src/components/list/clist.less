@@ -10,6 +10,13 @@
   padding: 0;
   background-color: @c-white;
   --spacing-horizontal: 16px;
+
+  & .cbtn.cbtn--variant_primary {
+    &:focus,
+    &:focus-within {
+      color: @c-gray-35;
+    }
+  }
 }
 
 .clist--block {
@@ -64,8 +71,7 @@
   }
   &:focus,
   &:focus-within {
-    & .clist-item__tag,
-    & .cbtn--variant_primary {
+    & .clist-item__tag {
       color: @c-gray-35;
     }
   }
