@@ -27,7 +27,9 @@ export const Menu: IStorybookComponent = () => {
                     Главная
                 </List.Group>
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    Рассылки
+                </List.Item>
                 <List.Item as={'button'} type={'button'} suffix={<AddIcon />}>
                     Участники
                 </List.Item>
@@ -38,10 +40,16 @@ export const Menu: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Menu full</StoryTitle>
             <List full={true}>
-                <List.Item>Главная</List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Главная
+                </List.Item>
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
-                <List.Item suffix={<AddIcon />}>Участники</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    Рассылки
+                </List.Item>
+                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    Участники
+                </List.Item>
                 <List.Item href={'#'} as={'a'}>
                     Организация
                 </List.Item>
@@ -49,10 +57,16 @@ export const Menu: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Menu Dark</StoryTitle>
             <List variant={'dark'} size={'lg'}>
-                <List.Item>Главная</List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Главная
+                </List.Item>
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
-                <List.Item suffix={<AddIcon />}>Участники</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    Рассылки
+                </List.Item>
+                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    Участники
+                </List.Item>
                 <List.Item href={'#'} as={'a'}>
                     Организация
                 </List.Item>
@@ -60,13 +74,19 @@ export const Menu: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Menu Divider</StoryTitle>
             <List size="lg">
-                <List.Item>Главная</List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Главная
+                </List.Item>
                 <List.Divider />
                 <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
                 <List.Divider />
-                <List.Item prefix={<AddIcon />}>Рассылки</List.Item>
+                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    Рассылки
+                </List.Item>
                 <List.Divider />
-                <List.Item suffix={<AddIcon />}>Участники</List.Item>
+                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    Участники
+                </List.Item>
                 <List.Divider />
                 <List.Item href={'#'} as={'a'}>
                     Организация
@@ -82,18 +102,34 @@ export const Menu: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Text position</StoryTitle>
             <List full={true}>
-                <List.Item>Default</List.Item>
-                <List.Item textPosition={'start'}>Left</List.Item>
-                <List.Item textPosition={'center'}>Center</List.Item>
-                <List.Item textPosition={'end'}>Right</List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Default
+                </List.Item>
+                <List.Item as={'a'} href={'#'} textPosition={'start'}>
+                    Left
+                </List.Item>
+                <List.Item as={'a'} href={'#'} textPosition={'center'}>
+                    Center
+                </List.Item>
+                <List.Item as={'a'} href={'#'} textPosition={'end'}>
+                    Right
+                </List.Item>
             </List>
             <div className="lbrick-2" />
             <StoryTitle>Font-size slime</StoryTitle>
             <List full={true} fontSize={'sm'}>
-                <List.Item>Главная</List.Item>
-                <List.Item>События</List.Item>
-                <List.Item>Рассылки</List.Item>
-                <List.Item>Участники</List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Главная
+                </List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    События
+                </List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Рассылки
+                </List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Участники
+                </List.Item>
             </List>
             <div className="lbrick-2" />
         </Theme>

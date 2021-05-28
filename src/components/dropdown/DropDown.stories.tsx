@@ -24,12 +24,16 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
             <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
-                    <List variant={'dark'}>
+                    <List variant={'dark'} fontSize="sm">
                         <List.Item as={'button'} type={'button'}>
                             Главная
                         </List.Item>
-                        <List.Item>Организация</List.Item>
-                        <List.Item>Рассылки</List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Организация
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Рассылки
+                        </List.Item>
                     </List>
                 </Dropdown.Body>
             </Dropdown>
@@ -43,10 +47,16 @@ const DropCustomBody: React.FC = (props) => {
             <Dropdown {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
-                    <List variant={'white'}>
-                        <List.Item>Главная</List.Item>
-                        <List.Item>Организация</List.Item>
-                        <List.Item>Рассылки</List.Item>
+                    <List variant={'white'} fontSize="sm">
+                        <List.Item href={'#'} as={'a'}>
+                            Главная
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Организация
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Рассылки
+                        </List.Item>
                     </List>
                 </Dropdown.Body>
             </Dropdown>
@@ -68,10 +78,16 @@ const DropShowBtn: React.FC = () => {
             </Button>
             <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
-                    <List>
-                        <List.Item>Главная</List.Item>
-                        <List.Item>Организация</List.Item>
-                        <List.Item>Рассылки</List.Item>
+                    <List fontSize="sm">
+                        <List.Item href={'#'} as={'a'}>
+                            Главная
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Организация
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Рассылки
+                        </List.Item>
                     </List>
                 </Dropdown.Body>
             </Dropdown>
@@ -96,11 +112,19 @@ const DropItemBtn: React.FC = () => {
             </List>
             <Dropdown parent={ref} show={show} onClose={toggleShow}>
                 <Dropdown.Body>
-                    <List variant={'dark'}>
-                        <List.Item>Открыть главную страницу профиля</List.Item>
-                        <List.Item>Организация</List.Item>
-                        <List.Item>Рассылки</List.Item>
-                        <List.Item>Рассылки</List.Item>
+                    <List variant={'dark'} fontSize="sm">
+                        <List.Item href={'#'} as={'a'}>
+                            Открыть главную страницу профиля
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Организация
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Рассылки
+                        </List.Item>
+                        <List.Item href={'#'} as={'a'}>
+                            Рассылки
+                        </List.Item>
                         <Dropdown.Button textPosition={'center'} label="Стать организатором" />
                     </List>
                 </Dropdown.Body>
@@ -124,13 +148,13 @@ const DropProfile: React.FC = (props) => {
                                 </div>
                             </div>
                         </List.Group>
-                        <List.Item to={'#'} as={'a'}>
+                        <List.Item href={'#'} as={'a'}>
                             Мои события
                         </List.Item>
-                        <List.Item to={'#'} as={'a'}>
+                        <List.Item href={'#'} as={'a'}>
                             Мои подписки
                         </List.Item>
-                        <List.Item to={'#'} as={'a'}>
+                        <List.Item href={'#'} as={'a'}>
                             Избранное
                         </List.Item>
                         <List.Item as={'button'} type={'button'} label="Выход" />
