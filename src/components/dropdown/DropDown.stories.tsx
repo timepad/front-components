@@ -78,7 +78,7 @@ const DropShowBtn: React.FC = () => {
             </Button>
             <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
-                    <List fontSize="sm">
+                    <List variant={'white'} fontSize="sm">
                         <List.Item href={'#'} as={'a'}>
                             Главная
                         </List.Item>
