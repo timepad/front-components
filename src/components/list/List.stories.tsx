@@ -21,117 +21,119 @@ const Suffix: React.FC = () => <Button variant={ButtonVariant.secondary} icon={<
 export const Menu: IStorybookComponent = () => {
     return (
         <Theme light={true}>
-            <StoryTitle>Menu</StoryTitle>
-            <List as={'nav'}>
-                <List.Group as={'a'} href={'#'} prefix={Prefix} suffix={Suffix}>
-                    Главная
-                </List.Group>
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
-                    Рассылки
-                </List.Item>
-                <List.Item as={'button'} type={'button'} suffix={<AddIcon />}>
-                    Участники
-                </List.Item>
-                <List.Item as={'a'} href={'#'}>
-                    Организация
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Menu full</StoryTitle>
-            <List full={true}>
-                <List.Item href={'#'} as={'a'}>
-                    Главная
-                </List.Item>
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
-                    Рассылки
-                </List.Item>
-                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
-                    Участники
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Организация
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Menu Dark</StoryTitle>
-            <List variant={'dark'} size={'lg'}>
-                <List.Item href={'#'} as={'a'}>
-                    Главная
-                </List.Item>
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
-                    Рассылки
-                </List.Item>
-                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
-                    Участники
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Организация
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Menu Divider</StoryTitle>
-            <List size="lg">
-                <List.Item href={'#'} as={'a'}>
-                    Главная
-                </List.Item>
-                <List.Divider />
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                <List.Divider />
-                <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
-                    Рассылки
-                </List.Item>
-                <List.Divider />
-                <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
-                    Участники
-                </List.Item>
-                <List.Divider />
-                <List.Item href={'#'} as={'a'}>
-                    Организация
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Menu secondary text</StoryTitle>
-            <List size="lg">
-                <List.Item as={'a'} href={'#'} secondaryText={'Наша супер главная страница'}>
-                    Главная
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Text position</StoryTitle>
-            <List full={true}>
-                <List.Item href={'#'} as={'a'}>
-                    Default
-                </List.Item>
-                <List.Item as={'a'} href={'#'} textPosition={'start'}>
-                    Left
-                </List.Item>
-                <List.Item as={'a'} href={'#'} textPosition={'center'}>
-                    Center
-                </List.Item>
-                <List.Item as={'a'} href={'#'} textPosition={'end'}>
-                    Right
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
-            <StoryTitle>Font-size slime</StoryTitle>
-            <List full={true} fontSize={'sm'}>
-                <List.Item href={'#'} as={'a'}>
-                    Главная
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    События
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Рассылки
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Участники
-                </List.Item>
-            </List>
-            <div className="lbrick-2" />
+            <div style={{maxWidth: '320px'}}>
+                <StoryTitle>Menu</StoryTitle>
+                <List full={true} as={'nav'}>
+                    <List.Group as={'a'} href={'#'} prefix={Prefix} suffix={Suffix}>
+                        Главная
+                    </List.Group>
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                        Рассылки
+                    </List.Item>
+                    <List.Item as={'button'} type={'button'} suffix={<AddIcon />}>
+                        Участники
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'}>
+                        Организация
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Menu full</StoryTitle>
+                <List full={true}>
+                    <List.Item href={'#'} as={'a'}>
+                        Главная
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                        Рассылки
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                        Участники
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Организация
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Menu Dark</StoryTitle>
+                <List full={true} variant={'dark'} size={'lg'}>
+                    <List.Item href={'#'} as={'a'}>
+                        Главная
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                        Рассылки
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                        Участники
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Организация
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Menu Divider</StoryTitle>
+                <List full={true} size="lg">
+                    <List.Item href={'#'} as={'a'}>
+                        Главная
+                    </List.Item>
+                    <List.Divider />
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Divider />
+                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                        Рассылки
+                    </List.Item>
+                    <List.Divider />
+                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                        Участники
+                    </List.Item>
+                    <List.Divider />
+                    <List.Item href={'#'} as={'a'}>
+                        Организация
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Menu secondary text</StoryTitle>
+                <List full={true} size="lg">
+                    <List.Item as={'a'} href={'#'} secondaryText={'Caption'}>
+                        List item
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Text position</StoryTitle>
+                <List full={true}>
+                    <List.Item href={'#'} as={'a'}>
+                        Default
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} textPosition={'start'}>
+                        Left
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} textPosition={'center'}>
+                        Center
+                    </List.Item>
+                    <List.Item as={'a'} href={'#'} textPosition={'end'}>
+                        Right
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+                <StoryTitle>Font-size slime</StoryTitle>
+                <List full={true} fontSize={'sm'}>
+                    <List.Item href={'#'} as={'a'}>
+                        Главная
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        События
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Рассылки
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Участники
+                    </List.Item>
+                </List>
+                <div className="lbrick-2" />
+            </div>
         </Theme>
     );
 };

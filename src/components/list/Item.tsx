@@ -57,7 +57,10 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                     : null}
                 <div className={tagClassNames}>
                     {secondaryText ? (
-                        <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                        <div>
+                            <div>{mainText}</div>
+                            <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                        </div>
                     ) : (
                         <div>{mainText}</div>
                     )}
