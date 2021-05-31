@@ -23,7 +23,7 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
     return (
         <>
             <Dropdown show={true} {...props}>
-                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+                <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List variant={'dark'} fontSize="sm">
                         <List.Item as={'button'} type={'button'}>
@@ -46,7 +46,7 @@ const DropCustomBody: React.FC = (props) => {
     return (
         <>
             <Dropdown show={true} {...props}>
-                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+                <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
                     <List variant={'white'} fontSize="sm">
                         <List.Item href={'#'} as={'a'}>
@@ -75,7 +75,7 @@ const DropShowBtn: React.FC = () => {
     return (
         <>
             <Button buttonRef={ref as React.MutableRefObject<HTMLButtonElement>} onClick={toggleShow}>
-                Open
+                Выпадающий список
             </Button>
             <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
@@ -108,7 +108,7 @@ const DropItemBtn: React.FC = () => {
         <>
             <List>
                 <List.Item ref={ref} as={'button'} type={'button'} onClick={toggleShow}>
-                    Btn
+                    Выпадающий список
                 </List.Item>
             </List>
             <Dropdown parent={ref} show={show} onClose={toggleShow}>
@@ -137,7 +137,7 @@ const DropItemBtn: React.FC = () => {
 const DropProfile: React.FC = (props) => {
     return (
         <Dropdown show={true} {...props}>
-            <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+            <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
             <Dropdown.Body>
                 <List variant="dark" size="lg" fontSize="sm">
                     <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
@@ -168,7 +168,7 @@ const DropProfile: React.FC = (props) => {
 const DropLongItemList: React.FC = () => {
     return (
         <Dropdown show={true}>
-            <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+            <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
             <Dropdown.Body>
                 <List variant="dark" size="lg" fontSize="sm">
                     {cities.map((item, index) => {
