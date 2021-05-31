@@ -40,7 +40,7 @@ const ComponentBlock = ({title, children}: React.PropsWithChildren<{title: strin
 };
 
 interface IInputsContainerProps {
-    themeColor: string;
+    themeColor: keyof typeof themes;
 }
 
 const RadioButtonContainer = (props: IInputsContainerProps) => {
@@ -122,7 +122,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <RadioButtonContainer themeColor={themeColor} key={index} />
+                <RadioButtonContainer themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
     );

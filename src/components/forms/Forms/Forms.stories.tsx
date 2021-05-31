@@ -10,7 +10,6 @@ import {Checkbox, Radio, RadioButton, Textarea} from '../index';
 import {Button} from '../../button';
 import {Form} from './Form';
 import {FORM_UNIT_SIZE} from './Unit';
-import {Description} from './Description';
 
 export default {
     title: 'Forms',
@@ -25,7 +24,7 @@ const themes = {
 };
 
 interface IInputsContainerProps {
-    themeColor: string;
+    themeColor: keyof typeof themes;
 }
 
 const FormsContainer = (props: IInputsContainerProps) => {
@@ -119,7 +118,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <FormsContainer themeColor={themeColor} key={index} />
+                <FormsContainer themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
     );

@@ -28,7 +28,7 @@ const themes = {
 };
 
 interface IInputsContainerProps {
-    themeColor: string;
+    themeColor: keyof typeof themes;
 }
 
 const RadioContainer = (props: IInputsContainerProps) => {
@@ -104,7 +104,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <RadioContainer themeColor={themeColor} key={index} />
+                <RadioContainer themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
     );

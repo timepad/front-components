@@ -76,12 +76,6 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
         onBlur?.(e);
     };
 
-    const onPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.keyCode === 13) {
-            onLocalBlur(e as unknown as React.FocusEvent<HTMLTextAreaElement>);
-        }
-    };
-
     const checkErrorTruncation = useCallback(() => {
         const truncated = (fakeErrorLabelRef.current?.offsetWidth ?? 0) < (fakeErrorLabelRef.current?.scrollWidth ?? 0);
         setIsTruncated(!!error && truncated);
@@ -184,7 +178,6 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
                 onChange={handleChange}
                 onBlur={onLocalBlur}
                 onFocus={onLocalFocus}
-                onKeyPress={onPress}
                 disabled={disabled}
                 autoFocus={autoFocus}
                 {...othersProps}

@@ -28,7 +28,7 @@ const themes = {
 };
 
 interface IInputsContainerProps {
-    themeColor: string;
+    themeColor: keyof typeof themes;
 }
 
 const CheckboxContainer = (props: IInputsContainerProps) => {
@@ -98,7 +98,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <CheckboxContainer themeColor={themeColor} key={index} />
+                <CheckboxContainer themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
     );

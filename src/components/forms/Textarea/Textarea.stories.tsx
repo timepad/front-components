@@ -106,7 +106,7 @@ const InputRow = (props: IInputData) => {
 
 interface IInputsContainerProps {
     data: IInputData[];
-    themeColor: string;
+    themeColor: keyof typeof themes;
 }
 
 const InputsContainer = (props: IInputsContainerProps) => {
@@ -148,7 +148,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <InputsContainer data={inputsData} themeColor={themeColor} key={index} />
+                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
     );

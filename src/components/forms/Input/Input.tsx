@@ -82,8 +82,8 @@ export const Input: React.FC<IInputProps> = (props) => {
     };
 
     const onPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.keyCode === 13) {
-            onLocalBlur(e as unknown as React.FocusEvent<HTMLInputElement>);
+        if (e.key === 'Enter') {
+            onLocalBlur((e as unknown) as React.FocusEvent<HTMLInputElement>);
         }
     };
 
