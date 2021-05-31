@@ -9,6 +9,7 @@ import {List} from '../list';
 import {Button} from '../button';
 import {IDropdownProps} from './Dropdown';
 import AddIcon from 'svg/24/icon-plus-24.svg';
+import {cities} from '../../data/cities';
 
 export default {
     title: 'DropDown',
@@ -21,7 +22,7 @@ const Suffix: React.FC = () => <AddIcon />;
 const DropBtn: React.FC<IDropdownProps> = (props) => {
     return (
         <>
-            <Dropdown {...props}>
+            <Dropdown show={true} {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List variant={'dark'} fontSize="sm">
@@ -44,7 +45,7 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
 const DropCustomBody: React.FC = (props) => {
     return (
         <>
-            <Dropdown {...props}>
+            <Dropdown show={true} {...props}>
                 <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
                     <List variant={'white'} fontSize="sm">
@@ -65,7 +66,7 @@ const DropCustomBody: React.FC = (props) => {
 };
 
 const DropShowBtn: React.FC = () => {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const ref = useRef<HTMLButtonElement | null>(null);
 
     const toggleShow = () => setShow(!show);
@@ -96,7 +97,7 @@ const DropShowBtn: React.FC = () => {
 };
 
 const DropItemBtn: React.FC = () => {
-    const [show, setShow] = React.useState(false);
+    const [show, setShow] = React.useState(true);
     const ref = React.useRef<HTMLButtonElement | null>(null);
 
     const toggleShow = () => {
@@ -135,34 +136,47 @@ const DropItemBtn: React.FC = () => {
 
 const DropProfile: React.FC = (props) => {
     return (
-        <>
-            <Dropdown {...props}>
-                <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
-                <Dropdown.Body>
-                    <List variant="dark" size="lg" fontSize="sm">
-                        <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
-                            <div className="lflex lflex--y-axis">
-                                <div className="lflex lflex--y-axis mdrop__profile--name">
-                                    <span className="mdrop__profile--main">Алексей</span>
-                                    <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
-                                </div>
+        <Dropdown show={true} {...props}>
+            <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+            <Dropdown.Body>
+                <List variant="dark" size="lg" fontSize="sm">
+                    <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
+                        <div className="lflex lflex--y-axis">
+                            <div className="lflex lflex--y-axis mdrop__profile--name">
+                                <span className="mdrop__profile--main">Алексей</span>
+                                <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
                             </div>
-                        </List.Group>
-                        <List.Item href={'#'} as={'a'}>
-                            Мои события
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Мои подписки
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Избранное
-                        </List.Item>
-                        <List.Item as={'button'} type={'button'} label="Выход" />
-                        <Dropdown.Button textPosition={'center'} label="Стать организатором" />
-                    </List>
-                </Dropdown.Body>
-            </Dropdown>
-        </>
+                        </div>
+                    </List.Group>
+                    <List.Item href={'#'} as={'a'}>
+                        Мои события
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Мои подписки
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Избранное
+                    </List.Item>
+                    <List.Item as={'button'} type={'button'} label="Выход" />
+                    <Dropdown.Button textPosition={'center'} label="Стать организатором" />
+                </List>
+            </Dropdown.Body>
+        </Dropdown>
+    );
+};
+
+const DropLongItemList: React.FC = () => {
+    return (
+        <Dropdown show={true}>
+            <Dropdown.ToggleButton>Open dropdown</Dropdown.ToggleButton>
+            <Dropdown.Body>
+                <List variant="dark" size="lg" fontSize="sm">
+                    {cities.map((item, index) => {
+                        return <List.Item key={index}>{item}</List.Item>;
+                    })}
+                </List>
+            </Dropdown.Body>
+        </Dropdown>
     );
 };
 
@@ -171,21 +185,62 @@ export const Default: IStorybookComponent = () => {
         <>
             <StoryTitle>Default</StoryTitle>
             <DropBtn />
-            <div className="lbrick-2" />
+        </>
+    );
+};
+
+export const TopRightPosition: IStorybookComponent = () => {
+    return (
+        <>
             <StoryTitle>Top right position</StoryTitle>
-            <DropBtn priorityPositions={['tr']} />
-            <div className="lbrick-2" />
+            <div style={{marginTop: '130px'}}>
+                <DropBtn priorityPositions={['tr']} />
+            </div>
+        </>
+    );
+};
+
+export const CustomBody: IStorybookComponent = () => {
+    return (
+        <>
             <StoryTitle>Custom body</StoryTitle>
             <DropCustomBody />
-            <div className="lbrick-2" />
-            <StoryTitle>Outside open</StoryTitle>
+        </>
+    );
+};
+
+export const OutsideOpenBtn: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Outside open button</StoryTitle>
             <DropShowBtn />
-            <div className="lbrick-2" />
+        </>
+    );
+};
+
+export const ListItemAsButton: IStorybookComponent = () => {
+    return (
+        <>
             <StoryTitle>List item as button</StoryTitle>
             <DropItemBtn />
-            <div className="lbrick-2" />
+        </>
+    );
+};
+
+export const ProfileDrop: IStorybookComponent = () => {
+    return (
+        <>
             <StoryTitle>Profile Drop</StoryTitle>
             <DropProfile />
+        </>
+    );
+};
+
+export const WithLongItemList: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>With long item list</StoryTitle>
+            <DropLongItemList />
         </>
     );
 };

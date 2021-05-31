@@ -23,7 +23,7 @@ export const Menu: IStorybookComponent = () => {
         <Theme light={true}>
             <div style={{maxWidth: '320px'}}>
                 <StoryTitle>Menu</StoryTitle>
-                <List full={true} as={'nav'}>
+                <List full={true} as={'nav'} size="lg">
                     <List.Group as={'a'} href={'#'} prefix={Prefix} suffix={Suffix}>
                         Главная
                     </List.Group>
@@ -40,7 +40,7 @@ export const Menu: IStorybookComponent = () => {
                 </List>
                 <div className="lbrick-2" />
                 <StoryTitle>Menu full</StoryTitle>
-                <List full={true}>
+                <List full={true} size="lg">
                     <List.Item href={'#'} as={'a'}>
                         Главная
                     </List.Item>
@@ -102,7 +102,7 @@ export const Menu: IStorybookComponent = () => {
                 </List>
                 <div className="lbrick-2" />
                 <StoryTitle>Text position</StoryTitle>
-                <List full={true}>
+                <List full={true} size="lg">
                     <List.Item href={'#'} as={'a'}>
                         Default
                     </List.Item>
@@ -118,7 +118,7 @@ export const Menu: IStorybookComponent = () => {
                 </List>
                 <div className="lbrick-2" />
                 <StoryTitle>Font-size slime</StoryTitle>
-                <List full={true} fontSize={'sm'}>
+                <List full={true} size="lg" fontSize={'sm'}>
                     <List.Item href={'#'} as={'a'}>
                         Главная
                     </List.Item>
