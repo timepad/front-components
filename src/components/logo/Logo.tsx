@@ -1,6 +1,7 @@
 import * as React from 'react';
 import LogoMobile from '../../assets/svg/logo/logo.svg';
-import LogoDesktop from '../../assets/svg/logo/logo-big.svg';
+import LogoDesktop from '../../assets/svg/logo/logo-desktop.svg';
+import LogoShort from '../../assets/svg/logo/logo-short.svg';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import './index.less';
@@ -11,25 +12,26 @@ export enum Theme {
     lightpic = 'lightpic',
 }
 
-export enum Device {
+export enum Variant {
     mobile = 'mobile',
     desktop = 'desktop',
+    short = 'short',
 }
 
 interface ILogo {
     coverTheme?: Theme;
     link?: string;
-    device?: Device;
+    variant?: Variant;
 }
 
-export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}) => {
+export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, variant}) => {
     const themeClassName = component('theme');
     const themeLogoClassName = component('theme', 'logo');
     const logoClassName = component('logo');
 
     if (link) {
         // Логотип-ссылка
-        if (device && device == Device.desktop) {
+        if (variant && variant === Variant.desktop) {
             return (
                 <div className={themeClassName(coverTheme)}>
                     <a
@@ -46,7 +48,7 @@ export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}
                     </a>
                 </div>
             );
-        } else if (device && device == Device.mobile) {
+        } else if (variant && variant === Variant.mobile) {
             return (
                 <div className={themeClassName(coverTheme)}>
                     <a
@@ -60,6 +62,22 @@ export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}
                         )}
                     >
                         <LogoMobile />
+                    </a>
+                </div>
+            );
+        } else if (variant && variant === Variant.short) {
+            return (
+                <div className={themeClassName(coverTheme)}>
+                    <a
+                        href={link}
+                        className={cx(
+                            themeLogoClassName(),
+                            logoClassName({
+                                hoverable: true,
+                            }),
+                        )}
+                    >
+                        <LogoShort />
                     </a>
                 </div>
             );
@@ -98,7 +116,7 @@ export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}
         }
     } else {
         // Просто логотип
-        if (device && device == Device.desktop) {
+        if (variant && variant == Variant.desktop) {
             return (
                 <div className={themeClassName(coverTheme)}>
                     <div
@@ -113,7 +131,7 @@ export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}
                     </div>
                 </div>
             );
-        } else if (device && device == Device.mobile) {
+        } else if (variant && variant == Variant.mobile) {
             return (
                 <div className={themeClassName(coverTheme)}>
                     <div
@@ -125,6 +143,14 @@ export const Logo: React.FC<ILogo> = ({coverTheme = Theme.default, link, device}
                         )}
                     >
                         <LogoMobile />
+                    </div>
+                </div>
+            );
+        } else if (variant && variant === Variant.short) {
+            return (
+                <div className={themeClassName(coverTheme)}>
+                    <div className={cx(themeLogoClassName(), logoClassName())}>
+                        <LogoShort />
                     </div>
                 </div>
             );

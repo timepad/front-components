@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {FC} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {Logo} from './Logo';
+import {Variant, Logo} from './Logo';
 import 'css/bundle.less';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 
@@ -17,8 +17,44 @@ export default {
 export const Simple: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Simple Logo Example</StoryTitle>
+            <StoryTitle>Simple Logo</StoryTitle>
             <Logo />
+        </>
+    );
+};
+
+export const Desktop: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Desktop Logo</StoryTitle>
+            <Logo variant={Variant.desktop} />
+        </>
+    );
+};
+
+export const Mobile: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Mobile Logo</StoryTitle>
+            <Logo variant={Variant.mobile} />
+        </>
+    );
+};
+
+export const Short: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Short Logo</StoryTitle>
+            <Logo variant={Variant.short} />
+        </>
+    );
+};
+
+export const LinkLogo: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Link Logo</StoryTitle>
+            <Logo link="#" />
         </>
     );
 };

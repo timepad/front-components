@@ -8,7 +8,7 @@
 
 .clogo svg {
   display: block;
-  fill: @c-primary-blue;
+  fill: @c-black;
 }
 
 .clogo.clogo--desktop {
@@ -16,9 +16,10 @@
 }
 
 .clogo--hoverable {
-  .on-hover({
+  &:hover {
+    cursor: pointer;
     svg {
       fill: @c-primary-blue-80;
     }
-  });
+  }
 }
