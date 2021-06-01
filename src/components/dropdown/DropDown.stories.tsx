@@ -25,15 +25,15 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
             <Dropdown show={true} {...props}>
                 <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body>
-                    <List variant={'dark'} fontSize="sm">
+                    <List size={'lg'} variant={'dark'} fontSize="sm">
                         <List.Item as={'button'} type={'button'}>
-                            Главная
+                            Primary text
                         </List.Item>
                         <List.Item href={'#'} as={'a'}>
-                            Организация
+                            Primary text
                         </List.Item>
                         <List.Item href={'#'} as={'a'}>
-                            Рассылки
+                            Primary text
                         </List.Item>
                     </List>
                 </Dropdown.Body>
@@ -48,7 +48,7 @@ const DropCustomBody: React.FC = (props) => {
             <Dropdown show={true} {...props}>
                 <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
-                    <List variant={'white'} fontSize="sm">
+                    <List size={'lg'} variant={'white'} fontSize="sm">
                         <List.Item href={'#'} as={'a'}>
                             Главная
                         </List.Item>
@@ -79,7 +79,7 @@ const DropShowBtn: React.FC = () => {
             </Button>
             <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
-                    <List variant={'white'} fontSize="sm">
+                    <List size={'lg'} variant={'white'} fontSize="sm">
                         <List.Item href={'#'} as={'a'}>
                             Главная
                         </List.Item>
@@ -113,7 +113,7 @@ const DropItemBtn: React.FC = () => {
             </List>
             <Dropdown parent={ref} show={show} onClose={toggleShow}>
                 <Dropdown.Body>
-                    <List variant={'dark'} fontSize="sm">
+                    <List size={'lg'} variant={'dark'} fontSize="sm">
                         <List.Item href={'#'} as={'a'}>
                             Открыть главную страницу профиля
                         </List.Item>
@@ -142,7 +142,7 @@ const DropProfile: React.FC = (props) => {
                 <List variant="dark" size="lg" fontSize="sm">
                     <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
                         <div className="lflex lflex--y-axis">
-                            <div className="lflex lflex--y-axis mdrop__profile--name">
+                            <div className="lflex lflex--y-axis mdrop__profile--name typo-fonts">
                                 <span className="mdrop__profile--main">Алексей</span>
                                 <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
                             </div>
