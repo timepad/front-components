@@ -41,6 +41,10 @@
   --font-size: 15px;
 }
 
+.clist--font-family_main {
+  --font-family: @ff;
+}
+
 .clist--variant_dark .clist-item {
   background-color: transparent;
   & path {
@@ -56,7 +60,7 @@
 }
 
 .clist-item {
-  font-family: @ff-system;
+  font-family: var(--font-family, @ff-system);
   display: flex;
   align-items: center;
   justify-content: space-between;
