@@ -37,8 +37,8 @@
   --spacing-horizontal: 32px;
 }
 
-.clist--font-size_sm {
-  --font-size: 14px;
+.clist--font-size_lg {
+  --font-size: 15px;
 }
 
 .clist--variant_dark .clist-item {
@@ -56,6 +56,7 @@
 }
 
 .clist-item {
+  font-family: @ff-system;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -87,7 +88,6 @@
     text-decoration: none;
   }
   button& {
-    font-family: @ff-system;
     cursor: pointer;
     border: none;
     background-color: transparent;
@@ -103,8 +103,8 @@
   align-items: center;
   padding: 0 var(--spacing-horizontal);
   height: 100%;
-  line-height: 1;
-  font-size: var(--font-size, 15px);
+  line-height: 22px;
+  font-size: var(--font-size, 14px);
   button& {
     cursor: pointer;
     border: none;

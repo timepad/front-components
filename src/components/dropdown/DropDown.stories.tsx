@@ -194,7 +194,7 @@ export const TopRightPosition: IStorybookComponent = () => {
         <>
             <StoryTitle>Top right position</StoryTitle>
             <div style={{marginTop: '130px'}}>
-                <DropBtn priorityPositions={['tr']} />
+                <DropBtn priorityPositions={['tl']} />
             </div>
         </>
     );

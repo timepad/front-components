@@ -14,7 +14,7 @@ export interface IList {
     full?: boolean;
     variant?: 'white' | 'dark' | 'transparent';
     size?: 'lg' | 'sm';
-    fontSize?: 'sm';
+    fontSize?: 'lg';
 }
 
 const ListBase: React.FC<IList> = ({

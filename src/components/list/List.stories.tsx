@@ -118,7 +118,7 @@ export const Menu: IStorybookComponent = () => {
                 </List>
                 <div className="lbrick-2" />
                 <StoryTitle>Font-size slime</StoryTitle>
-                <List full={true} size="lg" fontSize={'sm'}>
+                <List full={true} size="lg">
                     <List.Item href={'#'} as={'a'}>
                         Главная
                     </List.Item>
