@@ -142,7 +142,7 @@ const DropProfile: React.FC = (props) => {
                 <List variant="dark" size="lg" fontSize="sm">
                     <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
                         <div className="lflex lflex--y-axis">
-                            <div className="lflex lflex--y-axis mdrop__profile--name typo-fonts">
+                            <div className="lflex lflex--y-axis mdrop__profile--name">
                                 <span className="mdrop__profile--main">Алексей</span>
                                 <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
                             </div>
