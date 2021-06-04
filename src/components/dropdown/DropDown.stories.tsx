@@ -10,6 +10,7 @@ import {Button} from '../button';
 import {IDropdownProps} from './Dropdown';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
+import {Pic} from '../userpic';
 
 export default {
     title: 'DropDown',
@@ -140,7 +141,13 @@ const DropProfile: React.FC = (props) => {
             <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
             <Dropdown.Body>
                 <List variant="dark" size="lg">
-                    <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
+                    <List.Group
+                        header={true}
+                        as="button"
+                        type="button"
+                        prefix={() => <Pic interactive />}
+                        suffix={Suffix}
+                    >
                         <div className="lflex lflex--y-axis">
                             <div className="lflex lflex--y-axis mdrop__profile--name">
                                 <span className="mdrop__profile--main">Алексей</span>
