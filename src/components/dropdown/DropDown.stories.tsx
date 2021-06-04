@@ -17,7 +17,7 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <AddIcon />;
+const Prefix: React.FC = () => <Pic interactive />;
 const Suffix: React.FC = () => <AddIcon />;
 
 const DropBtn: React.FC<IDropdownProps> = (props) => {
@@ -141,13 +141,7 @@ const DropProfile: React.FC = (props) => {
             <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
             <Dropdown.Body>
                 <List variant="dark" size="lg">
-                    <List.Group
-                        header={true}
-                        as="button"
-                        type="button"
-                        prefix={() => <Pic interactive />}
-                        suffix={Suffix}
-                    >
+                    <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
                         <div className="lflex lflex--y-axis">
                             <div className="lflex lflex--y-axis mdrop__profile--name">
                                 <span className="mdrop__profile--main">Алексей</span>

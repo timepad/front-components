@@ -38,6 +38,7 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                 'has-suffix': !!suffix,
                 header,
                 active,
+                'secondary-text': !!secondaryText,
             }),
             className,
         );

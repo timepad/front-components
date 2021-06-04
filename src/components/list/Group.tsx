@@ -34,6 +34,7 @@ const Group: React.FC<IItem | any> = ({
                 'has-suffix': !!Suffix,
                 header,
                 active,
+                'secondary-text': !!secondaryText,
             }),
             className,
         );
@@ -48,7 +49,10 @@ const Group: React.FC<IItem | any> = ({
             ) : null}
             <Tag className={component('list-item', 'tag')()} {...props}>
                 {secondaryText ? (
-                    <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                    <div>
+                        <div>{mainText}</div>
+                        <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                    </div>
                 ) : (
                     <div>{mainText}</div>
                 )}

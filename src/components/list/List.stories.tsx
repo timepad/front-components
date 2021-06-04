@@ -103,7 +103,37 @@ export const Menu: IStorybookComponent = () => {
                 <div className="lbrick-2" />
                 <StoryTitle>Menu secondary text</StoryTitle>
                 <List full={true} size="lg">
+                    <List.Item as={'a'} href={'#'} secondaryText={'Secondary text'}>
+                        Primary text
+                    </List.Item>
+                    <List.Item prefix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
+                        Primary text
+                    </List.Item>
+                    <List.Item suffix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
+                        Primary text
+                    </List.Item>
+                    <List.Item
+                        prefix={<AddIcon />}
+                        suffix={<AddIcon />}
+                        as={'a'}
+                        href={'#'}
+                        secondaryText={'Secondary text'}
+                    >
+                        Primary text
+                    </List.Item>
+                </List>
+                <StoryTitle>Menu secondary text Font-Family NeueHaasUnica font-size 15</StoryTitle>
+                <List full={true} size="lg" fontFamily={'main'} fontSize={'lg'}>
                     <List.Item as={'a'} href={'#'} secondaryText={'Caption'}>
+                        List item
+                    </List.Item>
+                    <List.Item prefix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Caption'}>
+                        List item
+                    </List.Item>
+                    <List.Item suffix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Caption'}>
+                        List item
+                    </List.Item>
+                    <List.Item prefix={<AddIcon />} suffix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Caption'}>
                         List item
                     </List.Item>
                 </List>

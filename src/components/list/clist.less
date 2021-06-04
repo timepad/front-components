@@ -101,6 +101,10 @@
   }
 }
 
+.clist-item--secondary-text {
+  min-height: 72px;
+}
+
 .clist-item--active {
   background-color: @graydark-fade-35;
 }
@@ -108,6 +112,14 @@
 .clist-item__prefix,
 .clist-item__suffix {
   align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.clist-item--secondary-text .clist-item__prefix,
+.clist-item--secondary-text .clist-item__suffix {
+  align-self: start;
+  margin-top: 8px;
   display: flex;
   align-items: center;
 }
@@ -172,9 +184,10 @@
 
 .clist-item__secondary-text {
   display: block;
-  font-size: 15px;
+  font-size: var(--font-size, 14px);
   color: @c-gray-50;
   margin-top: 2px;
+  line-height: 22px;
 }
 
 .clist-item__tag--text-position_start {
