@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {FC} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {Variant, Logo} from './Logo';
-import 'css/bundle.less';
+import {LogoWrapper} from './Logo';
+import {LogoMobile, LogoDesktop, LogoShort} from './index';
+import '../../assets/css/bundle.less';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 interface IStorybookComponent extends FC {
@@ -11,23 +12,16 @@ interface IStorybookComponent extends FC {
 
 export default {
     title: 'Logo',
-    component: Logo,
+    component: LogoWrapper,
 } as Meta;
 
 export const Simple: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Simple Logo</StoryTitle>
-            <Logo />
-        </>
-    );
-};
-
-export const Desktop: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>Desktop Logo</StoryTitle>
-            <Logo variant={Variant.desktop} />
+            <LogoWrapper>
+                <LogoDesktop />
+            </LogoWrapper>
         </>
     );
 };
@@ -36,7 +30,9 @@ export const Mobile: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Mobile Logo</StoryTitle>
-            <Logo variant={Variant.mobile} />
+            <LogoWrapper mobile>
+                <LogoMobile />
+            </LogoWrapper>
         </>
     );
 };
@@ -45,7 +41,9 @@ export const Short: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Short Logo</StoryTitle>
-            <Logo variant={Variant.short} />
+            <LogoWrapper>
+                <LogoShort />
+            </LogoWrapper>
         </>
     );
 };
@@ -54,7 +52,9 @@ export const LinkLogo: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Link Logo</StoryTitle>
-            <Logo link="#" />
+            <LogoWrapper link="#">
+                <LogoDesktop />
+            </LogoWrapper>
         </>
     );
 };
