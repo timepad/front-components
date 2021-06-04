@@ -62,7 +62,7 @@
 .clist-item {
   font-family: var(--font-family, @ff-system);
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   width: 100%;
   text-decoration: none;
@@ -78,7 +78,7 @@
   &:hover,
   &:focus,
   &:focus-within {
-    background: rgba(206, 205, 222, 0.35);
+    background-color: @graydark-fade-35;
   }
   &:focus,
   &:focus-within {
@@ -101,12 +101,23 @@
   }
 }
 
+.clist-item--active {
+  background-color: @graydark-fade-35;
+}
+
+.clist-item__prefix {
+  align-self: center;
+}
+
+.clist-item__suffix {
+  align-self: center;
+}
+
 .clist-item__tag {
   display: flex;
   flex: 1;
   align-items: center;
   padding: 0 var(--spacing-horizontal);
-  height: 100%;
   line-height: 22px;
   font-size: var(--font-size, 14px);
   button& {

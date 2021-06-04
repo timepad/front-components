@@ -22,12 +22,19 @@ export const Menu: IStorybookComponent = () => {
     return (
         <Theme light={true}>
             <div style={{maxWidth: '320px'}}>
-                <StoryTitle>Menu</StoryTitle>
+                <StoryTitle>Menu active element</StoryTitle>
                 <List full={true} as={'nav'} size="lg">
                     <List.Group as={'a'} href={'#'} prefix={Prefix} suffix={Suffix}>
                         Главная
                     </List.Group>
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Item
+                        active={true}
+                        as={'a'}
+                        href={'#'}
+                        prefix={<AddIcon />}
+                        suffix={<AddIcon />}
+                        label={'События'}
+                    />
                     <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
                         Рассылки
                     </List.Item>

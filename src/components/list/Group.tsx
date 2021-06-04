@@ -11,6 +11,7 @@ export interface IItem {
     suffix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
     children?: React.ReactChild | React.ReactChild[];
     header?: boolean;
+    active?: boolean;
 }
 
 const Group: React.FC<IItem | any> = ({
@@ -22,6 +23,7 @@ const Group: React.FC<IItem | any> = ({
     suffix,
     label,
     header,
+    active,
     ...props
 }: IItem): JSX.Element => {
     const Prefix = prefix,
@@ -31,6 +33,7 @@ const Group: React.FC<IItem | any> = ({
                 'has-prefix': !!Prefix,
                 'has-suffix': !!Suffix,
                 header,
+                active,
             }),
             className,
         );
@@ -38,7 +41,11 @@ const Group: React.FC<IItem | any> = ({
     const mainText = label ? label : children;
     return (
         <div className={classNames}>
-            {Prefix ? <Prefix /> : null}
+            {Prefix ? (
+                <div className={component('list-item', 'prefix')()}>
+                    <Prefix />
+                </div>
+            ) : null}
             <Tag className={component('list-item', 'tag')()} {...props}>
                 {secondaryText ? (
                     <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
@@ -46,7 +53,11 @@ const Group: React.FC<IItem | any> = ({
                     <div>{mainText}</div>
                 )}
             </Tag>
-            {Suffix ? <Suffix /> : null}
+            {Suffix ? (
+                <div className={component('list-item', 'suffix')()}>
+                    <Suffix />
+                </div>
+            ) : null}
         </div>
     );
 };

@@ -12,6 +12,7 @@ export interface IItem {
     children?: React.ReactChild | React.ReactChild[];
     textPosition?: 'start' | 'center' | 'end';
     header?: boolean;
+    active?: boolean;
 }
 
 const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
@@ -26,6 +27,7 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
             label,
             textPosition,
             header,
+            active,
             ...props
         }: IItem,
         ref,
@@ -35,6 +37,7 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                 'has-prefix': !!prefix,
                 'has-suffix': !!suffix,
                 header,
+                active,
             }),
             className,
         );
@@ -50,11 +53,13 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
         const mainText = label ? label : children;
         return (
             <Tag ref={ref} className={classNames} {...props}>
-                {prefix
-                    ? React.cloneElement(prefix, {
-                          className: cx(component('icon')(), component('list-item', 'row-icon')()),
-                      })
-                    : null}
+                {prefix ? (
+                    <div className={component('list-item', 'prefix')()}>
+                        {React.cloneElement(prefix, {
+                            className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                        })}
+                    </div>
+                ) : null}
                 <div className={tagClassNames}>
                     {secondaryText ? (
                         <div>
@@ -65,11 +70,13 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                         <div>{mainText}</div>
                     )}
                 </div>
-                {suffix
-                    ? React.cloneElement(suffix, {
-                          className: cx(component('icon')(), component('list-item', 'row-icon')()),
-                      })
-                    : null}
+                {suffix ? (
+                    <div className={component('list-item', 'suffix')()}>
+                        {React.cloneElement(suffix, {
+                            className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                        })}
+                    </div>
+                ) : null}
             </Tag>
         );
     },
