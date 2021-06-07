@@ -40,7 +40,7 @@ const BasePagination: FC<IPagination> = ({
     activePage,
     total,
     children,
-    onChange,
+    onChange = defaultChange,
     theme = 'light',
     className,
     coefficient = 1,
@@ -65,7 +65,7 @@ const BasePagination: FC<IPagination> = ({
 
     return (
         <div {...restProps} className={paginationClassName}>
-            <PaginationContext.Provider value={{activePage, total, onChange: onChange || defaultChange}}>
+            <PaginationContext.Provider value={{activePage, total, onChange}}>
                 {children ? (
                     children
                 ) : (
