@@ -1,4 +1,7 @@
 import * as React from 'react';
+import LogoMobile from '../../assets/svg/logo/logo.svg';
+import LogoDesktop from '../../assets/svg/logo/logo-big.svg';
+import LogoShort from '../../assets/svg/logo/logo-short.svg';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import './index.less';
@@ -9,13 +12,19 @@ export enum Theme {
     lightpic = 'lightpic',
 }
 
-interface ILogoWrapperProps {
+export enum LogoVariant {
+    mobile = 'mobile',
+    desktop = 'desktop',
+    short = 'short',
+}
+
+export interface ILogoWrapperProps {
     coverTheme?: Theme;
     link?: string;
     mobile?: boolean;
 }
 
-export const LogoWrapper: React.FC<ILogoWrapperProps> = ({coverTheme = Theme.default, link, mobile, children}) => {
+const LogoWrapper: React.FC<ILogoWrapperProps> = ({coverTheme = Theme.default, link, mobile, children}) => {
     const themeClassName = component('theme');
     const themeLogoClassName = component('theme', 'logo');
     const logoClassName = component('logo');
@@ -56,5 +65,34 @@ export const LogoWrapper: React.FC<ILogoWrapperProps> = ({coverTheme = Theme.def
                 </div>
             </div>
         );
+    }
+};
+
+export interface ILogoProps {
+    coverTheme?: Theme;
+    link?: string;
+    variant?: LogoVariant;
+}
+
+export const Logo: React.FC<ILogoProps> = ({coverTheme = Theme.default, link, variant}) => {
+    switch (variant) {
+        case LogoVariant.mobile:
+            return (
+                <LogoWrapper coverTheme={coverTheme} link={link} mobile>
+                    <LogoMobile />
+                </LogoWrapper>
+            );
+        case LogoVariant.short:
+            return (
+                <LogoWrapper coverTheme={coverTheme} link={link}>
+                    <LogoShort />
+                </LogoWrapper>
+            );
+        default:
+            return (
+                <LogoWrapper coverTheme={coverTheme} link={link}>
+                    <LogoDesktop />
+                </LogoWrapper>
+            );
     }
 };
