@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent, ChangeEventHandler} from 'react';
+import {ChangeEventHandler} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 
