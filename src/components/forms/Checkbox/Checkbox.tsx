@@ -37,9 +37,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
 
     const checkboxClasses = component('checkbox', 'icon')({checked: checked});
 
-    const onChangeLocal = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e);
-    };
+    const labeClasses = cx(component('checkbox', 'text')(), component('t-caption')('brick'));
 
     return (
         <div className={wrapperClasses}>
@@ -50,14 +48,14 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
                     id={idx}
                     checked={checked}
                     value={value}
-                    onChange={onChangeLocal}
+                    onChange={onChange}
                     onBlur={onBlur}
                     {...props}
                 />
                 <span className={checkboxClasses}>
                     <CheckSvg />
                 </span>
-                <span className={cx(component('checkbox', 'text')(), component('t-caption')('brick'))}>{label}</span>
+                <span className={labeClasses}>{label}</span>
             </label>
         </div>
     );

@@ -24,7 +24,11 @@ export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
 
     const checkboxClasses = component('radiobutton')({disabled: disabled, labeled: !!label});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange?.(e);
+    const labelTextClasses = component('radiobutton', 'text')();
+
+    const labelIconClasses = component('radiobutton', 'icon')();
+
+    const iconClasses = component('icon')();
 
     return (
         <div className={checkboxClasses}>
@@ -35,16 +39,16 @@ export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
                 checked={checked}
                 value={value}
                 disabled={disabled}
-                onChange={handleChange}
+                onChange={onChange}
                 onBlur={onBlur}
                 {...othersProps}
             />
             <label htmlFor={id}>
                 {label ? (
-                    <span className={component('radiobutton', 'text')()}>{label}</span>
+                    <span className={labelTextClasses}>{label}</span>
                 ) : (
-                    <span className={component('radiobutton', 'icon')()}>
-                        <CheckSvg className={component('icon')()} />
+                    <span className={labelIconClasses}>
+                        <CheckSvg className={iconClasses} />
                     </span>
                 )}
             </label>

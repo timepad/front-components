@@ -3,14 +3,7 @@ import {useRef, useState, useEffect, useCallback, ChangeEventHandler} from 'reac
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/16/icon-check-16.svg';
-
-enum State {
-    disabled = 'disabled',
-    active = 'active',
-    error = 'error',
-    success = 'success',
-    idle = 'idle',
-}
+import {State} from '../enums';
 
 interface ITextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     name?: string;
@@ -159,8 +152,6 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
         }),
     );
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => onChange?.(e);
-
     return (
         <div className={inputClasses}>
             <div className="div-for-ta-height-container">
@@ -175,7 +166,7 @@ export const Textarea: React.FC<ITextareaProps> = (props) => {
                 id={`${name}_id_field`}
                 placeholder={label}
                 value={value}
-                onChange={handleChange}
+                onChange={onChange}
                 onBlur={onLocalBlur}
                 onFocus={onLocalFocus}
                 disabled={disabled}

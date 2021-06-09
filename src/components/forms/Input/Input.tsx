@@ -3,14 +3,7 @@ import {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useC
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-
-export enum State {
-    disabled = 'disabled',
-    active = 'active',
-    error = 'error',
-    success = 'success',
-    idle = 'idle',
-}
+import {State} from '../enums';
 
 export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -70,6 +63,10 @@ export const Input: React.FC<IInputProps> = (props) => {
         }),
     );
 
+    const iconClasses = component('icon')();
+
+    const inputIconClasses = component('form', 'gm-input__icon')();
+
     const onLocalFocus = (e: React.FocusEvent<HTMLInputElement>) => {
         setFocused(true);
         onFocus?.(e);
@@ -83,7 +80,7 @@ export const Input: React.FC<IInputProps> = (props) => {
 
     const onPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            onLocalBlur((e as unknown) as React.FocusEvent<HTMLInputElement>);
+            onLocalBlur(e as unknown as React.FocusEvent<HTMLInputElement>);
         }
     };
 
@@ -150,8 +147,8 @@ export const Input: React.FC<IInputProps> = (props) => {
                 {inputState === State.error ? error : ''}
             </label>
             <label htmlFor={id}>{inputState === State.error && !isTruncated ? error : label}</label>
-            <span className={component('form', 'gm-input__icon')()}>
-                {customIcon ? customIcon : inputState === State.success && <CheckSvg className={component('icon')()} />}
+            <span className={inputIconClasses}>
+                {customIcon ? customIcon : inputState === State.success && <CheckSvg className={iconClasses} />}
             </span>
         </div>
     );

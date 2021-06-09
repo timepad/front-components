@@ -76,7 +76,6 @@
         opacity: 1 !important;
 
         color: @black-fade-35 !important;
-        //letter-spacing: 0; // TODO опасная фигня
       }
     }
   }
@@ -96,8 +95,6 @@
 
     &--payment {
       padding: 24px 32px 0;
-      // border-radius: 8px;
-      // background-color: @c-light-yellow;
     }
   }
 
@@ -191,7 +188,6 @@
     max-height: 64px;
     -webkit-line-clamp: 2;
 
-    // this is necessary to adjust height of the ticket container to fit design
     margin-bottom: 14px;
     @media (max-width: @rsp-mobile-max) {
       margin-top: 17px;
@@ -259,7 +255,6 @@
       width: 100%;
 
       .div-for-ta-height {
-        // must be equal to textarea height
         min-height: @input-height;
         position: absolute;
         width: 100%;
@@ -519,8 +514,6 @@
     }
 
     &--lines2 textarea {
-      // this is actually 32px (default height) + 22px (line height)
-      // height: 54px;
       height: @input-height + @input-lh-desktop;
 
       @media (max-width: @rsp-mobile-max) {
@@ -529,8 +522,6 @@
     }
 
     &--lines3 textarea {
-      // this is actually 32px (default height) + 2 * 22px (line height)
-      // height: 76px;
       height: @input-height + 2 * @input-lh-desktop;
 
       @media (max-width: @rsp-mobile-max) {
@@ -539,9 +530,6 @@
     }
 
     &--lines4 textarea {
-      // this is actually 32px (default height) + 2 * 22px (line height)
-      // +8px which creates an effect of cut off of up string
-      // height: 84px;
       height: @input-height + 2 * @input-lh-desktop + 8px;
 
       @media (max-width: @rsp-mobile-max) {

@@ -36,6 +36,8 @@ export const Radio: React.FC<IRadioProps> = ({
 
     const radioClasses = component('radio', 'icon')({checked: checked});
 
+    const labelClasses = cx(component('radio', 'text')(), component('t-caption')('brick'));
+
     const onChangeLocal = (e: ChangeEvent<HTMLInputElement>) => {
         onChange?.(e);
     };
@@ -56,7 +58,7 @@ export const Radio: React.FC<IRadioProps> = ({
                 <span className={radioClasses}>
                     <BulletSvg />
                 </span>
-                <span className={cx(component('radio', 'text')(), component('t-caption')('brick'))}>{label}</span>
+                <span className={labelClasses}>{label}</span>
             </label>
         </div>
     );
