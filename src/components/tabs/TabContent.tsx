@@ -12,7 +12,7 @@ export interface ITabContent extends HTMLAttributes<HTMLDivElement> {
 
 export const TabContent: FC<ITabContent> = observer(({children, tabId, className, ...restProps}) => {
     const {tabsStore} = useContext(TabsContext);
-    const divClasses = cx(component('ctab-bar', 'content')(), className);
+    const divClasses = cx(component('tab-bar', 'content')(), className);
 
     return tabsStore.activeTabId === tabId ? (
         <div {...restProps} className={divClasses}>
