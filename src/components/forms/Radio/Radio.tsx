@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent, ChangeEventHandler} from 'react';
+import {ChangeEventHandler} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
@@ -38,10 +38,6 @@ export const Radio: React.FC<IRadioProps> = ({
 
     const labelClasses = cx(component('radio', 'text')(), component('t-caption')('brick'));
 
-    const onChangeLocal = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e);
-    };
-
     return (
         <div className={wrapperClasses}>
             <label>
@@ -51,7 +47,7 @@ export const Radio: React.FC<IRadioProps> = ({
                     name={name}
                     checked={checked}
                     value={value}
-                    onChange={onChangeLocal}
+                    onChange={onChange}
                     onBlur={onBlur}
                     {...othersProps}
                 />
