@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import {createContext, FC, HTMLAttributes} from 'react';
 import {Item} from './Item';
 import {Ellipsis} from './Ellipsis';
 import {Next} from './Next';
@@ -46,16 +46,7 @@ const BasePagination: FC<IPagination> = ({
     coefficient = 1,
     ...restProps
 }) => {
-    const paginationClassName = useMemo<string>(
-        () =>
-            cx(
-                component('pagination')({
-                    [theme]: true,
-                }),
-                className,
-            ),
-        [className, theme],
-    );
+    const paginationClassName = cx(component('pagination')({[theme]: true}), className);
 
     const {startItems, centerItems, endItems, isEndEllipsis, isStartEllipsis} = usePagination({
         activePage,

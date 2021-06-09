@@ -19,10 +19,10 @@ export type TPage = {
 };
 
 export const usePagination = ({coefficient, activePage, total}: IUsePaginationEntry): TUsePaginationOutput => {
-    const validCoef = useMemo<number>(() => (coefficient * 2 + 1 > total ? (total - 1) / 2 : coefficient), [
-        coefficient,
-        total,
-    ]);
+    const validCoef = useMemo<number>(
+        () => (coefficient * 2 + 1 > total ? (total - 1) / 2 : coefficient),
+        [coefficient, total],
+    );
 
     const centerItems = useMemo<TPage[]>(() => {
         const result: TPage[] = [];
