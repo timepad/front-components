@@ -54,11 +54,11 @@ const Group: React.FC<IItem | any> = React.forwardRef<HTMLDivElement, IItem>(
                 <Tag className={component('list-item', 'tag')()} {...props}>
                     {secondaryText ? (
                         <div>
-                            <div>{mainText}</div>
+                            <div className={component('list-iten', 'main-text')()}>{mainText}</div>
                             <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
                         </div>
                     ) : (
-                        <div>{mainText}</div>
+                        <div className={component('list-iten', 'main-text')()}>{mainText}</div>
                     )}
                 </Tag>
                 {Suffix ? (
