@@ -5,7 +5,7 @@ import {Textarea} from './index';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-import 'css/demo.less';
+import '../storybook/demo.less';
 
 export default {
     title: 'Textarea',

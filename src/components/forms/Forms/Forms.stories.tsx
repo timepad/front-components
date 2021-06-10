@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 
 import 'css/bundle.less';
-import 'css/demo.less';
+import '../storybook/demo.less';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import {Input} from '../Input';
 import {Checkbox, Radio, RadioButton, Textarea} from '../index';
