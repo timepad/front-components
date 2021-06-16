@@ -42,7 +42,7 @@ export const WithDescription: React.FC = () => {
 export const Closable: React.FC = () => {
     return (
         <Modal isOpen={true} onClose={action('close-button-click')}>
-            <Modal.Header>
+            <Modal.Header closeHandler={action('close-button-click')}>
                 <Modal.Title>Модальное окно</Modal.Title>
             </Modal.Header>
             <Modal.Body>
