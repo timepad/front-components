@@ -11,6 +11,13 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o ./dist/storybook",
+    "lint": "eslint --ext js,jsx,ts,tsx ./",
+    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
+    "chromatic": "npx chromatic --project-token 58cee8519832"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.17",
     "@bem-react/classname": "^1.5.9",
@@ -52,12 +59,5 @@
     "webpack-dev-server": "^3.11.2",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4"
-  },
-  "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o ./dist/storybook",
-    "lint": "eslint --ext js,jsx,ts,tsx ./",
-    "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
-    "chromatic": "npx chromatic --project-token 58cee8519832"
   }
 }
