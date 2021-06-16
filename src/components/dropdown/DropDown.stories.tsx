@@ -5,6 +5,7 @@ import {Dropdown} from './index';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
+import './storybook/demo.less';
 import {List} from '../list';
 import {Button} from '../button';
 import {IDropdownProps} from './Dropdown';
@@ -143,8 +144,8 @@ const DropProfile: React.FC = (props) => {
                 <List variant="dark" size="lg">
                     <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
                         <div className="lflex lflex--y-axis">
-                            <div className="lflex lflex--y-axis mdrop__profile--name">
-                                <span className="mdrop__profile--main">Алексей</span>
+                            <div className="lflex lflex--y-axis profile--name">
+                                <span className="profile--main">Алексей</span>
                                 <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
                             </div>
                         </div>
