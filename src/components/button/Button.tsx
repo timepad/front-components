@@ -65,6 +65,7 @@ const keysToExclude = new Set([
 
 export function Button(props: IButtonProps): JSX.Element {
     const variant = props.variant || 'primary';
+
     const hasIconWithLabel = props.icon && props.label;
     const iconAlignedLeft = hasIconWithLabel && props.iconAlignment === ButtonIconAlignment.left;
     const iconAlignedRight =
