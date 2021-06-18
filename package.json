@@ -10,9 +10,7 @@
   "dependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-modal": "^3.11.1"
-  },
-  "devDependencies": {
+    "react-modal": "^3.11.1",
     "@babel/core": "^7.12.17",
     "@bem-react/classname": "^1.5.9",
     "@storybook/addon-actions": "^6.1.18",
