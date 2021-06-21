@@ -36,13 +36,15 @@ const useClickOutside = (
     }, [ref, handler, target]);
 };
 
-if (!document.getElementById('root')) {
-    const root = document.createElement('div');
-    root.id = 'root';
-    document.body.appendChild(root);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.getElementById('root')) {
+        const root = document.createElement('div');
+        root.id = 'root';
+        document.body.appendChild(root);
+    }
 
-ReactModal.setAppElement('#root');
+    ReactModal.setAppElement('#root');
+});
 
 export interface IModalProps {
     isClean?: boolean;
