@@ -12,6 +12,9 @@ module.exports = {
     "@storybook/addon-viewport",
     "@storybook/addon-storysource",
   ],
+  typescript: {
+    reactDocgen: 'react-docgen',
+  },
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
