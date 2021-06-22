@@ -22,6 +22,7 @@ export const Simple: IStorybookComponent = () => {
         </>
     );
 };
+Simple.storyName = 'Simple';
 
 export const Short: IStorybookComponent = () => {
     return (
@@ -31,3 +32,4 @@ export const Short: IStorybookComponent = () => {
         </>
     );
 };
+Short.storyName = 'Short';
