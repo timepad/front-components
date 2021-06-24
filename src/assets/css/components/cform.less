@@ -705,6 +705,42 @@
   }
 }
 
+.cform__unit {
+  display: flex;
+  flex-direction: column;
+
+  &--msheduletickets {
+    & > span:last-child {
+      // According to Figma design
+      margin-top: -9px;
+    }
+  }
+
+  @mr-row: (12px);
+  @mr-row-adaptive: (8px);
+
+  &--row {
+    flex-direction: row;
+    margin-right: -1 * @mr-row;
+
+    & > * {
+      margin-right: @mr-row;
+    }
+  }
+
+  &--row-adaptive {
+    @media (max-width: @rsp-mobile-max) {
+      flex-direction: column;
+      margin-bottom: -1 * @mr-row-adaptive;
+
+      & > * {
+        margin-right: 0;
+        margin-bottom:  @mr-row-adaptive;
+      }
+    }
+  }
+}
+
 .cform__description {
   font-size: @fs-small;
   line-height: @lh-small;
