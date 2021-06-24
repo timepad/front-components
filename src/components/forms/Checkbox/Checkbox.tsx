@@ -6,7 +6,7 @@ import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 
 import './index.less';
-import {uniqueId} from "../../../services/helpers/uniqueId";
+import {uniqueId} from '../../../services/helpers/uniqueId';
 
 export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
@@ -33,7 +33,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     ...props
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
-    const idx = localId || name + '_field_checkbox';
+    const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
 
     const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});
 

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {ChangeEventHandler} from 'react';
+import {ChangeEventHandler, useState} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 
 import './index.less';
+import {uniqueId} from '../../../services/helpers/uniqueId';
 
 export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
@@ -30,7 +31,8 @@ export const Radio: React.FC<IRadioProps> = ({
     onBlur,
     ...othersProps
 }) => {
-    const idx = id || name + '_field_checkbox';
+    const [localId] = useState<string>(id ? id : uniqueId());
+    const idx = localId ? localId + '_field_radip' : name + '_field_radip';
 
     const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
 
