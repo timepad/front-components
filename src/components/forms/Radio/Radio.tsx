@@ -36,7 +36,7 @@ export const Radio: React.FC<IRadioProps> = ({
 
     const radioClasses = component('radio', 'icon')({checked: checked});
 
-    const labelClasses = cx(component('radio', 'text')(), component('t-caption')('brick'));
+    const labelClasses = cx(component('radio', 'text')(), 't-caption', 't-caption--brick');
 
     return (
         <div className={wrapperClasses}>

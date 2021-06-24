@@ -37,7 +37,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
 
     const checkboxClasses = component('checkbox', 'icon')({checked: checked});
 
-    const labeClasses = cx(component('checkbox', 'text')(), component('t-caption')('brick'));
+    const labeClasses = cx(component('checkbox', 'text')(), 't-caption', 't-caption--brick');
 
     return (
         <div className={wrapperClasses}>
