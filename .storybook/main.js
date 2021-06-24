@@ -1,29 +1,5 @@
 const path = require('path');
 
-// According to issue:
-// https://github.com/babel/babel/issues/11622
-const modifyBabelPlugins = rules => {
-  const affectedPlugins = [
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-private-methods',
-    '@babel/plugin-proposal-private-property-in-object'
-  ];
-
-  return rules.map(rule => {
-    if (!rule.test.toString().includes('tsx?|jsx?') || !Array.isArray(rule.use)) return rule;
-
-    const index = rule.use.findIndex(item => typeof item === 'object' && item.loader.includes('babel-loader'))
-
-    if (index < 0 || !Array.isArray(rule.use[index].options.plugins)) return rule;
-
-    rule.use[index].options.plugins = rule.use[index].options.plugins.map(plugin => {
-      return affectedPlugins.includes(plugin) ? [plugin, {loose: true}] : plugin
-    });
-
-    return rule;
-  });
-}
-
 module.exports = {
   stories: [
     "../src/**/*.stories.mdx",
@@ -36,11 +12,13 @@ module.exports = {
     "@storybook/addon-viewport",
     "@storybook/addon-storysource",
   ],
+
   // According to issue
   // https://github.com/styleguidist/react-docgen-typescript/issues/356#issuecomment-857887751
   typescript: {
     reactDocgen: 'react-docgen',
   },
+
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
@@ -52,10 +30,6 @@ module.exports = {
       net: 'empty',
       tls: 'empty',
     };
-
-    // According to issue:
-    // https://github.com/babel/babel/issues/11622
-    config.module.rules = modifyBabelPlugins(config.module.rules);
 
     // Добавил из нашего вебпака обработчик less, svg и шрифтовой загрузчик
     config.module.rules.push.apply(config.module.rules, [
