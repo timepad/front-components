@@ -40,9 +40,10 @@ const TabsBase: FC<ITabProps> = ({children, defaultTabId, activeTabId, onTabClic
     const initialTabId = useMemo(() => defaultTabId, []);
     const divClasses = cx(component('tab-bar')(), className);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const tabsStore = useMemo(() => new TabsStore(initialTabId !== undefined ? initialTabId : activeTabId), [
-        activeTabId,
-    ]);
+    const tabsStore = useMemo(
+        () => new TabsStore(initialTabId !== undefined ? initialTabId : activeTabId),
+        [activeTabId],
+    );
     const handleOnTabClick: TabClickHandler = onTabClick
         ? (TabId: string) => {
               onTabClick(TabId, tabsStore.setActiveTabId);
