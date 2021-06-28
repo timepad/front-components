@@ -6,3 +6,5 @@ export * from './components/modal';
 export * from './components/logo';
 export * from './components/dropdown';
 export * from './components/list';
+export * from './components/forms';
+export * as Forms from './components/forms';
