@@ -6,3 +6,6 @@ export * from './components/modal';
 export * from './components/logo';
 export * from './components/forms';
 export * as Forms from './components/forms';
+export * from './components/modules';
+export * from './components/gap';
+export * from './components/brick';
