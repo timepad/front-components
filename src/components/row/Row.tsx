@@ -22,7 +22,7 @@ export const enum RowFontEnum {
     FFSystem = 'ff_system',
 }
 
-export class Row extends Component<IRowProps, {}> {
+export class Row extends Component<IRowProps> {
     static Body: React.FC<{children: ReactNode | ReactNode[]}> = ({children}): JSX.Element => {
         return <div className="crow--body">{children}</div>;
     };
