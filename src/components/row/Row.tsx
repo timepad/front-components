@@ -8,11 +8,18 @@ interface IRowProps {
     disabled?: boolean;
     hoverable?: boolean;
     small?: boolean;
+    fontFamily?: RowFontEnum;
 }
 
 interface IRowIconProps {
     children: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     right?: boolean;
+    top?: boolean;
+}
+
+export const enum RowFontEnum {
+    FF = 'ff',
+    FFSystem = 'ff_system',
 }
 
 export class Row extends Component<IRowProps, {}> {
@@ -28,9 +35,10 @@ export class Row extends Component<IRowProps, {}> {
         return <div className="crow--body--text">{children}</div>;
     };
 
-    static Icon: React.FC<IRowIconProps> = ({children, right}: IRowIconProps): JSX.Element => {
+    static Icon: React.FC<IRowIconProps> = ({children, right, top}: IRowIconProps): JSX.Element => {
         const classNames = component('row--icon')({
             right,
+            top,
         });
         const iconClasses = ['aicon', 'cicon'];
         return (
@@ -42,12 +50,14 @@ export class Row extends Component<IRowProps, {}> {
         );
     };
     render(): JSX.Element {
-        const {children, disabled, hoverable, small} = this.props;
+        const {children, disabled, hoverable, small, fontFamily = RowFontEnum.FFSystem} = this.props;
 
         const className = component('row')({
             disabled,
             hoverable,
             small,
+            ff: fontFamily === RowFontEnum.FF,
+            ff_system: fontFamily === RowFontEnum.FFSystem,
         });
 
         const Children =

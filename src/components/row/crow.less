@@ -10,6 +10,7 @@
 
 .crow {
   display: flex;
+  align-items: center;
 
   padding: 0 32px;
   cursor: pointer;
@@ -49,6 +50,24 @@
     color: var(--text-color)!important;
   });
 
+  &--ff_system {
+    .crow--body--text, .crow--body--caption {
+      font-family: @ff-system;
+      font-size: 14px;
+    }
+  }
+
+  &--ff {
+    .crow--body--text, .crow--body--caption {
+      font-family: @ff;
+      font-size: 15px;
+    }
+
+    .crow--body {
+      padding: 11px 0 15px 0;
+    }
+  }
+
   &--body {
     display: flex;
     flex-direction: column;
@@ -59,10 +78,8 @@
     padding: 13px 0;
 
     &--text, &--caption {
-      font-family: @ff-system;
       font-style: normal;
       font-weight: normal;
-      font-size: 14px;
       line-height: 22px;
       height: 22px;
     }
@@ -78,20 +95,56 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 0 0 0 -16px;
-    padding: 8px 16px 0 0;
+
+    margin-left: -16px;
+    padding: 8px 16px 8px 0;
+
+    &--top {
+      margin-top: -24px !important;
+    }
 
     &--right {
-      margin: 0 -16px 0 0;
-      padding: 8px 0 0 16px;
+      margin: 0 -16px 0 8px;
+      padding: 8px 0 8px 16px;
     }
   }
 
   &--small {
     padding: 0 16px;
 
+    &.crow--ff {
+      .crow--body--text, .crow--body--caption {
+        font-size: 13px;
+        line-height: 19px;
+        height: 19px;
+      }
+
+      .crow--body--caption {
+        margin-top: 5px;
+      }
+
+      .crow--body {
+        padding: 9px 0 12px 0;
+      }
+    }
+
     .crow--body {
       padding: 9px 0;
+    }
+
+    .crow--icon {
+      padding: 4px 8px 4px 0;
+      margin-left: -8px;
+
+      .crow--icon--top {
+        margin-top: -24px;
+      }
+
+      &--right {
+        margin-left: 4px;
+        margin-right: -8px;
+        padding: 4px 0 4px 8px;
+      }
     }
   }
 }
