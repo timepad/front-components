@@ -7,13 +7,7 @@ interface IRowProps {
     children: string | ReactNode | ReactNode[];
     disabled?: boolean;
     hoverable?: boolean;
-    theme?: 'light' | 'dark';
-}
-
-interface IRowState {
-    disabled?: boolean;
-    hoverable?: boolean;
-    theme?: 'light' | 'dark';
+    small?: boolean;
 }
 
 interface IRowIconProps {
@@ -21,7 +15,7 @@ interface IRowIconProps {
     right?: boolean;
 }
 
-export class Row extends Component<IRowProps, IRowState> {
+export class Row extends Component<IRowProps, {}> {
     static Body: React.FC<{children: ReactNode | ReactNode[]}> = ({children}): JSX.Element => {
         return <div className="crow--body">{children}</div>;
     };
@@ -47,15 +41,6 @@ export class Row extends Component<IRowProps, IRowState> {
             </div>
         );
     };
-
-    constructor(props: IRowProps) {
-        super(props);
-
-        this.state = {
-            disabled: props.disabled,
-            hoverable: props.hoverable,
-        };
-    }
     render(): JSX.Element {
         const {children, disabled, hoverable} = this.props;
 
