@@ -17,6 +17,7 @@
   user-select: none;
 
   --text-color: @c-black;
+  --bg-color: @c-white;
 
   color: var(--text-color) !important;
   background-color: var(--bg-color);
@@ -30,17 +31,15 @@
     cursor: default;
   }
 
-  --bg-color: @c-white;
-
-  &:active {
-    --bg-color: @c-dark-gray-fade-35;
-    --text-color: @c-gray-50;
-  }
-
   &--hoverable {
     .on-hover({
       --bg-color: @c-dark-gray-fade-20;
     });
+  }
+
+  &:active {
+    --bg-color: @c-dark-gray-fade-35;
+    --text-color: @c-gray-50;
   }
 
   .crow-disabled-state({
@@ -56,20 +55,16 @@
     justify-content: center;
     flex-grow: 1;
 
+    // 13х13px for FF-system - DEFAULT
     padding: 13px 0;
 
     &--text, &--caption {
-      // 13х13px for FF-system
       font-family: @ff-system;
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
       line-height: 22px;
       height: 22px;
-
-      /* identical to box height, or 157% */
-
-      letter-spacing: 0.00933333px;
     }
 
     &--caption {
@@ -89,6 +84,14 @@
     &--right {
       margin: 0 -16px 0 0;
       padding: 8px 0 0 16px;
+    }
+  }
+
+  &--small {
+    padding: 0 16px;
+
+    .crow--body {
+      padding: 9px 0;
     }
   }
 }

@@ -42,11 +42,12 @@ export class Row extends Component<IRowProps, {}> {
         );
     };
     render(): JSX.Element {
-        const {children, disabled, hoverable} = this.props;
+        const {children, disabled, hoverable, small} = this.props;
 
         const className = component('row')({
-            disabled: disabled,
-            hoverable: hoverable,
+            disabled,
+            hoverable,
+            small,
         });
 
         const Children =
