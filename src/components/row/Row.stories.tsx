@@ -56,6 +56,21 @@ export const Primary: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
+                <Row hoverable>
+                    <Row.Icon>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
+                    <Row.Icon right>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Icon right>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
             </div>
         </>
     );

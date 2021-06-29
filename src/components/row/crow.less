@@ -1,6 +1,6 @@
 .crow-disabled-state (@content) {
   &.crow--disabled {
-    &, &:active {
+    &, &:active, .crow--body--caption {
       @content();
     }
 
@@ -18,6 +18,8 @@
 
   user-select: none;
 
+  --text-color: @c-black;
+
   color: var(--text-color) !important;
   background-color: var(--bg-color);
 
@@ -31,7 +33,6 @@
   }
 
   --bg-color: @c-white;
-  --text-color: @c-black;
 
   &:active {
     --bg-color: @c-dark-gray-fade-35;
@@ -49,7 +50,6 @@
     --text-color: @c-gray-35;
 
     color: var(--text-color)!important;
-
   });
 
   &--body {
@@ -75,20 +75,22 @@
     }
 
     &--caption {
+      margin-top: 2px;
       --text-color: @c-gray-50;
+      color: var(--text-color);
     }
   }
 
   &--icon {
-    margin: 8px 16px 0 -16px;
-
-    &--with-caption {
-      padding: 0 17px 17px 25px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0 0 0 -16px;
+    padding: 8px 16px 0 0;
 
     &--right {
-      position: absolute!important;
-      right: 16px;
+      margin: 0 -16px 0 0;
+      padding: 8px 0 0 16px;
     }
   }
 }
