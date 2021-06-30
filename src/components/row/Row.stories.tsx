@@ -1,7 +1,7 @@
 import React from 'react';
 import {IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
-import {Row, RowFontEnum} from './Row';
+import {Row, RowFontEnum} from './index';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 
 import 'css/bundle.less';

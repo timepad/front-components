@@ -1,6 +1,12 @@
-import React, {Component, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
+
+import Text from './RowText';
+import Body from './RowBody';
+import Icon from './RowIcon';
+import Caption from './RowCaption';
+import {RowFontEnum} from './Row.const';
 
 import './index.less';
 
@@ -12,70 +18,37 @@ interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     fontFamily?: RowFontEnum;
 }
 
-interface IRowIconProps {
-    children: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    right?: boolean;
-    top?: boolean;
-}
+const Row = (props: IRowProps): JSX.Element => {
+    const {disabled, hoverable, small, fontFamily = RowFontEnum.FFSystem} = props;
+    const customClassNames = component('row')({
+        disabled,
+        hoverable,
+        small,
+        ff: fontFamily === RowFontEnum.FF,
+        ff_system: fontFamily === RowFontEnum.FFSystem,
+    });
 
-export const enum RowFontEnum {
-    FF = 'ff',
-    FFSystem = 'ff_system',
-}
+    const finalClassNames = cx(customClassNames, props.className);
 
-export class Row extends Component<IRowProps> {
-    static Body: React.FC<{children: ReactNode | ReactNode[]}> = ({children}): JSX.Element => {
-        return <div className="crow--body">{children}</div>;
-    };
-
-    static Caption: React.FC = ({children}): JSX.Element => {
-        return <div className="crow--body--caption">{children}</div>;
-    };
-
-    static Text: React.FC = ({children}) => {
-        return <div className="crow--body--text">{children}</div>;
-    };
-
-    static Icon: React.FC<IRowIconProps> = ({children, right, top}: IRowIconProps): JSX.Element => {
-        const classNames = component('row--icon')({
-            right,
-            top,
-        });
-        const iconClasses = ['aicon', 'cicon'];
-        return (
-            <div className={classNames}>
-                {React.cloneElement(children, {
-                    className: iconClasses.join(' '),
-                })}
-            </div>
+    const Children =
+        typeof props.children === 'string' ? (
+            <Body>
+                <Text>{props.children}</Text>
+            </Body>
+        ) : (
+            props.children
         );
-    };
-    render(): JSX.Element {
-        const {children, disabled, hoverable, small, fontFamily = RowFontEnum.FFSystem} = this.props;
 
-        const className = component('row')({
-            disabled,
-            hoverable,
-            small,
-            ff: fontFamily === RowFontEnum.FF,
-            ff_system: fontFamily === RowFontEnum.FFSystem,
-        });
+    return (
+        <div className={finalClassNames} {...props}>
+            {Children}
+        </div>
+    );
+};
 
-        const finalClassNames = cx(className, this.props.className);
+Row.Body = Body;
+Row.Icon = Icon;
+Row.Text = Text;
+Row.Caption = Caption;
 
-        const Children =
-            typeof children === 'string' ? (
-                <Row.Body>
-                    <Row.Text>{children}</Row.Text>
-                </Row.Body>
-            ) : (
-                children
-            );
-
-        return (
-            <div className={finalClassNames} {...this.props}>
-                {Children}
-            </div>
-        );
-    }
-}
+export default Row;
