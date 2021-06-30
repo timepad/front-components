@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {action} from '@storybook/addon-actions';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Pagination} from './Pagination';
 

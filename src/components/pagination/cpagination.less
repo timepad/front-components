@@ -4,10 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  flex-grow: 1;
   border-radius: 8px;
-  padding: 32px 34px;
-  max-width: 100%;
+  padding: 16px;
 
   button {
     font-family: @ff-system;
@@ -50,7 +49,7 @@
   }
 
   &__item {
-    margin-right: 8px;
+    margin: 0 4px;
     padding: 10px;
     border-radius: 4px;
     min-width: 32px;
@@ -88,7 +87,7 @@
   }
 
   &__prev {
-    margin-right: 32px;
+    margin-right: 28px;
 
     svg {
       @media (max-width: @rsp-mobile-portrait-max) {
@@ -103,7 +102,7 @@
   }
 
   &__next {
-    margin-left: 32px;
+    margin-left: 28px;
 
     svg {
       @media (max-width: @rsp-mobile-portrait-max) {
