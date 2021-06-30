@@ -1,9 +1,10 @@
 import React, {Component, ReactNode} from 'react';
 import {component} from '../../services/helpers/classHelpers';
+import cx from 'classnames';
 
 import './index.less';
 
-interface IRowProps {
+interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     children: string | ReactNode | ReactNode[];
     disabled?: boolean;
     hoverable?: boolean;
@@ -60,6 +61,8 @@ export class Row extends Component<IRowProps> {
             ff_system: fontFamily === RowFontEnum.FFSystem,
         });
 
+        const finalClassNames = cx(className, this.props.className);
+
         const Children =
             typeof children === 'string' ? (
                 <Row.Body>
@@ -70,7 +73,7 @@ export class Row extends Component<IRowProps> {
             );
 
         return (
-            <div className={className} {...this.props}>
+            <div className={finalClassNames} {...this.props}>
                 {Children}
             </div>
         );
