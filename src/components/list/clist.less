@@ -1,0 +1,236 @@
+.clist * {
+  box-sizing: border-box;
+}
+
+.clist {
+  min-width: 120px;
+  max-width: 400px;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: @c-white;
+  --spacing-horizontal: 16px;
+
+  & .cbtn.cbtn--variant_primary {
+    &:focus,
+    &:focus-within {
+      --text-color: @c-gray-35;
+    }
+  }
+}
+
+.clist--block {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.clist--full {
+  width: 100%;
+}
+
+.clist--size_sm {
+  --spacing-horizontal: 8px;
+}
+
+.clist--size_lg {
+  --spacing-horizontal: 32px;
+}
+
+.clist--font-size_lg {
+  --font-size: 15px;
+}
+
+.clist--font-family_main {
+  --font-family: @ff;
+}
+
+.clist--font-family_main .clist-item__secondary-text {
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+
+.clist--variant_dark .clist-item {
+  background-color: transparent;
+  & path {
+    fill: @c-white;
+  }
+}
+
+.clist--variant_white .clist-item,
+.clist--variant_transparent .clist-item {
+  background-color: transparent;
+  &:hover {
+    background-color: @graydark-fade-20;
+  }
+  &:focus,
+  &:focus-within {
+    background-color: @graydark-fade-35;
+  }
+  &:focus,
+  &:focus-within {
+    & .clist-item__tag {
+      color: @c-gray-50;
+    }
+  }
+  & path {
+    fill: @c-black;
+  }
+}
+
+.clist-item {
+  font-family: var(--font-family, @ff-system);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: inherit;
+  min-height: 48px;
+  transition: 150ms background-color;
+  padding: inherit;
+  padding-top: var(--spacing-vertical, 0);
+  padding-bottom: var(--spacing-vertical, 0);
+  &:hover {
+    background-color: @c-gray-50-fade-20;
+  }
+  &:focus,
+  &:focus-within {
+    background-color: @c-gray-50-fade-35;
+  }
+  &:focus,
+  &:focus-within {
+    & .clist-item__tag {
+      color: @c-gray-35;
+    }
+  }
+  & a,
+  a& {
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button& {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+  &--header {
+    min-height: 64px;
+
+    .cuserpic--interactive {
+      .on-hover({
+        background: @gray-opaque-80;
+      })
+    }
+  }
+}
+
+.clist-item--secondary-text {
+  min-height: 72px;
+}
+
+.clist-item--active {
+  background-color: @graydark-fade-35;
+}
+
+.clist-item__prefix,
+.clist-item__suffix {
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.clist-item--secondary-text .clist-item__prefix,
+.clist-item--secondary-text .clist-item__suffix {
+  align-self: start;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.clist-item__tag {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding: 0 var(--spacing-horizontal);
+  line-height: 22px;
+  font-size: var(--font-size, 14px);
+  button& {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+}
+
+.clist--variant_dark {
+  background-color: @c-black;
+}
+
+.clist--variant_transparent {
+  background-color: transparent;
+}
+
+.clist--variant_dark .clist-item__tag {
+  color: @c-white;
+}
+
+.clist--variant_white .clist-item__tag,
+.clist--variant_transparent .clist-item__tag {
+  color: @c-black;
+}
+
+.clist-item--has-prefix {
+  padding-left: calc(var(--spacing-horizontal) / 2);
+  box-sizing: border-box;
+  & .clist-item__tag {
+    padding-left: calc(var(--spacing-horizontal) / 2);
+  }
+}
+
+.clist-item--has-suffix {
+  padding-right: calc(var(--spacing-horizontal) / 2);
+  box-sizing: border-box;
+  & .clist-item__tag {
+    padding-right: calc(var(--spacing-horizontal) / 2);
+  }
+}
+
+.clist-divider {
+  &--wrapper {
+    background: @c-black;
+  }
+  display: block;
+  padding: 0;
+  margin: 0;
+  height: 1px;
+  background-color: @c-gray-50-fade-20;
+}
+
+.clist-item__main-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clist-item__secondary-text {
+  display: block;
+  font-size: var(--font-size, 14px);
+  color: @c-gray-50;
+  margin-top: 2px;
+  line-height: 22px;
+}
+
+.clist-item__tag--text-position_start {
+  justify-content: flex-start;
+}
+
+.clist-item__tag--text-position_center {
+  justify-content: center;
+}
+
+.clist-item__tag--text-position_end {
+  justify-content: flex-end;
+}
