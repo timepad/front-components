@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import * as React from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 
@@ -11,7 +11,7 @@ import {RowFontEnum} from './Row.const';
 import './index.less';
 
 interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    children: string | ReactNode | ReactNode[];
+    children: string | React.ReactNode | React.ReactNode[];
     disabled?: boolean;
     hoverable?: boolean;
     small?: boolean;
@@ -19,11 +19,11 @@ interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
 }
 
 const Row = (props: IRowProps): JSX.Element => {
-    const {disabled, hoverable, small, fontFamily = RowFontEnum.FFSystem} = props;
+    const {children, fontFamily = RowFontEnum.FFSystem} = props;
     const customClassNames = component('row')({
-        disabled,
-        hoverable,
-        small,
+        disabled: props.disabled,
+        hoverable: props.hoverable,
+        small: props.small,
         ff: fontFamily === RowFontEnum.FF,
         ff_system: fontFamily === RowFontEnum.FFSystem,
     });
@@ -31,16 +31,16 @@ const Row = (props: IRowProps): JSX.Element => {
     const finalClassNames = cx(customClassNames, props.className);
 
     const Children =
-        typeof props.children === 'string' ? (
+        typeof children === 'string' ? (
             <Body>
-                <Text>{props.children}</Text>
+                <Text>{children}</Text>
             </Body>
         ) : (
-            props.children
+            children
         );
 
     return (
-        <div className={finalClassNames} {...props}>
+        <div {...props} className={finalClassNames}>
             {Children}
         </div>
     );
