@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 
@@ -10,7 +10,7 @@ interface IRowIconProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
     top?: boolean;
 }
 
-const Icon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
+const RowIcon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
     const customClassNames = component('row--icon')({
         right: props.right,
         top: props.top,
@@ -27,4 +27,4 @@ const Icon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
     );
 };
 
-export default Icon;
+export default RowIcon;

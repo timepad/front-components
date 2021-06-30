@@ -1,7 +1,7 @@
 import React from 'react';
 import {IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
-import {Row, RowFontEnum} from './index';
+import {Row} from './index';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 
 import 'css/bundle.less';
@@ -236,14 +236,14 @@ export const Default: IStorybookComponent = () => {
 
             <StoryTitle>Neue Haas Unica W1G</StoryTitle>
             <div className="lflex--y-axis">
-                <Row fontFamily={RowFontEnum.FF}>This Row</Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row ffFont>This Row</Row>
+                <Row disabled ffFont>
                     This disabled Row
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     This Row with hoverable
                 </Row>
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -251,7 +251,7 @@ export const Default: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -259,7 +259,7 @@ export const Default: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -267,7 +267,7 @@ export const Default: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -275,7 +275,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -283,7 +283,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -291,18 +291,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row fontFamily={RowFontEnum.FF}>
-                    <Row.Icon>
-                        <AddIcon />
-                    </Row.Icon>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                    </Row.Body>
-                    <Row.Icon right>
-                        <AddIcon />
-                    </Row.Icon>
-                </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -313,7 +302,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -324,44 +313,55 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
+                    <Row.Icon>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                    </Row.Body>
+                    <Row.Icon right>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
+                <Row ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
                 <hr />
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -370,17 +370,7 @@ export const Default: IStorybookComponent = () => {
                         <Row.Caption>Caption</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
-                    <Row.Icon top>
-                        <AddIcon />
-                    </Row.Icon>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                        <Row.Caption>Caption</Row.Caption>
-                    </Row.Body>
-                </Row>
-
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -390,7 +380,17 @@ export const Default: IStorybookComponent = () => {
                     </Row.Body>
                 </Row>
 
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
+                    <Row.Icon top>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
+                </Row>
+
+                <Row ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                         <Row.Caption>Caption</Row.Caption>
@@ -400,7 +400,7 @@ export const Default: IStorybookComponent = () => {
                     </Row.Icon>
                 </Row>
 
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                         <Row.Caption>Caption</Row.Caption>
@@ -410,7 +410,7 @@ export const Default: IStorybookComponent = () => {
                     </Row.Icon>
                 </Row>
 
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                         <Row.Caption>Caption</Row.Caption>
@@ -420,7 +420,7 @@ export const Default: IStorybookComponent = () => {
                     </Row.Icon>
                 </Row>
 
-                <Row fontFamily={RowFontEnum.FF}>
+                <Row ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -432,7 +432,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row hoverable fontFamily={RowFontEnum.FF}>
+                <Row hoverable ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -444,7 +444,7 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row disabled fontFamily={RowFontEnum.FF}>
+                <Row disabled ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -456,6 +456,59 @@ export const Default: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
+                <hr />
+                <StoryTitle>Table example</StoryTitle>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <Row hoverable>
+                                    <Row.Icon>
+                                        <AddIcon />
+                                    </Row.Icon>
+                                    <Row.Body>
+                                        <Row.Text>Col 1</Row.Text>
+                                    </Row.Body>
+                                </Row>
+                            </th>
+                            <th>
+                                <Row hoverable>First column</Row>
+                            </th>
+                            <th>
+                                <Row hoverable>First column</Row>
+                            </th>
+                            <th>
+                                <Row hoverable>First column</Row>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>Primary text</Row.Text>
+                                        <Row.Caption>Secondary text</Row.Caption>
+                                    </Row.Body>
+                                </Row>
+                            </td>
+                            <td>
+                                <Row hoverable>Cell 2</Row>
+                            </td>
+                            <td>
+                                <Row hoverable>Cell 3</Row>
+                            </td>
+                            <td>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>Primary text</Row.Text>
+                                        <Row.Caption>Secondary text</Row.Caption>
+                                    </Row.Body>
+                                </Row>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </>
     );
@@ -685,16 +738,16 @@ export const Small: IStorybookComponent = () => {
 
             <StoryTitle>Neue Haas Unica W1G</StoryTitle>
             <div className="lflex--y-axis">
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     This Row
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     This disabled Row
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     This Row with hoverable
                 </Row>
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -702,7 +755,7 @@ export const Small: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -710,7 +763,7 @@ export const Small: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -718,7 +771,7 @@ export const Small: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -726,7 +779,7 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -734,7 +787,7 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
@@ -742,18 +795,7 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small fontFamily={RowFontEnum.FF}>
-                    <Row.Icon>
-                        <AddIcon />
-                    </Row.Icon>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                    </Row.Body>
-                    <Row.Icon right>
-                        <AddIcon />
-                    </Row.Icon>
-                </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -764,7 +806,7 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Row.Icon>
                         <AddIcon />
                     </Row.Icon>
@@ -775,44 +817,55 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
+                    <Row.Icon>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                    </Row.Body>
+                    <Row.Icon right>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
+                <Row small ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     <Spacer />
                     <Row.Body>
                         <Row.Text>List item</Row.Text>
                     </Row.Body>
                 </Row>
                 <hr />
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     <Row.Body>
                         <Row.Text>Primary text</Row.Text>
                         <Row.Caption>Secondary text</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -821,17 +874,7 @@ export const Small: IStorybookComponent = () => {
                         <Row.Caption>Caption</Row.Caption>
                     </Row.Body>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
-                    <Row.Icon top>
-                        <AddIcon />
-                    </Row.Icon>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                        <Row.Caption>Caption</Row.Caption>
-                    </Row.Body>
-                </Row>
-
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -841,37 +884,7 @@ export const Small: IStorybookComponent = () => {
                     </Row.Body>
                 </Row>
 
-                <Row small fontFamily={RowFontEnum.FF}>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                        <Row.Caption>Caption</Row.Caption>
-                    </Row.Body>
-                    <Row.Icon right top>
-                        <AddIcon />
-                    </Row.Icon>
-                </Row>
-
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                        <Row.Caption>Caption</Row.Caption>
-                    </Row.Body>
-                    <Row.Icon right top>
-                        <AddIcon />
-                    </Row.Icon>
-                </Row>
-
-                <Row small disabled fontFamily={RowFontEnum.FF}>
-                    <Row.Body>
-                        <Row.Text>List item</Row.Text>
-                        <Row.Caption>Caption</Row.Caption>
-                    </Row.Body>
-                    <Row.Icon right top>
-                        <AddIcon />
-                    </Row.Icon>
-                </Row>
-
-                <Row small fontFamily={RowFontEnum.FF}>
+                <Row small disabled ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -879,11 +892,39 @@ export const Small: IStorybookComponent = () => {
                         <Row.Text>List item</Row.Text>
                         <Row.Caption>Caption</Row.Caption>
                     </Row.Body>
+                </Row>
+
+                <Row small ffFont>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
                     <Row.Icon right top>
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small hoverable fontFamily={RowFontEnum.FF}>
+
+                <Row small hoverable ffFont>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
+                    <Row.Icon right top>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
+
+                <Row small disabled ffFont>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
+                    <Row.Icon right top>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
+
+                <Row small ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>
@@ -895,7 +936,19 @@ export const Small: IStorybookComponent = () => {
                         <AddIcon />
                     </Row.Icon>
                 </Row>
-                <Row small disabled fontFamily={RowFontEnum.FF}>
+                <Row small hoverable ffFont>
+                    <Row.Icon top>
+                        <AddIcon />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>List item</Row.Text>
+                        <Row.Caption>Caption</Row.Caption>
+                    </Row.Body>
+                    <Row.Icon right top>
+                        <AddIcon />
+                    </Row.Icon>
+                </Row>
+                <Row small disabled ffFont>
                     <Row.Icon top>
                         <AddIcon />
                     </Row.Icon>

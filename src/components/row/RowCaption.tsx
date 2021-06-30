@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import cx from 'classnames';
 import './index.less';
 
-const Caption: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = (
+const RowCaption: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = (
     props,
 ): JSX.Element => {
     const {children, className} = props;
@@ -15,4 +15,4 @@ const Caption: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElem
     );
 };
 
-export default Caption;
+export default RowCaption;
