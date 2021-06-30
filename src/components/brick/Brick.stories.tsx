@@ -32,7 +32,7 @@ export const Custom: IStorybookComponent = () => {
         <Modules>
             <Modules.M>
                 <h3 className="thead">Заголовок</h3>
-                <Brick size={2} desktop={2.5} />
+                <Brick size={2} />
                 <div>Сверху отступ 32 пикселя</div>
             </Modules.M>
         </Modules>

@@ -32,23 +32,16 @@ export interface IGapProps {
     desktop?: gapSize;
     mobile?: gapSize;
     className?: string;
-    children?: React.ReactNode;
 }
 
 const defaultBrickSize = 1;
 
 const getGapClassname = (size: number) => {
-    const [x, y] = `${size}`.split('.');
-    return `lgap-${x}${y ? `-${y}` : ''}`;
+    const [int, fract] = `${size}`.split('.');
+    return `lgap-${int}${fract ? `-${fract}` : ''}`;
 };
 
-export const Gap: React.FC<IGapProps> = ({
-    size = defaultBrickSize,
-    desktop,
-    mobile,
-    className,
-    children,
-}: IGapProps) => {
+export const Gap: React.FC<IGapProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => {
     const classNames = cx(
         className,
         getGapClassname(size),

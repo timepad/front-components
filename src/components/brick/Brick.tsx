@@ -32,23 +32,16 @@ export interface IBrickProps {
     desktop?: brickSize;
     mobile?: brickSize;
     className?: string;
-    children?: React.ReactNode;
 }
 
 const defaultBrickSize = 1;
 
 const getBrickClassname = (size: number) => {
-    const [x, y] = `${size}`.split('.');
-    return `lbrick-${x}${y ? `-${y}` : ''}`;
+    const [int, fract] = `${size}`.split('.');
+    return `lbrick-${int}${fract ? `-${fract}` : ''}`;
 };
 
-export const Brick: React.FC<IBrickProps> = ({
-    size = defaultBrickSize,
-    desktop,
-    mobile,
-    className,
-    children,
-}: IBrickProps) => {
+export const Brick: React.FC<IBrickProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => {
     const classNames = cx(
         className,
         getBrickClassname(size),

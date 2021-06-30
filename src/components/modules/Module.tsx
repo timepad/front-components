@@ -13,7 +13,6 @@ export interface IModuleProps {
     first?: boolean;
     firstMobile?: boolean;
     className?: string;
-    children?: React.ReactNode;
 }
 
 const defaultModuleSize: moduleSize = 12;
@@ -31,7 +30,7 @@ export const Module: React.FC<IModuleProps> = ({
     firstMobile,
     children,
     className,
-}: IModuleProps) => {
+}) => {
     const mobileSize = mobile || portrait;
     const tabletSize = tablet || mobileSize;
     const desktopSize = desktop || tabletSize;
