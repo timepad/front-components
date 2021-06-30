@@ -1,5 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
+import {layout} from '../../services/helpers/classHelpers';
 import '../../assets/css/bundle.less';
 
 export type brickSize =
@@ -38,7 +39,7 @@ const defaultBrickSize = 1;
 
 const getBrickClassname = (size: number) => {
     const [int, fract] = `${size}`.split('.');
-    return `lbrick-${int}${fract ? `-${fract}` : ''}`;
+    return `${layout('brick')()}-${int}${fract ? `-${fract}` : ''}`;
 };
 
 export const Brick: React.FC<IBrickProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => {

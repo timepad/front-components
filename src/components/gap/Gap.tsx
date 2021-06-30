@@ -1,5 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
+import {layout} from '../../services/helpers/classHelpers';
 import '../../assets/css/bundle.less';
 
 export type gapSize =
@@ -38,7 +39,7 @@ const defaultBrickSize = 1;
 
 const getGapClassname = (size: number) => {
     const [int, fract] = `${size}`.split('.');
-    return `lgap-${int}${fract ? `-${fract}` : ''}`;
+    return `${layout('gap')()}-${int}${fract ? `-${fract}` : ''}`;
 };
 
 export const Gap: React.FC<IGapProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => {
