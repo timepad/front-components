@@ -12,11 +12,13 @@ export default {
 } as Meta;
 
 export const Light: IStorybookComponent = () => {
+    const [page, setPage] = useState(1);
+
     return (
         <>
             <StoryTitle>Light</StoryTitle>
             <div className="lflex">
-                <Pagination activePage={1} total={5} onChange={action('change-page')}>
+                <Pagination activePage={page} total={5} onChange={setPage}>
                     <Pagination.Prev />
                     <Pagination.Item page={1} />
                     <Pagination.Item page={2} />
@@ -31,11 +33,13 @@ export const Light: IStorybookComponent = () => {
 };
 
 export const Dark: IStorybookComponent = () => {
+    const [page, setPage] = useState(1);
+
     return (
         <>
             <StoryTitle>Dark</StoryTitle>
             <div className="lflex">
-                <Pagination activePage={5} total={999} theme="dark" onChange={action('change-page')}>
+                <Pagination activePage={page} total={5} theme="dark" onChange={setPage}>
                     <Pagination.Prev />
                     <Pagination.Item page={1} />
                     <Pagination.Item page={2} />
