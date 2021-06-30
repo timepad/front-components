@@ -69,6 +69,10 @@ export class Row extends Component<IRowProps> {
                 children
             );
 
-        return <div className={className}>{Children}</div>;
+        return (
+            <div className={className} {...this.props}>
+                {Children}
+            </div>
+        );
     }
 }
