@@ -11,7 +11,7 @@ interface IRowIconProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
 }
 
 const RowIcon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
-    const customClassNames = component('row--icon')({
+    const customClassNames = component('row__icon')({
         right: props.right,
         top: props.top,
     });

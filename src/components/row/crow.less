@@ -28,11 +28,11 @@
     transition: fill @duration-blink;
   }
 
-  &--disabled {
+  &.crow--disabled {
     cursor: default;
   }
 
-  &--hoverable {
+  &.crow--hoverable {
     .on-hover({
       --bg-color: @c-dark-gray-fade-20;
     });
@@ -50,25 +50,25 @@
     color: var(--text-color)!important;
   });
 
-  &--ff_system {
-    .crow--body--text, .crow--body--caption {
+  &.crow--ff-system {
+    .crow__body__text, .crow__body__caption {
       font-family: @ff-system;
       font-size: 14px;
     }
   }
 
-  &--ff {
-    .crow--body--text, .crow--body--caption {
+  &.crow--ff {
+    .crow__body__text, .crow__body__caption {
       font-family: @ff;
       font-size: 15px;
     }
 
-    .crow--body {
+    .crow__body {
       padding: 11px 0 15px 0;
     }
   }
 
-  &--body {
+  .crow__body {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -77,21 +77,21 @@
     // 13х13px for FF-system - DEFAULT
     padding: 13px 0;
 
-    &--text, &--caption {
+    .crow__body__text, .crow__body__caption {
       font-style: normal;
       font-weight: normal;
       line-height: 22px;
       height: 22px;
     }
 
-    &--caption {
+    .crow__body__caption {
       margin-top: 2px;
       --text-color: @c-gray-50;
       color: var(--text-color);
     }
   }
 
-  &--icon {
+  .crow__icon {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -99,48 +99,48 @@
     margin-left: -16px;
     padding: 8px 16px 8px 0;
 
-    &--top {
+    &.crow__icon--top {
       margin-top: -24px !important;
     }
 
-    &--right {
+    &.crow__icon--right {
       margin: 0 -16px 0 8px;
       padding: 8px 0 8px 16px;
     }
   }
 
-  &--small {
+  &.crow--small {
     padding: 0 16px;
 
-    &.crow--ff {
-      .crow--body--text, .crow--body--caption {
+    .crow__body {
+      padding: 9px 0;
+    }
+
+    &.crow__ff {
+      .crow__body__text, .crow__body__caption {
         font-size: 13px;
         line-height: 19px;
         height: 19px;
       }
 
-      .crow--body--caption {
+      .crow__body__caption {
         margin-top: 5px;
       }
 
-      .crow--body {
+      .crow__body {
         padding: 9px 0 12px 0;
       }
     }
 
-    .crow--body {
-      padding: 9px 0;
-    }
-
-    .crow--icon {
+    .crow__icon {
       padding: 4px 8px 4px 0;
       margin-left: -8px;
 
-      .crow--icon--top {
+      &.crow__icon--top {
         margin-top: -24px;
       }
 
-      &--right {
+      &.crow__icon--right {
         margin-left: 4px;
         margin-right: -8px;
         padding: 4px 0 4px 8px;

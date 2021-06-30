@@ -16,9 +16,21 @@ export const Default: IStorybookComponent = () => {
         <>
             <StoryTitle>Input Sans Narrow</StoryTitle>
             <div className="lflex--y-axis">
-                <Row>This Row</Row>
-                <Row disabled>This disabled Row</Row>
-                <Row hoverable>This Row with hoverable</Row>
+                <Row>
+                    <Row.Body>
+                        <Row.Text>This Row</Row.Text>
+                    </Row.Body>
+                </Row>
+                <Row disabled>
+                    <Row.Body>
+                        <Row.Text>This disabled</Row.Text>
+                    </Row.Body>
+                </Row>
+                <Row hoverable>
+                    <Row.Body>
+                        <Row.Text>This hoverable</Row.Text>
+                    </Row.Body>
+                </Row>
                 <Row>
                     <Row.Icon>
                         <AddIcon />
@@ -236,12 +248,20 @@ export const Default: IStorybookComponent = () => {
 
             <StoryTitle>Neue Haas Unica W1G</StoryTitle>
             <div className="lflex--y-axis">
-                <Row ffFont>This Row</Row>
+                <Row ffFont>
+                    <Row.Body>
+                        <Row.Text>This Row</Row.Text>
+                    </Row.Body>
+                </Row>
                 <Row disabled ffFont>
-                    This disabled Row
+                    <Row.Body>
+                        <Row.Text>This disabled Row</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row hoverable ffFont>
-                    This Row with hoverable
+                    <Row.Body>
+                        <Row.Text>This Row with hoverable</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row ffFont>
                     <Row.Icon>
@@ -472,13 +492,25 @@ export const Default: IStorybookComponent = () => {
                                 </Row>
                             </th>
                             <th>
-                                <Row hoverable>First column</Row>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>This Row with hoverable</Row.Text>
+                                    </Row.Body>
+                                </Row>
                             </th>
                             <th>
-                                <Row hoverable>First column</Row>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>This Row with hoverable</Row.Text>
+                                    </Row.Body>
+                                </Row>
                             </th>
                             <th>
-                                <Row hoverable>First column</Row>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>This Row with hoverable</Row.Text>
+                                    </Row.Body>
+                                </Row>
                             </th>
                         </tr>
                     </thead>
@@ -493,10 +525,18 @@ export const Default: IStorybookComponent = () => {
                                 </Row>
                             </td>
                             <td>
-                                <Row hoverable>Cell 2</Row>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>This Row with hoverable</Row.Text>
+                                    </Row.Body>
+                                </Row>
                             </td>
                             <td>
-                                <Row hoverable>Cell 3</Row>
+                                <Row hoverable>
+                                    <Row.Body>
+                                        <Row.Text>This Row with hoverable</Row.Text>
+                                    </Row.Body>
+                                </Row>
                             </td>
                             <td>
                                 <Row hoverable>
@@ -519,12 +559,20 @@ export const Small: IStorybookComponent = () => {
         <>
             <StoryTitle>Input Sans Narrow</StoryTitle>
             <div className="lflex--y-axis">
-                <Row small>This Row</Row>
+                <Row small>
+                    <Row.Body>
+                        <Row.Text>This Row</Row.Text>
+                    </Row.Body>
+                </Row>
                 <Row small disabled>
-                    This disabled Row
+                    <Row.Body>
+                        <Row.Text>This disabled row</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row small hoverable>
-                    This Row with hoverable
+                    <Row.Body>
+                        <Row.Text>This Row with hoverable</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row small>
                     <Row.Icon>
@@ -739,13 +787,19 @@ export const Small: IStorybookComponent = () => {
             <StoryTitle>Neue Haas Unica W1G</StoryTitle>
             <div className="lflex--y-axis">
                 <Row small ffFont>
-                    This Row
+                    <Row.Body>
+                        <Row.Text>This Row</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row small disabled ffFont>
-                    This disabled Row
+                    <Row.Body>
+                        <Row.Text>This disabled Row</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row small hoverable ffFont>
-                    This Row with hoverable
+                    <Row.Body>
+                        <Row.Text>This Row with hoverable</Row.Text>
+                    </Row.Body>
                 </Row>
                 <Row small ffFont>
                     <Row.Icon>
