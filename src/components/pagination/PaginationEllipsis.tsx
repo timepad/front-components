@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {FC, HTMLAttributes} from 'react';
+import React, {FC, HTMLAttributes} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 

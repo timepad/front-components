@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {FC, HTMLAttributes, useContext} from 'react';
+import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {PaginationContext} from './Pagination';
