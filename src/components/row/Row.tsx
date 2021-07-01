@@ -38,11 +38,11 @@ const Row: React.FC<IRowProps> & {
         dark: props.dark,
     });
 
-    const finalClassNames = cx(customClassNames, props.className);
+    const innerContainerClassNames = cx(customClassNames, props.className);
 
     return (
         <div className={outContainerClassNames}>
-            <div {...props} className={finalClassNames}>
+            <div {...props} className={innerContainerClassNames}>
                 {props.children}
             </div>
         </div>
