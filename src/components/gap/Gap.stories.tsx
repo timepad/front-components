@@ -21,7 +21,7 @@ export const Default: IStorybookComponent = () => {
             <Modules.M className="lflex">
                 <Button>Кнопка</Button>
                 <Gap />
-                <span>Отступ слева 16 пикселей</span>
+                <span style={{backgroundColor: 'lightblue'}}>Отступ слева 16 пикселей</span>
             </Modules.M>
         </Modules>
     );
@@ -34,7 +34,7 @@ export const Custom: IStorybookComponent = () => {
             <Modules.M className="lflex">
                 <Button>Кнопка</Button>
                 <Gap size={2} />
-                <span>Отступ слева 32 пикселя</span>
+                <span style={{backgroundColor: 'lightblue'}}>Отступ слева 32 пикселя</span>
             </Modules.M>
         </Modules>
     );

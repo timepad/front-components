@@ -18,9 +18,9 @@ export const Default: IStorybookComponent = () => {
     return (
         <Modules>
             <Modules.M>
-                <h3 className="thead">Заголовок</h3>
+                <div style={{backgroundColor: 'lightcoral'}}>Заголовок</div>
                 <Brick />
-                <div>Сверху отступ 16 пикселей</div>
+                <div style={{backgroundColor: 'lightblue'}}>Сверху отступ 16 пикселей</div>
             </Modules.M>
         </Modules>
     );
@@ -31,9 +31,9 @@ export const Custom: IStorybookComponent = () => {
     return (
         <Modules>
             <Modules.M>
-                <h3 className="thead">Заголовок</h3>
+                <div style={{backgroundColor: 'lightcoral'}}>Заголовок</div>
                 <Brick size={2} />
-                <div>Сверху отступ 32 пикселя</div>
+                <div style={{backgroundColor: 'lightblue'}}>Сверху отступ 32 пикселя</div>
             </Modules.M>
         </Modules>
     );

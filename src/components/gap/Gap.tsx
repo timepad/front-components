@@ -1,54 +1,38 @@
 import * as React from 'react';
-import cx from 'classnames';
-import {layout} from '../../services/helpers/classHelpers';
 import '../../assets/css/bundle.less';
-
-export type gapSize =
-    | 1
-    | 1.5
-    | 2
-    | 2.5
-    | 3
-    | 3.5
-    | 4
-    | 4.5
-    | 5
-    | 5.5
-    | 6
-    | 6.5
-    | 7
-    | 7.5
-    | 8
-    | 8.5
-    | 9
-    | 9.5
-    | 10
-    | 10.5
-    | 11
-    | 11.5
-    | 12;
+import cx from 'classnames';
 
 export interface IGapProps {
-    size?: gapSize;
-    desktop?: gapSize;
-    mobile?: gapSize;
+    size?: number;
+    desktop?: number;
+    mobile?: number;
     className?: string;
 }
 
 const defaultBrickSize = 1;
 
-const getGapClassname = (size: number) => {
-    const [int, fract] = `${size}`.split('.');
-    return `${layout('gap')()}-${int}${fract ? `-${fract}` : ''}`;
-};
-
-export const Gap: React.FC<IGapProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => {
-    const classNames = cx(
-        className,
-        getGapClassname(size),
-        desktop && `${getGapClassname(desktop)}--desktop`,
-        mobile && `${getGapClassname(mobile)}--mobile`,
-    );
-
-    return <div className={classNames}>{children}</div>;
-};
+export const Gap: React.FC<IGapProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => (
+    <>
+        {!!desktop && (
+            <div className={cx(className, 'hidden-mobile')} style={{width: `${desktop * 16}px`}}>
+                {children}
+            </div>
+        )}
+        {!!mobile && (
+            <div className={cx(className, 'hidden-desktop')} style={{width: `${mobile * 16}px`}}>
+                {children}
+            </div>
+        )}
+        {(!desktop || !mobile) && (
+            <div
+                className={cx(className, {
+                    'hidden-mobile': !!mobile,
+                    'hidden-desktop': !!desktop,
+                })}
+                style={{width: `${size * 16}px`}}
+            >
+                {children}
+            </div>
+        )}
+    </>
+);
