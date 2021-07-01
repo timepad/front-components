@@ -1,10 +1,33 @@
-.crow-disabled-state (@content) {
-  &.crow--disabled {
-    &, &:active, .crow--body--caption {
-      @content();
+.crow__outer {
+  display: block;
+  height: auto;
+  width: auto;
+
+  --text-color: @c-black;
+  --bg-color: @c-white;
+
+  color: var(--text-color) !important;
+  background-color: var(--bg-color);
+
+  &.crow__outer--dark {
+    --bg-color: @c-black;
+    --text-color: @c-white;
+
+    .crow:active {
+      --bg-color: @c-gray-50-fade-35;
+      --text-color: @c-gray-35;
     }
 
-    .on-hover(@content);
+    .crow--disabled {
+      &, &:active, .crow__body .crow__body__caption {
+        cursor: default;
+
+        --bg-color: @c-black;
+        --text-color: @c-gray-75;
+
+        color: var(--text-color)!important;
+      }
+    }
   }
 }
 
@@ -17,9 +40,6 @@
 
   user-select: none;
 
-  --text-color: @c-black;
-  --bg-color: @c-white;
-
   color: var(--text-color) !important;
   background-color: var(--bg-color);
 
@@ -28,27 +48,27 @@
     transition: fill @duration-blink;
   }
 
-  &.crow--disabled {
-    cursor: default;
-  }
-
-  &.crow--hoverable {
-    .on-hover({
-      --bg-color: @c-dark-gray-fade-20;
-    });
-  }
-
   &:active {
     --bg-color: @c-dark-gray-fade-35;
     --text-color: @c-gray-50;
   }
 
-  .crow-disabled-state({
-    --bg-color: @c-white;
-    --text-color: @c-gray-35;
+  &.crow--disabled {
+    &, &:active, .crow__body .crow__body__caption {
+      cursor: default;
 
-    color: var(--text-color)!important;
-  });
+      --bg-color: @c-white;
+      --text-color: @c-gray-35;
+
+      color: var(--text-color)!important;
+    }
+  }
+
+  &.crow--hoverable {
+    &:hover {
+      --bg-color: @c-dark-gray-fade-20;
+    }
+  }
 
   &.crow--ff-system {
     .crow__body__text, .crow__body__caption {

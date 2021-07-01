@@ -14,6 +14,7 @@ interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     hoverable?: boolean;
     small?: boolean;
     ffFont?: boolean;
+    dark?: boolean;
 }
 
 const Row: React.FC<IRowProps> & {
@@ -23,18 +24,27 @@ const Row: React.FC<IRowProps> & {
     Caption: typeof RowCaption;
 } = (props: IRowProps): JSX.Element => {
     const customClassNames = component('row')({
-        disabled: props.disabled,
         hoverable: props.hoverable,
         small: props.small,
         ff: props.ffFont,
         'ff-system': !props.ffFont,
+        disabled: props.disabled,
+    });
+
+    const outContainerClassNames = component(
+        'row',
+        'outer',
+    )({
+        dark: props.dark,
     });
 
     const finalClassNames = cx(customClassNames, props.className);
 
     return (
-        <div {...props} className={finalClassNames}>
-            {props.children}
+        <div className={outContainerClassNames}>
+            <div {...props} className={finalClassNames}>
+                {props.children}
+            </div>
         </div>
     );
 };

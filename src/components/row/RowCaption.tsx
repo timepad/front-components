@@ -7,7 +7,7 @@ const RowCaption: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivE
     props,
 ): JSX.Element => {
     const {children, className} = props;
-    const classNames = cx(component('crow__body', 'caption')(), className);
+    const classNames = cx(component('row__body', 'caption')(), className);
 
     return (
         <div {...props} className={classNames}>
