@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 
 export interface IUsePaginationEntry {
     activePage: number;
-    coefficient: number;
+    amountAdjacentItems: number;
     total: number;
 }
 
@@ -18,10 +18,10 @@ export type TPage = {
     id: number;
 };
 
-export const usePagination = ({coefficient, activePage, total}: IUsePaginationEntry): TUsePaginationOutput => {
+export const usePagination = ({amountAdjacentItems, activePage, total}: IUsePaginationEntry): TUsePaginationOutput => {
     const validCoef = useMemo<number>(
-        () => (coefficient * 2 + 1 > total ? (total - 1) / 2 : coefficient),
-        [coefficient, total],
+        () => (amountAdjacentItems * 2 + 1 > total ? (total - 1) / 2 : amountAdjacentItems),
+        [amountAdjacentItems, total],
     );
 
     const centerItems = useMemo<TPage[]>(() => {

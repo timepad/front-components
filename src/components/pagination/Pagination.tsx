@@ -1,9 +1,8 @@
-import * as React from 'react';
-import {createContext, FC, HTMLAttributes} from 'react';
-import {Item} from './Item';
-import {Ellipsis} from './Ellipsis';
-import {Next} from './Next';
-import {Prev} from './Prev';
+import React, {createContext, FC, HTMLAttributes} from 'react';
+import {PaginationItem} from './PaginationItem';
+import {PaginationEllipsis} from './PaginationEllipsis';
+import {PaginationNext} from './PaginationNext';
+import {PaginationPrev} from './PaginationPrev';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {usePagination} from './usePagination';
@@ -17,7 +16,7 @@ export interface IPagination extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
     activePage: number;
     total: number;
     onChange?: TOnChange;
-    coefficient?: number;
+    amountAdjacentItems?: number; // количество соседних элементов
 }
 
 export interface IPaginationDefaultContext {
@@ -36,14 +35,19 @@ export const PaginationContext = createContext<IPaginationDefaultContext>({
     onChange: defaultChange,
 });
 
-const BasePagination: FC<IPagination> = ({
+const Pagination: FC<IPagination> & {
+    Item: typeof PaginationItem;
+    Next: typeof PaginationNext;
+    Prev: typeof PaginationPrev;
+    Ellipsis: typeof PaginationEllipsis;
+} = ({
     activePage,
     total,
     children,
     onChange = defaultChange,
     theme = 'light',
     className,
-    coefficient = 1,
+    amountAdjacentItems = 1,
     ...restProps
 }) => {
     const paginationClassName = cx(component('pagination')({[theme]: true}), className);
@@ -51,7 +55,7 @@ const BasePagination: FC<IPagination> = ({
     const {startItems, centerItems, endItems, isEndEllipsis, isStartEllipsis} = usePagination({
         activePage,
         total,
-        coefficient,
+        amountAdjacentItems,
     });
 
     return (
@@ -61,19 +65,19 @@ const BasePagination: FC<IPagination> = ({
                     children
                 ) : (
                     <>
-                        <Prev />
+                        <PaginationPrev />
                         {startItems.map(({id}) => (
-                            <Item page={id} key={id} />
+                            <PaginationItem page={id} key={id} />
                         ))}
-                        {isStartEllipsis && <Ellipsis />}
+                        {isStartEllipsis && <PaginationEllipsis />}
                         {centerItems.map(({id}) => (
-                            <Item page={id} key={id} />
+                            <PaginationItem page={id} key={id} />
                         ))}
-                        {isEndEllipsis && <Ellipsis />}
+                        {isEndEllipsis && <PaginationEllipsis />}
                         {endItems.map(({id}) => (
-                            <Item page={id} key={id} />
+                            <PaginationItem page={id} key={id} />
                         ))}
-                        <Next />
+                        <PaginationNext />
                     </>
                 )}
             </PaginationContext.Provider>
@@ -81,11 +85,9 @@ const BasePagination: FC<IPagination> = ({
     );
 };
 
-const paginationComponents = {
-    Item,
-    Prev,
-    Next,
-    Ellipsis,
-};
+Pagination.Item = PaginationItem;
+Pagination.Prev = PaginationPrev;
+Pagination.Ellipsis = PaginationEllipsis;
+Pagination.Next = PaginationNext;
 
-export const Pagination = Object.assign(BasePagination, paginationComponents);
+export default Pagination;

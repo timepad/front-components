@@ -9,7 +9,7 @@ export interface IPaginationItem extends HTMLAttributes<HTMLButtonElement> {
     page: number;
 }
 
-export const Item: FC<IPaginationItem> = ({page, className, disabled = false, ...restProps}) => {
+export const PaginationItem: FC<IPaginationItem> = ({page, className, disabled = false, ...restProps}) => {
     const {activePage, onChange} = useContext(PaginationContext);
     const isActive = activePage === page;
     const buttonClassName = cx(

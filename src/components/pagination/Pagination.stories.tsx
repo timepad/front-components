@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
-import {Pagination} from './Pagination';
+import Pagination from './Pagination';
 
 import 'css/bundle.less';
 
@@ -17,7 +17,7 @@ export const Light: IStorybookComponent = () => {
         <>
             <StoryTitle>Light</StoryTitle>
             <div className="lflex">
-                <Pagination activePage={page} total={5} onChange={setPage}>
+                <Pagination coefficient={2} activePage={page} total={5} onChange={setPage}>
                     <Pagination.Prev />
                     <Pagination.Item page={1} />
                     <Pagination.Item page={2} />
@@ -58,7 +58,7 @@ export const WithHoc: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Light</StoryTitle>
-            <Pagination activePage={page} total={654} coefficient={1} onChange={setPage} />
+            <Pagination activePage={page} total={654} onChange={setPage} />
         </>
     );
 };
