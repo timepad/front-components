@@ -2,8 +2,7 @@ import * as React from 'react';
 import cx from 'classnames';
 import {layout} from '../../services/helpers/classHelpers';
 import '../../assets/css/bundle.less';
-
-type moduleSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+import {moduleSize} from './types';
 
 export interface IModuleProps {
     size?: moduleSize;
