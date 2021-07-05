@@ -1,0 +1,40 @@
+.label {
+  width: fit-content;
+  height: 24px;
+  padding: 0 8px;
+  font-family: @ff;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: @c-white;
+  border-radius: 4px;
+  line-height: 0;
+  white-space: nowrap;
+}
+
+.label_default {
+  .label();
+  background: @c-black-overlay;
+}
+
+.label_yellow {
+  .label();
+  background: @c-yellow;
+  color: @c-black;
+}
+
+.label_red {
+  .label();
+  background: @c-red;
+}
+
+.label_green {
+  .label();
+  background: @c-green;
+}
+
+.label_timer{
+  height: 19px;
+  padding: 0 4px 1px;
+  box-sizing: border-box;
+}
