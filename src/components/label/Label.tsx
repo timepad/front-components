@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './index.less';
-import cn from 'classnames';
+import {component} from '../../services/helpers/classHelpers';
 
 export enum LabelColor {
     green = 'green',
@@ -15,5 +15,12 @@ export interface ILabelProps {
 }
 
 export const Label: React.FC<ILabelProps> = ({background = LabelColor.default, timer, children}) => (
-    <div className={cn('label_' + background, timer && 'label_timer')}>{children}</div>
+    <div
+        className={component('label')({
+            [background]: true,
+            timer: timer,
+        })}
+    >
+        {children}
+    </div>
 );
