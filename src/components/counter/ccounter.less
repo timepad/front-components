@@ -1,27 +1,8 @@
 
-.counter-wrapper {
+.ccounter-wrapper {
   position: relative;
 
-  .empty-badge-bg {
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    box-sizing: border-box;
-    border-radius: 50%;
-    background: @c-white;
-
-    .badge {
-      padding: 3px;
-      border-radius: 50%;
-      background: @c-primary-blue;
-    }
-
-  }
-
-  .badge-bg {
+  .cbadge-bg {
     position: absolute;
     left: calc(100% - 12px);
     top: -6px;
@@ -32,7 +13,7 @@
     border-radius: 20px;
     background: @c-white;
 
-    .badge {
+    .cbadge {
       font-family: @ff;
       font-size: 13px;
       line-height: 0;
@@ -50,5 +31,24 @@
 
   }
 
+  .cbadge-bg--empty {
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    left: unset;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: @c-white;
+    .cbadge {
+      min-width: unset;
+      height: unset;
+      padding: 3px;
+      border-radius: 50%;
+      background: @c-primary-blue;
+    }
 
+  }
 }

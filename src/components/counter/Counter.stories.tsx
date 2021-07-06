@@ -24,7 +24,7 @@ const Skeleton = () => (
 export const Counters: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Labels</StoryTitle>
+            <StoryTitle>Counters</StoryTitle>
             <div className="lflex">
                 <Counter>
                     <Skeleton />
