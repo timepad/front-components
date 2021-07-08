@@ -56,3 +56,5 @@ out/
 .idea/deployment.xml
 .idea/markdown-navigator.xml
 .idea/markdown-navigator/
+.idea/prettier.xml
+.idea/misc.xml
