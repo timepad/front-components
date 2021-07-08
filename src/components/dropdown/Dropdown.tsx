@@ -266,7 +266,6 @@ export const Dropdown = ({
                     return;
                 }
             }
-            debugger;
             onCloseHandler();
         },
         target as React.MutableRefObject<HTMLButtonElement>,
