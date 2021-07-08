@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useEffect, useRef, useState, useCallback} from 'react';
+import {ReactNode, useEffect, useRef, useState, useCallback, Ref} from 'react';
 import cx from 'classnames';
 
 import {Row} from './Row';
@@ -35,6 +35,7 @@ export interface IDropdownProps {
     // enable with icons dropdown style
     withIcons?: boolean;
     doNotCloseMobileDDOnAnyClick?: boolean;
+    childrenRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 const EDGE_PADDING = 8;
@@ -195,6 +196,7 @@ export const Dropdown = ({
     priorityPositions,
     withIcons,
     doNotCloseMobileDDOnAnyClick,
+    childrenRef,
 }: IDropdownProps): React.ReactElement => {
     // generate unique name for autoposition class
     // so that different dropdowns will have different autoposition class
@@ -256,7 +258,32 @@ export const Dropdown = ({
     }, [onClose]);
 
     const target = parent ? parent : ddBtnRef;
-    useClickOutside(ddRef, () => onCloseHandler(), target as React.MutableRefObject<HTMLButtonElement>);
+    useClickOutside(
+        ddRef,
+        (event) => {
+            if (childrenRef && childrenRef.current) {
+                if (childrenRef.current.contains(event.target as any)) {
+                    return;
+                }
+            }
+            debugger;
+            onCloseHandler();
+        },
+        target as React.MutableRefObject<HTMLButtonElement>,
+    );
+    // useClickOutside(
+    //     ddRef,
+    //     (event) => {
+    //         const el = Array.from(document.querySelectorAll('.cdrop-bg')).find((item) =>
+    //             item.contains(event.target as any),
+    //         );
+    //         if (el) {
+    //             return;
+    //         }
+    //         onCloseHandler();
+    //     },
+    //     target as React.MutableRefObject<HTMLButtonElement>,
+    // );
 
     useEffect(() => {
         const currentDdRef = ddRef?.current;
