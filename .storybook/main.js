@@ -12,9 +12,13 @@ module.exports = {
     "@storybook/addon-viewport",
     "@storybook/addon-storysource",
   ],
+
+  // According to issue
+  // https://github.com/styleguidist/react-docgen-typescript/issues/356#issuecomment-857887751
   typescript: {
     reactDocgen: 'react-docgen',
   },
+
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
@@ -25,7 +29,7 @@ module.exports = {
       fs: 'empty',
       net: 'empty',
       tls: 'empty',
-    }
+    };
 
     // Добавил из нашего вебпака обработчик less, svg и шрифтовой загрузчик
     config.module.rules.push.apply(config.module.rules, [
