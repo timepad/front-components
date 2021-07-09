@@ -276,7 +276,7 @@ export const DropDownInDropDown: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>DropDown in DropDown</StoryTitle>
-            <Dropdown childrenRef={childrenRef} withIcons priorityPositions={['br']}>
+            <Dropdown isOutSideClick={false} childrenRef={childrenRef} withIcons priorityPositions={['br']}>
                 <Dropdown.ToggleButton label="Все" />
                 <Dropdown.Body>
                     <List variant="dark">
@@ -285,7 +285,8 @@ export const DropDownInDropDown: IStorybookComponent = () => {
                             className="mtheme--darkpic"
                             onClick={(e: any) => e.stopPropagation()}
                         >
-                            Элемент
+                            Сортируйте учестников по имени, дате первого участия или мероприятия, количеству билетов и
+                            принесенному доходу
                         </List.Item>
                     </List>
                 </Dropdown.Body>

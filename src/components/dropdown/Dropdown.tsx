@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useEffect, useRef, useState, useCallback, Ref} from 'react';
+import {ReactNode, useEffect, useRef, useState, useCallback} from 'react';
 import cx from 'classnames';
 
 import {Row} from './Row';
@@ -36,6 +36,7 @@ export interface IDropdownProps {
     withIcons?: boolean;
     doNotCloseMobileDDOnAnyClick?: boolean;
     childrenRef?: React.MutableRefObject<HTMLDivElement | null>;
+    isOutSideClick?: boolean;
 }
 
 const EDGE_PADDING = 8;
@@ -197,6 +198,7 @@ export const Dropdown = ({
     withIcons,
     doNotCloseMobileDDOnAnyClick,
     childrenRef,
+    isOutSideClick = true,
 }: IDropdownProps): React.ReactElement => {
     // generate unique name for autoposition class
     // so that different dropdowns will have different autoposition class
@@ -261,6 +263,9 @@ export const Dropdown = ({
     useClickOutside(
         ddRef,
         (event) => {
+            if (!isOutSideClick) {
+                return;
+            }
             if (childrenRef && childrenRef.current) {
                 if (childrenRef.current.contains(event.target as any)) {
                     return;
