@@ -1,0 +1,58 @@
+.csnackbar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 32px;
+  z-index: @z-index-dropdowns;
+  transition: opacity 150ms ease-out, bottom 150ms ease-out;
+}
+
+.csnackbar {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: @c-black;
+  font-size: 15px;
+  line-height: 22px;
+  font-style: normal;
+  font-weight: normal;
+  width: max-content;
+  height: 40px;
+  color: @c-white;
+  
+  > button, > button:active {
+    --text-color: @c-white;
+    margin: 4px 4px 4px 0;
+  }
+  
+  > svg {
+    margin: 0 -7px 0 7px;
+  
+    > path {
+      fill: @c-white;
+    }
+  }
+  &--error {
+    background-color: @c-red;
+  }
+}
+
+.csnackbar__text {
+  padding: 0 16px;
+}
+
+/* CSSTransition classNames logic */
+.csnackbar-enter,
+.csnackbar-exit-active {
+  bottom: 24px;
+  opacity: 0;
+}
+
+.csnackbar-enter-active {
+  bottom: 32px;
+  opacity: 1;
+}
