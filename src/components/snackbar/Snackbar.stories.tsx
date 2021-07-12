@@ -17,7 +17,7 @@ export default {
 
 export const View: IStorybookComponent = () => {
     return (
-        <SnackbarProvider>
+        <>
             <Snackbar text="Что-то произошло" />
             <div className="lbrick" />
             <Snackbar
@@ -51,7 +51,7 @@ export const View: IStorybookComponent = () => {
                     onClick: () => null,
                 }}
             />
-        </SnackbarProvider>
+        </>
     );
 };
 View.storyName = 'View';
