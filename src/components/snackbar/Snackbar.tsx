@@ -4,7 +4,7 @@ import {Button} from '../button';
 
 import {ISnackbarProps} from './SnackbarProvider';
 import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
-import WarningSvg from '../../assets/svg/24/icon-warning-24.svg';
+import WarningSvg from '../../assets/svg/24/icon-error-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 
 export const Snackbar: React.FC<ISnackbarProps> = ({text, state, button}) => {
