@@ -2,53 +2,32 @@
 .ccounter-wrapper {
   position: relative;
 
-  .cbadge-bg {
+  .cbadge {
     position: absolute;
     left: calc(100% - 12px);
     top: -6px;
+    border-radius: 20px;
+    border: 2px solid @c-white;
+
+    .t-small();
     display: flex;
     align-items: center;
-    padding: 2px;
+    color: @c-white;
+    padding: 0 3px 1px;
     box-sizing: border-box;
-    border-radius: 20px;
-    background: @c-white;
-
-    .cbadge {
-      font-family: @ff;
-      font-size: 13px;
-      line-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: @c-white;
-      padding: 0 4px 1px;
-      box-sizing: border-box;
-      border-radius: 20px;
-      background: @c-primary-blue;
-      min-width: 17px;
-      height: 17px;
-    }
+    background: @c-primary-blue;
+    min-width: 17px;
+    height: 17px;
 
   }
 
-  .cbadge-bg--empty {
+  .cbadge-empty {
     position: absolute;
     right: -2px;
     top: -2px;
-    left: unset;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    box-sizing: border-box;
     border-radius: 50%;
-    background: @c-white;
-    .cbadge {
-      min-width: unset;
-      height: unset;
-      padding: 3px;
-      border-radius: 50%;
-      background: @c-primary-blue;
-    }
-
+    border: 2px solid @c-white;
+    padding: 3px;
+    background: @c-primary-blue;
   }
 }
