@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {ReactNode, useState} from 'react';
 import {usePopper} from 'react-popper';
 import {VariationPlacement} from '@popperjs/core';
@@ -77,8 +77,9 @@ export const Dropdown = ({
     const [show, setShow] = useState<boolean>(propShow);
     const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
     const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
     const target = parent?.current ? parent.current : referenceElement;
-    const {styles, attributes} = usePopper(target, popperElement, {
+    const {styles, attributes, state} = usePopper(target, popperElement, {
         placement: positions,
         modifiers: [
             {name: 'arrow', options: {element: null}},
@@ -104,6 +105,21 @@ export const Dropdown = ({
     useEffect(() => {
         setShow(propShow);
     }, [propShow]);
+
+    useEffect(() => {
+        if (state?.modifiersData) {
+            const clientHeight = document.documentElement.clientHeight;
+            const modifiersData = state.modifiersData;
+            const popperOffsets = modifiersData.popperOffsets;
+            if (scrollRef?.current && popperOffsets) {
+                const nodeDropList = scrollRef.current;
+                const dorpListHeight = nodeDropList.getBoundingClientRect().height;
+                if (dorpListHeight + popperOffsets.y > clientHeight) {
+                    nodeDropList.style.maxHeight = `calc(100vh - ${popperOffsets.y + 16}px)`;
+                }
+            }
+        }
+    }, [state?.modifiersData]);
 
     useClickOutside(
         popperElement,
@@ -137,6 +153,7 @@ export const Dropdown = ({
                 onCloseHandler,
                 white: !!white,
                 dropClassName,
+                scrollRef,
             }}
         >
             {children}

@@ -1,4 +1,4 @@
-import {createContext} from 'react';
+import {createContext, Ref} from 'react';
 import * as React from 'react';
 
 interface IContext {
@@ -11,6 +11,7 @@ interface IContext {
     styles: {[key: string]: React.CSSProperties};
     attributes: {[key: string]: {[key: string]: string} | undefined};
     dropClassName: any;
+    scrollRef: Ref<HTMLDivElement>;
 }
 
 export const DropDownManagerContext = createContext<IContext | null>(null);
