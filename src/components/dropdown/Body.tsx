@@ -29,7 +29,12 @@ const Body: React.FC<IProps | any> = React.forwardRef<HTMLDivElement, IProps>(({
         dropClassName,
     } = context;
     return ReactDOM.createPortal(
-        <div ref={ref} className={component('drop-bg')()}>
+        <div
+            ref={ref}
+            className={component('drop-bg')({
+                show,
+            })}
+        >
             <div
                 className={component('drop-animate')({
                     show: show,

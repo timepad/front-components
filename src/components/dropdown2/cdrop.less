@@ -27,9 +27,9 @@
   display: inline-block;
 }
 
-.cdrop__drop {
-  display: none;
-  visibility: hidden;
+.cdrop__body {
+  //display: none;
+  //visibility: hidden;
   box-sizing: border-box;
 
   flex-direction: column;
@@ -38,11 +38,6 @@
   border-radius: 8px;
   background-clip: padding-box;
   overflow: hidden; //TODO ленивое скругление углов, удалить когда понадобится
-
-  margin-top: 2px;
-  position: absolute;
-  top: 100%;
-  left: 0;
 
   pointer-events: all;
 
@@ -485,7 +480,7 @@
 
 // TODO: фикс цвета для календаря и будущих боттомшитов-модалок
 
-.cdrop__drop.cdrop__drop--white {
+.cdrop__body.cdrop__body--white {
   .cdrop__list {
     background: @c-white;
   }
