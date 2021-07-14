@@ -406,6 +406,7 @@
 .cdrop__cancel-wrapper {
   background-color: @c-black;
   padding: 8px 16px;
+  display: flex;
 }
 
 .cdrop__center {
@@ -505,4 +506,51 @@
 
 .cdrop-animate--show {
   opacity: 1;
+}
+
+.cdrop-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  animation: 0.35s linear 0s 1 alternate move_eye;
+}
+
+@keyframes move_eye {
+  from {
+    transform: translate(-100%, 0px);
+  }
+  to {
+    transform: translate(0%, 0px);
+  }
+}
+
+.cdrop-mobile__body {
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  background-color: @c-black;
+}
+
+.cdrop-mobile__body--white {
+  background-color: @c-white;
+}
+
+.cdrop-mobile__overlay {
+  background-color: rgba(37, 37, 37, 0.35);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.cdrop-mobile__menu {
+  position: relative;
+  z-index: 2;
 }

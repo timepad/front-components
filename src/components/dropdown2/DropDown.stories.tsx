@@ -282,8 +282,7 @@ export const DropDownInDropDown: IStorybookComponent = () => {
                             className="mtheme--darkpic"
                             onClick={(e: any) => e.stopPropagation()}
                         >
-                            Сортируйте учестников по имени, дате первого участия или мероприятия, количеству билетов и
-                            принесенному доходу
+                            Сортируйте
                         </List.Item>
                     </List>
                 </Dropdown.Body>

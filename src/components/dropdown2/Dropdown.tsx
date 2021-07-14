@@ -11,6 +11,7 @@ import {ToggleButton} from './ToggleButton';
 import {DropDownManagerContext} from './ManagerContext';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
+import {AutoPlacement} from '@popperjs/core/lib/enums';
 
 /*
 ┌───────┐ ┌───┐    ┌───┐ ┌───────┐
@@ -35,12 +36,18 @@ const useClickOutside = (ref: HTMLElement | null, handler: (event: MouseEvent) =
             handler(event as MouseEvent);
         };
 
+        const hardClose = (e: any) => {
+            handler(e as MouseEvent); // Prints "Example of an event"
+        };
+
+        document.addEventListener('dropdown-close', hardClose);
         document.addEventListener('mousedown', listener);
         document.addEventListener('touchstart', listener);
 
         return () => {
             document.removeEventListener('mousedown', listener);
             document.removeEventListener('touchstart', listener);
+            document.addEventListener('dropdown-close', hardClose);
         };
     }, [ref, handler, target]);
 };
@@ -51,7 +58,7 @@ export interface IDropdownProps {
     onClose?: () => void;
     parent?: React.MutableRefObject<HTMLElement | null>;
     children?: ReactNode;
-    positions?: DropdownPosition;
+    positions?: DropdownPosition | AutoPlacement;
     // enable with icons dropdown style
     withIcons?: boolean;
     doNotCloseMobileDDOnAnyClick?: boolean;
@@ -68,7 +75,7 @@ const EDGE_PADDING = 8;
 export const Dropdown = ({
     children,
     white,
-    positions,
+    positions = 'auto',
     withIcons,
     parent,
     show: propShow = false,
@@ -92,9 +99,13 @@ export const Dropdown = ({
         ],
     });
 
-    const toggleShow = () => setShow(!show);
+    const toggleShow = () => {
+        setShow(!show);
+    };
 
-    const onCloseHandler = () => setShow(false);
+    const onCloseHandler = () => {
+        setShow(false);
+    };
 
     useEffect(() => {
         if (!show) {
@@ -124,6 +135,7 @@ export const Dropdown = ({
     useClickOutside(
         popperElement,
         () => {
+            console.log('check useClickOutside');
             onCloseHandler();
         },
         target as HTMLElement,
