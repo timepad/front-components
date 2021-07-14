@@ -1,13 +1,13 @@
 import React from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {Counter} from './index';
+import {Bage} from './index';
 import {IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
 
 export default {
-    title: 'Counter',
-    component: Counter,
+    title: 'Bage',
+    component: Bage,
 } as Meta;
 
 const Skeleton = () => (
@@ -21,22 +21,22 @@ const Skeleton = () => (
     />
 );
 
-export const Counters: IStorybookComponent = () => {
+export const Bages: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Counters</StoryTitle>
             <div className="lflex">
-                <Counter>
+                <Bage>
                     <Skeleton />
-                </Counter>
+                </Bage>
                 <Spacer />
-                <Counter value={0}>
+                <Bage value={0}>
                     <Skeleton />
-                </Counter>
+                </Bage>
                 <Spacer />
-                <Counter value="0000">
+                <Bage value="0000">
                     <Skeleton />
-                </Counter>
+                </Bage>
             </div>
         </>
     );
