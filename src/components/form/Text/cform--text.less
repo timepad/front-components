@@ -1,0 +1,43 @@
+
+
+.cform--text {
+  max-height: 32px;
+  padding: 3px 0 7px 16px;
+
+  flex-grow: 1;
+
+  font-family: @ff;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 22px;
+
+  --text-color: @c-black;
+  --bg-color: @c-dark-gray-fade-20;
+
+  background: var(--bg-color)!important;
+  color: var(--text-color)!important;
+
+  border-radius: @br-rounded;
+  border: 0;
+
+  &:hover {
+    --text-color: @c-gray-50;
+  }
+
+  &:focus {
+    border: 2px solid #643FFF;
+    box-sizing: border-box;
+
+    --text-color: @c-black;
+  }
+
+  &--dark {
+    --bg-color: @c-dark-gray-fade-20;
+    --text-color: @c-white;
+
+    &:focus {
+      --text-color: @c-white;
+    }
+  }
+}
