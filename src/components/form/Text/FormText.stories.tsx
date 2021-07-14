@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
@@ -25,12 +25,23 @@ interface IInputsContainerProps {
 }
 
 const Components = {
-    default: [<Form.Text key={1} />, <Form.Text key={2} />],
-    dark: [<Form.Text key={3} dark />, <Form.Text key={4} dark />],
+    default: [
+        <Form.Text key={1} placeholder="Empty" />,
+        <Form.Text key={2} placeholder="Empty" />,
+        <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />,
+        <Form.Text key={6} placeholder="Empty" error />,
+    ],
+    dark: [
+        <Form.Text key={3} placeholder="Empty" />,
+        <Form.Text key={4} placeholder="Empty" multiline />,
+        <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />,
+        <Form.Text key={6} placeholder="Empty" error />,
+    ],
 };
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {themeColor} = props;
+    const [value, setValue] = useState('');
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
             <div className="mtheme__typo mtheme--bg--demo">
@@ -48,6 +59,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                     </>
                                 );
                             })}
+                            <Form.Text value={value} onChange={(e) => setValue(e.target.value)} multiline />
                         </div>
                     </div>
                     <div className="lgap-4-0" />

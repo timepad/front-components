@@ -1,43 +1,121 @@
+.disabled-state (@color) {
+  &--disabled {
+    input, textarea {
+      --text-color: @color;
+      &:hover {
+        --text-color: @color;
+      }
+    }
+  }
+}
 
+.error-state (@color) {
+  &--error {
+    input, textarea {
+      &:focus {
+        border: 2px solid @color;
+      }
+    }
+  }
+}
+
+@height: (32px);
+@lh-desktop: (22px);
+@lh-mobile: (20px);
 
 .cform--text {
-  max-height: 32px;
-  padding: 3px 0 7px 16px;
+  display: flex;
 
-  flex-grow: 1;
+  input, textarea {
+    padding: 3px 16px 7px 16px;
 
-  font-family: @ff;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 22px;
+    flex-grow: 1;
 
-  --text-color: @c-black;
-  --bg-color: @c-dark-gray-fade-20;
-
-  background: var(--bg-color)!important;
-  color: var(--text-color)!important;
-
-  border-radius: @br-rounded;
-  border: 0;
-
-  &:hover {
-    --text-color: @c-gray-50;
-  }
-
-  &:focus {
-    border: 2px solid #643FFF;
-    box-sizing: border-box;
+    font-family: @ff;
+    font-size: 15px;
+    line-height: @lh-desktop;
 
     --text-color: @c-black;
-  }
-
-  &--dark {
     --bg-color: @c-dark-gray-fade-20;
-    --text-color: @c-white;
+
+    background: var(--bg-color)!important;
+    color: var(--text-color)!important;
+
+    border-radius: @br-rounded;
+    border: 0;
+
+    &:hover {
+      --text-color: @c-gray-50;
+    }
 
     &:focus {
-      --text-color: @c-white;
+      border: 2px solid @c-primary-blue;
+      box-sizing: border-box;
+      --text-color: @c-black;
     }
+  }
+
+  input {
+    &:focus {
+      max-height: @height;
+    }
+  }
+
+  textarea {
+    resize: none;
+    overflow: hidden;
+    height: @lh-desktop; // 22px
+    outline: 0;
+    appearance: none;
+
+    &:focus {
+      height: @lh-desktop;
+    }
+  }
+
+  //&--lines {
+  //  textarea {
+  //    &:focus {
+  //      height: ;
+  //    }
+  //  }
+  //}
+
+  //.height-variant(@step) {
+  //  &--lines_@{step} {
+  //    textarea {
+  //      max-height: @height * @step;
+  //      height: @lh-desktop * @step;
+  //
+  //        &:focus {
+  //          height: if(@step > 1, @lh-desktop * @step + 11, @height);
+  //        }
+  //    }
+  //  }
+  //}
+  //
+  //each(range(100), {
+  //  .height-variant(@value);
+  //})
+
+  .disabled-state(@c-gray-35);
+  .error-state(@c-red);
+
+  // ===== DARK THEME =====
+  html body .mtheme--darkpic & {
+    input, textarea {
+      --bg-color: @c-dark-gray-fade-20;
+      --text-color: @c-white;
+
+      &:hover {
+        --text-color: @c-gray-50;
+      }
+
+      &:focus {
+        --text-color: @c-white;
+      }
+    }
+
+    .disabled-state(@c-gray-75);
   }
 }
