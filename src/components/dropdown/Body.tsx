@@ -29,7 +29,11 @@ export const Body: React.FC<IProps> = ({children, className}) => {
         dropClassName,
     } = context;
     return ReactDOM.createPortal(
-        <div className={component('drop-bg')()}>
+        <div
+            className={component('drop-bg')({
+                show,
+            })}
+        >
             <div
                 className={component('drop-animate')({
                     show: show,
