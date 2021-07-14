@@ -253,7 +253,7 @@ const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
             <Dropdown.Body ref={childrenRef}>
                 <List variant="dark">
                     <List.Item
-                        suffix={<MemberFiltersEditCurrentTemplate />}
+                        suffix={<DropProfile />}
                         className="mtheme--darkpic"
                         onClick={(e: any) => e.stopPropagation()}
                     >
@@ -273,7 +273,7 @@ export const DropDownInDropDown: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>DropDown in DropDown</StoryTitle>
-            <Dropdown isOutSideClick={false} childrenRef={childrenRef} withIcons positions={'bottom-end'}>
+            <Dropdown childrenRef={childrenRef} withIcons positions={'bottom-end'}>
                 <Dropdown.ToggleButton label="Все" />
                 <Dropdown.Body>
                     <List variant="dark">

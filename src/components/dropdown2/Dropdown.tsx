@@ -63,7 +63,6 @@ export interface IDropdownProps {
     withIcons?: boolean;
     doNotCloseMobileDDOnAnyClick?: boolean;
     childrenRef?: React.MutableRefObject<HTMLDivElement | null>;
-    isOutSideClick?: boolean;
 }
 
 const EDGE_PADDING = 8;
@@ -135,7 +134,6 @@ export const Dropdown = ({
     useClickOutside(
         popperElement,
         () => {
-            console.log('check useClickOutside');
             onCloseHandler();
         },
         target as HTMLElement,

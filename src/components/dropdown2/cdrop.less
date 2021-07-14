@@ -127,15 +127,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  //TODO кажется этот способ скрывать скроллбар не работает
-  //@media(min-width: @rsp-desktop-min) {
-  //  transform: scale(-1, 1);
-  //
-  //  & > * {
-  //    transform: scale(-1, 1);
-  //  }
-  //}
-
   //а вот это работает на вебкит (Хром, Опера, Сафари)
   &::-webkit-scrollbar {
     display: none;
@@ -427,7 +418,6 @@
   left: auto;
   right: 0;
 
-  // @media (max-width: @rsp-mobile-max) { TODO: временно
   @media (max-width: @rsp-mobile-portrait-max) {
     top: 0;
     left: 0;
@@ -439,7 +429,6 @@
   top: auto;
   bottom: 64px;
 
-  // @media (max-width: @rsp-mobile-max) { TODO: временно
   @media (max-width: @rsp-mobile-portrait-max) {
     top: 0;
     bottom: 0;
