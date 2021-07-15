@@ -15,6 +15,7 @@ interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     small?: boolean;
     ffFont?: boolean;
     dark?: boolean;
+    horizontalPadding?: 0 | 8 | 16 | 24 | 32;
 }
 
 const Row: React.FC<IRowProps> & {
@@ -42,7 +43,11 @@ const Row: React.FC<IRowProps> & {
 
     return (
         <div className={outContainerClassNames}>
-            <div {...props} className={innerContainerClassNames}>
+            <div
+                {...props}
+                style={props.horizontalPadding !== undefined ? {padding: `0 ${props.horizontalPadding}px`} : {}}
+                className={innerContainerClassNames}
+            >
                 {props.children}
             </div>
         </div>
