@@ -17,6 +17,7 @@ export const FormText: FC<IFormTextProps> = (props) => {
 
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [height, setHeight] = useState(22);
+    const [lineHeight, setLineHeight] = useState(1.2);
 
     const finalClassNames = cx(
         component('form--text')({
@@ -28,16 +29,6 @@ export const FormText: FC<IFormTextProps> = (props) => {
     );
 
     useEffect(() => {
-        if (textareaRef && textareaRef.current) {
-            const style = window.getComputedStyle(textareaRef.current);
-            const width = Number(style.width.replace('px', ''));
-            // const elem = document.createElement('span');
-            // elem.textContent = value as string;
-            // const textWidth = Number(elem.style.width.replace('px', ''));
-            // console.log(width);
-            // console.log(width / (value as string)?.length);
-        }
-        // console.log(textareaRef.current?.value?.match(/\r|\r\n|\n/));
         if (value) {
             const count = (value as string).split(/\r|\r\n|\n/).length;
             setLinesNumber(count);
@@ -45,12 +36,13 @@ export const FormText: FC<IFormTextProps> = (props) => {
     }, [value]);
 
     useEffect(() => {
-        const setHeightListener = (height: number) => () => {
+        const setHeightListener = (height: number, lineHeight: number) => () => {
             setHeight(height);
+            setLineHeight(lineHeight);
         };
 
-        const setHeight22Listener = setHeightListener(22);
-        const setHeight32Listener = setHeightListener(32);
+        const setHeight22Listener = setHeightListener(22, 22);
+        const setHeight32Listener = setHeightListener(32, 18);
 
         if (textareaRef && textareaRef.current) {
             textareaRef.current.addEventListener('focus', setHeight32Listener);
@@ -67,8 +59,8 @@ export const FormText: FC<IFormTextProps> = (props) => {
 
     const text = {
         height: linesNumber > 1 ? 22 * linesNumber + 11 : height * linesNumber,
+        lineHeight: `${lineHeight}px`,
         maxHeight: 32 * linesNumber,
-        width: 300 - 32,
     };
 
     return (
