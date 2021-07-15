@@ -94,7 +94,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
     }, [getLatest, hideTooltip, showTooltip]);
 
     useEffect(() => {
-        if (!getLatest().finalConfig.closeOnOutsideClick) return;
+        if (!getLatest().finalConfig.closeOnOutsideClick) {
+            return;
+        }
 
         const handleClickOutside: EventListener = (event) => {
             const {tooltipRef, triggerRef} = getLatest();
