@@ -4,8 +4,8 @@ import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-import '../storybook/demo.less';
 import {Form} from '../Form';
+import {Formik, FormikProps, Form as FormikForm} from 'formik';
 
 export default {
     title: 'TextLight',
@@ -28,7 +28,7 @@ const themes = {
 };
 
 interface IInputData {
-    label: string;
+    placeholder: string;
     value: string | number;
     disabled?: boolean;
     success?: boolean;
@@ -39,7 +39,7 @@ interface IInputData {
 const inputsData: IInputData[] = [
     // Empty input
     {
-        label: 'Empty',
+        placeholder: 'Empty',
         value: '',
         disabled: false,
         success: false,
@@ -47,7 +47,7 @@ const inputsData: IInputData[] = [
     },
     // Active input
     {
-        label: 'Active input caption',
+        placeholder: 'Active input caption',
         value: 'Active',
         disabled: false,
         success: false,
@@ -56,7 +56,7 @@ const inputsData: IInputData[] = [
     },
     // Filled input
     {
-        label: 'Input caption',
+        placeholder: 'Input caption',
         value: 'Filled',
         disabled: false,
         success: false,
@@ -64,7 +64,7 @@ const inputsData: IInputData[] = [
     },
     // Disabled input
     {
-        label: 'Disabled input caption',
+        placeholder: 'Disabled input caption',
         value: 'Disabled',
         disabled: true,
         success: false,
@@ -72,7 +72,7 @@ const inputsData: IInputData[] = [
     },
     // Successful input
     {
-        label: 'Input caption',
+        placeholder: 'Input caption',
         value: 'Filled',
         disabled: false,
         success: true,
@@ -80,7 +80,7 @@ const inputsData: IInputData[] = [
     },
     // Error input
     {
-        label: 'Error input caption',
+        placeholder: 'Error input caption',
         value: 'Error',
         disabled: false,
         success: false,
@@ -89,11 +89,11 @@ const inputsData: IInputData[] = [
 ];
 
 const InputRow = (props: IInputData) => {
-    const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
+    const {placeholder, value: valueDefault, disabled, success, error, autoFocus} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Form.TextLight
-            label={label}
+            placeholder={placeholder}
             value={value}
             disabled={disabled}
             success={success}
@@ -123,7 +123,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             {data.map((input, index) => (
                                 <div key={index}>
                                     <InputRow
-                                        label={input.label}
+                                        placeholder={input.placeholder}
                                         value={input.value}
                                         disabled={input.disabled}
                                         success={input.success}
@@ -151,5 +151,44 @@ export const Simple: IStorybookComponent = () => {
                 <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index} />
             ))}
         </>
+    );
+};
+
+interface Values {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export const FormikExample: IStorybookComponent = () => {
+    return (
+        <div>
+            <Formik
+                initialValues={{
+                    email: '',
+                    firstName: 'red',
+                    lastName: '',
+                }}
+                onSubmit={(values: Values, actions: any) => {
+                    setTimeout(() => {
+                        alert(JSON.stringify(values, null, 2));
+                        actions.setSubmitting(false);
+                    }, 1000);
+                }}
+            >
+                {({isValid, values, errors, handleChange}: FormikProps<Values>) => (
+                    <FormikForm>
+                        <Form.TextLightField
+                            value={values.firstName}
+                            onChange={handleChange('firstName')}
+                            // error={errors.firstName}
+                            name="firstName"
+                            type="text"
+                            placeholder="TEST"
+                        />
+                    </FormikForm>
+                )}
+            </Formik>
+        </div>
     );
 };

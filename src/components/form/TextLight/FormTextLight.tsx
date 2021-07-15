@@ -3,6 +3,7 @@ import {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
+import './index.less';
 
 export enum State {
     disabled = 'disabled',
@@ -14,13 +15,8 @@ export enum State {
 
 export interface IFormTextLightProps
     extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-    label: string;
     error?: string;
-    disabled?: boolean;
     success?: boolean;
-    // onFocus?: FocusEventHandler<HTMLInputElement>;
-    // onChange?: ChangeEventHandler<HTMLInputElement>;
-    // onBlur?: FocusEventHandler<HTMLInputElement>; // yes FocusEventHandler, look d.ts
     inputRef?: React.MutableRefObject<HTMLInputElement>;
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onStateChange?: (state: State) => void;
@@ -30,20 +26,13 @@ export interface IFormTextLightProps
 export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
     const {
         name,
-        label,
-        value,
         error,
-        disabled,
         success,
         autoFocus = false,
-        onFocus,
-        onChange,
-        onBlur,
         inputRef,
         customIcon,
         onStateChange,
         onErrorTruncation,
-        type,
         ...othersProps
     } = props;
 
@@ -56,10 +45,10 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
     const [isTruncated, setIsTruncated] = useState(false);
 
     const inputClasses = cx(
-        component('form', 'gm-input')(),
+        component('form--text-light', 'container')(),
         component(
-            'form',
-            'gm-input-single',
+            'form--text-light',
+            'input',
         )({
             disabled: inputState === State.disabled,
             error: inputState === State.error,
@@ -69,17 +58,17 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
 
     const iconClasses = component('icon')();
 
-    const inputIconClasses = component('form', 'gm-input__icon')();
+    const inputIconClasses = component('form--text-light', 'container__icon')();
 
     const onLocalFocus = (e: React.FocusEvent<HTMLInputElement>) => {
         setFocused(true);
-        onFocus?.(e);
+        props.onFocus?.(e);
     };
 
     const onLocalBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setFocused(false);
-        onChange?.(e);
-        onBlur?.(e);
+        props.onChange?.(e);
+        props.onBlur?.(e);
     };
 
     const onPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -94,7 +83,7 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
     }, [error]);
 
     useEffect(() => {
-        if (disabled) {
+        if (props.disabled) {
             setInputState(State.disabled);
         } else if (focused) {
             setInputState(State.active);
@@ -105,7 +94,7 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
         } else {
             setInputState(State.idle);
         }
-    }, [disabled, focused, error, success]);
+    }, [props.disabled, focused, error, success]);
 
     useEffect(() => {
         onStateChange?.(inputState);
@@ -136,21 +125,16 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
                 ref={inputRef}
                 name={fieldName}
                 id={id}
-                placeholder={label}
-                value={value}
-                onChange={onChange}
                 onFocus={onLocalFocus}
                 onBlur={onLocalBlur}
                 onKeyPress={onPress}
-                disabled={disabled}
                 autoFocus={autoFocus}
-                type={type}
                 {...othersProps}
             />
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
                 {inputState === State.error ? error : ''}
             </label>
-            <label htmlFor={id}>{inputState === State.error && !isTruncated ? error : label}</label>
+            <label htmlFor={id}>{inputState === State.error && !isTruncated ? error : props.placeholder}</label>
             <span className={inputIconClasses}>
                 {customIcon ? customIcon : inputState === State.success && <CheckSvg className={iconClasses} />}
             </span>

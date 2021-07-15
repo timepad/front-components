@@ -23,7 +23,6 @@ export const FormText: FC<IFormTextProps> = (props) => {
         component('form--text')({
             disabled,
             error,
-            lines: linesNumber,
         }),
         props.className,
     );
@@ -59,7 +58,7 @@ export const FormText: FC<IFormTextProps> = (props) => {
 
     const text = {
         height: linesNumber > 1 ? 22 * linesNumber + 11 : height * linesNumber,
-        lineHeight: `${lineHeight}px`,
+        // lineHeight: `${lineHeight}px`,
         maxHeight: 32 * linesNumber,
     };
 

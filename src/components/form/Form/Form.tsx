@@ -4,6 +4,7 @@ import {component} from '../../../services/helpers/classHelpers';
 import './cform.less';
 import {FormText} from '../Text';
 import {FormTextLight} from '../TextLight';
+import {FormTextLightField} from '../TextLight/FormTextLightField';
 
 export interface IFormProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>> {
@@ -13,6 +14,7 @@ export interface IFormProps
 export const Form: FC<IFormProps> & {
     Text: typeof FormText;
     TextLight: typeof FormTextLight;
+    TextLightField: typeof FormTextLightField;
 } = (props) => {
     const formClassName = cx(
         component('form')({
@@ -30,3 +32,4 @@ export const Form: FC<IFormProps> & {
 
 Form.Text = FormText;
 Form.TextLight = FormTextLight;
+Form.TextLightField = FormTextLightField;
