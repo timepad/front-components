@@ -9,9 +9,9 @@ export interface IBageProps {
 }
 
 export const Bage: React.FC<IBageProps> = ({value, children}) => {
-    const badgeClasses = cx(cn(component('badge')(), value === null ? 'empty' : '')(), 't-small');
+    const badgeClasses = cx(cn(component('badge__inner')(), value === undefined ? 'empty' : '')(), 't-small');
     return (
-        <div className={component('badge-wrapper')()}>
+        <div className={component('badge')()}>
             <div className={badgeClasses}>{value}</div>
             {children}
         </div>

@@ -1,8 +1,8 @@
 
-.cbadge-wrapper {
+.cbadge {
   position: relative;
 
-  .cbadge {
+  .cbadge__inner {
     position: absolute;
     left: calc(100% - 12px);
     top: -6px;
@@ -17,10 +17,12 @@
     background: @c-primary-blue;
     min-width: 17px;
     height: 17px;
-
+    @media (min-width: @rsp-desktop-min) {
+      padding-bottom: 2px;
+    }
   }
 
-  .cbadge-empty {
+  .cbadge__inner-empty {
     position: absolute;
     right: -2px;
     top: -2px;
