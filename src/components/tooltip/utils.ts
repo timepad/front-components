@@ -20,7 +20,7 @@ export function useControlledState<T>({
     onChange?: (state: T) => void;
 }): [T, (state: T) => void] {
     if (initial === undefined && value === undefined) {
-        throw new TypeError('Either "value" or "initial" variable must be set. Now both are undefined');
+        console.warn('Either "value" or "initial" variable must be set. Now both are undefined');
     }
 
     const [state, setState] = React.useState(initial);

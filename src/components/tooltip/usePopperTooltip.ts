@@ -34,6 +34,7 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     const defaultModifiers = useMemo(
         () => [{name: 'offset', options: {offset: finalConfig.offset}}],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         Array.isArray(finalConfig.offset) ? finalConfig.offset : [],
     );
 
@@ -72,6 +73,7 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
                 ? finalConfig.trigger.includes(trigger)
                 : finalConfig.trigger === trigger;
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         Array.isArray(finalConfig.trigger) ? finalConfig.trigger : [finalConfig.trigger],
     );
 
@@ -115,7 +117,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     // Trigger: click
     useEffect(() => {
-        if (triggerRef == null || !isTriggeredBy('click')) return;
+        if (triggerRef == null || !isTriggeredBy('click')) {
+            return;
+        }
 
         triggerRef.addEventListener('click', toggleTooltip);
 
@@ -124,7 +128,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     // Trigger: focus
     useEffect(() => {
-        if (triggerRef == null || !isTriggeredBy('focus')) return;
+        if (triggerRef == null || !isTriggeredBy('focus')) {
+            return;
+        }
 
         triggerRef.addEventListener('focus', showTooltip);
         triggerRef.addEventListener('blur', hideTooltip);
@@ -136,7 +142,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     // Trigger: hover on trigger
     useEffect(() => {
-        if (triggerRef == null || !isTriggeredBy('hover')) return;
+        if (triggerRef == null || !isTriggeredBy('hover')) {
+            return;
+        }
 
         triggerRef.addEventListener('mouseenter', showTooltip);
         triggerRef.addEventListener('mouseleave', hideTooltip);
@@ -148,7 +156,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     // Trigger: hover on tooltip, keep it open if hovered
     useEffect(() => {
-        if (tooltipRef == null || !getLatest().finalConfig.interactive) return;
+        if (tooltipRef == null || !getLatest().finalConfig.interactive) {
+            return;
+        }
 
         tooltipRef.addEventListener('mouseenter', showTooltip);
         tooltipRef.addEventListener('mouseleave', hideTooltip);
@@ -166,7 +176,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
 
     // Handle follow cursor
     useEffect(() => {
-        if (!finalConfig.followCursor || triggerRef == null) return;
+        if (!finalConfig.followCursor || triggerRef == null) {
+            return;
+        }
 
         function setMousePosition({clientX, clientY}: {clientX: number; clientY: number}) {
             virtualElement.getBoundingClientRect = generateBoundingClientRect(clientX, clientY);
@@ -178,7 +190,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
     }, [finalConfig.followCursor, triggerRef, update]);
 
     useEffect(() => {
-        if (tooltipRef == null || update == null || finalConfig.mutationObserverOptions == null) return;
+        if (tooltipRef == null || update == null || finalConfig.mutationObserverOptions == null) {
+            return;
+        }
 
         const observer = new MutationObserver(update);
         observer.observe(tooltipRef, finalConfig.mutationObserverOptions);
