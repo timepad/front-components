@@ -14,7 +14,7 @@ import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 
 export default {
-    title: 'DropDown2',
+    title: 'DropDownModal',
     component: Dropdown,
 } as Meta;
 
@@ -252,11 +252,7 @@ const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
             </div>
             <Dropdown.Body ref={childrenRef}>
                 <List variant="dark">
-                    <List.Item
-                        suffix={<DropProfile />}
-                        className="mtheme--darkpic"
-                        onClick={(e: any) => e.stopPropagation()}
-                    >
+                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
                         тест
                     </List.Item>
                     <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
