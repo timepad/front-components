@@ -19,7 +19,7 @@ export const Snackbar: React.FC<ISnackbarProps> = ({text, state, button}) => {
             {state === 'errorWithIcon' && <WarningSvg />}
             <div className="csnackbar__text">{text}</div>
             {button ? (
-                <Button variant={Button.variant.secondary} onClick={button.onClick}>
+                <Button className="csnackbar__button" variant={Button.variant.secondary} onClick={button.onClick}>
                     {button.label}
                 </Button>
             ) : null}

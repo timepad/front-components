@@ -23,12 +23,7 @@
   width: max-content;
   height: 40px;
   color: @c-white;
-  
-  > button, > button:active {
-    --text-color: @c-white;
-    margin: 4px 4px 4px 0;
-  }
-  
+
   > svg {
     margin: 0 -7px 0 7px;
   
@@ -38,6 +33,13 @@
   }
   &--error {
     background-color: @c-red;
+  }
+}
+
+.csnackbar__button {
+  &.cbtn.cbtn--variant_secondary, .cbtn.cbtn--variant_secondary:active {
+    --text-color: @c-white;
+    margin: 4px 4px 4px 0;
   }
 }
 
