@@ -6,7 +6,7 @@ import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
 
 export default {
-    title: 'Text',
+    title: 'Checkbox (new)',
     component: Form,
 } as Meta;
 
@@ -27,7 +27,7 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {themeColor} = props;
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(false);
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
             <div className="mtheme__typo mtheme--bg--demo">
@@ -37,20 +37,22 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis">
-                            <Form.Text key={3} placeholder="Empty" />
-                            <div className="lbrick-2" />
-                            <Form.Text key={4} placeholder="Empty" />
-                            <div className="lbrick-2" />
-                            <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />
-                            <div className="lbrick-2" />
-                            <Form.Text key={6} placeholder="Empty" error={'message'} />
-                            <div className="lbrick-2" />
-                            <Form.Text
-                                placeholder="Multiline"
-                                value={value}
-                                onChange={(e) => setValue(e.target.value)}
-                                multiline
+                            <Form.Checkbox
+                                text="Text"
+                                caption="Caption"
+                                checked={value}
+                                onClick={() => setValue(!value)}
                             />
+
+                            <Form.Checkbox
+                                text="Text"
+                                caption="Caption"
+                                disabled
+                                checked={false}
+                                onClick={() => setValue(!value)}
+                            />
+
+                            <Form.Checkbox text="Text" caption="Caption" disabled checked={true} />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
@@ -61,7 +63,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
     );
 };
 
-export const Simple: IStorybookComponent = () => {
+export const Checkbox: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Primary</StoryTitle>
@@ -72,7 +74,7 @@ export const Simple: IStorybookComponent = () => {
     );
 };
 
-export const TextFieldFormik: IStorybookComponent = () => {
+export const CheckboxField: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>TextField Formik</StoryTitle>
