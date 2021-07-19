@@ -5,6 +5,7 @@ import './cform.less';
 import {FormText} from '../Text';
 import {FormTextLight} from '../TextLight';
 import {FormTextLightField} from '../TextLight/FormTextLightField';
+import {FormTextField} from '../Text/FormTextField';
 
 export interface IFormProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>> {
@@ -13,6 +14,7 @@ export interface IFormProps
 
 export const Form: FC<IFormProps> & {
     Text: typeof FormText;
+    TextField: typeof FormTextField;
     TextLight: typeof FormTextLight;
     TextLightField: typeof FormTextLightField;
 } = (props) => {
@@ -31,5 +33,6 @@ export const Form: FC<IFormProps> & {
 };
 
 Form.Text = FormText;
+Form.TextField = FormTextField;
 Form.TextLight = FormTextLight;
 Form.TextLightField = FormTextLightField;

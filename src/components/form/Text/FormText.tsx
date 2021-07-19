@@ -5,7 +5,7 @@ import {component} from '../../../services/helpers/classHelpers';
 
 interface IFormTextProps extends T {
     multiline?: boolean;
-    error?: boolean;
+    error?: string;
 }
 
 type T = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> &
@@ -17,12 +17,12 @@ export const FormText: FC<IFormTextProps> = (props) => {
 
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [height, setHeight] = useState(22);
-    const [lineHeight, setLineHeight] = useState(1.2);
+    // const [lineHeight, setLineHeight] = useState(1.2);
 
     const finalClassNames = cx(
         component('form--text')({
             disabled,
-            error,
+            error: !!error,
         }),
         props.className,
     );
@@ -35,23 +35,24 @@ export const FormText: FC<IFormTextProps> = (props) => {
     }, [value]);
 
     useEffect(() => {
-        const setHeightListener = (height: number, lineHeight: number) => () => {
+        const currentRef = textareaRef.current;
+        const setHeightListener = (height: number) => () => {
             setHeight(height);
-            setLineHeight(lineHeight);
+            // setLineHeight(lineHeight);
         };
 
-        const setHeight22Listener = setHeightListener(22, 22);
-        const setHeight32Listener = setHeightListener(32, 18);
+        const setHeight22Listener = setHeightListener(22);
+        const setHeight32Listener = setHeightListener(32);
 
-        if (textareaRef && textareaRef.current) {
-            textareaRef.current.addEventListener('focus', setHeight32Listener);
-            textareaRef.current.addEventListener('focusout', setHeight22Listener);
+        if (currentRef) {
+            currentRef.addEventListener('focus', setHeight32Listener);
+            currentRef.addEventListener('focusout', setHeight22Listener);
         }
 
         return () => {
-            if (textareaRef && textareaRef.current) {
-                textareaRef.current.removeEventListener('focus', setHeight32Listener);
-                textareaRef.current.removeEventListener('focusout', setHeight22Listener);
+            if (currentRef) {
+                currentRef.removeEventListener('focus', setHeight32Listener);
+                currentRef.removeEventListener('focusout', setHeight22Listener);
             }
         };
     }, []);

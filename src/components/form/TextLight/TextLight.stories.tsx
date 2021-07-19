@@ -5,7 +5,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 
 import 'css/bundle.less';
 import {Form} from '../Form';
-import {Formik, FormikProps, Form as FormikForm} from 'formik';
+import {Formik, Form as FormikForm} from 'formik';
 
 export default {
     title: 'TextLight',
@@ -154,7 +154,7 @@ export const Simple: IStorybookComponent = () => {
     );
 };
 
-interface Values {
+interface IValues {
     firstName: string;
     lastName: string;
     email: string;
@@ -169,23 +169,24 @@ export const FormikExample: IStorybookComponent = () => {
                     firstName: 'red',
                     lastName: '',
                 }}
-                onSubmit={(values: Values, actions: any) => {
+                validate={(values) => {
+                    if (values.firstName.match(/[0-9]+/g)) {
+                        return {
+                            firstName: 'Имя не может содержать цифры',
+                        };
+                    }
+                }}
+                onSubmit={(values: IValues) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
-                        actions.setSubmitting(false);
+                        // actions.setSubmitting(false);
                     }, 1000);
                 }}
+                validateOnMount
             >
-                {({isValid, values, errors, handleChange}: FormikProps<Values>) => (
+                {() => (
                     <FormikForm>
-                        <Form.TextLightField
-                            value={values.firstName}
-                            onChange={handleChange('firstName')}
-                            // error={errors.firstName}
-                            name="firstName"
-                            type="text"
-                            placeholder="TEST"
-                        />
+                        <Form.TextLightField name="firstName" type="text" placeholder="TEST" />
                     </FormikForm>
                 )}
             </Formik>

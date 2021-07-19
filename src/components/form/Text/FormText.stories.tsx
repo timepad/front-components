@@ -3,6 +3,7 @@ import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
 import {Form} from '../Form';
+import {Formik, Form as FormikForm} from 'formik';
 
 export default {
     title: 'Text',
@@ -29,13 +30,13 @@ const Components = {
         <Form.Text key={1} placeholder="Empty" />,
         <Form.Text key={2} placeholder="Empty" />,
         <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />,
-        <Form.Text key={6} placeholder="Empty" error />,
+        <Form.Text key={6} placeholder="Empty" error={'message'} />,
     ],
     dark: [
         <Form.Text key={3} placeholder="Empty" />,
         <Form.Text key={4} placeholder="Empty" multiline />,
         <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />,
-        <Form.Text key={6} placeholder="Empty" error />,
+        <Form.Text key={6} placeholder="Empty" error={'message'} />,
     ],
 };
 
@@ -77,6 +78,41 @@ export const Simple: IStorybookComponent = () => {
             {Object.keys(themes).map((theme, key) => (
                 <InputsContainer key={key} themeColor={theme as keyof typeof themes} />
             ))}
+        </>
+    );
+};
+
+export const TextFieldFormik: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>TextField Formik</StoryTitle>
+            <Formik
+                initialValues={{
+                    email: '',
+                    firstName: 'red',
+                    lastName: '',
+                }}
+                validate={(values) => {
+                    if (values.firstName.match(/[0-9]+/g)) {
+                        return {
+                            firstName: 'Имя не может содержать цифры',
+                        };
+                    }
+                }}
+                onSubmit={(values) => {
+                    setTimeout(() => {
+                        alert(JSON.stringify(values, null, 2));
+                        // actions.setSubmitting(false);
+                    }, 1000);
+                }}
+                validateOnMount
+            >
+                {() => (
+                    <FormikForm>
+                        <Form.TextField name="firstName" type="text" placeholder="TEST" />
+                    </FormikForm>
+                )}
+            </Formik>
         </>
     );
 };

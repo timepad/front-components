@@ -12,6 +12,9 @@
 .error-state (@color) {
   &--error {
     input, textarea {
+      border: 2px solid @color;
+      box-sizing: border-box;
+      max-height: 32px;
       &:focus {
         border: 2px solid @color;
       }
@@ -72,31 +75,6 @@
       height: @lh-desktop;
     }
   }
-
-  //&--lines {
-  //  textarea {
-  //    &:focus {
-  //      height: ;
-  //    }
-  //  }
-  //}
-
-  //.height-variant(@step) {
-  //  &--lines_@{step} {
-  //    textarea {
-  //      max-height: @height * @step;
-  //      height: @lh-desktop * @step;
-  //
-  //        &:focus {
-  //          height: if(@step > 1, @lh-desktop * @step + 11, @height);
-  //        }
-  //    }
-  //  }
-  //}
-  //
-  //each(range(100), {
-  //  .height-variant(@value);
-  //})
 
   .disabled-state(@c-gray-35);
   .error-state(@c-red);

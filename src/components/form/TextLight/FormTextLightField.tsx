@@ -9,6 +9,6 @@ export const FormTextLightField: FC<IFormTextLightFieldProps & FieldHookConfig<s
     props: IFormTextLightFieldProps & FieldHookConfig<string>,
 ) => {
     const [field, meta, helpers] = useField(props);
-    // console.log(field, meta, helpers);
+
     return <FormTextLight {...field} {...meta} {...helpers} {...props} />;
 };

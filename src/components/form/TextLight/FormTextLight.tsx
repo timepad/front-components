@@ -26,8 +26,8 @@ export interface IFormTextLightProps
 export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
     const {
         name,
-        error,
         success,
+        error,
         autoFocus = false,
         inputRef,
         customIcon,
@@ -51,7 +51,7 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
             'input',
         )({
             disabled: inputState === State.disabled,
-            error: inputState === State.error,
+            error: !!error,
             success: inputState === State.success,
         }),
     );
@@ -132,9 +132,9 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
                 {...othersProps}
             />
             <label style={{visibility: 'hidden'}} ref={fakeErrorLabelRef}>
-                {inputState === State.error ? error : ''}
+                {!!error ? error : ''}
             </label>
-            <label htmlFor={id}>{inputState === State.error && !isTruncated ? error : props.placeholder}</label>
+            <label htmlFor={id}>{!!error && !isTruncated ? error : props.placeholder}</label>
             <span className={inputIconClasses}>
                 {customIcon ? customIcon : inputState === State.success && <CheckSvg className={iconClasses} />}
             </span>
