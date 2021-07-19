@@ -1,6 +1,7 @@
 import React from 'react';
 import {Theme} from './theme';
 import './index.less';
+import {component} from '../../services/helpers/classHelpers';
 
 export interface ISpinLoaderProps {
     theme?: Theme;
@@ -8,8 +9,8 @@ export interface ISpinLoaderProps {
 
 export const SpinLoader: React.FC<ISpinLoaderProps> = ({theme = Theme.default}) => {
     return (
-        <div className="cspinloader--wrapper">
-            <div className={`cspinloader cspinloader--color-${theme}`} />
+        <div className={component('spinloader', 'wrapper')()}>
+            <div className={component('spinloader')({color: theme})} />
         </div>
     );
 };

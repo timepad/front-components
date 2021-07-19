@@ -1,6 +1,5 @@
-/* Base */
 .cspinloader {
-  &--wrapper {
+  &__wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,33 +27,18 @@
   }
 
   /* Colors */
-  &--color-default {
+  &--color_default {
     border-color: @c-primary-blue @c-primary-blue @purple-fade-30;
   }
-  &--color-lightpic {
+  &--color_lightpic {
     border-color: @c-black @c-black @black-fade-50;
   }
-  &--color-darkpic {
+  &--color_darkpic {
     border-color: @c-white @c-white @white-fade-50;
   }
 
   &:hover {
     width: 32px;
     height: 32px;
-  }
-}
-
-.cspinloader-container {
-  border-radius: @br-rounded;
-
-  background-color: @c-light-gray;
-
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & > * {
-    margin: 8px;
   }
 }
