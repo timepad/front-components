@@ -4,6 +4,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 import 'css/bundle.less';
 import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
+import {Button} from '../../button';
 
 export default {
     title: 'Checkbox (new)',
@@ -41,17 +42,13 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                 text="Text"
                                 caption="Caption"
                                 checked={value}
-                                onClick={() => setValue(!value)}
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    setValue(!value);
+                                }}
                             />
 
-                            <Form.Checkbox
-                                text="Text"
-                                caption="Caption"
-                                disabled
-                                checked={false}
-                                onClick={() => setValue(!value)}
-                            />
-
+                            <Form.Checkbox text="Text" caption="Caption" disabled />
                             <Form.Checkbox text="Text" caption="Caption" disabled checked={true} />
                         </div>
                     </div>
@@ -80,16 +77,9 @@ export const CheckboxField: IStorybookComponent = () => {
             <StoryTitle>TextField Formik</StoryTitle>
             <Formik
                 initialValues={{
-                    email: '',
-                    firstName: 'red',
+                    interest: [],
                     lastName: '',
-                }}
-                validate={(values) => {
-                    if (values.firstName.match(/[0-9]+/g)) {
-                        return {
-                            firstName: 'Имя не может содержать цифры',
-                        };
-                    }
+                    firstName: '',
                 }}
                 onSubmit={(values) => {
                     setTimeout(() => {
@@ -97,11 +87,15 @@ export const CheckboxField: IStorybookComponent = () => {
                         // actions.setSubmitting(false);
                     }, 1000);
                 }}
-                validateOnMount
             >
                 {() => (
                     <FormikForm>
-                        <Form.TextField name="firstName" type="text" placeholder="TEST" />
+                        <Form.CheckboxField name="interest" text="Dogs" value="dogs" />
+                        <Form.CheckboxField name="interest" text="Cats" value="cats" />
+
+                        <Form.TextField name="lastName" type="text" />
+                        <Form.TextField name="firstName" type="text" />
+                        <Button type="submit">Submit</Button>
                     </FormikForm>
                 )}
             </Formik>

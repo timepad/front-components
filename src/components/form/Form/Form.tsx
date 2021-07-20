@@ -2,11 +2,9 @@ import React, {FC, PropsWithChildren} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
 import './cform.less';
-import {FormText} from '../Text';
-import {FormTextLight} from '../TextLight';
-import {FormTextLightField} from '../TextLight/FormTextLightField';
-import {FormTextField} from '../Text/FormTextField';
-import {FormCheckbox} from '../Checkbox';
+import {FormText, FormTextField} from '../Text';
+import {FormTextLight, FormTextLightField} from '../TextLight';
+import {FormCheckbox, FormCheckboxField} from '../Checkbox';
 
 export interface IFormProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>> {
@@ -19,6 +17,7 @@ export const Form: FC<IFormProps> & {
     TextLight: typeof FormTextLight;
     TextLightField: typeof FormTextLightField;
     Checkbox: typeof FormCheckbox;
+    CheckboxField: typeof FormCheckboxField;
 } = (props) => {
     const formClassName = cx(
         component('form')({
@@ -39,3 +38,4 @@ Form.TextField = FormTextField;
 Form.TextLight = FormTextLight;
 Form.TextLightField = FormTextLightField;
 Form.Checkbox = FormCheckbox;
+Form.CheckboxField = FormCheckboxField;

@@ -1,21 +1,12 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import './index.less';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-
-interface IFormTextProps extends T {
-    multiline?: boolean;
-    error?: string;
-}
-
-type T = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> &
-    React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>;
+import {IFormTextProps} from './FormText.types';
 
 export const FormText: FC<IFormTextProps> = (props) => {
     const {disabled, error, multiline, value} = props;
     const [linesNumber, setLinesNumber] = useState(1);
-
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const finalClassNames = cx(
         component('form--text')({
@@ -38,11 +29,7 @@ export const FormText: FC<IFormTextProps> = (props) => {
 
     return (
         <div className={finalClassNames}>
-            {multiline ? (
-                <textarea rows={linesNumber} ref={textareaRef} style={text} {...props} />
-            ) : (
-                <input {...props} />
-            )}
+            {multiline ? <textarea rows={linesNumber} style={text} {...props} /> : <input {...props} />}
         </div>
     );
 };

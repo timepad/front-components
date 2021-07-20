@@ -1,16 +1,10 @@
 import React, {FC} from 'react';
 import {FormText} from './index';
 import {useField, FieldHookConfig} from 'formik';
+import {IFormTextProps} from './FormText.types';
 
-interface IFormTextFieldProps extends T {}
+export const FormTextField: FC<IFormTextProps & FieldHookConfig<string>> = (props) => {
+    const [field] = useField(props);
 
-type T = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> &
-    React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>;
-
-export const FormTextField: FC<IFormTextFieldProps & FieldHookConfig<string>> = (
-    props: IFormTextFieldProps & FieldHookConfig<string>,
-) => {
-    const [field, meta, helpers] = useField(props);
-
-    return <FormText {...field} {...meta} {...helpers} {...props} />;
+    return <FormText {...field} {...props} />;
 };
