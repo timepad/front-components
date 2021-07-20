@@ -25,10 +25,10 @@ export const FormCheckbox: FC<IFormCheckboxProps & Partial<FieldHelperProps<bool
     // };
 
     return (
-        <>
-            <Row ffFont disabled={disabled} onClick={(e) => onChange && onChange(e as any)} className={wrapperClasses}>
+        <Row ffFont hoverable disabled={disabled} className={wrapperClasses}>
+            <label htmlFor={idx}>
                 <Row.Icon top={!!caption}>
-                    <label htmlFor={idx}>
+                    <label>
                         <input type="checkbox" id={idx} checked={checked} onChange={onChange} {...props} name={name} />
                         <span className={checkboxClasses}>
                             <CheckSvg />
@@ -39,7 +39,7 @@ export const FormCheckbox: FC<IFormCheckboxProps & Partial<FieldHelperProps<bool
                     {props.text && <Row.Text id={idx}>{text}</Row.Text>}
                     {props.caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
-            </Row>
-        </>
+            </label>
+        </Row>
     );
 };

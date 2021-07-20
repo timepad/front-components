@@ -4,7 +4,7 @@ import {useField, FieldHookConfig} from 'formik';
 import {IFormTextProps} from './FormText.types';
 
 export const FormTextField: FC<IFormTextProps & FieldHookConfig<string>> = (props) => {
-    const [field] = useField(props);
+    const [field, meta] = useField(props);
 
-    return <FormText {...field} {...props} />;
+    return <FormText {...field} {...meta} {...props} />;
 };

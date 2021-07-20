@@ -7,7 +7,9 @@ export const FormCheckboxField: FC<IFormCheckboxProps & FieldHookConfig<boolean>
     const [field, meta, helpers] = useField(props);
 
     const tmpChecked =
-        typeof field.value === 'object' ? (field.value as Array<string>).includes(props.value) : props.checked;
+        typeof field.value === 'object'
+            ? (field.value as Array<string>).includes(props.value)
+            : props.checked || field.value;
 
     return <FormCheckbox {...field} {...meta} {...helpers} {...props} checked={tmpChecked} />;
 };

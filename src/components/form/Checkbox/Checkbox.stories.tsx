@@ -74,12 +74,26 @@ export const Checkbox: IStorybookComponent = () => {
 export const CheckboxField: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>TextField Formik</StoryTitle>
+            <StoryTitle>Formik intergations</StoryTitle>
             <Formik
                 initialValues={{
                     interest: [],
                     lastName: '',
                     firstName: '',
+                    isFirstActive: false,
+                    isSecondActive: false,
+                }}
+                validate={(values) => {
+                    if (values.firstName.match(/[0-9]+/g)) {
+                        return {
+                            firstName: 'Имя не может содержать цифры',
+                        };
+                    }
+                    if (values.lastName.match(/[0-9]+/g)) {
+                        return {
+                            lastName: 'Фамилия не может содержать цифры',
+                        };
+                    }
                 }}
                 onSubmit={(values) => {
                     setTimeout(() => {
@@ -90,12 +104,18 @@ export const CheckboxField: IStorybookComponent = () => {
             >
                 {() => (
                     <FormikForm>
-                        <Form.CheckboxField name="interest" text="Dogs" value="dogs" />
-                        <Form.CheckboxField name="interest" text="Cats" value="cats" />
-
-                        <Form.TextField name="lastName" type="text" />
-                        <Form.TextField name="firstName" type="text" />
-                        <Button type="submit">Submit</Button>
+                        <div className="lflex lflex--y-axis">
+                            <Form.CheckboxField name="isFirstActive" text="isFirstActive" />
+                            <Form.CheckboxField name="isSecondActive" text="isSecondActive" />
+                            <Form.CheckboxField name="interest" text="Dogs" value="dogs" />
+                            <Form.CheckboxField name="interest" text="Cats" value="cats" />
+                            <div className="lbrick-1" />
+                            <Form.TextField name="lastName" type="text" placeholder="Введите Фамилию" />
+                            <div className="lbrick-1" />
+                            <Form.TextField name="firstName" type="text" placeholder="Введите Имя" />
+                            <div className="lbrick-1" />
+                            <Button type="submit">Submit</Button>
+                        </div>
                     </FormikForm>
                 )}
             </Formik>
