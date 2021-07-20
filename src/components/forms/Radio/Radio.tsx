@@ -15,6 +15,7 @@ export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement>
     disabled?: boolean;
     id?: string;
     error?: string;
+    className?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
@@ -29,12 +30,13 @@ export const Radio: React.FC<IRadioProps> = ({
     error,
     onChange,
     onBlur,
+    className,
     ...othersProps
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_radip' : name + '_field_radip';
 
-    const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
+    const wrapperClasses = cx(component('radio')({error: !!error, disabled: disabled}), className);
 
     const radioClasses = component('radio', 'icon')({checked: checked});
 
