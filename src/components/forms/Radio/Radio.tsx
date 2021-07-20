@@ -30,7 +30,7 @@ export const Radio: React.FC<IRadioProps> = ({
     error,
     onChange,
     onBlur,
-    className,
+    className = '',
     ...othersProps
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());

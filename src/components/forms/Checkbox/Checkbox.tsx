@@ -31,7 +31,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     error,
     onChange,
     onBlur,
-    className,
+    className = '',
     ...props
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
