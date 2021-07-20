@@ -16,6 +16,7 @@ export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputEleme
     disabled?: boolean;
     id?: string;
     error?: string;
+    className?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
@@ -30,12 +31,13 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     error,
     onChange,
     onBlur,
+    className,
     ...props
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
 
-    const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});
+    const wrapperClasses = cx(component('checkbox')({error: !!error, disabled: disabled}), className);
 
     const checkboxClasses = component('checkbox', 'icon')({checked: checked});
 
