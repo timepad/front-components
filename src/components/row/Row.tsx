@@ -15,6 +15,7 @@ interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     small?: boolean;
     ffFont?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
+    outerClassName?: string;
 }
 
 const Row: React.FC<IRowProps> & {
@@ -31,7 +32,7 @@ const Row: React.FC<IRowProps> & {
         disabled: props.disabled,
     });
 
-    const outContainerClassNames = component('row', 'outer')();
+    const outContainerClassNames = cx(component('row', 'outer')(), props.outerClassName);
 
     const innerContainerClassNames = cx(customClassNames, props.className);
 
