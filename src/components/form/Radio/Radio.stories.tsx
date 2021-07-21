@@ -53,13 +53,14 @@ const InputsContainer = (props: IInputsContainerProps) => {
 
                             <Form.Radio
                                 text="Text"
+                                caption="Caption"
                                 value={RadioEnumState.Second}
                                 checked={value === RadioEnumState.Second}
                                 onChange={() => setValue(RadioEnumState.Second)}
                             />
 
-                            <Form.Radio text="Text" caption="Caption" disabled />
-                            <Form.Radio text="Text" caption="Caption" disabled checked={true} />
+                            <Form.Radio text="Disabled" caption="Caption" disabled />
+                            <Form.Radio text="Disabled checked" caption="Caption" disabled checked={true} />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
@@ -87,23 +88,7 @@ export const RadioField: IStorybookComponent = () => {
             <StoryTitle>Formik intergations</StoryTitle>
             <Formik
                 initialValues={{
-                    interest: [],
-                    lastName: '',
-                    firstName: '',
-                    isFirstActive: false,
-                    isSecondActive: false,
-                }}
-                validate={(values) => {
-                    if (values.firstName.match(/[0-9]+/g)) {
-                        return {
-                            firstName: 'Имя не может содержать цифры',
-                        };
-                    }
-                    if (values.lastName.match(/[0-9]+/g)) {
-                        return {
-                            lastName: 'Фамилия не может содержать цифры',
-                        };
-                    }
+                    radio: '',
                 }}
                 onSubmit={(values) => {
                     setTimeout(() => {
@@ -112,18 +97,23 @@ export const RadioField: IStorybookComponent = () => {
                     }, 1000);
                 }}
             >
-                {() => (
+                {({values}) => (
                     <FormikForm>
                         <div className="lflex lflex--y-axis">
-                            <Form.RadioField name="isFirstActive" text="isFirstActive" />
-                            <Form.RadioField name="isSecondActive" text="isSecondActive" />
-                            <Form.RadioField name="interest" text="Dogs" value="dogs" />
-                            <Form.RadioField name="interest" text="Cats" value="cats" />
-                            <div className="lbrick-1" />
-                            <Form.TextField name="lastName" type="text" placeholder="Введите Фамилию" />
-                            <div className="lbrick-1" />
-                            <Form.TextField name="firstName" type="text" placeholder="Введите Имя" />
-                            <div className="lbrick-1" />
+                            <Form.RadioField
+                                name="radio"
+                                checked={values.radio === RadioEnumState.First}
+                                text="First"
+                                value={RadioEnumState.First}
+                            />
+
+                            <Form.RadioField
+                                name="radio"
+                                checked={values.radio === RadioEnumState.Second}
+                                text="Second"
+                                value={RadioEnumState.Second}
+                            />
+
                             <Button type="submit">Submit</Button>
                         </div>
                     </FormikForm>
