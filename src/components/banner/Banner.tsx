@@ -18,17 +18,25 @@ interface IEnumprops {
 interface IProps {
     theme?: string;
     closeable?: boolean;
-    icon?: boolean;
+    icon?: boolean | React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
-export const Banner: React.FC<IProps> & IEnumprops = ({children, theme = Banner.themes.info, closeable, icon}) => {
+export const Banner: React.FC<IProps> & IEnumprops = (props) => {
     const [show, setShow] = useState(true);
     if (!show) return null;
+    const {children, theme = Banner.themes.info, closeable, icon} = props;
+
+    const Icon = () => {
+        if (typeof icon === 'boolean') return <InfoIcon />;
+        if (((icon: any): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon)) return <props.icon />;
+        return null;
+    };
+
     return (
         <Row className={component('banner')({theme})}>
             {icon && (
                 <Row.Icon className={component('banner', 'icon')()}>
-                    <InfoIcon />
+                    <Icon />
                 </Row.Icon>
             )}
             <Row.Body
