@@ -1,0 +1,29 @@
+.cbanner {
+  padding: 0;
+  border-radius: 8px;
+  align-items: start;
+  color: inherit;
+  background-color: @c-gray-50;
+
+  & > &__content {
+    padding: 10px 0;
+  };
+
+  & > &__icon {
+    padding: 8px;
+    margin: 0;
+  };
+
+  svg.cicon * {
+    --text-color: @c-black;
+  }
+
+  &--theme_info {
+    background-color: @c-light-yellow;
+  };
+
+  &--theme_warning {
+    background-color: @c-light-red;
+  }
+}
+
