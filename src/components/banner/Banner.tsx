@@ -6,34 +6,26 @@ import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {Button, ButtonVariant} from '../button';
 
-export enum BannerThemes {
-    info = 'info',
-    warning = 'warning',
-}
-
-interface IEnumprops {
-    themes: Record<BannerThemes, string>;
-}
-
 interface IProps {
     theme?: string;
     closeable?: boolean;
     icon?: boolean | React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
-export const Banner: React.FC<IProps> & IEnumprops = (props) => {
+export const Banner: React.FC<IProps> = (props) => {
     const [show, setShow] = useState(true);
     if (!show) return null;
-    const {children, theme = Banner.themes.info, closeable, icon} = props;
+    const {children, closeable, icon} = props;
 
     const Icon = () => {
         if (typeof icon === 'boolean') return <InfoIcon />;
-        if (((icon: any): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon)) return <props.icon />;
+        if (((icon: IProps['icon']): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon))
+            return <props.icon />;
         return null;
     };
 
     return (
-        <Row className={component('banner')({theme})}>
+        <Row className={component('banner')()}>
             {icon && (
                 <Row.Icon className={component('banner', 'icon')()}>
                     <Icon />
@@ -53,5 +45,3 @@ export const Banner: React.FC<IProps> & IEnumprops = (props) => {
         </Row>
     );
 };
-
-Banner.themes = BannerThemes;
