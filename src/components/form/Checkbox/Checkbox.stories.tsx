@@ -40,12 +40,11 @@ const InputsContainer = (props: IInputsContainerProps) => {
                         <div className="inputs-container lflex lflex--y-axis">
                             <Form.Checkbox
                                 text="Text"
-                                caption="Caption"
                                 checked={value}
-                                onChange={(e) => {
-                                    e.preventDefault();
+                                onChange={() => {
                                     setValue(!value);
                                 }}
+                                small
                             />
 
                             <Form.Checkbox text="Text" caption="Caption" disabled />

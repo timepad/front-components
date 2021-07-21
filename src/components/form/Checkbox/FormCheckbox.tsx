@@ -8,28 +8,19 @@ import {IFormCheckboxProps} from './FormCheckbox.types';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 
 export const FormCheckbox: FC<IFormCheckboxProps & Partial<FieldHelperProps<boolean>>> = (props) => {
-    const {error, checked, disabled, id, text, caption, name, onChange} = props;
+    const {error, checked, disabled, id, text, caption, name, onChange, small} = props;
 
     const wrapperClasses = component('form--checkbox')({error: !!error, disabled: disabled});
     const checkboxClasses = component('form--checkbox', 'icon')({checked: checked});
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
 
-    // const handleClick = (e: MouseEvent<HTMLInputElement>) => {
-    //     e.preventDefault();
-    //     if (setValue) {
-    //         setValue(!checked);
-    //     } else if (onClick) {
-    //         onClick(e);
-    //     }
-    // };
-
     return (
-        <Row ffFont hoverable disabled={disabled} className={wrapperClasses}>
+        <Row ffFont small={small} disabled={disabled} className={wrapperClasses}>
             <label htmlFor={idx}>
                 <Row.Icon top={!!caption}>
                     <label>
-                        <input type="checkbox" id={idx} checked={checked} onChange={onChange} {...props} name={name} />
+                        <input type="checkbox" id={idx} checked={checked} onChange={onChange} name={name} {...props} />
                         <span className={checkboxClasses}>
                             <CheckSvg />
                         </span>
