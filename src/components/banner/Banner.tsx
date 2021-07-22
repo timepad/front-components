@@ -18,9 +18,13 @@ export const Banner: React.FC<IProps> = (props) => {
     const {children, closeable, icon} = props;
 
     const Icon = () => {
-        if (typeof icon === 'boolean') return <InfoIcon />;
-        if (((icon: IProps['icon']): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon))
+        if (typeof icon === 'boolean') {
+            return <InfoIcon />;
+        }
+
+        if (((icon: IProps['icon']): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon)) {
             return <props.icon />;
+        }
         return null;
     };
 
