@@ -9,24 +9,28 @@ import {Button, ButtonVariant} from '../button';
 interface IProps {
     theme?: string;
     closeable?: boolean;
-    icon?: boolean | React.FC<React.SVGProps<SVGSVGElement>>;
+    withIcon?: boolean;
+    icon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
 export const Banner: React.FC<IProps> = (props) => {
     const [show, setShow] = useState(true);
     if (!show) return null;
-    const {children, closeable, icon} = props;
+    const {children, closeable, icon, withIcon} = props;
 
     const Icon = () => {
-        if (typeof icon === 'boolean') {
+        if (props.icon) {
+            return <props.icon />;
+        }
+        if (withIcon) {
             return <InfoIcon />;
         }
 
-        if (((icon: IProps['icon']): icon is React.FC<React.SVGProps<SVGSVGElement>> => true)(props.icon)) {
-            return <props.icon />;
-        }
         return null;
     };
+
+    // TODO: Временное решение. Исправить в будующем в самом row. Сделать row мод multiline.
+    const BodyStyle = {paddingLeft: icon ? 0 : '16px', paddingRight: closeable ? 0 : '16px'};
 
     return (
         <Row className={component('banner')()}>
@@ -35,10 +39,7 @@ export const Banner: React.FC<IProps> = (props) => {
                     <Icon />
                 </Row.Icon>
             )}
-            <Row.Body
-                style={{paddingLeft: icon ? 0 : '16px', paddingRight: closeable ? 0 : '16px'}}
-                className={component('banner', 'content')()}
-            >
+            <Row.Body style={BodyStyle} className={component('banner', 'content')()}>
                 {children}
             </Row.Body>
             {closeable && (
