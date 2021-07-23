@@ -1,14 +1,10 @@
 import React, {FC} from 'react';
 import {FormTextLight} from './index';
 import {useField, FieldHookConfig} from 'formik';
+import {IFormTextLightProps} from './FormTextLight.types';
 
-interface IFormTextLightFieldProps
-    extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
+export const FormTextLightField: FC<IFormTextLightProps & FieldHookConfig<string>> = (props) => {
+    const [field, meta] = useField(props);
 
-export const FormTextLightField: FC<IFormTextLightFieldProps & FieldHookConfig<string>> = (
-    props: IFormTextLightFieldProps & FieldHookConfig<string>,
-) => {
-    const [field, meta, helpers] = useField(props);
-
-    return <FormTextLight {...field} {...meta} {...helpers} {...props} />;
+    return <FormTextLight {...field} {...meta} {...props} />;
 };

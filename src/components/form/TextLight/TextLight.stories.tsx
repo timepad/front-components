@@ -29,6 +29,7 @@ const themes = {
 
 interface IInputData {
     placeholder: string;
+    multiline?: boolean;
     value: string | number;
     disabled?: boolean;
     success?: boolean;
@@ -37,6 +38,14 @@ interface IInputData {
 }
 
 const inputsData: IInputData[] = [
+    {
+        placeholder: 'Multiline',
+        value: '',
+        multiline: true,
+        disabled: false,
+        success: false,
+        error: undefined,
+    },
     // Empty input
     {
         placeholder: 'Empty',
@@ -89,7 +98,7 @@ const inputsData: IInputData[] = [
 ];
 
 const InputRow = (props: IInputData) => {
-    const {placeholder, value: valueDefault, disabled, success, error, autoFocus} = props;
+    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Form.TextLight
@@ -97,6 +106,7 @@ const InputRow = (props: IInputData) => {
             value={value}
             disabled={disabled}
             success={success}
+            multiline={multiline}
             error={error}
             autoFocus={autoFocus}
             onChange={(event) => setValue(event.target.value)}
@@ -127,6 +137,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                         value={input.value}
                                         disabled={input.disabled}
                                         success={input.success}
+                                        multiline={input.multiline}
                                         error={input.error}
                                         autoFocus={input.autoFocus}
                                     />

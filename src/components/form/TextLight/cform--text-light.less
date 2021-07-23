@@ -69,12 +69,18 @@
       top: 10px;
     }
 
-    input, .div-for-ta-height {
+    textarea {
+      resize: none;
+      outline: 0;
+      appearance: none;
+    }
+
+    input, textarea, .div-for-ta-height {
       padding: 0 48px 12px 0;
       .t-caption;
     }
 
-    input {
+    input, textarea {
       height: @input-height;
       border: medium none;
       background-color: transparent;
@@ -124,7 +130,7 @@
     }
 
     &--error {
-      & input:focus {
+      & input:focus, & textarea:focus {
         box-shadow: inset 0 -2px @c-red;
 
         & ~ label {
@@ -132,7 +138,7 @@
         }
       }
 
-      input {
+      input, textarea {
         box-shadow: inset 0 -1px @c-red;
 
         &:not(:focus) ~ label,
@@ -144,7 +150,7 @@
     }
 
     &--success {
-      input {
+      input, textarea {
         box-shadow: inset 0 -1px @c-dark-gray;
       }
 
@@ -158,7 +164,7 @@
         box-shadow: inherit;
       }
 
-      input {
+      input, textarea {
         color: @c-gray-35;
         -webkit-text-fill-color: @c-gray-35;
 
@@ -175,7 +181,7 @@
         box-shadow: inset 0px -2px 0px rgba(128, 128, 128, 0.35);
       }
 
-      input {
+      input, textarea {
         box-shadow: inset 0 -1px @c-gray-50-fade-35;
 
         &:placeholder-shown ~ label {
@@ -191,7 +197,7 @@
         }
       }
 
-      &--error input {
+      &--error input, textarea {
         box-shadow: inset 0 -1px @c-red;
 
         &:placeholder-shown:not(:focus) ~ label {
@@ -199,7 +205,7 @@
         }
       }
 
-      &--success input {
+      &--success input, textarea {
         box-shadow: inset 0 -1px @c-green;
       }
 
@@ -207,16 +213,6 @@
         &:hover {
           box-shadow: inherit;
         }
-
-        //input {
-        //  color: @c-gray-75;
-        //  -webkit-text-fill-color: @c-gray-75;
-        //
-        //  &:not(:focus) ~ label {
-        //    color: @c-gray-75;
-        //    -webkit-text-fill-color: @c-gray-75;
-        //  }
-        //}
       }
     }
 
