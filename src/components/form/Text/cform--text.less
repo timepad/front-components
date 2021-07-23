@@ -15,7 +15,7 @@
       border: 2px solid @color;
       box-sizing: border-box;
       max-height: 32px;
-      padding: 3px 14px 7px 14px;
+      padding: 1px 14px 5px 14px;
       &:focus {
         border: 2px solid @color;
       }
@@ -31,9 +31,8 @@
   display: flex;
 
   input, textarea {
-    padding: 3px 16px 7px 16px;
-
-    flex-grow: 1;
+    padding: 1px 16px 5px 16px;
+    width: 100%;
 
     font-family: @ff;
     font-size: 15px;
@@ -46,38 +45,24 @@
     color: var(--text-color)!important;
 
     border-radius: @br-rounded;
-    border: 0;
+    box-sizing: border-box;
+    border: 2px solid transparent;
 
     &:hover {
       --text-color: @c-gray-50;
     }
 
     &:focus {
-      border: 2px solid @c-primary-blue;
-      box-sizing: border-box;
+      border-color: @c-primary-blue;
       --text-color: @c-black;
-    }
-  }
-
-  input {
-    &:focus {
-      max-height: @height;
-      padding: 3px 14px 7px 14px;
     }
   }
 
   textarea {
     resize: none;
-    overflow: hidden;
-    //height: @lh-desktop; // 22px
-    box-sizing: border-box;
+    //overflow: hidden;
     outline: 0;
     appearance: none;
-
-    &:focus {
-      //height: @lh-desktop;
-      padding: 1px 14px 7px 14px;
-    }
   }
 
   .disabled-state(@c-gray-35);

@@ -36,7 +36,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div className="lgap-4-0" />
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
-                        <div className="inputs-container lflex lflex--y-axis">
+                        <div className="inputs-container lflex lflex--y-axis" style={{width: '200px'}}>
                             <Form.Text key={3} placeholder="Empty" />
                             <div className="lbrick-2" />
                             <Form.Text key={4} placeholder="Empty" />
@@ -95,7 +95,6 @@ export const TextFieldFormik: IStorybookComponent = () => {
                         // actions.setSubmitting(false);
                     }, 1000);
                 }}
-                validateOnMount
             >
                 {() => (
                     <FormikForm>
