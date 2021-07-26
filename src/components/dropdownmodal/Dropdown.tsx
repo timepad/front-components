@@ -36,7 +36,7 @@ const useClickOutside = (ref: HTMLElement | null, handler: (event: MouseEvent) =
             handler(event as MouseEvent);
         };
 
-        const hardClose = (e: any) => {
+        const hardClose = (e: Event) => {
             handler(e as MouseEvent); // Prints "Example of an event"
         };
 
@@ -74,7 +74,7 @@ const EDGE_PADDING = 8;
 export const Dropdown = ({
     children,
     white,
-    positions = 'auto',
+    positions = 'bottom-end',
     withIcons,
     parent,
     show: propShow = false,
@@ -110,7 +110,7 @@ export const Dropdown = ({
         if (!show) {
             onClose?.();
         }
-    }, [show]);
+    }, [onClose, show]);
 
     useEffect(() => {
         setShow(propShow);
