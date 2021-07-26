@@ -11,7 +11,7 @@ interface IProps
     className?: string;
 }
 
-export const Body: React.FC<IProps> = ({children, className}) => {
+const Body: React.FC<IProps | any> = React.forwardRef<HTMLDivElement, IProps>(({children, className}, ref) => {
     const classNames = className ? className : component('drop', 'list')();
     const context = useContext(DropDownManagerContext);
 
@@ -30,6 +30,7 @@ export const Body: React.FC<IProps> = ({children, className}) => {
     } = context;
     return ReactDOM.createPortal(
         <div
+            ref={ref}
             className={component('drop-bg')({
                 show,
             })}
@@ -101,4 +102,8 @@ export const Body: React.FC<IProps> = ({children, className}) => {
         </div>,
         document.body,
     );
-};
+});
+
+Body.displayName = 'Body';
+
+export {Body};

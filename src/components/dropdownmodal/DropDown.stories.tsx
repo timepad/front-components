@@ -14,7 +14,7 @@ import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 
 export default {
-    title: 'DropDown',
+    title: 'DropDownModal',
     component: Dropdown,
 } as Meta;
 
@@ -28,13 +28,11 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
                 <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body>
                     <List size={'lg'} variant={'dark'}>
+                        <List.Item>Primary text</List.Item>
                         <List.Item as={'button'} type={'button'}>
                             Primary text
                         </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Primary text
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
+                        <List.Item as={'button'} type={'button'}>
                             Primary text
                         </List.Item>
                     </List>
@@ -51,9 +49,7 @@ const DropCustomBody: React.FC = (props) => {
                 <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
                 <Dropdown.Body className="my-super-class">
                     <List size={'lg'} variant={'white'}>
-                        <List.Item href={'#'} as={'a'}>
-                            Главная
-                        </List.Item>
+                        <List.Item>Главная</List.Item>
                         <List.Item href={'#'} as={'a'}>
                             Организация
                         </List.Item>
@@ -79,7 +75,7 @@ const DropShowBtn: React.FC = () => {
             <Button buttonRef={ref as React.MutableRefObject<HTMLButtonElement>} onClick={toggleShow}>
                 Выпадающий список
             </Button>
-            <Dropdown parent={ref} show={show} onClose={handleClose}>
+            <Dropdown white={true} parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
                     <List size={'lg'} variant={'white'}>
                         <List.Item href={'#'} as={'a'}>
@@ -105,6 +101,7 @@ const DropItemBtn: React.FC = () => {
     const toggleShow = () => {
         setShow(!show);
     };
+    const handleClose = () => setShow(false);
 
     return (
         <>
@@ -113,7 +110,7 @@ const DropItemBtn: React.FC = () => {
                     Выпадающий список
                 </List.Item>
             </List>
-            <Dropdown parent={ref} show={show} onClose={toggleShow}>
+            <Dropdown parent={ref} show={show} onClose={handleClose}>
                 <Dropdown.Body>
                     <List size={'lg'} variant={'dark'}>
                         <List.Item href={'#'} as={'a'}>
@@ -196,7 +193,7 @@ export const TopRightPosition: IStorybookComponent = () => {
         <>
             <StoryTitle>Top right position</StoryTitle>
             <div style={{marginTop: '130px'}}>
-                <DropBtn priorityPositions={['tl']} />
+                <DropBtn positions={'top-start'} />
             </div>
         </>
     );
@@ -249,17 +246,13 @@ export const WithLongItemList: IStorybookComponent = () => {
 
 const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
     return (
-        <Dropdown priorityPositions={['br']}>
+        <Dropdown positions={'bottom-end'}>
             <div className="mtheme--darkpic">
                 <Dropdown.ToggleButton label="open" />
             </div>
             <Dropdown.Body ref={childrenRef}>
                 <List variant="dark">
-                    <List.Item
-                        suffix={<MemberFiltersEditCurrentTemplate />}
-                        className="mtheme--darkpic"
-                        onClick={(e: any) => e.stopPropagation()}
-                    >
+                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
                         тест
                     </List.Item>
                     <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
@@ -268,5 +261,28 @@ const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
                 </List>
             </Dropdown.Body>
         </Dropdown>
+    );
+};
+
+export const DropDownInDropDown: IStorybookComponent = () => {
+    const childrenRef = useRef(null);
+    return (
+        <>
+            <StoryTitle>DropDown in DropDown</StoryTitle>
+            <Dropdown childrenRef={childrenRef} withIcons positions={'bottom-end'}>
+                <Dropdown.ToggleButton label="Все" />
+                <Dropdown.Body>
+                    <List variant="dark">
+                        <List.Item
+                            suffix={<MemberFiltersEditCurrentTemplate childrenRef={childrenRef} />}
+                            className="mtheme--darkpic"
+                            onClick={(e: any) => e.stopPropagation()}
+                        >
+                            Сортируйте
+                        </List.Item>
+                    </List>
+                </Dropdown.Body>
+            </Dropdown>
+        </>
     );
 };
