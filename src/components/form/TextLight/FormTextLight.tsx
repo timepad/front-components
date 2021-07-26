@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {FC} from 'react';
 import {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
@@ -7,16 +7,16 @@ import './index.less';
 import ReactTextArea from 'react-textarea-autosize';
 import {IFormTextLightProps} from './FormTextLight.types';
 
-export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
+export const FormTextLight: FC<IFormTextLightProps> = (props: IFormTextLightProps) => {
     const {
         name,
         success,
         error,
         autoFocus = false,
-        inputRef,
         customIcon,
         disabled,
         onErrorTruncation,
+        inputRef,
         multiline,
         ...othersProps
     } = props;
@@ -87,12 +87,12 @@ export const FormTextLight: React.FC<IFormTextLightProps> = (props) => {
     return (
         <div className={inputClasses}>
             {multiline ? (
-                <ReactTextArea name={fieldName} style={style} {...othersProps} />
+                <ReactTextArea id={id} ref={inputRef} name={fieldName} style={style} {...othersProps} />
             ) : (
                 <input
-                    ref={inputRef}
                     name={fieldName}
                     id={id}
+                    ref={inputRef}
                     onFocus={onLocalFocus}
                     onBlur={onLocalBlur}
                     onKeyPress={onPress}
