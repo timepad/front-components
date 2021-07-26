@@ -23,7 +23,7 @@ const defaultConfig: Config = {
     placement: 'top',
 };
 
-export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptions = {}) {
+export const usePopperTooltip = (config: Config = {}, popperOptions: PopperOptions = {}) => {
     const finalConfig = (Object.keys(defaultConfig) as Array<keyof typeof defaultConfig>).reduce(
         (config, key) => ({
             ...config,
@@ -173,7 +173,9 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
     // Handle closing tooltip if trigger hidden
     const isReferenceHidden = popperProps?.state?.modifiersData?.hide?.isReferenceHidden;
     useEffect(() => {
-        if (finalConfig.closeOnTriggerHidden && isReferenceHidden) hideTooltip();
+        if (finalConfig.closeOnTriggerHidden && isReferenceHidden) {
+            hideTooltip();
+        }
     }, [finalConfig.closeOnTriggerHidden, hideTooltip, isReferenceHidden]);
 
     // Handle follow cursor
@@ -222,4 +224,4 @@ export function usePopperTooltip(config: Config = {}, popperOptions: PopperOptio
         visible,
         ...popperProps,
     };
-}
+};

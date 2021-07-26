@@ -33,10 +33,15 @@ export function useControlledState<T>({
 
             const updatedState = typeof updater === 'function' ? updater(state) : updater;
 
-            if (typeof updatedState.persist === 'function') updatedState.persist();
+            if (typeof updatedState.persist === 'function') {
+                updatedState.persist();
+            }
 
             setState(updatedState);
-            if (typeof onChange === 'function') onChange(updatedState);
+
+            if (typeof onChange === 'function') {
+                onChange(updatedState);
+            }
         },
         [getLatest, onChange],
     );
