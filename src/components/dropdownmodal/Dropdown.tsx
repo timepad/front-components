@@ -99,18 +99,16 @@ export const Dropdown = ({
     });
 
     const toggleShow = () => {
+        if (!show) {
+            onClose?.();
+        }
         setShow(!show);
     };
 
     const onCloseHandler = () => {
+        onClose?.();
         setShow(false);
     };
-
-    useEffect(() => {
-        if (!show) {
-            onClose?.();
-        }
-    }, [onClose, show]);
 
     useEffect(() => {
         setShow(propShow);
