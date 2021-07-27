@@ -37,7 +37,7 @@ const useClickOutside = (ref: HTMLElement | null, handler: (event: MouseEvent) =
         };
 
         const hardClose = (e: Event) => {
-            handler(e as MouseEvent); // Prints "Example of an event"
+            handler(e as MouseEvent);
         };
 
         document.addEventListener('dropdown-close', hardClose);
