@@ -71,7 +71,7 @@ export const SnackbarProvider: React.FC = ({children}) => {
                 // Sets timeout to close the snackbar
                 onEnter={() => {
                     clearTimeout(timeoutId);
-                    const timerId = setTimeout(() => setOpen(false), snackbarDuration);
+                    const timerId: number = +setTimeout(() => setOpen(false), snackbarDuration);
                     setTimeoutId(timerId);
                 }}
                 className={`csnackbar-wrapper`}
