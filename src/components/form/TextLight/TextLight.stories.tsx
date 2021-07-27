@@ -8,7 +8,7 @@ import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
 
 export default {
-    title: 'TextLight',
+    title: 'TextLight (new)',
     component: Form,
 } as Meta;
 

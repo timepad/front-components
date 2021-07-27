@@ -1,3 +1,28 @@
 .cform--select {
+  position: relative;
 
+  button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cdrop-mobile {
+    display: none;
+  }
+
+  &__mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: transparent;
+
+    @media (min-width: @mobile-content-max-width) {
+      display: none;
+    }
+  }
 }

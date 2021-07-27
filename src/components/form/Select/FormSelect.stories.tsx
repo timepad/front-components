@@ -4,7 +4,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 import React from 'react';
 
 export default {
-    title: 'Select',
+    title: 'Select (new)',
     component: Form,
 } as Meta;
 
@@ -41,7 +41,12 @@ const InputsContainer = (props: IInputsContainerProps) => {
                         <div className="inputs-container lfelx-y-axis">
                             {data.map((input, index) => (
                                 <div key={index}>
-                                    <Form.Select />
+                                    <Form.Select
+                                        options={[
+                                            {value: '1', label: '1qweqwewqewqe'},
+                                            {value: '2', label: '2qweqwew'},
+                                        ]}
+                                    />
                                     <div className="lbrick-2" />
                                 </div>
                             ))}
