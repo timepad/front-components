@@ -165,9 +165,10 @@ const DropProfile: React.FC = (props) => {
 };
 
 const DropLongItemList: React.FC = () => {
+    const ref = React.useRef<HTMLButtonElement | null>(null);
     return (
         <Dropdown show={true}>
-            <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
+            <Dropdown.ToggleButton buttonRef={ref}>Выпадающий список</Dropdown.ToggleButton>
             <Dropdown.Body>
                 <List variant="dark" size="lg">
                     {cities.map((item, index) => {
@@ -244,18 +245,18 @@ export const WithLongItemList: IStorybookComponent = () => {
     );
 };
 
-const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
+const MemberFiltersEditCurrentTemplate: FC = () => {
     return (
         <Dropdown positions={'bottom-end'}>
             <div className="mtheme--darkpic">
                 <Dropdown.ToggleButton label="open" />
             </div>
-            <Dropdown.Body ref={childrenRef}>
+            <Dropdown.Body>
                 <List variant="dark">
-                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
+                    <List.Item className="mtheme--darkpic" onClick={(e: Event) => e.stopPropagation()}>
                         тест
                     </List.Item>
-                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
+                    <List.Item className="mtheme--darkpic" onClick={(e: Event) => e.stopPropagation()}>
                         <input type="text" name="name" />
                     </List.Item>
                 </List>
@@ -265,18 +266,17 @@ const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
 };
 
 export const DropDownInDropDown: IStorybookComponent = () => {
-    const childrenRef = useRef(null);
     return (
         <>
             <StoryTitle>DropDown in DropDown</StoryTitle>
-            <Dropdown childrenRef={childrenRef} withIcons positions={'bottom-end'}>
+            <Dropdown withIcons positions={'bottom-end'}>
                 <Dropdown.ToggleButton label="Все" />
                 <Dropdown.Body>
                     <List variant="dark">
                         <List.Item
-                            suffix={<MemberFiltersEditCurrentTemplate childrenRef={childrenRef} />}
+                            suffix={<MemberFiltersEditCurrentTemplate />}
                             className="mtheme--darkpic"
-                            onClick={(e: any) => e.stopPropagation()}
+                            onClick={(e: Event) => e.stopPropagation()}
                         >
                             Сортируйте
                         </List.Item>

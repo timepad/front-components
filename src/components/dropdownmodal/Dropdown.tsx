@@ -12,45 +12,10 @@ import {DropDownManagerContext} from './ManagerContext';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {AutoPlacement} from '@popperjs/core/lib/enums';
+import {useClickOutside} from './helpers/useClickOutside';
 
-/*
-┌───────┐ ┌───┐    ┌───┐ ┌───────┐
-│   tl  │ │   │    │   │ │  tr   │
-└───────┘ │rt │    │ lt│ └───────┘
-┌───┐ ┌─┐ │   │    │   │ ┌─┐ ┌───┐
-│   │ └─┘ └───┘    └───┘ └─┘ │   │
-│ lb│ ┌───────┐    ┌───────┐ │rb │
-│   │ │  br   │    │   bl  │ │   │
-└───┘ └───────┘    └───────┘ └───┘
-*/
 type DropdownPosition = VariationPlacement;
 // "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"
-
-const useClickOutside = (ref: HTMLElement | null, handler: (event: MouseEvent) => void, target?: HTMLElement): void => {
-    useEffect(() => {
-        const listener = (event: MouseEvent | TouchEvent) => {
-            if (!ref || ref.contains(event.target as Node | null) || target?.contains(event.target as Node | null)) {
-                return;
-            }
-
-            handler(event as MouseEvent);
-        };
-
-        const hardClose = (e: Event) => {
-            handler(e as MouseEvent);
-        };
-
-        document.addEventListener('dropdown-close', hardClose);
-        document.addEventListener('mousedown', listener);
-        document.addEventListener('touchstart', listener);
-
-        return () => {
-            document.removeEventListener('mousedown', listener);
-            document.removeEventListener('touchstart', listener);
-            document.addEventListener('dropdown-close', hardClose);
-        };
-    }, [ref, handler, target]);
-};
 
 export interface IDropdownProps {
     show?: boolean;
@@ -62,14 +27,9 @@ export interface IDropdownProps {
     // enable with icons dropdown style
     withIcons?: boolean;
     doNotCloseMobileDDOnAnyClick?: boolean;
-    childrenRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 const EDGE_PADDING = 8;
-//
-// const TOP_SHIFT = 2;
-//
-// const TOP_PADDING = 16;
 
 export const Dropdown = ({
     children,
