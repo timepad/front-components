@@ -51,6 +51,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
         'icon',
     )({
         checked: checked,
+        'checked-primary': checked && variant === CheckboxVariant.primary,
         'checked-blue': checked && variant === CheckboxVariant.blue,
     });
 

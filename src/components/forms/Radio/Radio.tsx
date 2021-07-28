@@ -50,6 +50,7 @@ export const Radio: React.FC<IRadioProps> = ({
         'icon',
     )({
         checked: checked,
+        'checked-primary': checked && variant === RadioVariant.primary,
         'checked-blue': checked && variant === RadioVariant.blue,
     });
 
