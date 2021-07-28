@@ -8,6 +8,11 @@ import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 
+export enum CheckboxVariant {
+    primary = 'primary',
+    blue = 'blue',
+}
+
 export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
@@ -17,6 +22,7 @@ export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputEleme
     id?: string;
     error?: string;
     className?: string;
+    variant?: CheckboxVariant;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
@@ -32,6 +38,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     onChange,
     onBlur,
     className = '',
+    variant = CheckboxVariant.primary,
     ...props
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
@@ -39,7 +46,13 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
 
     const wrapperClasses = cx(component('checkbox')({error: !!error, disabled: disabled}), className);
 
-    const checkboxClasses = component('checkbox', 'icon')({checked: checked});
+    const checkboxClasses = component(
+        'checkbox',
+        'icon',
+    )({
+        checked: checked,
+        'checked-blue': checked && variant === CheckboxVariant.blue,
+    });
 
     const labeClasses = cx(component('checkbox', 'text')(), 't-caption', 't-caption--brick');
 

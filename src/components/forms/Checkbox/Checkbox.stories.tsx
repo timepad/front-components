@@ -6,6 +6,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 
 import 'css/bundle.less';
 import '../storybook/demo.less';
+import {CheckboxVariant} from './Checkbox';
 
 export default {
     title: 'Checkbox',
@@ -35,6 +36,7 @@ const CheckboxContainer = (props: IInputsContainerProps) => {
     const {themeColor} = props;
     const [checkedOne, setCheckedOne] = React.useState(false);
     const [checkedTwo, setCheckedTwo] = React.useState(true);
+    const [checkedThree, setCheckedThree] = React.useState(true);
     const theme = themeColor;
 
     return (
@@ -63,6 +65,16 @@ const CheckboxContainer = (props: IInputsContainerProps) => {
                                     checked={checkedTwo}
                                     onChange={() => {
                                         setCheckedTwo(!checkedTwo);
+                                    }}
+                                />
+                                <div className="lbrick-2" />
+                                <Checkbox
+                                    name={`${theme}-checkbox-three`}
+                                    label={checkedThree ? 'Checked blue' : 'Active'}
+                                    checked={checkedThree}
+                                    variant={CheckboxVariant.blue}
+                                    onChange={() => {
+                                        setCheckedThree(!checkedThree);
                                     }}
                                 />
                                 <div className="lbrick-2" />

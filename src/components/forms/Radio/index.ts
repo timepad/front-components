@@ -1,2 +1,2 @@
-export {Radio} from './Radio';
+export {Radio, RadioVariant} from './Radio';
 export type {IRadioProps} from './Radio';

@@ -89,6 +89,14 @@ export const Orgpics: React.FC = () => {
             </div>
             <div className="lbrick-2" />
 
+            <StoryTitle>Organization square thin icon</StoryTitle>
+            <div className="lflex">
+                <Pic shape={PicShape.square} fillChar={char} size={PicSize.thin} />
+                <Spacer />
+                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.thin} />
+            </div>
+            <div className="lbrick-2" />
+
             <StoryTitle>Organization square big icon</StoryTitle>
             <div className="lflex">
                 <Pic shape={PicShape.square} fillChar={char} size={PicSize.big} />
