@@ -30,7 +30,6 @@ const Body: React.FC<IProps | any> = React.forwardRef<HTMLDivElement, IProps>(({
     } = context;
     return ReactDOM.createPortal(
         <div
-            ref={ref}
             className={component('drop-bg')({
                 show,
             })}
