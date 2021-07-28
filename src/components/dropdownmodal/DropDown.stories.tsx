@@ -26,7 +26,7 @@ const DropBtn: React.FC<IDropdownProps> = (props) => {
         <>
             <Dropdown show={true} {...props}>
                 <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
-                <Dropdown.Body>
+                <Dropdown.Body className="my-class-body">
                     <List size={'lg'} variant={'dark'}>
                         <List.Item>Primary text</List.Item>
                         <List.Item as={'button'} type={'button'}>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {PropsWithChildren, useContext} from 'react';
+import cx from 'classnames';
 import {DropDownManagerContext} from './ManagerContext';
 import {component} from '../../services/helpers/classHelpers';
 import {Theme} from '../utility/Modifiers';
@@ -12,7 +13,7 @@ interface IProps
 }
 
 const Body: React.FC<IProps | any> = ({children, className}) => {
-    const classNames = className ? className : component('drop', 'list')();
+    const classNames = cx(component('drop', 'list')(), className);
     const context = useContext(DropDownManagerContext);
     const isSmall = useMedia('(max-width: 735.6px)');
 
@@ -80,12 +81,8 @@ const Body: React.FC<IProps | any> = ({children, className}) => {
                 {show && (
                     <div
                         className={dropClassName}
-                        onClick={(e: React.MouseEvent) => {
-                            // if (doNotCloseMobileDDOnAnyClick) {
-                            //     e.target === e.currentTarget && onCloseHandler();
-                            // } else {
+                        onClick={() => {
                             onCloseHandler();
-                            // }
                         }}
                     >
                         <div className={classNames}>
