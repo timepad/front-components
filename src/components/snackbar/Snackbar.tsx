@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import './index.less';
 import {Button} from '../button';
 
@@ -11,9 +12,12 @@ export const Snackbar: React.FC<ISnackbarProps> = ({text, state, button}) => {
     // Returns the Provider that must wrap the application
     return (
         <div
-            className={component('snackbar')({
-                error: state === 'error' || state === 'errorWithIcon',
-            })}
+            className={cx(
+                't-caption',
+                component('snackbar')({
+                    error: state === 'error' || state === 'errorWithIcon',
+                }),
+            )}
         >
             {state === 'successWithIcon' && <CheckSvg />}
             {state === 'errorWithIcon' && <WarningSvg />}

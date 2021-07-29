@@ -13,11 +13,10 @@
 
 .csnackbar {
   display: flex;
-  align-items: center;
-  border-radius: 4px;
+  border-radius: 8px;
+  padding: 7px 0 11px 0;
+  box-sizing: border-box;
   background-color: @c-black;
-  font-size: 15px;
-  line-height: 22px;
   font-style: normal;
   font-weight: normal;
   width: max-content;
@@ -25,13 +24,17 @@
   color: @c-white;
 
   > svg {
-    margin: 0 -7px 0 7px;
+    margin: -2px -11px 0 3px;
   
     > path {
       fill: @c-white;
     }
   }
+  
   &--error {
+    > svg {
+      margin: -3px -11px 0 4px;
+    }
     background-color: @c-red;
   }
 }
@@ -39,7 +42,7 @@
 .csnackbar__button {
   &.cbtn.cbtn--variant_secondary, &.cbtn.cbtn--variant_secondary:active {
     --text-color: @c-white;
-    margin: 4px 4px 4px 0;
+    margin: -3px 4px 4px 0;
   }
 }
 
