@@ -4,7 +4,7 @@ import './index.less';
 import {Button} from '../button';
 
 import {ISnackbarProps} from './SnackbarProvider';
-import CheckSvg from '../../assets/svg/24/icon-check-24.svg';
+import SuccessSvg from '../../assets/svg/16/icon-success-16.svg';
 import WarningSvg from '../../assets/svg/24/icon-error-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 
@@ -16,10 +16,11 @@ export const Snackbar: React.FC<ISnackbarProps> = ({text, state, button}) => {
                 't-caption',
                 component('snackbar')({
                     error: state === 'error' || state === 'errorWithIcon',
+                    success: state === 'successWithIcon',
                 }),
             )}
         >
-            {state === 'successWithIcon' && <CheckSvg />}
+            {state === 'successWithIcon' && <SuccessSvg />}
             {state === 'errorWithIcon' && <WarningSvg />}
             <div className="csnackbar__text">{text}</div>
             {button ? (

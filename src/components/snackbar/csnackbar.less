@@ -23,17 +23,18 @@
   height: 40px;
   color: @c-white;
 
-  > svg {
-    margin: -2px -11px 0 3px;
-  
-    > path {
-      fill: @c-white;
+  &--success {
+    > svg {
+      margin:  7px -4px 0 12px;;
     }
   }
   
   &--error {
     > svg {
       margin: -3px -11px 0 4px;
+      > path {
+        fill: @c-white;
+      }
     }
     background-color: @c-red;
   }
