@@ -1,4 +1,4 @@
-import {FormCheckbox} from './FormCheckbox';
-import {FormCheckboxField} from './FormCheckboxField';
+import {Checkbox} from './Checkbox';
+import {CheckboxField} from './CheckboxField';
 
-export {FormCheckbox, FormCheckboxField};
+export {Checkbox, CheckboxField};

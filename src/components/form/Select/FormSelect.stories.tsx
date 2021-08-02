@@ -30,6 +30,7 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {data, themeColor} = props;
+
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
             <div className="mtheme__typo mtheme--bg--demo">
@@ -42,6 +43,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             {data.map((input, index) => (
                                 <div key={index}>
                                     <Form.Select
+                                        value={'2'}
                                         options={[
                                             {value: '1', label: '1qweqwewqewqe'},
                                             {value: '2', label: '2qweqwew'},

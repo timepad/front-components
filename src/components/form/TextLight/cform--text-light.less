@@ -1,3 +1,46 @@
+.on-state-disabled(@color, @boxShadowColor) {
+  &--disabled {
+    &:hover {
+      box-shadow: inherit;
+    }
+
+    input, textarea {
+      color: @color;
+      -webkit-text-fill-color: @color;
+
+      &:focus {
+        color: @color;
+        box-shadow: inset 0px -1px 0px @boxShadowColor;
+
+        & ~ label {
+          color:  @color;
+        }
+      }
+
+      &:not(:focus) ~ label {
+        color: @color;
+        -webkit-text-fill-color: @color;
+      }
+    }
+  }
+}
+
+.on-state-error() {
+  &--error {
+    input, textarea {
+      box-shadow: inset 0 -1px @c-red;
+      &:focus {
+        box-shadow: inset 0 -2px @c-red;
+      }
+
+      &:focus ~ label,
+      &:not(:focus) ~ label {
+        color: @c-red;
+      }
+    }
+  }
+}
+
 .cform--text-light {
   &__container {
     position: relative;
@@ -129,25 +172,7 @@
       }
     }
 
-    &--error {
-      & input:focus, & textarea:focus {
-        box-shadow: inset 0 -2px @c-red;
-
-        & ~ label {
-          color: @c-red;
-        }
-      }
-
-      input, textarea {
-        box-shadow: inset 0 -1px @c-red;
-
-        &:not(:focus) ~ label,
-        &:placeholder-shown:not(:focus) ~ label {
-          color: @c-red;
-        }
-      }
-
-    }
+    .on-state-error();
 
     &--success {
       input, textarea {
@@ -159,26 +184,12 @@
       }
     }
 
-    &--disabled {
-      &:hover {
-        box-shadow: inherit;
-      }
-
-      input, textarea {
-        color: @c-gray-35;
-        -webkit-text-fill-color: @c-gray-35;
-
-        &:not(:focus) ~ label {
-          color: @c-gray-35;
-          -webkit-text-fill-color: @c-gray-35;
-        }
-      }
-    }
+    .on-state-disabled(@c-gray-35, @c-dark-gray);
 
     // THEMES
     .mtheme--lightpic & {
       &:hover {
-        box-shadow: inset 0px -2px 0px rgba(128, 128, 128, 0.35);
+        box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
       }
 
       input, textarea {
@@ -197,31 +208,21 @@
         }
       }
 
-      &--error input, textarea {
-        box-shadow: inset 0 -1px @c-red;
+      .on-state-error();
 
-        &:placeholder-shown:not(:focus) ~ label {
-          color: @c-red;
-        }
-      }
-
-      &--success input, textarea {
+      &--success input textarea {
         box-shadow: inset 0 -1px @c-green;
       }
 
-      &--disabled {
-        &:hover {
-          box-shadow: inherit;
-        }
-      }
+      .on-state-disabled(@c-gray-35, rgba(128, 128, 128, .35));
     }
 
     .mtheme--darkpic & {
       &:hover {
-        box-shadow: inset 0px -2px 0px rgba(128, 128, 128, 0.35);
+        box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
       }
 
-      input {
+      input, textarea {
         color: @c-white;
         box-shadow: inset 0 -1px @c-gray-50-fade-35;
 
@@ -238,16 +239,10 @@
         }
       }
 
-      &--error input {
-        box-shadow: inset 0 -1px @c-red;
-
-        &:placeholder-shown:not(:focus) ~ label {
-          color: @c-red;
-        }
-      }
+      .on-state-error();
 
       &--success {
-        input {
+        input, textarea {
           box-shadow: inset 0 -1px @c-gray-50-fade-35;
         }
 
@@ -256,21 +251,7 @@
         }
       }
 
-      &--disabled {
-        &:hover {
-          box-shadow: inherit;
-        }
-
-        input {
-          color: @c-gray-75;
-          -webkit-text-fill-color: @c-gray-75;
-
-          &:not(:focus) ~ label {
-            color: @c-gray-75;
-            -webkit-text-fill-color: @c-gray-75;
-          }
-        }
-      }
+      .on-state-disabled(@c-gray-75, rgba(128, 128, 128, .35))
     }
   }
 }

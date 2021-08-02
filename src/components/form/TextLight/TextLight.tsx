@@ -4,10 +4,10 @@ import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 import './index.less';
-import {IFormTextLightProps} from './FormTextLight.types';
+import {IFormTextLightProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
 
-export const FormTextLight: FC<IFormTextLightProps> = ({
+export const TextLight: FC<IFormTextLightProps> = ({
     customIcon,
     success,
     error,

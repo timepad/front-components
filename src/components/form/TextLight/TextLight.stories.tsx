@@ -98,7 +98,7 @@ const inputsData: IInputData[] = [
 ];
 
 const InputRow = (props: IInputData) => {
-    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline} = props;
+    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline = false} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Form.TextLight

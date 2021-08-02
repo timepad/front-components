@@ -1,4 +1,4 @@
-import {FormTextLight} from './FormTextLight';
-import {FormTextLightField} from './FormTextLightField';
+import {TextLight} from './TextLight';
+import {TextLightField} from './TextLightField';
 
-export {FormTextLight, FormTextLightField};
+export {TextLight, TextLightField};
