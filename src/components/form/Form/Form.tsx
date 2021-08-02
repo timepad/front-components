@@ -10,7 +10,7 @@ import {FormSelect} from '../Select/FormSelect';
 
 export interface IFormProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>> {
-    variant?: 'white';
+    // variant?: 'white';
 }
 
 export const Form: FC<IFormProps> & {
@@ -24,12 +24,7 @@ export const Form: FC<IFormProps> & {
     RadioField: typeof FormRadioField;
     Select: typeof FormSelect;
 } = (props) => {
-    const formClassName = cx(
-        component('form')({
-            white: props.variant === 'white',
-        }),
-        props.className,
-    );
+    const formClassName = cx(component('form')(), props.className);
 
     return (
         <form {...props} className={formClassName}>

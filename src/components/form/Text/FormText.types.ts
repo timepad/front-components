@@ -1,12 +1,9 @@
 import React from 'react';
-import {TextareaAutosizeProps} from 'react-textarea-autosize/dist/declarations/src';
+import {ITextareaProps} from '../Textarea/Textarea';
 
-type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-type TextareaProps = TextareaAutosizeProps & React.RefAttributes<HTMLTextAreaElement>;
-
-type BaseFormTextProps = InputProps & TextareaProps;
-
-export interface IFormTextProps extends BaseFormTextProps {
-    multiline?: boolean;
+export type IFormTextProps = {
     error?: string;
-}
+} & (
+    | ({multiline?: false} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)
+    | ({multiline: true} & ITextareaProps)
+);

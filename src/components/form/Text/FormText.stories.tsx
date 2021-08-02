@@ -37,7 +37,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis" style={{width: '200px'}}>
-                            <Form.Text key={3} placeholder="Empty" />
+                            <Form.Text key={3} multiline placeholder="Empty" />
                             <div className="lbrick-2" />
                             <Form.Text key={4} placeholder="Empty" />
                             <div className="lbrick-2" />

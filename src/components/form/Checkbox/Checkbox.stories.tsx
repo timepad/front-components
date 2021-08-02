@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
 import {Form} from '../Form';
-import {Formik, Form as FormikForm} from 'formik';
+import {Form as FormikForm, Formik} from 'formik';
 import {Button} from '../../button';
+import {CheckboxType} from './FormCheckbox.types';
 
 export default {
     title: 'Checkbox (new)',
@@ -28,7 +29,37 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {themeColor} = props;
-    const [value, setValue] = useState(false);
+    const [checked, setChecked] = useState<CheckboxType>('off');
+    const [checks, setChecks] = useState<Record<string, CheckboxType>>({
+        a: 'off',
+        b: 'off',
+        c: 'off',
+    });
+
+    const handleChange = (key: 'a' | 'b' | 'c') => () => {
+        let updatedChecked = checks[key];
+
+        if (checks[key] === 'on') {
+            updatedChecked = 'off';
+        } else if (checks[key] === 'off') {
+            updatedChecked = 'on';
+        }
+
+        setChecks((prevState) => ({...prevState, [key]: updatedChecked}));
+    };
+
+    useEffect(() => {
+        const result = Object.entries(checks).filter(([, value]) => value === 'on');
+
+        if (result.length === 0) {
+            setChecked('off');
+        } else if (result.length < Object.keys(checks).length) {
+            setChecked('partial');
+        } else {
+            setChecked('on');
+        }
+    }, [checks]);
+
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
             <div className="mtheme__typo mtheme--bg--demo">
@@ -38,15 +69,12 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis">
-                            <Form.Checkbox
-                                text="Text"
-                                checked={value}
-                                onChange={() => {
-                                    setValue(!value);
-                                }}
-                                small
-                            />
+                            <Form.Checkbox name="main" text="Need all checks" value={checked} />
+                            <Form.Checkbox name="second" text="1" value={checks.a} onChange={handleChange('a')} />
+                            <Form.Checkbox name="second" text="2" value={checks.b} onChange={handleChange('b')} />
+                            <Form.Checkbox name="second" text="3" value={checks.c} onChange={handleChange('c')} />
 
+                            {/*<Form.Checkbox text="Text" caption="Caption" value={checked} onChange={handleChange} />*/}
                             <Form.Checkbox text="Text" caption="Caption" disabled />
                             <Form.Checkbox text="Text" caption="Caption" disabled checked={true} />
                         </div>
@@ -106,8 +134,8 @@ export const CheckboxField: IStorybookComponent = () => {
                         <div className="lflex lflex--y-axis">
                             <Form.CheckboxField name="isFirstActive" text="isFirstActive" />
                             <Form.CheckboxField name="isSecondActive" text="isSecondActive" />
-                            <Form.CheckboxField name="interest" text="Dogs" value="dogs" />
-                            <Form.CheckboxField name="interest" text="Cats" value="cats" />
+                            {/*<Form.CheckboxField name="interest" text="Dogs" value="dogs" />*/}
+                            {/*<Form.CheckboxField name="interest" text="Cats" value="cats" />*/}
                             <div className="lbrick-1" />
                             <Form.TextField name="lastName" type="text" placeholder="Введите Фамилию" />
                             <div className="lbrick-1" />

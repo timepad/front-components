@@ -4,23 +4,17 @@ import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 import './index.less';
-import ReactTextArea from 'react-textarea-autosize';
 import {IFormTextLightProps} from './FormTextLight.types';
+import {Textarea} from '../Textarea';
 
-export const FormTextLight: FC<IFormTextLightProps> = (props: IFormTextLightProps) => {
-    const {
-        name,
-        success,
-        error,
-        autoFocus = false,
-        customIcon,
-        disabled,
-        onErrorTruncation,
-        inputRef,
-        multiline,
-        ...othersProps
-    } = props;
-
+export const FormTextLight: FC<IFormTextLightProps> = ({
+    customIcon,
+    success,
+    error,
+    name,
+    disabled,
+    ...props
+}: IFormTextLightProps) => {
     const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
 
     const fakeErrorLabelRef = useRef<HTMLLabelElement | null>(null);
@@ -43,13 +37,17 @@ export const FormTextLight: FC<IFormTextLightProps> = (props: IFormTextLightProp
 
     const onLocalFocus = (e: React.FocusEvent<HTMLInputElement>) => {
         setFocused(true);
-        props.onFocus?.(e);
+        if (!props.multiline) {
+            props.onFocus?.(e);
+        }
     };
 
     const onLocalBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setFocused(false);
-        props.onChange?.(e);
-        props.onBlur?.(e);
+        if (!props.multiline) {
+            props.onChange?.(e);
+            props.onBlur?.(e);
+        }
     };
 
     const onPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -64,8 +62,8 @@ export const FormTextLight: FC<IFormTextLightProps> = (props: IFormTextLightProp
     }, [error]);
 
     useEffect(() => {
-        onErrorTruncation?.(isTruncated);
-    }, [focused, isTruncated, onErrorTruncation]);
+        props.onErrorTruncation?.(isTruncated);
+    }, [focused, isTruncated, props, props.onErrorTruncation]);
 
     useEffect(() => {
         const fakeErrorLabel = fakeErrorLabelRef?.current;
@@ -81,24 +79,24 @@ export const FormTextLight: FC<IFormTextLightProps> = (props: IFormTextLightProp
         };
     }, [checkErrorTruncation, error]);
 
-    const style = customIcon || success ? {padding: '0 32px 12px 0'} : {padding: '0 0 12px 0'};
+    const style =
+        customIcon || success ? {...props.style, padding: '0 32px 11px 0'} : {...props.style, padding: '0 0 11px 0'};
 
     const id = `${fieldName}_id_field`;
     return (
         <div className={inputClasses}>
-            {multiline ? (
-                <ReactTextArea id={id} ref={inputRef} name={fieldName} style={style} {...othersProps} />
+            {props.multiline ? (
+                <Textarea style={style} {...props} />
             ) : (
                 <input
                     name={fieldName}
                     id={id}
-                    ref={inputRef}
+                    ref={props.inputRef}
                     onFocus={onLocalFocus}
                     onBlur={onLocalBlur}
                     onKeyPress={onPress}
-                    autoFocus={autoFocus}
                     style={style}
-                    {...othersProps}
+                    {...props}
                 />
             )}
 

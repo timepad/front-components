@@ -1,16 +1,19 @@
 import React from 'react';
-import {TextareaAutosizeProps} from 'react-textarea-autosize/dist/declarations/src';
+import {ITextareaProps} from '../Textarea/Textarea';
 
-type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-type TextareaProps = TextareaAutosizeProps & React.RefAttributes<HTMLTextAreaElement>;
-
-type BaseFormTextLightProps = InputProps & TextareaProps;
-
-export interface IFormTextLightProps extends BaseFormTextLightProps {
+export type IFormTextLightProps = {
     error?: string;
     success?: boolean;
-    multiline?: boolean;
-    inputRef?: React.MutableRefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
+
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onErrorTruncation?: (truncated: boolean) => void;
-}
+} & (
+    | ({
+          multiline?: false;
+          inputRef?: React.MutableRefObject<HTMLInputElement | null>;
+      } & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)
+    | ({
+          multiline: true;
+          textareaRef?: React.Ref<HTMLTextAreaElement>;
+      } & ITextareaProps)
+);
