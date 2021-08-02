@@ -15,7 +15,7 @@ export enum CheckboxVariant {
 
 export interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    label: string;
+    label?: string;
     value?: string;
     checked?: boolean;
     disabled?: boolean;
@@ -73,7 +73,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
                 <span className={checkboxClasses}>
                     <CheckSvg />
                 </span>
-                <span className={labeClasses}>{label}</span>
+                {label && <span className={labeClasses}>{label}</span>}
             </label>
         </div>
     );

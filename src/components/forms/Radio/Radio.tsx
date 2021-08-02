@@ -14,7 +14,7 @@ export enum RadioVariant {
 
 export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    label: string;
+    label?: string;
     value: string;
     checked?: boolean;
     disabled?: boolean;
@@ -72,7 +72,7 @@ export const Radio: React.FC<IRadioProps> = ({
                 <span className={radioClasses}>
                     <BulletSvg />
                 </span>
-                <span className={labelClasses}>{label}</span>
+                {label && <span className={labelClasses}>{label}</span>}
             </label>
         </div>
     );
