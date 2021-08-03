@@ -22,8 +22,8 @@ const Row: React.FC<IRowProps> & {
     Icon: typeof RowIcon;
     Text: typeof RowText;
     Caption: typeof RowCaption;
-} = (props: IRowProps): JSX.Element => {
-    const customClassNames = component('row')({
+} = ({className, ...props}: IRowProps): JSX.Element => {
+    const innerContainerClassNames = component('row')({
         hoverable: props.hoverable,
         small: props.small,
         ff: props.ffFont,
@@ -31,9 +31,7 @@ const Row: React.FC<IRowProps> & {
         disabled: props.disabled,
     });
 
-    const outContainerClassNames = component('row', 'outer')();
-
-    const innerContainerClassNames = cx(customClassNames, props.className);
+    const outContainerClassNames = cx(component('row', 'outer')(), className);
 
     return (
         <div className={outContainerClassNames}>
