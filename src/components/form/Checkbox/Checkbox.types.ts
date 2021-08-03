@@ -9,6 +9,7 @@ export interface ICheckboxProps
     caption?: string;
     small?: boolean;
     error?: string;
+    indeterminate?: boolean;
 }
 
 // checkbox props with formik integrations

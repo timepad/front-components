@@ -28,26 +28,6 @@ interface IInputsContainerProps {
 
 const InputsContainer = (props: IInputsContainerProps) => {
     const {themeColor} = props;
-    const [checked, setChecked] = useState<boolean>(false);
-    //
-    // const [groupChecked, setGroupChecked] = useState<CheckboxState>('off');
-    // const [checks, setChecks] = useState<boolean[]>([false, false, false]);
-    // const handleChange = (index: number) => () => {
-    //     const tmp = checks.map((check, i) => (i === index ? !check : check));
-    //     setChecks(tmp);
-    // };
-    //
-    // useEffect(() => {
-    //     const isAllFalse = checks.filter((i) => !i);
-    //     const isAllTrue = checks.filter((i) => i);
-    //     if (isAllFalse.length === 3) {
-    //         setGroupChecked('off');
-    //     } else if (isAllTrue.length === 3) {
-    //         setGroupChecked('on');
-    //     } else {
-    //         setGroupChecked('partial');
-    //     }
-    // }, [checks]);
 
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
@@ -58,23 +38,12 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis">
-                            <Form.Checkbox
-                                name="main"
-                                text="Need all checks"
-                                checked={checked}
-                                onChange={() => setChecked(!checked)}
-                            />
-
-                            <Form.CheckboxGroup text="all items" name="checkboxGroup">
-                                {(Checkbox) => (
-                                    <>
-                                        <Checkbox text="1" />
-                                    </>
-                                )}
-                            </Form.CheckboxGroup>
-                            {/*<Form.Checkbox text="Text" caption="Caption" value={checked} onChange={handleChange} />*/}
-                            {/*<Form.Checkbox text="Text" caption="Caption" disabled />*/}
-                            {/*<Form.Checkbox text="Text" caption="Caption" disabled checked={true} />*/}
+                            <Form.Checkbox name="empty" text="Empty" />
+                            <Form.Checkbox name="checked" text="Checked" checked />
+                            <Form.Checkbox name="indeterminate" text="Indeterminate" indeterminate />
+                            <Form.Checkbox name="empty" text="Empty" disabled />
+                            <Form.Checkbox name="checked" text="Checked" checked disabled />
+                            <Form.Checkbox name="indeterminate" text="Indeterminate" indeterminate disabled />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
@@ -96,48 +65,37 @@ export const Checkbox: IStorybookComponent = () => {
     );
 };
 
+interface IInitialValues {
+    indeterminateBox: boolean;
+    multiple: string[];
+    testOne: boolean;
+    testTwo: boolean;
+}
+
 export const CheckboxField: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Formik intergations</StoryTitle>
-            <Formik
+            <Formik<IInitialValues>
                 initialValues={{
-                    interest: [],
-                    lastName: '',
-                    firstName: '',
-                    isFirstActive: false,
-                    isSecondActive: false,
-                }}
-                validate={(values) => {
-                    if (values.firstName.match(/[0-9]+/g)) {
-                        return {
-                            firstName: 'Имя не может содержать цифры',
-                        };
-                    }
-                    if (values.lastName.match(/[0-9]+/g)) {
-                        return {
-                            lastName: 'Фамилия не может содержать цифры',
-                        };
-                    }
+                    multiple: [],
+                    indeterminateBox: false,
+                    testOne: false,
+                    testTwo: false,
                 }}
                 onSubmit={(values) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
-                        // actions.setSubmitting(false);
                     }, 1000);
                 }}
             >
                 {() => (
                     <FormikForm>
                         <div className="lflex lflex--y-axis">
-                            <Form.CheckboxField name="isFirstActive" text="isFirstActive" />
-                            <Form.CheckboxField name="isSecondActive" text="isSecondActive" />
-                            <Form.CheckboxField name="interest" text="Dogs" value="dogs" />
-                            <Form.CheckboxField name="interest" text="Cats" value="cats" />
-                            <div className="lbrick-1" />
-                            <Form.TextField name="lastName" type="text" placeholder="Введите Фамилию" />
-                            <div className="lbrick-1" />
-                            <Form.TextField name="firstName" type="text" placeholder="Введите Имя" />
+                            <Form.CheckboxField name="testOne" text="isFirstActive" />
+                            <Form.CheckboxField name="testTwo" text="isSecondActive" />
+                            <Form.CheckboxField name="multiple" text="Dogs" value="dogs" />
+                            <Form.CheckboxField name="multiple" text="Cats" value="cats" />
                             <div className="lbrick-1" />
                             <Button type="submit">Submit</Button>
                         </div>
