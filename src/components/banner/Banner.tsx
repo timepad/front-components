@@ -15,7 +15,9 @@ interface IProps {
 
 export const Banner: React.FC<IProps> = (props) => {
     const [show, setShow] = useState(true);
-    if (!show) return null;
+    if (!show) {
+        return null;
+    }
     const {children, closeable, icon, withIcon} = props;
 
     const Icon = () => {
