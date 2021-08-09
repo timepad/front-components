@@ -1,0 +1,44 @@
+.cselect {
+  position: relative;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .cdrop-mobile {
+    display: none;
+  }
+
+  &__mobile {
+    display: none;
+    position: relative;
+
+    select {
+      height: 32px;
+      padding: 4px 16px;
+
+      color: @c-primary-blue;
+
+      border-radius: 4px;
+      border: 1px solid @c-dark-gray;
+
+      line-height: 22px;
+      font-size: 14px;
+      font-family: @ff-system;
+      text-align: center;
+
+      -moz-appearance: none; /* Firefox */
+      -webkit-appearance: none; /* Safari and Chrome */
+      appearance: none;
+    }
+
+    svg {
+      position: absolute;
+      right: 0;
+      top: 0;
+      * {
+        fill: @c-primary-blue;
+      }
+    }
+  }
+}

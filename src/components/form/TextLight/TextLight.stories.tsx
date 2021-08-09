@@ -114,7 +114,7 @@ const InputRow = (props: IInputData) => {
             multiline={multiline}
             error={error}
             autoFocus={autoFocus}
-            onChange={(event) => setValue(event.target.value)}
+            onChange={(event: any) => setValue(event.target.value)}
         />
     );
 };

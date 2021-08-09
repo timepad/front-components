@@ -6,7 +6,7 @@ import {FormText, FormTextField} from '../Text';
 import {TextLight, TextLightField} from '../TextLight';
 import {Checkbox, CheckboxField} from '../Checkbox';
 import {FormRadio, FormRadioField} from '../Radio';
-import {FormSelect} from '../Select/FormSelect';
+import {Select} from '../Select/Select';
 
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
@@ -20,7 +20,7 @@ export const Form: FC<IFormProps> & {
     CheckboxField: typeof CheckboxField;
     Radio: typeof FormRadio;
     RadioField: typeof FormRadioField;
-    Select: typeof FormSelect;
+    Select: typeof Select;
 } = (props) => {
     const formClassName = cx(component('form')(), props.className);
 
@@ -39,4 +39,4 @@ Form.Checkbox = Checkbox;
 Form.CheckboxField = CheckboxField;
 Form.Radio = FormRadio;
 Form.RadioField = FormRadioField;
-Form.Select = FormSelect;
+Form.Select = Select;

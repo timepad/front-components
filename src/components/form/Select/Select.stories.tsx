@@ -37,13 +37,14 @@ const InputsContainer = (props: IInputsContainerProps) => {
                 <div className="lbrick-2" />
                 <div className="lflex">
                     <div className="lgap-4-0" />
-                    <div>
+                    <div style={{flex: 1}}>
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
-                        <div className="inputs-container lfelx-y-axis">
+                        <div className="lflex lflex--y-axis">
                             {data.map((input, index) => (
                                 <div key={index}>
                                     <Form.Select
-                                        value={'2'}
+                                        disabled
+                                        label="Select..."
                                         options={[
                                             {value: '1', label: '1qweqwewqewqe'},
                                             {value: '2', label: '2qweqwew'},

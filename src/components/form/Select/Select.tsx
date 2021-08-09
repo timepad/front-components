@@ -4,8 +4,9 @@ import {List} from '../../list';
 import ArrowDownIcon from '../../../assets/svg/16/icon-arrow-down-solid-16.svg';
 import ArrowUpIcon from '../../../assets/svg/16/icon-arrow-up-solid-16.svg';
 import {ButtonIconAlignment, ButtonVariant} from '../../button';
-import {IFormSelectOption, IFormSelectProps} from './FormSelect.types';
+import {ISelectOption, ISelectProps} from './Select.types';
 import './index.less';
+import {component} from '../../../services/helpers/classHelpers';
 
 // const createUnion = <O,>(o: {[K in keyof O]: ComponentType<O[K]>}) => {
 //     const R: FC<{[K in keyof O]: {type: K} & O[K]}[keyof O]> = (props) => createElement(o[props.type], props);
@@ -18,29 +19,29 @@ import './index.less';
 // const Selects = createUnion({mobile: A, desktop: B});
 // const JSX = <Selects type={'desktop'} b={'str'} />;
 
-export const FormSelect: FC<IFormSelectProps> = (props) => {
-    const {options, value, ...otherProps} = props;
+const findLabelByValue = (options: ISelectOption[], value: string | number | readonly string[]) => {
+    return options.find((option) => option.value === value)?.label || '';
+};
+
+export const Select: FC<ISelectProps> = (props) => {
+    const {options = [], label = '', value = '', ...otherProps} = props;
     const [isOpen, setOpen] = useState(false);
-    const [localValue, setLocalValue] = useState<string | ReadonlyArray<string> | number>(value || '');
+    const [localValue, setLocalValue] = useState<string | ReadonlyArray<string> | number>(value);
+    const [localLabel, setLocalLabel] = useState(label || findLabelByValue(options, value));
 
-    const getLabelByValue = useCallback(
-        (value: string) => {
-            return props.options.find((option) => option.value === value)?.label;
-        },
-        [props.options],
-    );
+    const isMobile = window.innerWidth < 640;
 
-    const [label, setLabel] = useState(getLabelByValue(value as string) || '');
+    const mobileClassName = component('select', 'mobile')();
 
     const handleOpen = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setOpen(!isOpen);
     };
 
-    const handleSelect = (option: IFormSelectOption) => (e: MouseEvent<HTMLDivElement>) => {
+    const handleSelect = (option: ISelectOption) => (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
 
-        setLabel(option.label);
+        setLocalLabel(option.label);
         setOpen(!isOpen);
         setLocalValue(option.value);
 
@@ -51,10 +52,10 @@ export const FormSelect: FC<IFormSelectProps> = (props) => {
         e.stopPropagation();
 
         const value = e.target.value;
-        const label = getLabelByValue(value);
+        const label = findLabelByValue(options, value);
 
         setLocalValue(value);
-        setLabel(label ? label : props.options[0].label);
+        setLocalLabel(label ? label : props.options[0].label);
 
         // if(isMobile) {
         //     const Select = union('mobile');
@@ -67,33 +68,32 @@ export const FormSelect: FC<IFormSelectProps> = (props) => {
     };
 
     return (
-        <div className="cform--select">
+        <div className="cselect">
             <Dropdown onClose={() => setOpen(!isOpen)} positions="bottom-start" show={isOpen} {...props}>
                 <Dropdown.ToggleButton
                     icon={isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
                     iconAlignment={ButtonIconAlignment.right}
                     onClick={handleOpen}
-                    variant={ButtonVariant.stroke}
-                    label={label}
+                    variant={!!localValue ? ButtonVariant.primary : ButtonVariant.stroke}
+                    label={localLabel}
                 />
                 <Dropdown.Body>
-                    <List size="lg" variant="dark">
-                        {options?.map((option, index) => (
-                            <List.Item onClick={handleSelect(option)} key={index}>
-                                {option.label}
-                            </List.Item>
-                        ))}
-                    </List>
+                    {options.map((option, index) => (
+                        <Dropdown.Option label={option.label} onClick={handleSelect(option)} key={index} />
+                    ))}
                 </Dropdown.Body>
             </Dropdown>
 
-            <select onChange={handleSelectChange} value={localValue} className="cform--select__mobile" {...otherProps}>
-                {props.options.map((option, index) => (
-                    <option key={index} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </select>
+            <div className={mobileClassName}>
+                <select onChange={handleSelectChange} value={localValue} {...otherProps}>
+                    {props.options.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <ArrowDownIcon />
+            </div>
         </div>
     );
 };
