@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {ChangeEventHandler} from 'react';
+import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 import {uniqueId} from '../../../services/helpers/uniqueId';
@@ -15,6 +16,7 @@ interface IRadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> 
     variant?: RadioVariant;
     value: string;
     disabled?: boolean;
+    className?: string;
     error?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: (event: React.FormEvent<HTMLInputElement>) => void;
@@ -30,6 +32,7 @@ export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
         onChange,
         onBlur,
         variant = RadioVariant.primary,
+        className = '',
         ...othersProps
     } = props;
     const [id] = useState<string>(uniqueId());
@@ -48,7 +51,7 @@ export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
     const iconClasses = component('icon')();
 
     return (
-        <div className={checkboxClasses}>
+        <div className={cx(checkboxClasses, className)}>
             <input
                 type="checkbox"
                 name={name}
