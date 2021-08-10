@@ -72,7 +72,16 @@
     &:checked + label {
       --icon-color: @c-white;
       --border-color: transparent;
+    }
+  }
+  &--primary {
+    input:not(:disabled):checked + label {
       --background-color: @c-primary-blue;
+    }
+  }
+  &--blue {
+    input:not(:disabled):checked + label {
+      --background-color: @c-light-blue;
     }
   }
 
