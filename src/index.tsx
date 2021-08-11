@@ -7,6 +7,7 @@ export * from './components/logo';
 export * from './components/dropdown';
 export * from './components/list';
 export * from './components/forms';
-export * as Forms from './components/forms';
+import * as Forms from './components/forms';
+export {Forms};
 export * from './components/row';
 export * from './components/snackbar';
