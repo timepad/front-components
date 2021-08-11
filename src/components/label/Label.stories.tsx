@@ -15,13 +15,13 @@ export const Labels: IStorybookComponent = () => {
         <>
             <StoryTitle>Labels</StoryTitle>
             <div className="lflex">
-                <Label>Default</Label>
+                <Label>Text</Label>
                 <Spacer width={8} />
-                <Label background={LabelColor.red}>Red</Label>
+                <Label background={LabelColor.red}>Text</Label>
                 <Spacer width={8} />
-                <Label background={LabelColor.green}>Green</Label>
+                <Label background={LabelColor.green}>Text</Label>
                 <Spacer width={8} />
-                <Label background={LabelColor.yellow}>Yellow</Label>
+                <Label background={LabelColor.yellow}>Text</Label>
             </div>
         </>
     );

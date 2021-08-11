@@ -1,6 +1,8 @@
 
 .cbadge {
   position: relative;
+  font-size: @fs-small;
+  line-height: @lh-really-small;
 
   .cbadge__inner {
     position: absolute;
@@ -17,9 +19,6 @@
     background: @c-primary-blue;
     min-width: 17px;
     height: 17px;
-    @media (min-width: @rsp-desktop-min) {
-      padding-bottom: 2px;
-    }
   }
 
   .cbadge__inner-empty {
