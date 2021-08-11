@@ -2,7 +2,6 @@ import React from 'react';
 import {PopperOptions, TriggerType} from './types';
 import {usePopperTooltip} from './usePopperTooltip';
 import {component} from '../../services/helpers/classHelpers';
-import cx from 'classnames';
 
 export interface ITooltipProps {
     trigger?: TriggerType;
@@ -11,7 +10,7 @@ export interface ITooltipProps {
 }
 
 export const Tooltip: React.FC<ITooltipProps> = ({children, trigger, content, placement}) => {
-    const tooltipClasses = cx(component('tooltip')(), 't-small');
+    const tooltipClasses = component('tooltip')();
     const {getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip({
         placement,
         trigger,
