@@ -9,13 +9,15 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@bem-react/classname": "^1.5.9",
+    "@popperjs/core": "^2.9.2",
     "@types/classnames": "^2.2.11",
     "@types/react": "^17.0.2",
     "@types/react-modal": "3.12.0",
     "classnames": "^2.2.6",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
-    "react-modal": "3.14.3"
+    "react-modal": "3.14.3",
+    "react-popper": "^2.2.5"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.1.18",
