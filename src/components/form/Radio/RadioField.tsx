@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {FormRadio} from './FormRadio';
+import {Radio} from './Radio';
 import {FieldHookConfig, useField} from 'formik';
-import {IFormRadioProps} from './FormRadio.types';
+import {IFormRadioProps} from './Radio.types';
 
-export const FormRadioField: FC<IFormRadioProps & FieldHookConfig<boolean>> = (props) => {
+export const RadioField: FC<IFormRadioProps & FieldHookConfig<boolean>> = (props) => {
     const [field, meta, helpers] = useField(props);
 
     const tmpChecked =
@@ -11,5 +11,5 @@ export const FormRadioField: FC<IFormRadioProps & FieldHookConfig<boolean>> = (p
             ? (field.value as Array<string>).includes(props.value)
             : props.checked || field.value;
 
-    return <FormRadio {...field} {...meta} {...helpers} {...props} checked={tmpChecked} />;
+    return <Radio {...field} {...meta} {...helpers} {...props} checked={tmpChecked} />;
 };

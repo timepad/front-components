@@ -1,4 +1,4 @@
-import {FormRadio} from './FormRadio';
-import {FormRadioField} from './FormRadioField';
+import {Radio} from './Radio';
+import {RadioField} from './RadioField';
 
-export {FormRadio, FormRadioField};
+export {Radio, RadioField};

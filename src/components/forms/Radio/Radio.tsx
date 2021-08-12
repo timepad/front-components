@@ -34,11 +34,11 @@ export const Radio: React.FC<IRadioProps> = ({
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_radip' : name + '_field_radip';
 
-    const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
+    const wrapperClasses = component('radio-old')({error: !!error, disabled: disabled});
 
-    const radioClasses = component('radio', 'icon')({checked: checked});
+    const radioClasses = component('radio-old', 'icon')({checked: checked});
 
-    const labelClasses = cx(component('radio', 'text')(), 't-caption', 't-caption--brick');
+    const labelClasses = cx(component('radio-old', 'text')(), 't-caption', 't-caption--brick');
 
     return (
         <div className={wrapperClasses}>

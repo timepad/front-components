@@ -4,13 +4,13 @@ import {component} from '../../../services/helpers/classHelpers';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {Row} from '../../row';
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
-import {IFormRadioProps} from './FormRadio.types';
+import {IFormRadioProps} from './Radio.types';
 
-export const FormRadio: FC<IFormRadioProps> = (props) => {
+export const Radio: FC<IFormRadioProps> = (props) => {
     const {error, checked, disabled, id, text, caption, name, onChange, small} = props;
 
-    const wrapperClasses = component('form--radio')({error: !!error, disabled: disabled});
-    const radioClasses = component('form--radio', 'icon')({checked: checked});
+    const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
+    const radioClasses = component('radio', 'icon')({checked: checked});
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
 

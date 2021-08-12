@@ -2,24 +2,24 @@ import React, {FC} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
 import './cform.less';
-import {FormText, FormTextField} from '../Text';
+import {Text, TextField} from '../Text';
 import {TextLight, TextLightField} from '../TextLight';
 import {Checkbox, CheckboxField} from '../Checkbox';
-import {FormRadio, FormRadioField} from '../Radio';
+import {Radio, RadioField} from '../Radio';
 import {Select} from '../Select/Select';
 
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
 
 export const Form: FC<IFormProps> & {
-    Text: typeof FormText;
-    TextField: typeof FormTextField;
+    Text: typeof Text;
+    TextField: typeof TextField;
     TextLight: typeof TextLight;
     TextLightField: typeof TextLightField;
     Checkbox: typeof Checkbox;
     CheckboxField: typeof CheckboxField;
-    Radio: typeof FormRadio;
-    RadioField: typeof FormRadioField;
+    Radio: typeof Radio;
+    RadioField: typeof RadioField;
     Select: typeof Select;
 } = (props) => {
     const formClassName = cx(component('form')(), props.className);
@@ -31,12 +31,12 @@ export const Form: FC<IFormProps> & {
     );
 };
 
-Form.Text = FormText;
-Form.TextField = FormTextField;
+Form.Text = Text;
+Form.TextField = TextField;
 Form.TextLight = TextLight;
 Form.TextLightField = TextLightField;
 Form.Checkbox = Checkbox;
 Form.CheckboxField = CheckboxField;
-Form.Radio = FormRadio;
-Form.RadioField = FormRadioField;
+Form.Radio = Radio;
+Form.RadioField = RadioField;
 Form.Select = Select;

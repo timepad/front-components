@@ -1,4 +1,4 @@
-import {FormText} from './FormText';
-import {FormTextField} from './FormTextField';
+import {Text} from './Text';
+import {TextField} from './TextField';
 
-export {FormText, FormTextField};
+export {Text, TextField};

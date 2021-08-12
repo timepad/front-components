@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import './index.less';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-import {IFormTextProps} from './FormText.types';
+import {IFormTextProps} from './Text.types';
 import {Textarea} from '../Textarea';
 
-export const FormText: FC<IFormTextProps> = ({disabled, error, className, ...props}) => {
+export const Text: FC<IFormTextProps> = ({disabled, error, className, ...props}) => {
     const finalClassNames = cx(
-        component('form--text')({
+        component('text')({
             disabled,
             error: !!error,
         }),
