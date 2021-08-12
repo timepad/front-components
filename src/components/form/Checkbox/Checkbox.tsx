@@ -6,6 +6,7 @@ import IndeterminateCheckBoxIcon from '../../../assets/svg/24/icon-minus-24.svg'
 import {ICheckboxProps} from './Checkbox.types';
 import {Row} from '../../row';
 import {uniqueId} from '../../../services/helpers/uniqueId';
+import {noop} from '../Textarea/utils';
 
 export const Checkbox: FC<ICheckboxProps> = (props) => {
     const {
@@ -17,12 +18,12 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         text = '',
         caption = '',
         small = false,
-        onChange,
+        onChange = noop,
     } = props;
-    const wrapperClasses = component('form--checkbox')({error: !!error, disabled: disabled});
+    const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});
     const idx = id + '_field_checkbox';
     const checkboxClasses = component(
-        'form--checkbox',
+        'checkbox',
         'icon',
     )({
         checked: checked || indeterminate,

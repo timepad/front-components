@@ -1,31 +1,36 @@
-.cform--checkbox {
+.ccheckbox {
   user-select: none;
 
   * {
     box-sizing: border-box;
   }
 
-  &:hover .cform--checkbox__icon {
+  &:hover .ccheckbox__icon {
     border-width: 2px;
   }
 
-  &--disabled .cform--checkbox__icon {
+  &--disabled .ccheckbox__icon {
     border-width: 1px!important;
   }
 
   label {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
     flex: 1;
     cursor: pointer;
+  }
+
+  .crow__icon label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 32px;
   }
 
   input {
     width: 0;
     height: 0;
     opacity: 0;
+    position: absolute;
   }
 
   &__icon {
@@ -34,7 +39,6 @@
     width: 20px;
     height: 20px;
     min-width: 20px;
-    margin-right: 16px;
 
     border: 1px solid @c-dark-gray;
     border-radius: 4px;
@@ -79,7 +83,7 @@
       cursor: default;
     }
 
-    .cform--checkbox__icon {
+    .ccheckbox__icon {
       border-width: 1px;
       border-color: @c-dark-gray-fade-35;
 
@@ -95,12 +99,12 @@
   }
 
   .mtheme--lightpic & {
-    .cform--checkbox__icon {
+    .ccheckbox__icon {
       border-color: @c-gray-50-fade-35;
     }
 
     &--disabled {
-      .cform--checkbox__icon {
+      .ccheckbox__icon {
         border-width: 1px;
         border-color: @c-gray-50-fade-20;
 
@@ -117,12 +121,12 @@
   }
 
   .mtheme--darkpic & {
-    .cform--checkbox__icon {
+    .ccheckbox__icon {
       border-color: @c-gray-50-fade-35;
     }
 
     &--disabled {
-      .cform--checkbox__icon {
+      .ccheckbox__icon {
         border-width: 1px;
         border-color: @c-gray-50-fade-20;
 
