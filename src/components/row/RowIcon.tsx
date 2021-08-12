@@ -6,14 +6,17 @@ import './index.less';
 
 interface IRowIconProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     children: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    right?: boolean;
     top?: boolean;
+    bottom?: boolean;
 }
 
 const RowIcon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
-    const customClassNames = component('row__icon')({
-        right: props.right,
+    const customClassNames = component(
+        'row',
+        'icon',
+    )({
         top: props.top,
+        bottom: props.bottom,
     });
     const finalClassNames = cx(customClassNames, props.className);
     const iconClasses = ['aicon', 'cicon'];
