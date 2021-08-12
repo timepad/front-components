@@ -14,6 +14,7 @@ export const Radio: FC<IFormRadioProps> = (props) => {
     const [localId] = useState<string>(id ? id : uniqueId());
     const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
 
+    // console.log(!!caption);
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses}>
             <label htmlFor={idx}>
