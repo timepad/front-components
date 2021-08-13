@@ -19,6 +19,7 @@ const RowIcon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => 
         bottom: props.bottom,
     });
     const finalClassNames = cx(customClassNames, props.className);
+    // add classnames for any svg as component
     const iconClasses = ['aicon', 'cicon'];
 
     return (
