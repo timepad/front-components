@@ -9,3 +9,8 @@ export * from './components/list';
 export * from './components/forms';
 export * as Forms from './components/forms';
 export * from './components/pagination';
+export * from './components/row';
+export * from './components/snackbar';
+export * from './components/modules';
+export * from './components/gap';
+export * from './components/brick';
