@@ -1,6 +1,5 @@
-import React, {FC, useState, MouseEvent, ChangeEvent, useCallback} from 'react';
+import React, {FC, useState, MouseEvent, ChangeEvent} from 'react';
 import {Dropdown} from '../../dropdownmodal';
-import {List} from '../../list';
 import ArrowDownIcon from '../../../assets/svg/16/icon-arrow-down-solid-16.svg';
 import ArrowUpIcon from '../../../assets/svg/16/icon-arrow-up-solid-16.svg';
 import {ButtonIconAlignment, ButtonVariant} from '../../button';
@@ -29,7 +28,7 @@ export const Select: FC<ISelectProps> = (props) => {
     const [localValue, setLocalValue] = useState<string | ReadonlyArray<string> | number>(value);
     const [localLabel, setLocalLabel] = useState(label || findLabelByValue(options, value));
 
-    const isMobile = window.innerWidth < 640;
+    // const isMobile = window.innerWidth < 640;
 
     const mobileClassName = component('select', 'mobile')();
 
