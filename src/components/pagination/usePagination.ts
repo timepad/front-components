@@ -20,7 +20,7 @@ export type TPage = {
 
 export const usePagination = ({amountAdjacentItems, activePage, total}: IUsePaginationEntry): TUsePaginationOutput => {
     const validCoef = useMemo<number>(
-        () => (amountAdjacentItems * 2 + 1 > total ? (total - 1) / 2 : amountAdjacentItems),
+        () => (amountAdjacentItems * 2 + 1 > total ? Math.ceil((total - 1) / 2) : amountAdjacentItems),
         [amountAdjacentItems, total],
     );
 
