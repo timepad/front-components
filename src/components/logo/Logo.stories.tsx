@@ -33,3 +33,13 @@ export const Short: IStorybookComponent = () => {
     );
 };
 Short.storyName = 'Short';
+
+export const Expandable: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Expandable Logo</StoryTitle>
+            <Logo short expandable />
+        </>
+    );
+};
+Expandable.storyName = 'Expandable';
