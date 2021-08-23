@@ -1,7 +1,5 @@
 import * as React from 'react';
-import LogoFull from '../../assets/svg/logo/logo.svg';
-import LogoShort from '../../assets/svg/logo/logo-short.svg';
-import {ExpandableLogo} from './ExpandableLogo';
+import LogoSVG from '../../assets/svg/logo/logo.svg';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
@@ -13,5 +11,19 @@ export interface ILogoProps {
 export const Logo: React.FC<ILogoProps> = ({short, expandable}) => {
     const className = component('logo')();
 
-    return <div className={className}>{short ? expandable ? <ExpandableLogo /> : <LogoShort /> : <LogoFull />}</div>;
+    return (
+        <div className={className}>
+            {short ? (
+                expandable ? (
+                    <div className="expandable">
+                        <LogoSVG />
+                    </div>
+                ) : (
+                    <LogoSVG width={12} />
+                )
+            ) : (
+                <LogoSVG />
+            )}
+        </div>
+    );
 };
