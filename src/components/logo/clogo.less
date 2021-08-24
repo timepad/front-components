@@ -10,7 +10,7 @@
     fill: @c-black;
   }
 
-  & .expandable {
+  & .expandable, & .hoverable {
     position: relative;
     width: 12px;
     height: 14px;
@@ -32,7 +32,7 @@
       background-color: @c-white;
       box-shadow: @box-shadow;
       border-radius: 24px;
-      transform: scale(0);
+      transform: scale(0.5);
       transform-origin: 24px 24px;
       opacity: 0;
       transition: width @duration-blink ease-in-out, transform @duration-blink/2 ease-in-out @duration-blink/2, opacity @duration-blink;
@@ -49,6 +49,24 @@
         opacity: 1;
         transform: scale(1);
         width: 143px;
+      }
+    }
+  }
+
+  & .hoverable {
+    &:before {
+      transition: @duration-blink ease-in-out;
+    }
+
+    &:hover {
+      width: 12px;
+
+      svg {
+        width: 12px;
+      }
+
+      &:before {
+        width: 48px;
       }
     }
   }

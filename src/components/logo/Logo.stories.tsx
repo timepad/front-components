@@ -34,12 +34,22 @@ export const Short: IStorybookComponent = () => {
 };
 Short.storyName = 'Short';
 
-export const Expandable: IStorybookComponent = () => {
+export const ShortExpandable: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Expandable Logo</StoryTitle>
-            <Logo short expandable />
+            <Logo short action="expandable" />
         </>
     );
 };
-Expandable.storyName = 'Expandable';
+ShortExpandable.storyName = 'Short expandable';
+
+export const ShortHoverable: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Hoverable Logo</StoryTitle>
+            <Logo short action="hoverable" />
+        </>
+    );
+};
+ShortHoverable.storyName = 'Short hoverable';
