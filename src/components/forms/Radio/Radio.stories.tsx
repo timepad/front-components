@@ -6,6 +6,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 
 import 'css/bundle.less';
 import '../storybook/demo.less';
+import {RadioVariant} from './Radio';
 
 export default {
     title: 'Radio',
@@ -63,6 +64,17 @@ const RadioContainer = (props: IInputsContainerProps) => {
                                     checked={selectedRadio === 'option-2'}
                                     onChange={() => {
                                         setSelectedRadio('option-2');
+                                    }}
+                                />
+                                <div className="lbrick-2" />
+                                <Radio
+                                    name="radio-4"
+                                    label={selectedRadio === 'option-3' ? 'Checked blue' : 'Active blue'}
+                                    value="option-3"
+                                    checked={selectedRadio === 'option-3'}
+                                    variant={RadioVariant.blue}
+                                    onChange={() => {
+                                        setSelectedRadio('option-3');
                                     }}
                                 />
                                 <div className="lbrick-2" />

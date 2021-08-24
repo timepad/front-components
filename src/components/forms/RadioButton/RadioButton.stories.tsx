@@ -6,6 +6,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 
 import 'css/bundle.less';
 import '../storybook/demo.less';
+import {RadioVariant} from '../Radio';
 
 export default {
     title: 'RadioButton',
@@ -69,11 +70,28 @@ const RadioButtonContainer = (props: IInputsContainerProps) => {
                                 <div className="lbrick-2" />
                                 <RadioButton value="s" disabled />
                                 <div className="lbrick-2" />
-                                <RadioButton
-                                    value="s"
-                                    checked={checkedRadioTwo}
-                                    onChange={() => setCheckedRadioTwo(!checkedRadioTwo)}
-                                />
+                                <div className="lflex">
+                                    <div>
+                                        <div className="t-caption">Primary variant</div>
+                                        <div className="lbrick" />
+                                        <RadioButton
+                                            value="s"
+                                            checked={checkedRadioTwo}
+                                            onChange={() => setCheckedRadioTwo(!checkedRadioTwo)}
+                                        />
+                                    </div>
+                                    <div className="lgap" />
+                                    <div>
+                                        <div className="t-caption">Blue variant (for otp theme)</div>
+                                        <div className="lbrick" />
+                                        <RadioButton
+                                            value="s"
+                                            variant={RadioVariant.blue}
+                                            checked={checkedRadioTwo}
+                                            onChange={() => setCheckedRadioTwo(!checkedRadioTwo)}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="lbrick-2" />
                                 <RadioButton value="s" checked disabled />
                                 <div className="lbrick-2" />

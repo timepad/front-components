@@ -107,13 +107,31 @@
     box-sizing: border-box;
     border-radius: 4px;
   }
-
+  
   &&--small {
     .size(24px);
     background-size: 24px;
     font-size: 11px;
     line-height: 16px;
   }
+
+  &&--thin {
+    width: 48px;
+    height: 28px;
+    font-size: 22px;
+    line-height: 33px;
+    
+    @media (max-width: @rsp-mobile-max) {
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    span {
+      position: relative;
+      top: -1px;
+    }
+    
+  }  
 
   &&--big {
     .size(48px);

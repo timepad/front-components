@@ -13,6 +13,7 @@ export enum PicShape {
 
 export enum PicSize {
     small = 'small',
+    thin = 'thin',
     big = 'big',
     bigger = 'bigger',
     biggest = 'biggest',
@@ -42,6 +43,7 @@ export const Pic: React.FC<IProps> = ({fillURL, fillChar, size, shape, onClick, 
             interactive: onClick !== undefined || interactive,
             square: shape === PicShape.square,
             small: size === PicSize.small,
+            thin: size === PicSize.thin,
             big: size === PicSize.big,
             bigger: size === PicSize.bigger,
             biggest: size === PicSize.biggest,
