@@ -11,3 +11,6 @@ export * from './components/loader';
 export * as Forms from './components/forms';
 export * from './components/row';
 export * from './components/snackbar';
+export * from './components/modules';
+export * from './components/gap';
+export * from './components/brick';
