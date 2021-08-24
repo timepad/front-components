@@ -17,6 +17,9 @@
     z-index: 0;
 
     svg {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 12px;
       transition: @duration-blink ease-in-out;
     }
@@ -39,8 +42,6 @@
     }
 
     &:hover {
-      width: 139px;
-
       svg {
         width: 107px;
       }
@@ -59,8 +60,6 @@
     }
 
     &:hover {
-      width: 12px;
-
       svg {
         width: 12px;
       }
