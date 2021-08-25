@@ -1,23 +1,36 @@
-.cradio-old {
+.ccheckbox {
+  user-select: none;
+
   * {
     box-sizing: border-box;
   }
 
+  &:hover .ccheckbox__icon {
+    border-width: 2px;
+  }
+
+  &--disabled .ccheckbox__icon {
+    border-width: 1px!important;
+  }
+
   label {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 52px;
-    padding: 16px 0;
-
+    flex: 1;
     cursor: pointer;
+  }
+
+  .crow__icon label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 32px;
   }
 
   input {
     width: 0;
     height: 0;
     opacity: 0;
+    position: absolute;
   }
 
   &__icon {
@@ -26,10 +39,9 @@
     width: 20px;
     height: 20px;
     min-width: 20px;
-    margin-right: 16px;
 
     border: 1px solid @c-dark-gray;
-    border-radius: 10px;
+    border-radius: 4px;
 
     svg {
       position: absolute;
@@ -43,7 +55,6 @@
     }
 
     label:hover & {
-      // TODO: приспособить миксин под такие кейсы
       border-width: 2px;
     }
 
@@ -52,7 +63,6 @@
       background-color: @c-primary-blue;
 
       label:hover & {
-        // TODO: приспособить миксин под такие кейсы
         border-color: transparent;
       }
 
@@ -73,7 +83,7 @@
       cursor: default;
     }
 
-    .cradio-old__icon {
+    .ccheckbox__icon {
       border-width: 1px;
       border-color: @c-dark-gray-fade-35;
 
@@ -83,18 +93,18 @@
       }
     }
 
-    .cradio-old__text {
+    .ccheckbox__text {
       color: @c-gray-35;
     }
   }
 
   .mtheme--lightpic & {
-    .cradio-old__icon {
+    .ccheckbox__icon {
       border-color: @c-gray-50-fade-35;
     }
 
     &--disabled {
-      .cradio-old__icon {
+      .ccheckbox__icon {
         border-width: 1px;
         border-color: @c-gray-50-fade-20;
 
@@ -111,12 +121,12 @@
   }
 
   .mtheme--darkpic & {
-    .cradio-old__icon {
+    .ccheckbox__icon {
       border-color: @c-gray-50-fade-35;
     }
 
     &--disabled {
-      .cradio-old__icon {
+      .ccheckbox__icon {
         border-width: 1px;
         border-color: @c-gray-50-fade-20;
 
@@ -130,7 +140,7 @@
         }
       }
 
-      .cradio-old__text {
+      .ccheckbox__text {
         color: @c-gray-75;
       }
     }

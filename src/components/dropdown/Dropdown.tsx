@@ -256,7 +256,13 @@ export const Dropdown = ({
     }, [onClose]);
 
     const target = parent ? parent : ddBtnRef;
-    useClickOutside(ddRef, () => onCloseHandler(), target as React.MutableRefObject<HTMLButtonElement>);
+    useClickOutside(
+        ddRef,
+        () => {
+            onCloseHandler();
+        },
+        target as React.MutableRefObject<HTMLButtonElement>,
+    );
 
     useEffect(() => {
         const currentDdRef = ddRef?.current;

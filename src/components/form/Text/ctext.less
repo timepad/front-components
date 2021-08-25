@@ -1,0 +1,97 @@
+.disabled-state (@color) {
+  &--disabled {
+    input, textarea {
+      --text-color: @color;
+      user-select: none;
+
+      &:focus {
+        border-color: transparent;
+      }
+
+      &:hover {
+        --text-color: @color;
+      }
+      &::placeholder {
+        color: @color;
+      }
+    }
+  }
+}
+
+.error-state (@color) {
+  &--error {
+    input, textarea {
+      border: 2px solid @color;
+      box-sizing: border-box;
+      max-height: 32px;
+      padding: 1px 16px 5px 16px;
+      &:focus {
+        border: 2px solid @color;
+      }
+    }
+  }
+}
+
+@height: (32px);
+@lh-desktop: (22px);
+@lh-mobile: (20px);
+
+.ctext {
+  display: flex;
+
+  input, textarea {
+    padding: 1px 16px 5px 16px;
+    width: 100%;
+
+    font-family: @ff;
+    font-size: 15px;
+    line-height: @lh-desktop;
+
+    --text-color: @c-black;
+    --bg-color: @c-dark-gray-fade-20;
+
+    background: var(--bg-color)!important;
+    color: var(--text-color)!important;
+
+    border-radius: @br-rounded;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+
+    &:hover {
+      --text-color: @c-gray-50;
+    }
+
+    &:focus {
+      border-color: @c-primary-blue;
+      --text-color: @c-black;
+    }
+  }
+
+  textarea {
+    resize: none;
+    outline: 0;
+    max-height: 84px;
+    box-sizing: border-box;
+  }
+
+  .disabled-state(@c-gray-35);
+  .error-state(@c-red);
+
+  // ===== DARK THEME =====
+  html body .mtheme--darkpic & {
+    input, textarea {
+      --bg-color: @c-dark-gray-fade-20;
+      --text-color: @c-white;
+
+      &:hover {
+        --text-color: @c-gray-50;
+      }
+
+      &:focus {
+        --text-color: @c-white;
+      }
+    }
+
+    .disabled-state(@c-gray-75);
+  }
+}
