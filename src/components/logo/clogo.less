@@ -6,8 +6,23 @@
   cursor: auto;
 
   svg {
-    display: block;
     fill: @c-black;
+
+    &.gray {
+      fill: @c-gray-50;
+    }
+
+    &.white {
+      fill: @c-white;
+    }
+
+    &.blue {
+      fill: @c-primary-blue;
+    }
+
+    &.purple {
+      fill: @c-primary-blue-80;
+    }
   }
 
   & .expandable, & .hoverable {
