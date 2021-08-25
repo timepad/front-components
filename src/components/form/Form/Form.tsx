@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-import './cform.less';
 import {Text, TextField} from '../Text';
 import {TextLight, TextLightField} from '../TextLight';
 import {Checkbox, CheckboxField} from '../Checkbox';
