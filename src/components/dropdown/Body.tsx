@@ -11,7 +11,7 @@ interface IProps
     className?: string;
 }
 
-const Body: React.FC<IProps | any> = React.forwardRef<HTMLDivElement, IProps>(({children, className}, ref) => {
+const Body: React.FC<IProps | any> = React.forwardRef<HTMLDivElement, IProps>(({children, className}) => {
     const classNames = className ? className : component('drop', 'list')();
     const context = useContext(DropDownManagerContext);
 
