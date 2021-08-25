@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import './index.less';
 import {component} from '../../../services/helpers/classHelpers';
 import CheckboxIcon from '../../../assets/svg/24/icon-check-24.svg';
 import IndeterminateCheckBoxIcon from '../../../assets/svg/24/icon-minus-24.svg';
@@ -8,13 +7,15 @@ import {Row} from '../../row';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {noop} from '../Textarea/utils';
 
+import './index.less';
+
 export const Checkbox: FC<ICheckboxProps> = (props) => {
     const {
-        error = '',
         checked = false,
         indeterminate = false,
         disabled = false,
         id = uniqueId(),
+        error = '',
         text = '',
         caption = '',
         small = false,

@@ -1,20 +1,30 @@
-import React, {FC, useState} from 'react';
-import './index.less';
+import React, {FC} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {Row} from '../../row';
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 import {IFormRadioProps} from './Radio.types';
 
+import './index.less';
+import {noop} from '../Textarea/utils';
+
 export const Radio: FC<IFormRadioProps> = (props) => {
-    const {error, checked, disabled, id, text, caption, name, onChange, small} = props;
+    const {
+        checked = false,
+        disabled = false,
+        small = false,
+        id = uniqueId(),
+        error = '',
+        text = '',
+        caption = '',
+        name = '',
+        onChange = noop,
+    } = props;
 
     const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
     const radioClasses = component('radio', 'icon')({checked: checked});
-    const [localId] = useState<string>(id ? id : uniqueId());
-    const idx = localId ? localId + '_field_checkbox' : name + '_field_checkbox';
+    const idx = id + '_field_radio';
 
-    // console.log(!!caption);
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses}>
             <label htmlFor={idx}>

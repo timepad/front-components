@@ -35,6 +35,7 @@ interface IInputData {
     success?: boolean;
     error?: string;
     autoFocus?: boolean;
+    caption?: string;
 }
 
 const inputsData: IInputData[] = [
@@ -45,6 +46,7 @@ const inputsData: IInputData[] = [
         disabled: false,
         success: false,
         error: undefined,
+        caption: 'Caption',
     },
     // Empty input
     {
@@ -54,6 +56,7 @@ const inputsData: IInputData[] = [
         disabled: false,
         success: false,
         error: undefined,
+        caption: 'Caption',
     },
     // Active input
     {
@@ -64,6 +67,7 @@ const inputsData: IInputData[] = [
         success: false,
         error: undefined,
         autoFocus: true,
+        caption: 'Caption',
     },
     // Filled input
     {
@@ -73,6 +77,7 @@ const inputsData: IInputData[] = [
         multiline: false,
         success: false,
         error: undefined,
+        caption: 'Caption',
     },
     // Disabled input
     {
@@ -82,6 +87,7 @@ const inputsData: IInputData[] = [
         multiline: false,
         success: false,
         error: undefined,
+        caption: 'Caption',
     },
     // Successful input
     {
@@ -90,6 +96,7 @@ const inputsData: IInputData[] = [
         disabled: false,
         success: true,
         error: undefined,
+        caption: 'Caption',
     },
     // Error input
     {
@@ -99,11 +106,12 @@ const inputsData: IInputData[] = [
         disabled: false,
         success: false,
         error: 'Error input caption (error text)',
+        caption: 'Caption',
     },
 ];
 
 const InputRow = (props: IInputData) => {
-    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline = false} = props;
+    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline = false, caption} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Form.TextLight
@@ -115,6 +123,7 @@ const InputRow = (props: IInputData) => {
             error={error}
             autoFocus={autoFocus}
             onChange={(event: any) => setValue(event.target.value)}
+            caption={caption}
         />
     );
 };
@@ -145,6 +154,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                         multiline={input.multiline}
                                         error={input.error}
                                         autoFocus={input.autoFocus}
+                                        caption={input.caption}
                                     />
                                     <div className="lbrick-2" />
                                 </div>
@@ -172,8 +182,6 @@ export const Simple: IStorybookComponent = () => {
 
 interface IValues {
     firstName: string;
-    lastName: string;
-    email: string;
 }
 
 export const FormikExample: IStorybookComponent = () => {
@@ -181,9 +189,7 @@ export const FormikExample: IStorybookComponent = () => {
         <div>
             <Formik
                 initialValues={{
-                    email: '',
                     firstName: 'red',
-                    lastName: '',
                 }}
                 validate={(values) => {
                     if (values.firstName.match(/[0-9]+/g)) {
@@ -202,7 +208,12 @@ export const FormikExample: IStorybookComponent = () => {
             >
                 {() => (
                     <FormikForm>
-                        <Form.TextLightField name="firstName" type="text" placeholder="TEST" />
+                        <Form.TextLightField
+                            name="firstName"
+                            caption="Какой-то caption"
+                            type="text"
+                            placeholder="Введите имя"
+                        />
                     </FormikForm>
                 )}
             </Formik>

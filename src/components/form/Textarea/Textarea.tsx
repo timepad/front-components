@@ -14,6 +14,8 @@ export interface ITextareaProps extends TextareaProps {
     cacheMeasurements?: boolean;
 }
 
+// TODO: Этот код взят из библиотеки react-textarea-autosize (адаптированный под наши компоненты)
+
 const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaProps> = (
     {cacheMeasurements, maxRows, minRows, onChange = noop, onHeightChange = noop, ...props},
     userRef,

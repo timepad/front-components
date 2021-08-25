@@ -83,7 +83,6 @@ export const Checkbox: IStorybookComponent = () => {
 };
 
 interface IInitialValues {
-    indeterminateBox: boolean;
     multiple: string[];
     testOne: boolean;
     testTwo: boolean;
@@ -96,7 +95,6 @@ export const CheckboxField: IStorybookComponent = () => {
             <Formik<IInitialValues>
                 initialValues={{
                     multiple: [],
-                    indeterminateBox: false,
                     testOne: false,
                     testTwo: false,
                 }}

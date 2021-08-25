@@ -7,6 +7,7 @@
     input, textarea {
       color: @color;
       -webkit-text-fill-color: @color;
+      user-select: none;
 
       &:focus {
         color: @color;
@@ -20,6 +21,7 @@
       &:not(:focus) ~ label {
         color: @color;
         -webkit-text-fill-color: @color;
+        user-select: none;
       }
     }
   }
@@ -46,7 +48,7 @@
     position: relative;
     display: inline-flex;
     flex-direction: column;
-    padding-top: 29px;
+    padding-top: 32px;
     width: 100%;
     max-height: 87px;
 
@@ -101,6 +103,17 @@
         right: 4px;
         bottom: 4px;
       }
+    }
+  }
+
+  &__caption {
+    line-height: @lh-small;
+    font-size: @fs-small;
+    color: @c-gray-35;
+    padding: 8px 0 13px 0;
+
+    &--error {
+      color: @c-red;
     }
   }
 

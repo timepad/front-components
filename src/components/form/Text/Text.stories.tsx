@@ -41,7 +41,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             <div className="lbrick-2" />
                             <Form.Text key={4} placeholder="Empty" />
                             <div className="lbrick-2" />
-                            <Form.Text key={5} placeholder="Empty" disabled value="Disabled" />
+                            <Form.Text key={5} placeholder="Disabled" disabled />
                             <div className="lbrick-2" />
                             <Form.Text key={6} placeholder="Empty" error={'message'} />
                             <div className="lbrick-2" />
