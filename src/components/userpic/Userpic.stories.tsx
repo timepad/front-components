@@ -9,38 +9,42 @@ export default {
     component: Pic,
 } as Meta;
 
-export const Basic: IStorybookComponent = () => (
-    <>
-        <StoryTitle>Basic Pic. Modes: light, standart, dark. With border and borderless.</StoryTitle>
-        <div className="lflex">
-            <Pic border mode="light" />
-            <Spacer />
-            <Pic />
-            <Spacer />
-            <Pic border mode="dark" />
-        </div>
-        <Brick />
-        <StoryTitle>Same basic Pic with hover effect</StoryTitle>
-        <div className="lflex">
-            <Pic border mode="light" hoverable />
-            <Spacer />
-            <Pic hoverable />
-            <Spacer />
-            <Pic border mode="dark" hoverable />
-        </div>
-        <Brick />
-        <StoryTitle>Same basic Pic with image, first symbol of name.</StoryTitle>
-        <div className="lflex">
-            <Pic
-                imgURL="https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg"
-                hoverable
-            />
-            <Spacer />
-            <Pic label="Avatar" mode="light" hoverable />
-            <Spacer />
-        </div>
-    </>
-);
+export const Basic: IStorybookComponent = () => {
+    const clickCb = () => alert('Pic clicked');
+
+    return (
+        <>
+            <StoryTitle>Basic Pic. Modes: light, standart, dark. With border and borderless.</StoryTitle>
+            <div className="lflex">
+                <Pic border mode="light" />
+                <Spacer />
+                <Pic />
+                <Spacer />
+                <Pic border mode="dark" />
+            </div>
+            <Brick />
+            <StoryTitle>Same basic Pic with click handler or just hover effect</StoryTitle>
+            <div className="lflex">
+                <Pic border mode="light" onClick={clickCb} />
+                <Spacer />
+                <Pic hoverable />
+                <Spacer />
+                <Pic border mode="dark" hoverable />
+            </div>
+            <Brick />
+            <StoryTitle>Same basic Pic with image, first symbol of name.</StoryTitle>
+            <div className="lflex">
+                <Pic
+                    imgURL="https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg"
+                    hoverable
+                />
+                <Spacer />
+                <Pic label="Avatar" mode="light" hoverable />
+                <Spacer />
+            </div>
+        </>
+    );
+};
 Basic.storyName = 'Basic Pic';
 
 export const PicSizes: IStorybookComponent = () => {
