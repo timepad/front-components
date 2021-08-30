@@ -1,1 +1,1 @@
-export {PicSize, PicShape, Pic} from './Pic';
+export * from './Pic';
