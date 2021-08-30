@@ -16,7 +16,7 @@ interface IProps {
     onClick?: MouseEventHandler;
     hoverable?: boolean;
     className?: string;
-    border?: boolean;
+    bordered?: boolean;
     mode?: 'light' | 'dark';
 }
 
@@ -28,7 +28,7 @@ export const Pic: React.FC<IProps> = ({
     onClick,
     className,
     hoverable,
-    border,
+    bordered,
     mode,
 }: IProps) => {
     const classNames = cx(
@@ -36,9 +36,8 @@ export const Pic: React.FC<IProps> = ({
         component('userpic')({
             hoverable: !!onClick || hoverable,
             square,
-            size: size,
-            pic: !!imgURL,
-            bordered: border,
+            size,
+            bordered,
             ['mode']: mode,
         }),
     );

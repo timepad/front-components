@@ -16,20 +16,20 @@ export const Basic: IStorybookComponent = () => {
         <>
             <StoryTitle>Basic Pic. Modes: light, standart, dark. With border and borderless.</StoryTitle>
             <div className="lflex">
-                <Pic border mode="light" />
+                <Pic bordered mode="light" />
                 <Spacer />
                 <Pic />
                 <Spacer />
-                <Pic border mode="dark" />
+                <Pic bordered mode="dark" />
             </div>
             <Brick />
-            <StoryTitle>Same basic Pic with click handler or just hover effect</StoryTitle>
+            <StoryTitle>Same basic Pic with click handler or just hover effect.</StoryTitle>
             <div className="lflex">
-                <Pic border mode="light" onClick={clickCb} />
+                <Pic bordered mode="light" onClick={clickCb} />
                 <Spacer />
                 <Pic hoverable />
                 <Spacer />
-                <Pic border mode="dark" hoverable />
+                <Pic bordered mode="dark" hoverable />
             </div>
             <Brick />
             <StoryTitle>Same basic Pic with image, first symbol of name.</StoryTitle>
