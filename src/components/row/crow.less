@@ -30,9 +30,11 @@
     transition: fill @duration-blink;
   }
 
-  &:active {
-    --bg-color: @c-dark-gray-fade-35;
-    --text-color: @c-gray-50;
+  &--activable {
+    &:active {
+      --bg-color: @c-dark-gray-fade-35;
+      --text-color: @c-gray-50;
+    }
   }
 
   &.crow--0,
@@ -156,10 +158,13 @@
     --bg-color: @c-black;
     --text-color: @c-white;
 
-    &.crow:active {
-      --bg-color: @c-gray-50-fade-35;
-      --text-color: @c-gray-35;
+    &.crow--activable {
+      &.crow:active {
+        --bg-color: @c-gray-50-fade-35;
+        --text-color: @c-gray-35;
+      }
     }
+
 
     .on-state-disabled(@c-black, @c-gray-75);
   }
