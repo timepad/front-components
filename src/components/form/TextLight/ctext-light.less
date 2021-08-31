@@ -111,11 +111,29 @@
   &__caption {
     line-height: @lh-small;
     font-size: @fs-small;
-    color: @c-gray-35;
+    color: @c-gray-50;
     padding: 8px 0 13px 0;
 
     &--error {
       color: @c-red;
+    }
+
+    &--disabled {
+      color: @c-gray-35;
+    }
+  }
+
+  .mtheme--darkpic & {
+    &__caption {
+      color: @c-gray-35;
+
+      &--error {
+        color: @c-red;
+      }
+
+      &--disabled {
+        color: @c-gray-75;
+      }
     }
   }
 

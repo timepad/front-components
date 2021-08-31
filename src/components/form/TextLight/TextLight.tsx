@@ -35,6 +35,7 @@ export const TextLight: FC<IFormTextLightProps> = ({
         'caption',
     )({
         error: !!error,
+        disabled,
     });
 
     const style =
@@ -45,7 +46,7 @@ export const TextLight: FC<IFormTextLightProps> = ({
         <>
             <div className={inputClasses}>
                 {props.multiline ? (
-                    <Textarea disabled={disabled} style={style} {...props} />
+                    <Textarea name={fieldName} id={id} disabled={disabled} style={style} {...props} />
                 ) : (
                     <input name={fieldName} id={id} disabled={disabled} ref={props.inputRef} style={style} {...props} />
                 )}
