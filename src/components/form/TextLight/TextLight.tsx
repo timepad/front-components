@@ -18,9 +18,9 @@ export const TextLight: FC<IFormTextLightProps> = ({
 }: IFormTextLightProps) => {
     const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
     const inputClasses = cx(
-        component('form--text-light', 'container')(),
+        component('text-light', 'container')(),
         component(
-            'form--text-light',
+            'text-light',
             'input',
         )({
             disabled,
@@ -29,9 +29,9 @@ export const TextLight: FC<IFormTextLightProps> = ({
         }),
     );
     const iconClasses = component('icon')();
-    const inputIconClasses = component('form--text-light', 'container__icon')();
+    const inputIconClasses = component('text-light', 'container__icon')();
     const captionClasses = component(
-        'form--text-light',
+        'text-light',
         'caption',
     )({
         error: !!error,
