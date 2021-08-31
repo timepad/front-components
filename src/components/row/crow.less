@@ -1,5 +1,18 @@
 @offsets: 0, 8, 16, 24, 32;
 
+.on-state-disabled(@bg-color, @color) {
+  &.crow--disabled {
+    &,
+    &:active,
+    .crow__body .crow__body__caption {
+      cursor: default;
+
+      --bg-color: @bg-color;
+      --text-color: @color;
+    }
+  }
+}
+
 .crow {
   display: flex;
   cursor: pointer;
@@ -12,34 +25,30 @@
   color: var(--text-color) !important;
   background-color: var(--bg-color);
 
-  svg.cicon * {
+  svg * {
     fill: var(--text-color);
     transition: fill @duration-blink;
   }
 
-  &:active {
-    --bg-color: @c-dark-gray-fade-35;
-    --text-color: @c-gray-50;
+  &--activable {
+    &:active {
+      --bg-color: @c-dark-gray-fade-35;
+      --text-color: @c-gray-50;
+    }
   }
 
+  &.crow--0,
+  &.crow--8,
+  &.crow--16,
+  &.crow--24,
+  &.crow--32 {}
   each(@offsets, {
     &--@{value} {
       padding: 0 unit(@value, px);
     }
   })
 
-  &.crow--disabled {
-    &,
-    &:active,
-    .crow__body .crow__body__caption {
-      cursor: default;
-
-      --bg-color: @c-white;
-      --text-color: @c-gray-35;
-
-      color: var(--text-color)!important;
-    }
-  }
+  .on-state-disabled(@c-white, @c-gray-35);
 
   &.crow--hoverable {
     &:hover {
@@ -51,7 +60,7 @@
     .crow__body__text,
     .crow__body__caption {
       font-family: @ff-system;
-      font-size: 14px;
+      font-size: @fs-control;
     }
   }
 
@@ -59,7 +68,7 @@
     .crow__body__text,
     .crow__body__caption {
       font-family: @ff;
-      font-size: 15px;
+      font-size: @fs-caption;
     }
 
     .crow__body {
@@ -67,6 +76,11 @@
     }
   }
 
+  &.crow--0,
+  &.crow--8,
+  &.crow--16,
+  &.crow--24,
+  &.crow--32 {}
   each(@offsets, {
     &.crow--@{value} {
       .crow__body {
@@ -84,14 +98,10 @@
     // 13х13px for FF-system - DEFAULT
     padding: 13px 0;
 
-
-
     .crow__body__text,
     .crow__body__caption {
-      font-style: normal;
-      font-weight: normal;
-      line-height: 22px;
-      min-height: 22px;
+      line-height: @lh-caption;
+      min-height: @lh-caption;
     }
 
     .crow__body__caption {
@@ -101,35 +111,11 @@
     }
   }
 
-  html body .mtheme--darkpic & {
-    --bg-color: @c-black;
-    --text-color: @c-white;
-
-    &.crow:active {
-      --bg-color: @c-gray-50-fade-35;
-      --text-color: @c-gray-35;
-    }
-
-    &.crow--disabled {
-      &,
-      &:active,
-      .crow__body .crow__body__caption {
-        cursor: default;
-
-        --bg-color: @c-black;
-        --text-color: @c-gray-75;
-
-        color: var(--text-color) !important;
-      }
-    }
-  }
-
   .crow__icon {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    //margin-left: -16px;
     padding: 8px 0;
 
     &.crow__icon--top {
@@ -139,11 +125,6 @@
     &.crow__icon--bottom {
       justify-content: flex-end;
     }
-
-    &.crow__icon--right {
-      padding: 8px 0 8px 16px;
-      //margin-right: -16px;
-    }
   }
 
   &.crow--small {
@@ -151,11 +132,16 @@
       padding: 9px 0;
     }
 
+    .crow__icon {
+      padding: 4px 0;
+    }
+
     &.crow--ff {
-      .crow__body__text, .crow__body__caption {
-        font-size: 13px;
-        line-height: 19px;
-        min-height: 19px;
+      .crow__body__text,
+      .crow__body__caption {
+        font-size: @fs-small;
+        line-height: @lh-small;
+        min-height: @lh-small;
       }
 
       .crow__body__caption {
@@ -166,17 +152,20 @@
         padding: 9px 0 12px 0;
       }
     }
+  }
 
-    .crow__icon {
-      padding: 4px 0;
+  html body .mtheme--darkpic & {
+    --bg-color: @c-black;
+    --text-color: @c-white;
 
-      &.crow__icon--top {
-        justify-content: flex-start;
-      }
-
-      &.crow__icon--bottom {
-        justify-content: flex-end;
+    &.crow--activable {
+      &.crow:active {
+        --bg-color: @c-gray-50-fade-35;
+        --text-color: @c-gray-35;
       }
     }
+
+
+    .on-state-disabled(@c-black, @c-gray-75);
   }
 }

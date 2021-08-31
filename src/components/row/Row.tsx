@@ -12,6 +12,7 @@ import './index.less';
 export interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     disabled?: boolean;
     hoverable?: boolean;
+    activable?: boolean;
     small?: boolean;
     ffFont?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
@@ -25,6 +26,7 @@ const Row: React.FC<IRowProps> & {
 } = ({
     className = '',
     hoverable = false,
+    activable = false,
     small = false,
     ffFont = false,
     disabled = false,
@@ -34,6 +36,7 @@ const Row: React.FC<IRowProps> & {
     const containerClassNames = cx(
         component('row')({
             hoverable: hoverable,
+            activable: activable,
             small: small,
             ff: ffFont,
             'ff-system': !ffFont,

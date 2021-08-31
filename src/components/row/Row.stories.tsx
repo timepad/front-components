@@ -72,7 +72,7 @@ const CreateRowObject = ({
     };
 };
 const CreateRowObjects = (ffFont = false, small = false): ICreateRowProps[] => [
-    CreateRowObject({ffFont, small}),
+    CreateRowObject({ffFont, small, activable: true}),
     CreateRowObject({ffFont, small, hoverable: true}),
     CreateRowObject({ffFont, small, disabled: true}),
     CreateRowObject({ffFont, small, leftIconPosition: 'center'}),
