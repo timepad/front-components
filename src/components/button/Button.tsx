@@ -95,7 +95,7 @@ export function Button(props: IButtonProps): JSX.Element {
             buttonProps[key] = (props as {[idx: string]: unknown})[key];
         }
     });
-
+    // TODO: Откатить добавление ref в button при избавлении от DropdownModal
     return (
         <button
             type="button"
