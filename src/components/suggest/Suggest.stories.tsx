@@ -34,7 +34,7 @@ export const BasicFromArray: IStorybookComponent = () => {
 
     return (
         <>
-            <StoryTitle>Basic input with suggestions from transferred data array (type "su").</StoryTitle>
+            <StoryTitle>Basic input with suggestions from transferred data array (type su).</StoryTitle>
             <Suggest label="Input label" value={value} setValue={setValue} data={temp} />
         </>
     );
@@ -48,6 +48,7 @@ export const BasicFromURL: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api from URL</StoryTitle>
+            {/*TODO: выяснить почему в консоли ворнинг на проп setValue*/}
             <Suggest label="Input label" value={value} setValue={setValue} url={url} />
         </>
     );
