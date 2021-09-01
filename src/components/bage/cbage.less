@@ -1,11 +1,11 @@
 
 .cbadge {
   position: relative;
-  font-size: @fs-small;
-  line-height: @lh-really-small;
 
   .cbadge__inner {
     position: absolute;
+    font-size: @fs-small;
+    line-height: @lh-really-small;
     left: calc(100% - 12px);
     top: -6px;
     border-radius: 20px;
@@ -21,6 +21,24 @@
     height: 17px;
   }
 
+  .cbadge__inner-single {
+    position: absolute;
+    font-size: 13px;
+    line-height: 16px;
+    left: calc(100% - 12px);
+    top: -6px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    padding-bottom: 1px;
+    box-sizing: border-box;
+    background: #643FFF;
+    width: 17px;
+    height: 17px;
+  }
   .cbadge__inner-empty {
     position: absolute;
     right: -2px;

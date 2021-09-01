@@ -8,7 +8,10 @@ export interface IBageProps {
 }
 
 export const Bage: React.FC<IBageProps> = ({value, children}) => {
-    const badgeClasses = cn(component('badge__inner')(), value == null ? 'empty' : '')();
+    const badgeClasses = cn(
+        component('badge__inner')(),
+        value == null ? 'empty' : String(value).length === 1 ? 'single' : '',
+    )();
     return (
         <div className={component('badge')()}>
             <div className={badgeClasses}>{value}</div>
