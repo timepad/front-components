@@ -2,6 +2,7 @@ import '../../assets/css/bundle.less';
 import * as React from 'react';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Suggest, ISuggestion} from './Suggest';
+import {Brick} from '../brick';
 import {FC, useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 
@@ -50,6 +51,10 @@ export const BasicFromURL: IStorybookComponent = () => {
             <StoryTitle>Basic input with suggestions received by api from URL</StoryTitle>
             {/*TODO: выяснить почему в консоли ворнинг на проп setValue*/}
             <Suggest label="Input label" value={value} setValue={setValue} url={url} />
+            <Brick size={2} />
+            <StoryTitle>Basic input with suggestions received from URL each time when focused.</StoryTitle>
+            {/*TODO: выяснить почему в консоли ворнинг на проп reloadOnFocus*/}
+            <Suggest label="Input label" value={value} setValue={setValue} url={url} reloadOnFocus />
         </>
     );
 };

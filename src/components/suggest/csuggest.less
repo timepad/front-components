@@ -3,6 +3,7 @@
 
   .suggest-list {
     position: absolute;
+    z-index: 10;
     top: calc(100% - 8px);
     left: 0;
     width: 100%;
@@ -10,6 +11,7 @@
     overflow-y: scroll;
     list-style: none;
     padding: 0;
+    background-color: @c-white;
     box-shadow: @sh-shadow;
 
     .suggest-list__item {

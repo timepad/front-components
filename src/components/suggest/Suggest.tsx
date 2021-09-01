@@ -17,19 +17,36 @@ interface ISuggestProps extends IInputProps {
     data?: ISuggestion[];
     url?: string;
     className?: string;
+    reloadOnFocus?: boolean;
 }
 
 export const Suggest: React.FC<ISuggestProps> = (props) => {
-    const {className, setValue, data, url} = props;
+    const {className, setValue, data, url, reloadOnFocus} = props;
+    const classNames = cx(className, component('suggest')());
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
     const [suggestions, setSuggestions] = useState<ISuggestion[]>([]);
-
-    const classNames = cx(className, component('suggest')());
-
     const [visible, setVisible] = useState<boolean>(true);
+
+    const getSuggestions = (value: string): ISuggestion[] => {
+        const regex = new RegExp(value, 'i');
+        return searchData.filter((item) => regex.test(item.title));
+    };
+    const fetchData = (url: string): void => {
+        url &&
+            fetch(url)
+                .then((response) => response.json())
+                .then((response) => setSearchData(response))
+                .catch(() => setSearchData([]));
+    };
+
     const onInputFocus: React.FocusEventHandler<HTMLInputElement> = () => {
         if (!visible) {
             setVisible(true);
+        }
+        if (reloadOnFocus && url) {
+            fetchData(url);
         }
     };
     const onInputBlur: React.FocusEventHandler<HTMLInputElement> = () => {
@@ -37,23 +54,11 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
             setTimeout(() => setVisible(false), 200);
         }
     };
-
-    useEffect(() => {
-        if (url) {
-            fetch(url)
-                .then((response) => response.json())
-                .then((response) => setSearchData(response));
-        } else {
-            setSearchData(data || []);
-        }
-    }, []);
-
-    const getSuggestions = (value: string): ISuggestion[] => {
-        const regex = new RegExp(value, 'i');
-        return searchData.filter((item) => regex.test(item.title));
+    const onSuggestClick = (text: string): void => {
+        setValue(text);
+        setSuggestions([]);
     };
 
-    let timeout: ReturnType<typeof setTimeout> | null = null;
     const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         const query = event.target.value;
         setValue(query);
@@ -72,17 +77,23 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         }
     };
 
-    const onSuggestClick = (text: string): void => {
-        setValue(text);
-        setSuggestions([]);
-    };
+    useEffect(() => {
+        if (url && !reloadOnFocus) {
+            fetchData(url);
+        } else {
+            setSearchData(data || []);
+        }
+    }, []);
 
     return (
         <div className={classNames}>
             <Input {...props} onChange={onInputChange} onFocus={onInputFocus} onBlur={onInputBlur} />
-            {visible && suggestions.length > 0 && (
-                <Suggestlist suggestions={suggestions} onSuggestClick={onSuggestClick} captionTextMaxLength={10} />
-            )}
+            <Suggestlist
+                visible={visible && suggestions.length > 0}
+                suggestions={suggestions}
+                onSuggestClick={onSuggestClick}
+                captionTextMaxLength={10}
+            />
         </div>
     );
 };
