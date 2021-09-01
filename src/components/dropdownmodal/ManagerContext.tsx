@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import {createContext, Ref} from 'react';
 import * as React from 'react';
 

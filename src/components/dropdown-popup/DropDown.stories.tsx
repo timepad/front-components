@@ -72,6 +72,7 @@ const DropBtnNested: React.FC<IDropdownProps> = () => {
                 mouseLeaveDelay={100}
                 mouseEnterDelay={0}
                 contentStyle={{padding: '0px', border: 'none'}}
+                keepTooltipInside
                 nested
             >
                 <List size={'lg'} variant={'dark'}>
@@ -94,6 +95,7 @@ const DropBtnNested: React.FC<IDropdownProps> = () => {
                             mouseEnterDelay={0}
                             contentStyle={{padding: '0px', border: 'none'}}
                             nested
+                            keepTooltipInside
                         >
                             <List size={'lg'} variant={'dark'}>
                                 <List.Item as={'button'} type={'button'}>

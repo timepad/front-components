@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import React, {useEffect, useRef} from 'react';
 import {ReactNode, useState} from 'react';
 import {usePopper} from 'react-popper';

@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import * as React from 'react';
 import {MouseEventHandler, ReactNode} from 'react';
 

@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import React, {FC, useRef, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';

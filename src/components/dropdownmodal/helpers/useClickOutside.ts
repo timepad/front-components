@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import {useEffect} from 'react';
 
 const useClickOutside = (ref: HTMLElement | null, handler: (event: MouseEvent) => void, target?: HTMLElement): void => {

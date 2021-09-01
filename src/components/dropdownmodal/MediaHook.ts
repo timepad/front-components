@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import {useEffect, useState} from 'react';
 
 const useMedia = (query: string) => {

@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 import * as React from 'react';
 import {useContext} from 'react';
 import {Button, IButtonProps} from '../button';
