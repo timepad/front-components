@@ -1,0 +1,36 @@
+.csuggest {
+  position: relative;
+
+  .suggest-list {
+    position: absolute;
+    top: calc(100% - 8px);
+    left: 0;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    box-shadow: @sh-shadow;
+    //box-shadow: 10px 10px 10px 10px red;
+
+    .suggest-list__item {
+      box-shadow: @separator-bottom;
+      padding: 0 16px;
+      cursor: pointer;
+
+      p {
+        margin: 0;
+      }
+
+      .suggest-list__item-title {
+        padding: 7px 0 3px 0;
+      }
+
+      .suggest-list__item-text {
+        padding-bottom: 13px;
+      }
+
+      &:hover {
+        background-color: @graydark-fade-20;
+      }
+    }
+  }
+}
