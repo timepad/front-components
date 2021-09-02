@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Input, IInputProps} from '../forms/Input/Input';
 import {Suggestlist} from './SuggestList';
 import cx from 'classnames';
@@ -13,7 +13,7 @@ export interface ISuggestion {
 
 interface ISuggestProps extends IInputProps {
     value: string;
-    setValue: (text: string) => void;
+    setInputValue: (text: string) => void;
     data?: ISuggestion[];
     url?: string;
     className?: string;
@@ -21,9 +21,9 @@ interface ISuggestProps extends IInputProps {
 }
 
 export const Suggest: React.FC<ISuggestProps> = (props) => {
-    const {className, setValue, data, url, reloadOnFocus} = props;
+    const {className, value, setInputValue, data, url, reloadOnFocus, onChange, onBlur, onFocus, onKeyDown} = props;
     const classNames = cx(className, component('suggest')());
-    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const timeout: React.MutableRefObject<number | null> = useRef(null);
 
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
     const [state, setState] = useState<{
@@ -48,7 +48,9 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 .catch(() => setSearchData([]));
     };
 
-    const onInputFocus: React.FocusEventHandler<HTMLInputElement> = () => {
+    const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
+        onFocus?.(event);
+
         if (!state.visible) {
             setState({...state, visible: true});
         }
@@ -56,38 +58,26 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
             fetchData(url);
         }
     };
-    const onInputBlur: React.FocusEventHandler<HTMLInputElement> = () => {
+    const onInputBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+        onBlur?.(event);
+
         if (state.visible) {
             setTimeout(() => setState({...state, visible: false, cursor: -1}), 100);
-            // setTimeout(() => console.log(state), 500);
         }
     };
 
     const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        // console.log('change: ', event.type);
-        if (event.type === 'blur' || event.type === 'keypress') {
-            return;
-        }
+        onChange?.(event);
 
         const query = event.target.value;
-        setValue(query);
-
-        const trimmedStr = query.trim();
-        if (trimmedStr && trimmedStr.length > 1) {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-
-            timeout = setTimeout(() => {
-                const suggestions = getSuggestions(trimmedStr);
-                setState({...state, suggestions, visible: true});
-            }, 250);
-        } else {
-            setState({...state, visible: false});
+        if (query !== value) {
+            setInputValue(query);
         }
     };
 
-    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = async (event) => {
+    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+        onKeyDown?.(event);
+
         const {visible, suggestions, cursor} = state;
 
         if (visible && suggestions.length > 1) {
@@ -102,10 +92,22 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                     cursor: prevState.cursor === 0 ? suggestions.length - 1 : prevState.cursor - 1,
                 }));
             } else if (event.key === 'Enter' && cursor >= 0) {
-                await setValue(suggestions[cursor].title);
-                setState({...state, suggestions: [], cursor: -1});
+                setInputValue(suggestions[cursor].title);
+                setState({...state, cursor: -1});
             }
         }
+    };
+
+    const onSuggestionClick = (text: string): void => {
+        setInputValue(text);
+    };
+
+    const onSuggestionHover = (index: number): void => {
+        setState({...state, cursor: index});
+    };
+
+    const onSuggestionLeave = (): void => {
+        setState({...state, cursor: -1});
     };
 
     useEffect(() => {
@@ -116,6 +118,25 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        if (value && value.length > 1) {
+            if (timeout.current) {
+                clearTimeout(timeout.current);
+            }
+
+            timeout.current = setTimeout(() => {
+                const suggestions = getSuggestions(value);
+                setState({
+                    ...state,
+                    suggestions,
+                    visible: !(suggestions.length === 1 && suggestions[0].title === value),
+                });
+            }, 250);
+        } else {
+            setState({...state, suggestions: [], visible: false});
+        }
+    }, [value]);
+
     return (
         <div className={classNames}>
             <Input
@@ -125,7 +146,15 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 onBlur={onInputBlur}
                 onKeyDown={onInputKeyDown}
             />
-            <Suggestlist setValue={setValue} captionTextMaxLength={10} state={state} setState={setState} />
+            <Suggestlist
+                visible={state.visible}
+                suggestions={state.suggestions}
+                onClick={onSuggestionClick}
+                onMouseEnter={onSuggestionHover}
+                onMouseLeave={onSuggestionLeave}
+                cursor={state.cursor}
+                captionTextMaxLength={10}
+            />
         </div>
     );
 };

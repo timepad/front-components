@@ -29,6 +29,14 @@ export const BasicFromArray: IStorybookComponent = () => {
             title: 'Suggest row 3',
             text: 'Caption text 3',
         },
+        {
+            title: 'Suggest row 4',
+            text: 'Caption text 4',
+        },
+        {
+            title: 'Suggest row 5',
+            text: 'Caption text 5',
+        },
     ];
 
     const [value, setValue] = useState('');
@@ -36,7 +44,7 @@ export const BasicFromArray: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions from transferred data array (type su).</StoryTitle>
-            <Suggest label="Input label" value={value} setValue={setValue} data={temp} />
+            <Suggest label="Input label" value={value} setInputValue={setValue} data={temp} />
         </>
     );
 };
@@ -45,16 +53,15 @@ BasicFromArray.storyName = 'Basic from array';
 export const BasicFromURL: IStorybookComponent = () => {
     const url = 'https://jsonplaceholder.typicode.com/todos/';
     const [value, setValue] = useState('');
+    const [value2, setValue2] = useState('');
 
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api from URL</StoryTitle>
-            {/*TODO: выяснить почему в консоли ворнинг на проп setValue*/}
-            <Suggest label="Input label" value={value} setValue={setValue} url={url} />
+            <Suggest label="Input label" value={value} setInputValue={setValue} url={url} />
             <Brick size={2} />
             <StoryTitle>Basic input with suggestions received from URL each time when focused.</StoryTitle>
-            {/*TODO: выяснить почему в консоли ворнинг на проп reloadOnFocus*/}
-            <Suggest label="Input label" value={value} setValue={setValue} url={url} reloadOnFocus />
+            <Suggest label="Input label" value={value2} setInputValue={setValue2} url={url} reloadOnFocus />
         </>
     );
 };

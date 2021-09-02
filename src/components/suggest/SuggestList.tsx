@@ -2,33 +2,33 @@ import * as React from 'react';
 import {ISuggestion} from './Suggest';
 
 interface ISuggestListProps {
-    setValue: (text: string) => void;
+    visible: boolean;
+    onClick: (text: string) => void;
+    onMouseEnter: (index: number) => void;
+    onMouseLeave: () => void;
     captionTextMaxLength?: number;
-    state: {
-        suggestions: ISuggestion[];
-        visible: boolean;
-        cursor: number;
-    };
-    setState: (state: {suggestions: ISuggestion[]; visible: boolean; cursor: number}) => void;
+    suggestions: ISuggestion[];
+    cursor: number;
 }
 
-export const Suggestlist: React.FC<ISuggestListProps> = ({state, setState, setValue, captionTextMaxLength = 20}) => {
-    const {suggestions, cursor} = state;
-    const visible = state.visible && suggestions.length > 0;
-
-    const suggestionClickHandler = async (text: string): Promise<void> => {
-        await setValue(text);
-        setState({...state, suggestions: [], visible: false});
-    };
-
+export const Suggestlist: React.FC<ISuggestListProps> = ({
+    visible,
+    cursor,
+    suggestions,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    captionTextMaxLength = 20,
+}) => {
     return visible ? (
         <ul className="suggest-list">
             {suggestions.map((item, i) => (
                 <li
                     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
                     key={item.title + i}
-                    onClick={() => suggestionClickHandler(item.title)}
-                    onMouseEnter={() => setState({...state, cursor: i})}
+                    onClick={() => onClick(item.title)}
+                    onMouseEnter={() => onMouseEnter(i)}
+                    onMouseLeave={onMouseLeave}
                 >
                     <p className="t-caption suggest-list__item-title">{item.title}</p>
                     {item.text && (
