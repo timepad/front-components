@@ -9,6 +9,7 @@ interface ISuggestListProps {
     captionTextMaxLength?: number;
     suggestions: ISuggestion[];
     cursor: number;
+    listRef: React.Ref<HTMLUListElement>;
 }
 
 export const Suggestlist: React.FC<ISuggestListProps> = ({
@@ -19,9 +20,10 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     onMouseEnter,
     onMouseLeave,
     captionTextMaxLength = 20,
+    listRef,
 }) => {
     return visible ? (
-        <ul className="suggest-list">
+        <ul className="suggest-list" ref={listRef}>
             {suggestions.map((item, i) => (
                 <li
                     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}

@@ -24,6 +24,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus, onChange, onBlur, onFocus, onKeyDown} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
+    const suggestionsListRef = useRef<HTMLUListElement>(null);
 
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
     const [state, setState] = useState<{
@@ -37,6 +38,33 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         cursor: -1,
         isSuggestionApprowed: false,
     });
+
+    /*    const scrollToSelected = (position: number) => {
+        if (suggestionsListRef && suggestionsListRef.current && suggestionsListRef.current.parentElement) {
+            // if (suggestionsListRef && suggestionsListRef.current && suggestionsListRef.current.parentNode) {
+            // suggestionsListRef.current.parentNode.scrollTo({
+            suggestionsListRef.current.parentElement.scrollTo({
+                top: position,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    useEffect(() => {
+        console.log('cursor update');
+        console.log('suggestionsListRef.current', suggestionsListRef.current);
+        const {cursor, suggestions} = state;
+
+        if (cursor < 0 || cursor > suggestions.length || !suggestionsListRef) {
+            console.log('cursor false');
+            return;
+        } else if (suggestionsListRef && suggestionsListRef.current) {
+            console.log('cursor true');
+            const listItems = Array.from(suggestionsListRef.current.children);
+            // listItems[cursor] && scrollToSelected(listItems[cursor].offsetTop);
+            listItems[cursor] && scrollToSelected(listItems[cursor].clientTop);
+        }
+    }, [state.cursor]);*/
 
     const getSuggestions = (value: string): ISuggestion[] => {
         const regex = new RegExp(value, 'i');
@@ -142,6 +170,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     }, [value]);
 
     // console.log('Render. State: ', state);
+    console.log('Render. ref: ', suggestionsListRef);
 
     return (
         <div className={classNames}>
@@ -160,6 +189,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 onMouseLeave={onSuggestionLeave}
                 cursor={state.cursor}
                 captionTextMaxLength={10}
+                listRef={suggestionsListRef}
             />
         </div>
     );
