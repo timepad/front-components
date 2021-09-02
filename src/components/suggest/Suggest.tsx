@@ -30,10 +30,12 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         suggestions: ISuggestion[];
         visible: boolean;
         cursor: number;
+        isSuggestionApprowed: boolean;
     }>({
         suggestions: [],
         visible: false,
         cursor: -1,
+        isSuggestionApprowed: false,
     });
 
     const getSuggestions = (value: string): ISuggestion[] => {
@@ -51,7 +53,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
         onFocus?.(event);
 
-        if (!state.visible) {
+        if (!state.visible && state.isSuggestionApprowed) {
             setState({...state, visible: true});
         }
         if (reloadOnFocus && url) {
@@ -72,6 +74,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         const query = event.target.value;
         if (query !== value) {
             setInputValue(query);
+            setState({...state, visible: true});
         }
     };
 
@@ -80,7 +83,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
 
         const {visible, suggestions, cursor} = state;
 
-        if (visible && suggestions.length > 1) {
+        if (visible && value.length > 1) {
             if (event.key === 'ArrowDown') {
                 setState((prevState) => ({
                     ...state,
@@ -93,13 +96,14 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 }));
             } else if (event.key === 'Enter' && cursor >= 0) {
                 setInputValue(suggestions[cursor].title);
-                setState({...state, cursor: -1});
+                setState({...state, cursor: -1, visible: false, isSuggestionApprowed: true});
             }
         }
     };
 
     const onSuggestionClick = (text: string): void => {
         setInputValue(text);
+        setState({...state, isSuggestionApprowed: true});
     };
 
     const onSuggestionHover = (index: number): void => {
@@ -129,13 +133,15 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 setState({
                     ...state,
                     suggestions,
-                    visible: !(suggestions.length === 1 && suggestions[0].title === value),
+                    isSuggestionApprowed: !(suggestions.length === 1 && suggestions[0].title === value),
                 });
             }, 250);
         } else {
             setState({...state, suggestions: [], visible: false});
         }
     }, [value]);
+
+    // console.log('Render. State: ', state);
 
     return (
         <div className={classNames}>
