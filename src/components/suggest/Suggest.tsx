@@ -13,7 +13,7 @@ export interface ISuggestion {
 
 interface ISuggestProps extends IInputProps {
     value: string;
-    setValue: React.Dispatch<string>;
+    setValue: (text: string) => void;
     data?: ISuggestion[];
     url?: string;
     className?: string;
@@ -26,8 +26,15 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
-    const [suggestions, setSuggestions] = useState<ISuggestion[]>([]);
-    const [visible, setVisible] = useState<boolean>(true);
+    const [state, setState] = useState<{
+        suggestions: ISuggestion[];
+        visible: boolean;
+        cursor: number;
+    }>({
+        suggestions: [],
+        visible: false,
+        cursor: -1,
+    });
 
     const getSuggestions = (value: string): ISuggestion[] => {
         const regex = new RegExp(value, 'i');
@@ -42,38 +49,62 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     };
 
     const onInputFocus: React.FocusEventHandler<HTMLInputElement> = () => {
-        if (!visible) {
-            setVisible(true);
+        if (!state.visible) {
+            setState({...state, visible: true});
         }
         if (reloadOnFocus && url) {
             fetchData(url);
         }
     };
     const onInputBlur: React.FocusEventHandler<HTMLInputElement> = () => {
-        if (visible) {
-            setTimeout(() => setVisible(false), 200);
+        if (state.visible) {
+            setTimeout(() => setState({...state, visible: false, cursor: -1}), 100);
+            // setTimeout(() => console.log(state), 500);
         }
-    };
-    const onSuggestClick = (text: string): void => {
-        setValue(text);
-        setSuggestions([]);
     };
 
     const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        // console.log('change: ', event.type);
+        if (event.type === 'blur' || event.type === 'keypress') {
+            return;
+        }
+
         const query = event.target.value;
         setValue(query);
 
         const trimmedStr = query.trim();
-        if (trimmedStr && query.length > 1) {
+        if (trimmedStr && trimmedStr.length > 1) {
             if (timeout) {
                 clearTimeout(timeout);
             }
 
             timeout = setTimeout(() => {
-                setSuggestions(getSuggestions(trimmedStr));
+                const suggestions = getSuggestions(trimmedStr);
+                setState({...state, suggestions, visible: true});
             }, 250);
         } else {
-            setSuggestions([]);
+            setState({...state, visible: false});
+        }
+    };
+
+    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = async (event) => {
+        const {visible, suggestions, cursor} = state;
+
+        if (visible && suggestions.length > 1) {
+            if (event.key === 'ArrowDown') {
+                setState((prevState) => ({
+                    ...state,
+                    cursor: prevState.cursor === suggestions.length - 1 ? 0 : prevState.cursor + 1,
+                }));
+            } else if (event.key === 'ArrowUp') {
+                setState((prevState) => ({
+                    ...state,
+                    cursor: prevState.cursor === 0 ? suggestions.length - 1 : prevState.cursor - 1,
+                }));
+            } else if (event.key === 'Enter' && cursor >= 0) {
+                await setValue(suggestions[cursor].title);
+                setState({...state, suggestions: [], cursor: -1});
+            }
         }
     };
 
@@ -87,13 +118,14 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
 
     return (
         <div className={classNames}>
-            <Input {...props} onChange={onInputChange} onFocus={onInputFocus} onBlur={onInputBlur} />
-            <Suggestlist
-                visible={visible && suggestions.length > 0}
-                suggestions={suggestions}
-                onSuggestClick={onSuggestClick}
-                captionTextMaxLength={10}
+            <Input
+                {...props}
+                onChange={onInputChange}
+                onFocus={onInputFocus}
+                onBlur={onInputBlur}
+                onKeyDown={onInputKeyDown}
             />
+            <Suggestlist setValue={setValue} captionTextMaxLength={10} state={state} setState={setState} />
         </div>
     );
 };
