@@ -20,51 +20,25 @@ interface ISuggestProps extends IInputProps {
     reloadOnFocus?: boolean;
 }
 
+interface IState {
+    suggestions: ISuggestion[];
+    visible: boolean;
+    cursor: number;
+    isSuggestionApprowed: boolean;
+}
+
 export const Suggest: React.FC<ISuggestProps> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus, onChange, onBlur, onFocus, onKeyDown} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
-    const suggestionsListRef = useRef<HTMLUListElement>(null);
 
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
-    const [state, setState] = useState<{
-        suggestions: ISuggestion[];
-        visible: boolean;
-        cursor: number;
-        isSuggestionApprowed: boolean;
-    }>({
+    const [state, setState] = useState<IState>({
         suggestions: [],
         visible: false,
         cursor: -1,
         isSuggestionApprowed: false,
     });
-
-    /*    const scrollToSelected = (position: number) => {
-        if (suggestionsListRef && suggestionsListRef.current && suggestionsListRef.current.parentElement) {
-            // if (suggestionsListRef && suggestionsListRef.current && suggestionsListRef.current.parentNode) {
-            // suggestionsListRef.current.parentNode.scrollTo({
-            suggestionsListRef.current.parentElement.scrollTo({
-                top: position,
-                behavior: 'smooth',
-            });
-        }
-    };
-
-    useEffect(() => {
-        console.log('cursor update');
-        console.log('suggestionsListRef.current', suggestionsListRef.current);
-        const {cursor, suggestions} = state;
-
-        if (cursor < 0 || cursor > suggestions.length || !suggestionsListRef) {
-            console.log('cursor false');
-            return;
-        } else if (suggestionsListRef && suggestionsListRef.current) {
-            console.log('cursor true');
-            const listItems = Array.from(suggestionsListRef.current.children);
-            // listItems[cursor] && scrollToSelected(listItems[cursor].offsetTop);
-            listItems[cursor] && scrollToSelected(listItems[cursor].clientTop);
-        }
-    }, [state.cursor]);*/
 
     const getSuggestions = (value: string): ISuggestion[] => {
         const regex = new RegExp(value, 'i');
@@ -131,14 +105,9 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
 
     const onSuggestionClick = (text: string): void => {
         setInputValue(text);
-        setState({...state, isSuggestionApprowed: true});
     };
 
-    const onSuggestionHover = (index: number): void => {
-        setState({...state, cursor: index});
-    };
-
-    const onSuggestionLeave = (): void => {
+    const onSuggestionsHover = (): void => {
         setState({...state, cursor: -1});
     };
 
@@ -161,16 +130,13 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 setState({
                     ...state,
                     suggestions,
-                    isSuggestionApprowed: !(suggestions.length === 1 && suggestions[0].title === value),
+                    isSuggestionApprowed: suggestions.length === 1 && suggestions[0].title === value,
                 });
             }, 250);
         } else {
             setState({...state, suggestions: [], visible: false});
         }
     }, [value]);
-
-    // console.log('Render. State: ', state);
-    console.log('Render. ref: ', suggestionsListRef);
 
     return (
         <div className={classNames}>
@@ -182,14 +148,12 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 onKeyDown={onInputKeyDown}
             />
             <Suggestlist
-                visible={state.visible}
+                visible={state.visible && !state.isSuggestionApprowed}
                 suggestions={state.suggestions}
                 onClick={onSuggestionClick}
-                onMouseEnter={onSuggestionHover}
-                onMouseLeave={onSuggestionLeave}
+                onMouseEnter={onSuggestionsHover}
                 cursor={state.cursor}
                 captionTextMaxLength={10}
-                listRef={suggestionsListRef}
             />
         </div>
     );

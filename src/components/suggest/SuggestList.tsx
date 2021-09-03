@@ -1,15 +1,14 @@
 import * as React from 'react';
 import {ISuggestion} from './Suggest';
+import {useRef, useEffect} from 'react';
 
 interface ISuggestListProps {
     visible: boolean;
     onClick: (text: string) => void;
-    onMouseEnter: (index: number) => void;
-    onMouseLeave: () => void;
+    onMouseEnter: () => void;
     captionTextMaxLength?: number;
     suggestions: ISuggestion[];
     cursor: number;
-    listRef: React.Ref<HTMLUListElement>;
 }
 
 export const Suggestlist: React.FC<ISuggestListProps> = ({
@@ -18,19 +17,27 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     suggestions,
     onClick,
     onMouseEnter,
-    onMouseLeave,
     captionTextMaxLength = 20,
-    listRef,
 }) => {
+    const suggestionsListRef = useRef<HTMLUListElement>(null);
+
+    useEffect(() => {
+        // console.log('suggestionsListRef.current', suggestionsListRef.current);
+        if (cursor < 0 || cursor > suggestions.length || !suggestionsListRef) {
+            return;
+        } else if (suggestionsListRef.current) {
+            const listItems = Array.from(suggestionsListRef.current.children);
+            listItems[cursor] && listItems[cursor].scrollIntoView();
+        }
+    }, [cursor]);
+
     return visible ? (
-        <ul className="suggest-list" ref={listRef}>
+        <ul className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
             {suggestions.map((item, i) => (
                 <li
                     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
                     key={item.title + i}
                     onClick={() => onClick(item.title)}
-                    onMouseEnter={() => onMouseEnter(i)}
-                    onMouseLeave={onMouseLeave}
                 >
                     <p className="t-caption suggest-list__item-title">{item.title}</p>
                     {item.text && (
