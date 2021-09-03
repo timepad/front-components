@@ -34,7 +34,7 @@ export interface IButtonProps
     fixed?: boolean | string[];
     large?: boolean;
     wrapText?: boolean;
-    buttonRef?: React.MutableRefObject<HTMLButtonElement>;
+    buttonRef?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement | null) => void);
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     iconAlignment?: ButtonIconAlignment;
     iconAdditionalClasses?: string[];
@@ -95,9 +95,20 @@ export function Button(props: IButtonProps): JSX.Element {
             buttonProps[key] = (props as {[idx: string]: unknown})[key];
         }
     });
-
+    // TODO: Откатить добавление ref в button при избавлении от DropdownModal
     return (
-        <button type="button" ref={props.buttonRef} className={finalClasses} {...buttonProps}>
+        <button
+            type="button"
+            ref={(node) => {
+                if (typeof props.buttonRef === 'function') {
+                    props.buttonRef(node);
+                } else if (props.buttonRef) {
+                    (props.buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+                }
+            }}
+            className={finalClasses}
+            {...buttonProps}
+        >
             {props.children ? (
                 props.children
             ) : (
