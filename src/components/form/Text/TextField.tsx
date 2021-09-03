@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Text} from './index';
+import {Text} from './Text';
 import {useField, FieldHookConfig} from 'formik';
 import {IFormTextProps} from './Text.types';
 
