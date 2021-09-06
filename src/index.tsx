@@ -10,6 +10,7 @@ export * from './components/forms';
 export * from './components/loader';
 export * as Forms from './components/forms';
 export * from './components/row';
+export * from './components/banner';
 export * from './components/snackbar';
 export * from './components/modules';
 export * from './components/gap';
