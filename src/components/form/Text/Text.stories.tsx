@@ -4,6 +4,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 import 'css/bundle.less';
 import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
+import * as Yup from 'yup';
 
 export default {
     title: 'Text (new)',
@@ -72,33 +73,32 @@ export const Simple: IStorybookComponent = () => {
     );
 };
 
-export const TextFieldFormik: IStorybookComponent = () => {
+interface IValues {
+    email: string;
+}
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Некорректная почта').required(),
+});
+
+export const TextFieldFormikWithYup: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>TextField Formik</StoryTitle>
-            <Formik
+            <Formik<IValues>
                 initialValues={{
                     email: '',
-                    firstName: 'red',
-                    lastName: '',
                 }}
-                validate={(values) => {
-                    if (values.firstName.match(/[0-9]+/g)) {
-                        return {
-                            firstName: 'Имя не может содержать цифры',
-                        };
-                    }
-                }}
+                validationSchema={validationSchema}
                 onSubmit={(values) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
-                        // actions.setSubmitting(false);
                     }, 1000);
                 }}
             >
                 {() => (
                     <FormikForm>
-                        <Form.TextField name="firstName" type="text" placeholder="TEST" />
+                        <Form.TextField name="email" type="text" placeholder="Email" />
                     </FormikForm>
                 )}
             </Formik>

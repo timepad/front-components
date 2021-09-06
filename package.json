@@ -18,7 +18,8 @@
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
     "react-modal": "3.14.3",
-    "react-popper": "^2.2.5"
+    "react-popper": "^2.2.5",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.1.18",

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as Yup from 'yup';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 
@@ -181,38 +182,34 @@ export const Simple: IStorybookComponent = () => {
 };
 
 interface IValues {
-    firstName: string;
+    email: string;
 }
 
-export const FormikExample: IStorybookComponent = () => {
+const mailValidationSchema = Yup.object().shape({
+    email: Yup.string().email('Некорректная почта').required(),
+});
+
+export const FormikExampleWithYup: IStorybookComponent = () => {
     return (
         <div>
             <Formik
                 initialValues={{
-                    firstName: 'red',
+                    email: '',
                 }}
-                validate={(values) => {
-                    if (values.firstName.match(/[0-9]+/g)) {
-                        return {
-                            firstName: 'Имя не может содержать цифры',
-                        };
-                    }
-                }}
+                validationSchema={mailValidationSchema}
                 onSubmit={(values: IValues) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
-                        // actions.setSubmitting(false);
                     }, 1000);
                 }}
-                validateOnMount
             >
                 {() => (
                     <FormikForm>
                         <Form.TextLightField
-                            name="firstName"
+                            name="email"
                             caption="Какой-то caption"
                             type="text"
-                            placeholder="Введите имя"
+                            placeholder="Введите email"
                         />
                     </FormikForm>
                 )}
