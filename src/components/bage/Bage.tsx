@@ -14,7 +14,9 @@ export const Bage: React.FC<IBageProps> = ({value, children}) => {
     )();
     return (
         <div className={component('badge')()}>
-            <div className={badgeClasses}>{value}</div>
+            <div className={badgeClasses}>
+                <span>{value}</span>
+            </div>
             {children}
         </div>
     );
