@@ -72,65 +72,65 @@ export const PicSizes: IStorybookComponent = () => {
 
             <StoryTitle>Icon in size S</StoryTitle>
             <div className="lflex">
-                <Pic size="S" hoverable />
+                <Pic size="s" hoverable />
                 <Spacer />
-                <Pic size="S" label={label} hoverable />
+                <Pic size="s" label={label} hoverable />
                 <Spacer />
-                <Pic size="S" imgURL={imageUrl} hoverable />
+                <Pic size="s" imgURL={imageUrl} hoverable />
                 <Spacer />
-                <Pic size="S" hoverable square />
+                <Pic size="s" hoverable square />
                 <Spacer />
-                <Pic size="S" label={label} hoverable square />
+                <Pic size="s" label={label} hoverable square />
                 <Spacer />
-                <Pic size="S" imgURL={imageUrl} hoverable square />
+                <Pic size="s" imgURL={imageUrl} hoverable square />
             </div>
             <Brick size={2} />
 
             <StoryTitle>Icon in size M</StoryTitle>
             <div className="lflex">
-                <Pic size="M" hoverable />
+                <Pic size="m" hoverable />
                 <Spacer />
-                <Pic size="M" label={label} hoverable />
+                <Pic size="m" label={label} hoverable />
                 <Spacer />
-                <Pic size="M" imgURL={imageUrl} hoverable />
+                <Pic size="m" imgURL={imageUrl} hoverable />
                 <Spacer />
-                <Pic size="M" hoverable square />
+                <Pic size="m" hoverable square />
                 <Spacer />
-                <Pic size="M" label={label} hoverable square />
+                <Pic size="m" label={label} hoverable square />
                 <Spacer />
-                <Pic size="M" imgURL={imageUrl} hoverable square />
+                <Pic size="m" imgURL={imageUrl} hoverable square />
             </div>
             <Brick size={2} />
 
             <StoryTitle>Icon in size L</StoryTitle>
             <div className="lflex">
-                <Pic size="L" hoverable />
+                <Pic size="l" hoverable />
                 <Spacer />
-                <Pic size="L" label={label} hoverable />
+                <Pic size="l" label={label} hoverable />
                 <Spacer />
-                <Pic size="L" imgURL={imageUrl} hoverable />
+                <Pic size="l" imgURL={imageUrl} hoverable />
                 <Spacer />
-                <Pic size="L" hoverable square />
+                <Pic size="l" hoverable square />
                 <Spacer />
-                <Pic size="L" label={label} hoverable square />
+                <Pic size="l" label={label} hoverable square />
                 <Spacer />
-                <Pic size="L" imgURL={imageUrl} hoverable square />
+                <Pic size="l" imgURL={imageUrl} hoverable square />
             </div>
             <Brick size={2} />
 
             <StoryTitle>Icon in size XL</StoryTitle>
             <div className="lflex">
-                <Pic size="XL" hoverable />
+                <Pic size="xl" hoverable />
                 <div style={{minWidth: 32}} />
-                <Pic size="XL" label={label} hoverable />
+                <Pic size="xl" label={label} hoverable />
                 <div style={{minWidth: 32}} />
-                <Pic size="XL" imgURL={imageUrl} hoverable />
+                <Pic size="xl" imgURL={imageUrl} hoverable />
                 <div style={{minWidth: 32}} />
-                <Pic size="XL" hoverable square />
+                <Pic size="xl" hoverable square />
                 <div style={{minWidth: 32}} />
-                <Pic size="XL" label={label} hoverable square />
+                <Pic size="xl" label={label} hoverable square />
                 <div style={{minWidth: 32}} />
-                <Pic size="XL" imgURL={imageUrl} hoverable square />
+                <Pic size="xl" imgURL={imageUrl} hoverable square />
             </div>
             <Brick size={2} />
         </>

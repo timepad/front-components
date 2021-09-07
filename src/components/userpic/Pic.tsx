@@ -6,7 +6,7 @@ import ProfileIcon from '../../assets/svg/24/icon-profile-24.svg';
 
 import './index.less';
 
-type PicSize = 'S' | 'M' | 'L' | 'XL';
+type PicSize = 's' | 'm' | 'l' | 'xl';
 
 interface IProps {
     imgURL?: string;
