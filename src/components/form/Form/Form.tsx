@@ -1,6 +1,4 @@
 import React, {FC} from 'react';
-import cx from 'classnames';
-import {component} from '../../../services/helpers/classHelpers';
 import {Text, TextField} from '../Text';
 import {TextLight, TextLightField} from '../TextLight';
 import {Checkbox, CheckboxField} from '../Checkbox';
@@ -19,13 +17,7 @@ export const Form: FC<IFormProps> & {
     Radio: typeof Radio;
     RadioField: typeof RadioField;
 } = (props) => {
-    const formClassName = cx(component('form')(), props.className);
-
-    return (
-        <form {...props} className={formClassName}>
-            {props.children}
-        </form>
-    );
+    return <form {...props}>{props.children}</form>;
 };
 
 Form.Text = Text;
