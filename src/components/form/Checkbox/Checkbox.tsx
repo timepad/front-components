@@ -21,10 +21,10 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         small = false,
         onChange = noop,
     } = props;
-    const wrapperClasses = component('checkbox')({error: !!error, disabled: disabled});
+    const wrapperClasses = component('form__checkbox')({error: !!error, disabled: disabled});
     const idx = id + '_field_checkbox';
     const checkboxClasses = component(
-        'checkbox',
+        'form__checkbox',
         'icon',
     )({
         checked: checked || indeterminate,

@@ -4,7 +4,7 @@
       cursor: default;
     }
 
-    .cradio__icon {
+    .cform__radio__icon {
       border-width: 1px;
       border-color: @color;
 
@@ -20,16 +20,16 @@
   }
 }
 
-.cradio {
+.cform__radio {
   * {
     box-sizing: border-box;
   }
 
-  &:hover .cradio__icon {
+  &:hover .cform__radio__icon {
     border-width: 2px;
   }
 
-  &--disabled .cradio__icon {
+  &--disabled .cform__radio__icon {
     border-width: 1px!important;
   }
 
@@ -95,7 +95,7 @@
   .on-state-disabled(@c-dark-gray-fade-35, @c-white);
 
   .mtheme--darkpic & {
-    .cradio__icon {
+    .cform__radio__icon {
       border-color: @c-gray-50-fade-35;
     }
 

@@ -21,8 +21,8 @@ export const Radio: FC<IFormRadioProps> = (props) => {
         onChange = noop,
     } = props;
 
-    const wrapperClasses = component('radio')({error: !!error, disabled: disabled});
-    const radioClasses = component('radio', 'icon')({checked: checked});
+    const wrapperClasses = component('form__radio')({error: !!error, disabled: disabled});
+    const radioClasses = component('form__radio', 'icon')({checked: checked});
     const idx = id + '_field_radio';
 
     return (
