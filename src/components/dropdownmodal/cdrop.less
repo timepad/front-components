@@ -1,3 +1,4 @@
+// НЕ ИСПОЛЬЗОВАТЬ БУДЕТ УДАЛЕН!
 @cdrop-min-width: 120px;
 @cdrop-max-width: 400px;
 
@@ -12,12 +13,6 @@
   right: 0;
   bottom: 0;
   z-index: @z-index-dropdowns;
-  display: none;
-
-  &--show {
-    display: block;
-  }
-
 
   pointer-events: none; // TODO: dirty fix
 
@@ -32,9 +27,9 @@
   display: inline-block;
 }
 
-.cdrop__drop {
-  display: none;
-  visibility: hidden;
+.cdrop__body {
+  //display: none;
+  //visibility: hidden;
   box-sizing: border-box;
 
   flex-direction: column;
@@ -43,11 +38,6 @@
   border-radius: 8px;
   background-clip: padding-box;
   overflow: hidden; //TODO ленивое скругление углов, удалить когда понадобится
-
-  margin-top: 2px;
-  position: absolute;
-  top: 100%;
-  left: 0;
 
   pointer-events: all;
 
@@ -83,8 +73,8 @@
   }
 
   &.cdrop__drop--scrollable {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     @media(max-width: @rsp-mobile-portrait-max) {
       .cdrop__scroll {
         // dropdown by design has default height of 7.5 strings
@@ -106,14 +96,14 @@
   }
   &.cdrop__drop--scrolledtobottom {
     @media(min-width: @rsp-mobile-portrait-max + 0.4px) {
-      top: 0px;
+      top: 0;
       border-radius: 8px;
-      margin-top: 0px;
+      margin-top: 0;
       transition: all @duration-blink;
     }
     @media(max-width: @rsp-mobile-portrait-max) {
       .cdrop__list {
-        border-radius: 0px;
+        border-radius: 0;
       }
     }
   }
@@ -137,15 +127,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  //TODO кажется этот способ скрывать скроллбар не работает
-  //@media(min-width: @rsp-desktop-min) {
-  //  transform: scale(-1, 1);
-  //
-  //  & > * {
-  //    transform: scale(-1, 1);
-  //  }
-  //}
-
   //а вот это работает на вебкит (Хром, Опера, Сафари)
   &::-webkit-scrollbar {
     display: none;
@@ -159,7 +140,7 @@
 
   min-width: @cdrop-min-width;
   max-width: @cdrop-max-width;
-  border-radius: 0px;
+  border-radius: 0;
 
   padding: 0;
   margin: 0;
@@ -170,8 +151,8 @@
     margin: 0 auto;
     border-radius: 8px 8px 0 0;
     width: 100%;
-    min-width: 128px;
-    max-width: 480px;
+    min-width: var(--dropdown-min-width, 128px);
+    max-width: var(--dropdown-max-width, 480px);
 
     body & li > a,
     body & li > span,
@@ -404,7 +385,7 @@
   @media (max-width: @rsp-mobile-portrait-max) {
     // same as max width for .cdrop__list
     max-width: 480px;
-    margin: 0px auto;
+    margin: 0 auto;
   }
 }
 
@@ -416,6 +397,7 @@
 .cdrop__cancel-wrapper {
   background-color: @c-black;
   padding: 8px 16px;
+  display: flex;
 }
 
 .cdrop__center {
@@ -436,7 +418,6 @@
   left: auto;
   right: 0;
 
-  // @media (max-width: @rsp-mobile-max) { TODO: временно
   @media (max-width: @rsp-mobile-portrait-max) {
     top: 0;
     left: 0;
@@ -448,7 +429,6 @@
   top: auto;
   bottom: 64px;
 
-  // @media (max-width: @rsp-mobile-max) { TODO: временно
   @media (max-width: @rsp-mobile-portrait-max) {
     top: 0;
     bottom: 0;
@@ -490,7 +470,7 @@
 
 // TODO: фикс цвета для календаря и будущих боттомшитов-модалок
 
-.cdrop__drop.cdrop__drop--white {
+.cdrop__body.cdrop__body--white {
   .cdrop__list {
     background: @c-white;
   }
@@ -515,4 +495,53 @@
 
 .cdrop-animate--show {
   opacity: 1;
+}
+
+.cdrop-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  animation: 0.35s linear 0s 1 alternate move_eye;
+  overflow-x: auto;
+  background-color: @c-black;
+}
+
+@keyframes move_eye {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(0%, 0);
+  }
+}
+
+.cdrop-mobile__body {
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  background-color: @c-black;
+}
+
+.cdrop-mobile__body--white {
+  background-color: @c-white;
+}
+
+.cdrop-mobile__overlay {
+  background-color: rgba(37, 37, 37, 0.35);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.cdrop-mobile__menu {
+  position: relative;
+  z-index: 2;
 }
