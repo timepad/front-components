@@ -2,7 +2,7 @@ import EE from 'eventemitter3';
 
 export type ConstructorValue<T> = T extends new () => infer U ? U : never;
 
-/** Класс контейнер зависимостей */
+/** Контейнер зависимостей */
 export class DependencyContainer extends EE {
     private readonly elements: Record<string, Record<string, any>>;
 
@@ -13,6 +13,9 @@ export class DependencyContainer extends EE {
 
     /**
      * Получить экземпляр типа T из указанной области видимости scope.
+     *
+     * Если в запрошенной области видмости не будет найден экземпляр, то контейнер создаст его
+     *
      * @param {T} cons - Конструктор класса.
      * @param {string} scope - Область где искать.
      * @return {ConstructorValue<T>} - Возвращает экземпляр класса T из области, если экземпляра в контейнере нет, то создать и вернуть.
