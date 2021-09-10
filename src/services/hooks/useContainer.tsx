@@ -1,46 +1,36 @@
-import React, {useContext} from 'react';
-import EE from 'eventemitter3';
+import React, {useCallback, useContext} from 'react';
+import {ConstructorValue, DependencyContainer} from '../helpers/dependencyContainer/DependencyContainer';
 
-class Container extends EE {
-    private readonly elements: Record<string, Record<string, any>>;
+export const ContainerContext = React.createContext<DependencyContainer>(new DependencyContainer());
 
-    constructor() {
-        super();
-        this.elements = {};
-    }
-
-    register<T extends new () => any>(cons: T, scope = 'default') {
-        if (this.elements[scope] && this.elements[scope][cons.name]) {
-            return this.elements[scope][cons.name];
-        }
-
-        if (!this.elements[scope]) {
-            this.elements[scope] = {};
-        }
-
-        const newConstructor = new cons();
-        this.elements[scope][cons.name] = newConstructor;
-
-        this.emit('register', {[scope]: this.elements[scope][cons.name]});
-
-        return newConstructor;
-    }
-
-    unregister<T extends new () => any>(cons: T, scope = 'default') {
-        this.emit('unregistered', {[scope]: this.elements[scope][cons.name]});
-        delete this.elements[scope][cons.name];
-    }
+interface IContainerEvent<T extends new () => any> {
+    scope: string;
+    cons: T;
 }
 
-export const ContainerContext = React.createContext<Container>(new Container());
+interface IContainerEventHandler<T extends new () => any> {
+    (event: IContainerEvent<T>): void;
+}
 
-type ConstructorValue<T> = T extends new () => infer U ? U : never;
+interface IContainerEventAdapter<T extends new () => any> {
+    (eventName: 'registered' | 'unregistered', fn: IContainerEventHandler<T>): void;
+}
 
-export const useContainer = <T extends new () => any>(
-    cons: T,
-    scope = 'default',
-): [ConstructorValue<T>, () => void] => {
+type UseContainerHookResult<T extends new () => any> = [ConstructorValue<T>, IContainerEventAdapter<T>, () => void];
+
+/**
+ * Возвращает кортедж из 3 элементов
+ * @param {T} cons - Конструктор класса T
+ * @param {string} scope - Область видимости
+ * @return {UseContainerHookResult<T>} - Возврашает кортедж из 3 элементов.
+ * Первый элемент это экземпляр класса.
+ * Второй элемент это функция, которая позволяет контролировать подписку/отписку экземпляра класса в контейнер
+ * Третий элемент это dispose функция, которая позволяет отписаться и удалить экземпляр класса из контейнера
+ */
+export function useContainer<T extends new () => any>(cons: T, scope = 'default'): UseContainerHookResult<T> {
     const ctx = useContext(ContainerContext);
 
-    return [ctx.register(cons, scope), () => ctx.unregister(cons, scope)];
-};
+    const on: IContainerEventAdapter<T> = useCallback((eventName, fn) => ctx.on(eventName, fn), [ctx]);
+
+    return [ctx.get(cons, scope), on, () => ctx.unregister(cons, scope)];
+}
