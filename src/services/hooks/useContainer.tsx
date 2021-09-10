@@ -1,5 +1,5 @@
 import React, {useCallback, useContext} from 'react';
-import {ConstructorValue, DependencyContainer} from '../helpers/dependencyContainer/DependencyContainer';
+import {ConstructorValue, DependencyContainer} from '../helpers/dependencyContainer';
 
 export const ContainerContext = React.createContext<DependencyContainer>(new DependencyContainer());
 
