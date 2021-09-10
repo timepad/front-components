@@ -9,9 +9,10 @@ import RowCaption from './RowCaption';
 
 import './index.less';
 
-interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+export interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     disabled?: boolean;
     hoverable?: boolean;
+    activable?: boolean;
     small?: boolean;
     ffFont?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
@@ -22,26 +23,32 @@ const Row: React.FC<IRowProps> & {
     Icon: typeof RowIcon;
     Text: typeof RowText;
     Caption: typeof RowCaption;
-} = ({className, ...props}: IRowProps): JSX.Element => {
-    const innerContainerClassNames = component('row')({
-        hoverable: props.hoverable,
-        small: props.small,
-        ff: props.ffFont,
-        'ff-system': !props.ffFont,
-        disabled: props.disabled,
-    });
-
-    const outContainerClassNames = cx(component('row', 'outer')(), className);
+} = ({
+    className = '',
+    hoverable = false,
+    activable = false,
+    small = false,
+    ffFont = false,
+    disabled = false,
+    horizontalPadding = small ? 8 : 16,
+    ...props
+}: IRowProps): JSX.Element => {
+    const containerClassNames = cx(
+        component('row')({
+            hoverable: hoverable,
+            activable: activable,
+            small: small,
+            ff: ffFont,
+            'ff-system': !ffFont,
+            disabled: disabled,
+            [`${horizontalPadding}`]: true,
+        }),
+        className,
+    );
 
     return (
-        <div className={outContainerClassNames}>
-            <div
-                {...props}
-                style={props.horizontalPadding !== undefined ? {padding: `0 ${props.horizontalPadding}px`} : {}}
-                className={innerContainerClassNames}
-            >
-                {props.children}
-            </div>
+        <div {...props} className={containerClassNames}>
+            {props.children}
         </div>
     );
 };
