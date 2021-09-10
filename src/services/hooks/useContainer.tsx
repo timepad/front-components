@@ -2,31 +2,33 @@ import React, {useContext} from 'react';
 import EE from 'eventemitter3';
 
 class Container extends EE {
-    private elements: Map<string, Map<string, any>>;
+    private readonly elements: Record<string, Record<string, any>>;
 
     constructor() {
         super();
-        this.elements = new Map();
-        this.elements.set('default', new Map());
+        this.elements = {};
     }
 
     register<T extends new () => any>(cons: T, scope = 'default') {
-        if (this.elements.has(scope) && this.elements.get(scope)?.has(cons.name)) {
-            return this.elements.get(scope)?.get(cons.name);
+        if (this.elements[scope] && this.elements[scope][cons.name]) {
+            return this.elements[scope][cons.name];
+        }
+
+        if (!this.elements[scope]) {
+            this.elements[scope] = {};
         }
 
         const newConstructor = new cons();
-        this.elements.set(scope, new Map([cons.name, newConstructor]));
+        this.elements[scope][cons.name] = newConstructor;
 
-        this.emit('register', {[scope]: this.elements.get(scope)});
+        this.emit('register', {[scope]: this.elements[scope][cons.name]});
 
         return newConstructor;
     }
 
     unregister<T extends new () => any>(cons: T, scope = 'default') {
-        this.emit('unregistered', {[scope]: this.elements.get(scope)});
-
-        this.elements.get(scope)?.delete(cons.name);
+        this.emit('unregistered', {[scope]: this.elements[scope][cons.name]});
+        delete this.elements[scope][cons.name];
     }
 }
 
@@ -39,18 +41,6 @@ export const useContainer = <T extends new () => any>(
     scope = 'default',
 ): [ConstructorValue<T>, () => void] => {
     const ctx = useContext(ContainerContext);
-
-    // if (ctx[scope] && ctx[scope][cons.name]) {
-    //     return ctx[scope][cons.name];
-    // }
-    //
-    // if (!ctx[scope]) {
-    //     ctx[scope] = {};
-    // }
-    //
-    // const newConstructor = new cons();
-    // ctx[scope][cons.name] = newConstructor;
-    //
 
     return [ctx.register(cons, scope), () => ctx.unregister(cons, scope)];
 };
