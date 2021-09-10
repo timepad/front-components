@@ -17,7 +17,9 @@ interface IContainerEventAdapter<T extends new () => any> {
 
 type UseContainerHookResult<T extends new () => any> = [ConstructorValue<T>, IContainerEventAdapter<T>, () => void];
 
-export const ContainerContext = React.createContext<DependencyContainer>(new DependencyContainer());
+export const dependencyContainerInstance = new DependencyContainer();
+
+export const ContainerContext = React.createContext<DependencyContainer>(dependencyContainerInstance);
 
 /**
  * Возвращает кортеж из 3 элементов
