@@ -24,7 +24,6 @@ interface IState {
     suggestions: ISuggestion[];
     visible: boolean;
     cursor: number;
-    isSuggestionApprowed: boolean;
 }
 
 export const Suggest: React.FC<ISuggestProps> = (props) => {
@@ -37,12 +36,11 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         suggestions: [],
         visible: false,
         cursor: -1,
-        isSuggestionApprowed: false,
     });
 
     const getSuggestions = (value: string): ISuggestion[] => {
         const regex = new RegExp(value, 'i');
-        return searchData.filter((item) => regex.test(item.title));
+        return searchData.filter((item) => item.title !== value && regex.test(item.title));
     };
     const fetchData = (url: string): void => {
         url &&
@@ -55,7 +53,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
         onFocus?.(event);
 
-        if (!state.visible && state.isSuggestionApprowed) {
+        if (!state.visible) {
             setState({...state, visible: true});
         }
         if (reloadOnFocus && url) {
@@ -98,7 +96,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 }));
             } else if (event.key === 'Enter' && cursor >= 0) {
                 setInputValue(suggestions[cursor].title);
-                setState({...state, cursor: -1, visible: false, isSuggestionApprowed: true});
+                setState({...state, cursor: -1, visible: false});
             }
         }
     };
@@ -130,7 +128,6 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 setState({
                     ...state,
                     suggestions,
-                    isSuggestionApprowed: suggestions.length === 1 && suggestions[0].title === value,
                 });
             }, 250);
         } else {
@@ -148,7 +145,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
                 onKeyDown={onInputKeyDown}
             />
             <Suggestlist
-                visible={state.visible && !state.isSuggestionApprowed}
+                visible={state.visible}
                 suggestions={state.suggestions}
                 onClick={onSuggestionClick}
                 onMouseEnter={onSuggestionsHover}
