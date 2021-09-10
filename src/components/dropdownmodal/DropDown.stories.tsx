@@ -6,7 +6,6 @@ import {Dropdown} from './index';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-import './storybook/demo.less';
 import {List} from '../list';
 import {Button} from '../button';
 import {IDropdownProps} from './Dropdown';
