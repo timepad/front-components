@@ -3,7 +3,4 @@ import {ITextareaProps} from '../Textarea/Textarea';
 
 export type IFormTextProps = {
     error?: string;
-} & (
-    | ({multiline?: false} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)
-    | ({multiline: true} & ITextareaProps)
-);
+} & (({multiline?: false} & React.InputHTMLAttributes<HTMLInputElement>) | ({multiline: true} & ITextareaProps));

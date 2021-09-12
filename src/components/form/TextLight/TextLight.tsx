@@ -46,9 +46,24 @@ export const TextLight: FC<IFormTextLightProps> = ({
         <>
             <div className={inputClasses}>
                 {props.multiline ? (
-                    <Textarea name={fieldName} id={id} disabled={disabled} style={style} {...props} />
+                    <Textarea
+                        name={fieldName}
+                        id={id}
+                        disabled={disabled}
+                        style={style}
+                        {...props}
+                        onChange={props.onChange}
+                    />
                 ) : (
-                    <input name={fieldName} id={id} disabled={disabled} ref={props.inputRef} style={style} {...props} />
+                    <input
+                        name={fieldName}
+                        id={id}
+                        disabled={disabled}
+                        ref={props.inputRef}
+                        style={style}
+                        {...props}
+                        onChange={props.onChange}
+                    />
                 )}
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
