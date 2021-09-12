@@ -7,9 +7,9 @@ export type IFormTextProps = {
     | ({
           multiline?: false;
           onChange: ChangeEventHandler<HTMLInputElement>;
-      } & React.InputHTMLAttributes<HTMLInputElement>)
+      } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>)
     | ({
           multiline: true;
           onChange: ChangeEventHandler<HTMLTextAreaElement>;
-      } & ITextareaProps)
+      } & Omit<ITextareaProps, 'onChange'>)
 );
