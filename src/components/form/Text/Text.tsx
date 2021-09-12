@@ -17,7 +17,11 @@ export const Text: FC<IFormTextProps> = ({disabled = false, error = '', classNam
 
     return (
         <div className={finalClassNames}>
-            {props.multiline ? <Textarea disabled={disabled} {...props} /> : <input disabled={disabled} {...props} />}
+            {props.multiline ? (
+                <Textarea disabled={disabled} {...props} onChange={props.onChange} />
+            ) : (
+                <input disabled={disabled} {...props} onChange={props.onChange} />
+            )}
         </div>
     );
 };
