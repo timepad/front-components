@@ -15,3 +15,4 @@ export * from './components/snackbar';
 export * from './components/modules';
 export * from './components/gap';
 export * from './components/brick';
+export * as Form from './components/form/Form';
