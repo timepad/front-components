@@ -1,0 +1,104 @@
+.on-state-disabled(@color, @fillColor) {
+  &--disabled {
+    label {
+      cursor: default;
+    }
+
+    .cform__radio__icon {
+      border-width: 1px;
+      border-color: @color;
+
+      &--checked {
+        border: none;
+        background-color: @color;
+
+        svg * {
+          fill: @fillColor;
+        }
+      }
+    }
+  }
+}
+
+.cform__radio {
+  * {
+    box-sizing: border-box;
+  }
+
+  &:hover .cform__radio__icon {
+    border-width: 2px;
+  }
+
+  &--disabled .cform__radio__icon {
+    border-width: 1px!important;
+  }
+
+  label {
+    display: flex;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .crow__icon label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 32px;
+  }
+
+  input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;;
+  }
+
+  &__icon {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+
+    border: 1px solid @c-dark-gray;
+    border-radius: 10px;
+
+    svg {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      opacity: 0;
+
+      * {
+        fill: @c-white;
+      }
+    }
+
+    label:hover & {
+      border-width: 2px;
+    }
+
+    &--checked {
+      border: none;
+      background-color: @c-primary-blue;
+
+      label:hover & {
+        border-color: transparent;
+      }
+
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  .on-state-disabled(@c-dark-gray-fade-35, @c-white);
+
+  .mtheme--darkpic & {
+    .cform__radio__icon {
+      border-color: @c-gray-50-fade-35;
+    }
+
+    .on-state-disabled(@c-gray-50-fade-20, @c-gray-50);
+  }
+}
