@@ -11,7 +11,7 @@ export interface ISuggestion {
     text?: string;
 }
 
-interface ISuggestProps extends IInputProps {
+export interface ISuggestProps extends IInputProps {
     value: string;
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
