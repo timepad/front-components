@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {SpinLoader} from './SpinLoader';
 import {Theme} from './theme';
-import {WithSpinLoader} from './WithSpinLoader';
+import {SpinLoaderWrapper} from './SpinLoaderWrapper';
 import {Button} from '../button';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
@@ -42,7 +42,7 @@ const LoadersContainer: React.FC<ILoadersContainer> = (props) => {
                 <div className="lbrick-2" />
                 <div className="lflex">
                     <div className="lgap-4-0" />
-                    <div>
+                    <div style={{width: '100%'}}>
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lfelx-y-axis">
                             <LoaderCase theme={theme} />
@@ -59,7 +59,15 @@ const LoadersContainer: React.FC<ILoadersContainer> = (props) => {
 
 const LoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
     return (
-        <div className={`mtheme mtheme--${theme}`}>
+        <div
+            style={{
+                display: 'grid',
+                alignItems: 'center',
+                gridTemplateColumns: '200px 1fr',
+            }}
+            className={`mtheme mtheme--${theme}`}
+        >
+            <div>Spin loader:</div>
             <div style={{padding: 16}} className="mtheme__typo">
                 <SpinLoader theme={theme} />
             </div>
@@ -68,14 +76,36 @@ const LoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
 };
 
 const WithLoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     return (
-        <div className={`mtheme mtheme--${theme}`}>
-            <div style={{padding: 16}} className="mtheme__typo lflex lflex--align-centered">
-                <Button onClick={() => setIsLoaded(!isLoaded)}>Switch state</Button>
-                <WithSpinLoader isLoaded={isLoaded} theme={theme}>
-                    Some content
-                </WithSpinLoader>
+        <div
+            style={{
+                display: 'grid',
+                alignItems: 'center',
+                gridTemplateColumns: '200px 1fr',
+            }}
+            className={`mtheme mtheme--${theme}`}
+        >
+            <div>Container with spin loader:</div>
+            <div
+                style={{
+                    padding: 16,
+                    flexDirection: 'column',
+                }}
+                className="mtheme__typo lflex lflex--align-centered"
+            >
+                <SpinLoaderWrapper isLoading={isLoading} theme={theme}>
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '44px',
+                        }}
+                        className="lflex lflex--justify-centered"
+                    >
+                        Some content
+                    </div>
+                </SpinLoaderWrapper>
+                <Button onClick={() => setIsLoading(!isLoading)}>Switch state</Button>
             </div>
         </div>
     );
