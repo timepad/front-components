@@ -42,6 +42,8 @@ export const TextLight: FC<IFormTextLightProps> = ({
         customIcon || success ? {...props.style, padding: '0 32px 11px 0'} : {...props.style, padding: '0 0 11px 0'};
 
     const id = `${fieldName}_id_field`;
+
+    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <>
             <div className={inputClasses}>
@@ -59,9 +61,9 @@ export const TextLight: FC<IFormTextLightProps> = ({
                         name={fieldName}
                         id={id}
                         disabled={disabled}
-                        ref={props.inputRef}
+                        ref={(props as any).inputRef}
                         style={style}
-                        {...props}
+                        {...(props as any)}
                         onChange={props.onChange}
                     />
                 )}

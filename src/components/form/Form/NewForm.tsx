@@ -7,7 +7,7 @@ import {Radio, RadioField} from '../Radio';
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
 
-export const Form: FC<IFormProps> & {
+export const NewForm: FC<IFormProps> & {
     Text: typeof Text;
     TextField: typeof TextField;
     TextLight: typeof TextLight;
@@ -20,11 +20,11 @@ export const Form: FC<IFormProps> & {
     return <form {...props}>{props.children}</form>;
 };
 
-Form.Text = Text;
-Form.TextField = TextField;
-Form.TextLight = TextLight;
-Form.TextLightField = TextLightField;
-Form.Checkbox = Checkbox;
-Form.CheckboxField = CheckboxField;
-Form.Radio = Radio;
-Form.RadioField = RadioField;
+NewForm.Text = Text;
+NewForm.TextField = TextField;
+NewForm.TextLight = TextLight;
+NewForm.TextLightField = TextLightField;
+NewForm.Checkbox = Checkbox;
+NewForm.CheckboxField = CheckboxField;
+NewForm.Radio = Radio;
+NewForm.RadioField = RadioField;
