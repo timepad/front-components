@@ -1,0 +1,140 @@
+.cform__checkbox {
+  user-select: none;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &:hover .cform__checkbox__icon {
+    border-width: 2px;
+  }
+
+  &--disabled .cform__checkbox__icon {
+    border-width: 1px!important;
+  }
+
+  label {
+    display: flex;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .crow__icon label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 32px;
+  }
+
+  input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+  }
+
+  &__icon {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+
+    border: 1px solid @c-dark-gray;
+    border-radius: 4px;
+
+    svg {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      opacity: 0;
+
+      * {
+        fill: @c-white;
+      }
+    }
+
+    label:hover & {
+      border-width: 2px;
+    }
+
+    &--checked {
+      border: none;
+      background-color: @c-primary-blue;
+
+      label:hover & {
+        border-color: transparent;
+      }
+
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__text {
+    display: block;
+    position: relative;
+    top: 1px;
+  }
+
+  &&--disabled {
+    label {
+      cursor: default;
+    }
+
+    .cform__checkbox__icon {
+      border-width: 1px;
+      border-color: @c-dark-gray-fade-35;
+
+      &--checked {
+        border: none;
+        background-color: @c-dark-gray;
+      }
+    }
+  }
+
+  .mtheme--lightpic & {
+    .cform__checkbox__icon {
+      border-color: @c-gray-50-fade-35;
+    }
+
+    &--disabled {
+      .cform__checkbox__icon {
+        border-width: 1px;
+        border-color: @c-gray-50-fade-20;
+
+        &--checked {
+          border: none;
+          background-color: @c-gray-50-fade-20;
+
+          svg * {
+            fill: @c-gray-35;
+          }
+        }
+      }
+    }
+  }
+
+  .mtheme--darkpic & {
+    .cform__checkbox__icon {
+      border-color: @c-gray-50-fade-35;
+    }
+
+    &--disabled {
+      .cform__checkbox__icon {
+        border-width: 1px;
+        border-color: @c-gray-50-fade-20;
+
+        &--checked {
+          border: none;
+          background-color: @c-gray-50-fade-20;
+
+          svg * {
+            fill: @c-gray-50;
+          }
+        }
+      }
+    }
+  }
+}
