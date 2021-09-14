@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
-import {NewForm} from '../Form';
+import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
 import {Button} from '../../button';
 
 export default {
     title: 'Radio (new)',
-    component: NewForm,
+    component: Form,
 } as Meta;
 
 const themes = {
@@ -44,14 +44,14 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis">
-                            <NewForm.Radio
+                            <Form.Radio
                                 text="Text"
                                 value={RadioEnumState.First}
                                 checked={value === RadioEnumState.First}
                                 onChange={() => setValue(RadioEnumState.First)}
                             />
 
-                            <NewForm.Radio
+                            <Form.Radio
                                 text="Text"
                                 caption="Caption"
                                 value={RadioEnumState.Second}
@@ -59,8 +59,8 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                 onChange={() => setValue(RadioEnumState.Second)}
                             />
 
-                            <NewForm.Radio text="Disabled" caption="Caption" disabled />
-                            <NewForm.Radio text="Disabled checked" caption="Caption" disabled checked={true} />
+                            <Form.Radio text="Disabled" caption="Caption" disabled />
+                            <Form.Radio text="Disabled checked" caption="Caption" disabled checked={true} />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
@@ -100,14 +100,14 @@ export const RadioField: IStorybookComponent = () => {
                 {({values}) => (
                     <FormikForm>
                         <div className="lflex lflex--y-axis">
-                            <NewForm.RadioField
+                            <Form.RadioField
                                 name="radio"
                                 checked={values.radio === RadioEnumState.First}
                                 text="First"
                                 value={RadioEnumState.First}
                             />
 
-                            <NewForm.RadioField
+                            <Form.RadioField
                                 name="radio"
                                 checked={values.radio === RadioEnumState.Second}
                                 text="Second"

@@ -5,12 +5,12 @@ import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
-import {NewForm} from '../Form';
+import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
 
 export default {
     title: 'TextLight (new)',
-    component: NewForm,
+    component: Form,
 } as Meta;
 
 const themes = {
@@ -115,7 +115,7 @@ const InputRow = (props: IInputData) => {
     const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline = false, caption} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
-        <NewForm.TextLight
+        <Form.TextLight
             placeholder={placeholder}
             value={value}
             disabled={disabled}
@@ -205,7 +205,7 @@ export const FormikExampleWithYup: IStorybookComponent = () => {
             >
                 {() => (
                     <FormikForm>
-                        <NewForm.TextLightField
+                        <Form.TextLightField
                             name="email"
                             caption="Какой-то caption"
                             type="text"

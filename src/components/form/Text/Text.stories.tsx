@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
-import {NewForm} from '../Form';
+import {Form} from '../Form';
 import {Formik, Form as FormikForm} from 'formik';
 import * as Yup from 'yup';
 
 export default {
     title: 'Text (new)',
-    component: NewForm,
+    component: Form,
 } as Meta;
 
 const themes = {
@@ -38,15 +38,15 @@ const InputsContainer = (props: IInputsContainerProps) => {
                     <div style={{flexGrow: 1}} className="lflex--y-axis">
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lflex lflex--y-axis" style={{width: '200px'}}>
-                            <NewForm.Text key={3} multiline placeholder="Empty" />
+                            <Form.Text key={3} multiline placeholder="Empty" />
                             <div className="lbrick-2" />
-                            <NewForm.Text key={4} placeholder="Empty" />
+                            <Form.Text key={4} placeholder="Empty" />
                             <div className="lbrick-2" />
-                            <NewForm.Text key={5} placeholder="Disabled" disabled />
+                            <Form.Text key={5} placeholder="Disabled" disabled />
                             <div className="lbrick-2" />
-                            <NewForm.Text key={6} placeholder="Empty" error={'message'} />
+                            <Form.Text key={6} placeholder="Empty" error={'message'} />
                             <div className="lbrick-2" />
-                            <NewForm.Text
+                            <Form.Text
                                 placeholder="Multiline"
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
@@ -98,7 +98,7 @@ export const TextFieldFormikWithYup: IStorybookComponent = () => {
             >
                 {() => (
                     <FormikForm>
-                        <NewForm.TextField name="email" type="text" placeholder="Email" />
+                        <Form.TextField name="email" type="text" placeholder="Email" />
                     </FormikForm>
                 )}
             </Formik>

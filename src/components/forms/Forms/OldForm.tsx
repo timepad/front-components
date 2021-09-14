@@ -37,4 +37,4 @@ const listChildren = {
     SubTitle,
 };
 
-export const Form = Object.assign(FormBase, listChildren);
+export const OldForm = Object.assign(FormBase, listChildren);

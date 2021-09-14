@@ -1,1 +1,1 @@
-export {NewForm} from './NewForm';
+export {Form} from './Form';
