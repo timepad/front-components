@@ -12,7 +12,7 @@ export type IFormTextLightProps = {
     | ({
           multiline?: false;
           inputRef?: React.MutableRefObject<HTMLInputElement | null>;
-      } & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)
+      } & React.InputHTMLAttributes<HTMLInputElement>)
     | ({
           multiline: true;
           textareaRef?: React.Ref<HTMLTextAreaElement>;
