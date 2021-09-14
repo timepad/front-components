@@ -7,21 +7,15 @@ import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 
-export enum RadioVariant {
-    primary = 'primary',
-    blue = 'blue',
-}
-
 export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    label?: string;
+    label: string;
     value: string;
     checked?: boolean;
     disabled?: boolean;
     id?: string;
     error?: string;
     className?: string;
-    variant?: RadioVariant;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     onBlur?: ChangeEventHandler<HTMLInputElement>;
 }
@@ -37,7 +31,6 @@ export const Radio: React.FC<IRadioProps> = ({
     onChange,
     onBlur,
     className = '',
-    variant = RadioVariant.primary,
     ...othersProps
 }) => {
     const [localId] = useState<string>(id ? id : uniqueId());
@@ -45,14 +38,7 @@ export const Radio: React.FC<IRadioProps> = ({
 
     const wrapperClasses = cx(component('radio')({error: !!error, disabled: disabled}), className);
 
-    const radioClasses = component(
-        'radio',
-        'icon',
-    )({
-        checked: checked,
-        'checked-primary': checked && variant === RadioVariant.primary,
-        'checked-blue': checked && variant === RadioVariant.blue,
-    });
+    const radioClasses = component('radio', 'icon')({checked: checked});
 
     const labelClasses = cx(component('radio', 'text')(), 't-caption', 't-caption--brick');
 

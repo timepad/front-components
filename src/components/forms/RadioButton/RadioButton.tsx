@@ -7,13 +7,11 @@ import {uniqueId} from '../../../services/helpers/uniqueId';
 
 const {useState} = React;
 import './cradiobutton.less';
-import {RadioVariant} from '../Radio';
 
 interface IRadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
     checked?: boolean;
     name?: string;
     label?: string;
-    variant?: RadioVariant;
     value: string;
     disabled?: boolean;
     className?: string;
@@ -23,26 +21,10 @@ interface IRadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 export const RadioButton: React.FC<IRadioButtonProps> = (props) => {
-    const {
-        checked,
-        name,
-        label,
-        value,
-        disabled,
-        onChange,
-        onBlur,
-        variant = RadioVariant.primary,
-        className = '',
-        ...othersProps
-    } = props;
+    const {checked, name, label, value, disabled, onChange, onBlur, className = '', ...othersProps} = props;
     const [id] = useState<string>(uniqueId());
 
-    const checkboxClasses = component('radiobutton')({
-        disabled: disabled,
-        labeled: !!label,
-        primary: checked && variant === RadioVariant.primary,
-        blue: checked && variant === RadioVariant.blue,
-    });
+    const checkboxClasses = component('radiobutton')({disabled: disabled, labeled: !!label});
 
     const labelTextClasses = component('radiobutton', 'text')();
 
