@@ -15,9 +15,14 @@ export const Text: FC<IFormTextProps> = ({disabled = false, error = '', classNam
         className,
     );
 
+    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <div className={finalClassNames}>
-            {props.multiline ? <Textarea disabled={disabled} {...props} /> : <input disabled={disabled} {...props} />}
+            {props.multiline ? (
+                <Textarea disabled={disabled} {...props} />
+            ) : (
+                <input disabled={disabled} {...(props as any)} />
+            )}
         </div>
     );
 };
