@@ -9,7 +9,7 @@ import {uniqueId} from '../../../services/helpers/uniqueId';
 
 export interface IRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    label: string;
+    label?: string;
     value: string;
     checked?: boolean;
     disabled?: boolean;
