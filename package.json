@@ -42,7 +42,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
-    "front-shared": "https://github.com/timepad/front-shared.git#4e63fee0b9ff0945742c243106db6567f0e1b332",
+    "front-shared": "https://github.com/timepad/front-shared.git#05c161220b3f944d79c5b40bff6e22c5594eb043",
     "html-webpack-plugin": "^5.1.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -53,7 +53,7 @@
     "react-transition-group": "^4.4.2",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.17",
-    "typescript": "^4.1.5",
+    "typescript": "^4.4.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
