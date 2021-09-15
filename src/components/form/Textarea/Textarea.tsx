@@ -14,7 +14,7 @@ export interface ITextareaProps extends TextareaProps {
     cacheMeasurements?: boolean;
 }
 
-// TODO: Этот код взят из библиотеки react-textarea-autosize (адаптированный под наши компоненты)
+// Этот код взят из библиотеки react-textarea-autosize (адаптированный под наши компоненты)
 
 const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaProps> = (
     {cacheMeasurements, maxRows, minRows, onChange = noop, onHeightChange = noop, ...props},
@@ -75,9 +75,3 @@ const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaPro
 };
 
 export default /* #__PURE__ */ forwardRef(Textarea);
-
-// export const Textarea: FC<
-//     React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>
-// > = ({children, ...otherProps}) => {
-//     return <textarea {...otherProps}>{children}</textarea>;
-// };
