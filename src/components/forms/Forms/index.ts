@@ -1,4 +1,4 @@
-import {IFormProps, Form} from './Form';
+import {IFormProps, OldForm} from './OldForm';
 
-export {Form};
+export {OldForm};
 export type {IFormProps};

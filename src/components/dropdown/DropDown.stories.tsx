@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -244,5 +244,29 @@ export const WithLongItemList: IStorybookComponent = () => {
             <StoryTitle>With long item list</StoryTitle>
             <DropLongItemList />
         </>
+    );
+};
+
+const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
+    return (
+        <Dropdown priorityPositions={['br']}>
+            <div className="mtheme--darkpic">
+                <Dropdown.ToggleButton label="open" />
+            </div>
+            <Dropdown.Body ref={childrenRef}>
+                <List variant="dark">
+                    <List.Item
+                        suffix={<MemberFiltersEditCurrentTemplate />}
+                        className="mtheme--darkpic"
+                        onClick={(e: any) => e.stopPropagation()}
+                    >
+                        тест
+                    </List.Item>
+                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
+                        <input type="text" name="name" />
+                    </List.Item>
+                </List>
+            </Dropdown.Body>
+        </Dropdown>
     );
 };

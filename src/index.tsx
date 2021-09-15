@@ -1,4 +1,6 @@
 export * from './components/button';
+export * from './components/bage';
+export * from './components/label';
 export * from './components/tabs';
 export * from './components/userpic';
 export * from './services/helpers/classHelpers';
@@ -14,3 +16,4 @@ export * from './components/snackbar';
 export * from './components/modules';
 export * from './components/gap';
 export * from './components/brick';
+export * from './components/form/Form';
