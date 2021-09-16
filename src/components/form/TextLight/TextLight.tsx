@@ -42,13 +42,30 @@ export const TextLight: FC<IFormTextLightProps> = ({
         customIcon || success ? {...props.style, padding: '0 32px 11px 0'} : {...props.style, padding: '0 0 11px 0'};
 
     const id = `${fieldName}_id_field`;
+
+    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <>
             <div className={inputClasses}>
                 {props.multiline ? (
-                    <Textarea name={fieldName} id={id} disabled={disabled} style={style} {...props} />
+                    <Textarea
+                        name={fieldName}
+                        id={id}
+                        disabled={disabled}
+                        style={style}
+                        {...props}
+                        onChange={props.onChange}
+                    />
                 ) : (
-                    <input name={fieldName} id={id} disabled={disabled} ref={props.inputRef} style={style} {...props} />
+                    <input
+                        name={fieldName}
+                        id={id}
+                        disabled={disabled}
+                        ref={(props as any).inputRef}
+                        style={style}
+                        {...(props as any)}
+                        onChange={props.onChange}
+                    />
                 )}
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
