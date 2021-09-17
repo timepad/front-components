@@ -3,17 +3,17 @@ import './index.less';
 import {component} from '../../services/helpers/classHelpers';
 import {cn} from '@bem-react/classname';
 
-export interface IBageProps {
+export interface ICounterProps {
     value?: number | string;
 }
 
-export const Bage: React.FC<IBageProps> = ({value, children}) => {
+export const Counter: React.FC<ICounterProps> = ({value, children}) => {
     const badgeClasses = cn(
-        component('badge__inner')(),
+        component('counter__inner')(),
         value == null ? 'empty' : String(value).length === 1 ? 'single' : '',
     )();
     return (
-        <div className={component('badge')()}>
+        <div className={component('counter')()}>
             <div className={badgeClasses}>
                 <span>{value}</span>
             </div>
