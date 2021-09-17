@@ -8,7 +8,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 import {Input} from '../Input';
 import {Checkbox, Radio, RadioButton, Textarea} from '../index';
 import {Button} from '../../button';
-import {Form} from './Form';
+import {OldForm} from './OldForm';
 import {FORM_UNIT_SIZE} from './Unit';
 
 export default {
@@ -47,12 +47,12 @@ const FormsContainer = (props: IInputsContainerProps) => {
                     <div>
                         <div className="t-lead t-lead-24">{currentTheme.title}</div>
                         <div className="inputs-container lfelx-y-axis">
-                            <Form>
-                                <Form.Unit>
-                                    <Form.Title>Наша супер форма</Form.Title>
-                                    <Form.SubTitle>Дополнительный заголовок</Form.SubTitle>
-                                </Form.Unit>
-                                <Form.Unit size={FORM_UNIT_SIZE.big}>
+                            <OldForm>
+                                <OldForm.Unit>
+                                    <OldForm.Title>Наша супер форма</OldForm.Title>
+                                    <OldForm.SubTitle>Дополнительный заголовок</OldForm.SubTitle>
+                                </OldForm.Unit>
+                                <OldForm.Unit size={FORM_UNIT_SIZE.big}>
                                     <Input label={'Логин'} value={name} onChange={(e) => setName(e.target.value)} />
                                     <Input
                                         label={'Пароль'}
@@ -71,7 +71,7 @@ const FormsContainer = (props: IInputsContainerProps) => {
                                         checked={yes}
                                         onChange={() => setYes(!yes)}
                                     />
-                                    <Form.Label>Описание полей</Form.Label>
+                                    <OldForm.Label>Описание полей</OldForm.Label>
                                     <div className={'lflex'}>
                                         {variantsList.map((item, index) => {
                                             return (
@@ -86,7 +86,7 @@ const FormsContainer = (props: IInputsContainerProps) => {
                                             );
                                         })}
                                     </div>
-                                    <Form.Label error={true}>Уведомление об ошибке</Form.Label>
+                                    <OldForm.Label error={true}>Уведомление об ошибке</OldForm.Label>
                                     <div className={'lflex'}>
                                         <RadioButton
                                             value="s"
@@ -95,14 +95,14 @@ const FormsContainer = (props: IInputsContainerProps) => {
                                         />
                                         <div> Отправлять уведомления на email?</div>
                                     </div>
-                                    <Form.Description>Описание</Form.Description>
-                                    <Form.Description error={true}>Описание с ошибкой</Form.Description>
+                                    <OldForm.Description>Описание</OldForm.Description>
+                                    <OldForm.Description error={true}>Описание с ошибкой</OldForm.Description>
                                     <div className={'lbrick-1'} />
                                     <Button type={'submit'}>Отправить</Button>
                                     <div className={'lbrick-1'} />
-                                </Form.Unit>
-                                <Form.Footer>Подвал формы</Form.Footer>
-                            </Form>
+                                </OldForm.Unit>
+                                <OldForm.Footer>Подвал формы</OldForm.Footer>
+                            </OldForm>
                         </div>
                     </div>
                     <div className="lgap-4-0" />
