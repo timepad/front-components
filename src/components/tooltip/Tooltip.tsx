@@ -10,7 +10,7 @@ export interface ITooltipProps {
 }
 
 export const Tooltip: React.FC<ITooltipProps> = ({children, trigger, content, placement}) => {
-    const tooltipClasses = component('tooltip')();
+    const tooltipClass = component('tooltip')();
     const {getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip({
         placement,
         trigger,
@@ -21,7 +21,7 @@ export const Tooltip: React.FC<ITooltipProps> = ({children, trigger, content, pl
                 {children}
             </div>
             {visible && (
-                <div ref={setTooltipRef} {...getTooltipProps({className: tooltipClasses})}>
+                <div ref={setTooltipRef} {...getTooltipProps({className: tooltipClass})}>
                     {content}
                 </div>
             )}

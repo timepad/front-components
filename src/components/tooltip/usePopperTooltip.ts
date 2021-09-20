@@ -52,11 +52,7 @@ export const usePopperTooltip = (config: Config = {}, popperOptions: PopperOptio
         onChange: finalConfig.onVisibleChange,
     });
 
-    const {styles, attributes, ...popperProps} = usePopper(
-        finalConfig.followCursor ? virtualElement : triggerRef,
-        tooltipRef,
-        finalPopperOptions,
-    );
+    const {styles, attributes, ...popperProps} = usePopper(triggerRef, tooltipRef, finalPopperOptions);
 
     const update = popperProps.update;
 

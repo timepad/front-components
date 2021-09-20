@@ -17,7 +17,7 @@ const Skeleton = () => (
             width: 32,
             height: 32,
             background: '#F1F0F5',
-            borderRadius: 8,
+            borderRadius: '50%',
         }}
     />
 );
