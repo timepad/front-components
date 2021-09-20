@@ -1,3 +1,3 @@
-import {Bage, IBageProps} from './Bage';
+import {Bage, Bage2, IBageProps} from './Bage';
 export type {IBageProps};
-export {Bage};
+export {Bage, Bage2};

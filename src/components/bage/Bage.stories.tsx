@@ -1,6 +1,6 @@
 import React from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {Bage} from './index';
+import {Bage, Bage2} from './index';
 import {IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
@@ -37,6 +37,25 @@ export const Bages: IStorybookComponent = () => {
                 <Bage value="0000">
                     <Skeleton />
                 </Bage>
+            </div>
+
+            <StoryTitle>Counters</StoryTitle>
+            <div className="lflex">
+                <Bage2>
+                    <Skeleton />
+                </Bage2>
+                <Spacer />
+                <Bage2 value="">
+                    <Skeleton />
+                </Bage2>
+                <Spacer />
+                <Bage2 value={0}>
+                    <Skeleton />
+                </Bage2>
+                <Spacer />
+                <Bage2 value="0000">
+                    <Skeleton />
+                </Bage2>
             </div>
         </>
     );

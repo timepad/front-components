@@ -50,3 +50,31 @@
     background: @c-primary-blue;
   }
 }
+
+.cbadge2 {
+  position: relative;
+
+  .cbadge2__inner {
+    position: absolute;
+    left: calc(100% - 13px);
+    top: -8px;
+    border-radius: 30px;
+    border: 2px solid @c-white;
+    color: @c-white;
+    background: @c-primary-blue;
+    min-width: 6px;
+    min-height: 6px;
+
+    span {
+      display: block;
+      font-size: @fs-small;
+      line-height: @lh-really-small;
+      padding: 0 4.5px 0.5px 4.5px;
+    }
+
+    &.cbadge2__inner--empty {
+      left: calc(100% - 8px);
+      top: -2px;
+    }
+  }
+}
