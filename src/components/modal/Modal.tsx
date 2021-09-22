@@ -71,11 +71,22 @@ export const Modal: React.FC<IModalProps> & {
         if (!hasDropdown && !blockCloseOnOutsideClick) {
             onClose && onClose();
         }
+
+        document.body.classList.contains('modal-open') && document.body.classList.remove('modal-open');
     });
 
     useEffect(() => {
-        document.body.classList.add('modal-open');
-        return () => document.body.classList.remove('modal-open');
+        if (isOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        return () => {
+            document.body.classList.contains('modal-open') && document.body.classList.remove('modal-open');
+        };
     }, []);
 
     return (
