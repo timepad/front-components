@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Tooltip} from './index';
@@ -9,6 +9,9 @@ import 'css/bundle.less';
 export default {
     title: 'Tooltip',
     component: Tooltip,
+    parameters: {
+        chromatic: {delay: 300},
+    },
 } as Meta;
 
 const Skeleton = () => (
@@ -22,6 +25,16 @@ const Skeleton = () => (
     />
 );
 export const Hover: IStorybookComponent = () => {
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOpen(true);
+        }, 1000);
+        setTimeout(() => {
+            setOpen(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
         <>
             <StoryTitle>Tooltip hover</StoryTitle>
@@ -30,6 +43,7 @@ export const Hover: IStorybookComponent = () => {
                 <Tooltip
                     content="Объемный текст в котором подробно рассказано о происходящем на экране"
                     placement="right"
+                    isOpen={open}
                 >
                     <Skeleton />
                 </Tooltip>
@@ -51,6 +65,16 @@ export const Hover: IStorybookComponent = () => {
 };
 
 export const Click: IStorybookComponent = () => {
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOpen(true);
+        }, 1000);
+        setTimeout(() => {
+            setOpen(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
         <>
             <StoryTitle>Tooltip click</StoryTitle>
@@ -60,6 +84,7 @@ export const Click: IStorybookComponent = () => {
                     trigger="click"
                     content="Объемный текст в котором подробно рассказано о происходящем на экране"
                     placement="right"
+                    isOpen={open}
                 >
                     <Skeleton />
                 </Tooltip>
