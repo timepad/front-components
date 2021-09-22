@@ -25,13 +25,13 @@ const Skeleton = () => (
     />
 );
 export const Hover: IStorybookComponent = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<undefined | boolean>(undefined);
     useEffect(() => {
         const timer = setTimeout(() => {
             setOpen(true);
         }, 1000);
         setTimeout(() => {
-            setOpen(false);
+            setOpen(undefined);
         }, 3000);
         return () => clearTimeout(timer);
     }, []);
@@ -65,13 +65,13 @@ export const Hover: IStorybookComponent = () => {
 };
 
 export const Click: IStorybookComponent = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<undefined | boolean>(undefined);
     useEffect(() => {
         const timer = setTimeout(() => {
             setOpen(true);
         }, 1000);
         setTimeout(() => {
-            setOpen(false);
+            setOpen(undefined);
         }, 3000);
         return () => clearTimeout(timer);
     }, []);
