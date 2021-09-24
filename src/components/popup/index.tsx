@@ -70,7 +70,7 @@ const noop = () => {
 };
 
 let dropdownIdCounter = 0;
-export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
+export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
     (
         {
             trigger = null,
@@ -162,7 +162,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
                 setIsOpen(true);
                 setTimeout(() => onOpen(event), 0);
             },
-            [disabled, isOpen],
+            [disabled, isOpen, onOpen],
         );
 
         const closePopup = useCallback(
@@ -172,7 +172,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
                 if (isModal) (focusedElBeforeOpen.current as HTMLElement)?.focus();
                 setTimeout(() => onClose(event), 0);
             },
-            [disabled, isOpen],
+            [disabled, isOpen, onOpen, isModal],
         );
 
         const togglePopup = (event?: React.SyntheticEvent) => {
@@ -232,7 +232,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
         );
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
-            const triggerProps: Record<string, any> = {
+            const triggerProps: Record<string, unknown> = {
                 key: 'T',
                 ref: triggerRef,
                 'aria-describedby': popupId.current,
