@@ -190,7 +190,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
         const onMouseEnter = (event?: React.SyntheticEvent) => {
             clearTimeout(timeOut.current);
-            timeOut.current = setTimeout(() => openPopup(event), mouseEnterDelay);
+            timeOut.current = Number(setTimeout(() => openPopup(event), mouseEnterDelay));
         };
 
         const onContextMenu = (event?: React.SyntheticEvent) => {
@@ -200,7 +200,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
         const onMouseLeave = (event?: React.SyntheticEvent) => {
             clearTimeout(timeOut.current);
-            timeOut.current = setTimeout(() => closePopup(event), mouseLeaveDelay);
+            timeOut.current = Number(setTimeout(() => closePopup(event), mouseLeaveDelay));
         };
 
         const focusContentOnOpen = () => {
