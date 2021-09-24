@@ -11,6 +11,7 @@ import {Button} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 
 export default {
     title: 'DropDown',
@@ -23,7 +24,7 @@ const Suffix: React.FC = () => <AddIcon />;
 const DropBtn: React.FC = () => {
     return (
         <>
-            <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
+            <Dropdown.Button label={'Выпадающий список'}>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -35,6 +36,28 @@ const DropBtn: React.FC = () => {
                         Primary text
                     </List.Item>
                 </List>
+            </Dropdown.Button>
+        </>
+    );
+};
+
+const Slist = SortableContainer(List);
+const SListItem = SortableElement(List.Item);
+const DropSortable: React.FC = () => {
+    return (
+        <>
+            <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
+                <Slist as={'ul'} size={'lg'} variant={'dark'}>
+                    <SListItem className={'ztop'} as={'li'} key={'drop1'} index={1}>
+                        1
+                    </SListItem>
+                    <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop2'} index={2}>
+                        2
+                    </SListItem>
+                    <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop3'} index={3}>
+                        3
+                    </SListItem>
+                </Slist>
             </Dropdown>
         </>
     );
@@ -121,7 +144,17 @@ export const TopRightPosition: IStorybookComponent = () => {
         </>
     );
 };
-
+export const SortableList: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Top right position</StoryTitle>
+            Для обработки перетаскивания смотри аттрибут SortEnd
+            <div style={{marginTop: '130px'}}>
+                <DropSortable />
+            </div>
+        </>
+    );
+};
 export const CustomBody: IStorybookComponent = () => {
     return (
         <>
