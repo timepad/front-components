@@ -1,11 +1,11 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
+
 import {useOnClickOutside, useOnEscape, useRepositionOnResize} from './hooks';
-
-import './index.less';
-
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
+
+import './index.less';
 
 const getRootPopup = () => {
     let PopupRoot = document.getElementById('popup-root');
@@ -172,7 +172,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 if (isModal) (focusedElBeforeOpen.current as HTMLElement)?.focus();
                 setTimeout(() => onClose(event), 0);
             },
-            [disabled, isOpen, onOpen, isModal],
+            [disabled, isOpen, onOpen, isModal, onClose],
         );
 
         const togglePopup = (event?: React.SyntheticEvent) => {

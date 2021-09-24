@@ -23,7 +23,7 @@ const Suffix: React.FC = () => <AddIcon />;
 const DropBtn: React.FC = () => {
     return (
         <>
-            <Dropdown show={true} trigger={() => <Button>Выпадающий список</Button>}>
+            <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -43,7 +43,7 @@ const DropBtn: React.FC = () => {
 const DropCustomBody: React.FC = () => {
     return (
         <>
-            <Dropdown show={true} modifier={'custombody'} trigger={() => <Button>Выпадающий список</Button>}>
+            <Dropdown modifier={'custombody'} trigger={() => <Button>Выпадающий список</Button>}>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -62,7 +62,7 @@ const DropCustomBody: React.FC = () => {
 
 const DropProfile: React.FC = () => {
     return (
-        <Dropdown trigger={() => <Button>Выпадающий список</Button>} show={true}>
+        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
             <List variant="dark" size="lg">
                 <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
                     <div className="lflex lflex--y-axis">
@@ -82,7 +82,9 @@ const DropProfile: React.FC = () => {
                     Избранное
                 </List.Item>
                 <List.Item as={'button'} type={'button'} label="Выход" />
-                <Button label="Стать организатором" />
+                <List.Item className={'mtheme--darkpic'} as={'button'} type={'button'}>
+                    <Button label="Стать организатором" />
+                </List.Item>
             </List>
         </Dropdown>
     );
@@ -90,7 +92,7 @@ const DropProfile: React.FC = () => {
 
 const DropLongItemList: React.FC = () => {
     return (
-        <Dropdown trigger={() => <Button>Выпадающий список</Button>} show={true}>
+        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
             <List variant="dark" size="lg">
                 {cities.map((item, index) => {
                     return <List.Item key={index}>{item}</List.Item>;
@@ -124,7 +126,9 @@ export const CustomBody: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Custom body</StoryTitle>
-            <DropCustomBody />
+            <div style={{marginTop: '130px'}}>
+                <DropCustomBody />
+            </div>
         </>
     );
 };
@@ -133,7 +137,20 @@ export const ProfileDrop: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Profile Drop</StoryTitle>
-            <DropProfile />
+            <div style={{marginTop: '130px'}}>
+                <DropProfile />
+            </div>
+        </>
+    );
+};
+
+export const MemberFiltersEdit: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Profile Drop</StoryTitle>
+            <div style={{marginTop: '130px'}}>
+                <MemberFiltersEditCurrentTemplate />
+            </div>
         </>
     );
 };
@@ -142,7 +159,9 @@ export const WithLongItemList: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>With long item list</StoryTitle>
-            <DropLongItemList />
+            <div style={{marginTop: '130px'}}>
+                <DropLongItemList />
+            </div>
         </>
     );
 };
