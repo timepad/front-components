@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -11,7 +11,7 @@ import {Button} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
-import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import {SortableContainer, SortableElement, SortEnd, SortEndHandler, SortEvent} from 'react-sortable-hoc';
 
 export default {
     title: 'DropDown',
@@ -44,18 +44,38 @@ const DropBtn: React.FC = () => {
 const Slist = SortableContainer(List);
 const SListItem = SortableElement(List.Item);
 const DropSortable: React.FC = () => {
+    const [valueMap, setValueMap] = useState(
+        new Map([
+            [1, 1],
+            [2, 2],
+            [3, 3],
+        ]),
+    );
+
+    const sortEndHandler = (sortEnd: SortEnd, e: SortEvent) => {
+        console.log(sortEnd, e);
+        const oldValue = valueMap.get(sortEnd.oldIndex);
+        const newValue = valueMap.get(sortEnd.newIndex);
+        if (oldValue && newValue) {
+            valueMap.set(sortEnd.oldIndex, newValue);
+            valueMap.set(sortEnd.newIndex, oldValue);
+
+            setValueMap(new Map(valueMap.entries()));
+        }
+    };
+
     return (
         <>
             <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-                <Slist as={'ul'} size={'lg'} variant={'dark'}>
+                <Slist onSortEnd={sortEndHandler} as={'ul'} size={'lg'} variant={'dark'}>
                     <SListItem className={'ztop'} as={'li'} key={'drop1'} index={1}>
-                        1
+                        {valueMap.get(1)}
                     </SListItem>
                     <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop2'} index={2}>
-                        2
+                        {valueMap.get(2)}
                     </SListItem>
                     <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop3'} index={3}>
-                        3
+                        {valueMap.get(3)}
                     </SListItem>
                 </Slist>
             </Dropdown>
