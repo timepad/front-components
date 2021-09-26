@@ -11,19 +11,28 @@ export interface IDropdownProps {
     onClose?: () => void;
     priorityPositions?: IPopupProps['position'];
     modifier?: string;
+    nested?: boolean;
 }
 
 const DropdownButton: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps> = ({
     show,
     modifier,
     onClose,
+    nested = false,
     priorityPositions,
     children,
     ...buttonProps
 }) => {
     const Btn = useCallback(() => <Button {...buttonProps} />, [buttonProps]);
     return (
-        <Dropdown show={show} trigger={Btn} modifier={modifier} onClose={onClose} priorityPositions={priorityPositions}>
+        <Dropdown
+            nested={nested}
+            show={show}
+            trigger={Btn}
+            modifier={modifier}
+            onClose={onClose}
+            priorityPositions={priorityPositions}
+        >
             {children}
         </Dropdown>
     );
@@ -31,9 +40,16 @@ const DropdownButton: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps> = ({
 
 export const Dropdown: FC<IDropdownProps> & {Button: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps>} & {
     Button: typeof DropdownButton;
-} = ({show, modifier, trigger, onClose, children, priorityPositions = 'right-center'}) => {
+} = ({show, nested = false, modifier, trigger, onClose, children, priorityPositions = 'right-center'}) => {
     return (
-        <Popup open={show} on={['click']} position={priorityPositions} onClose={onClose} trigger={trigger}>
+        <Popup
+            nested={nested}
+            open={show}
+            on={['click']}
+            position={priorityPositions}
+            onClose={onClose}
+            trigger={trigger}
+        >
             <div className={cx('dropdown-body', modifier)}>{children}</div>
         </Popup>
     );

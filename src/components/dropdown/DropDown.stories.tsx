@@ -202,6 +202,7 @@ export const WithLongItemList: IStorybookComponent = () => {
 const MemberFiltersEditCurrentTemplate: FC = () => {
     return (
         <Dropdown
+            nested
             trigger={() => {
                 return (
                     <div className="mtheme--darkpic">
