@@ -11,7 +11,7 @@ import {Button} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
-import {SortableContainer, SortableElement, SortEnd, SortEndHandler, SortEvent} from 'react-sortable-hoc';
+import {SortableContainer, SortableElement, SortEnd} from 'react-sortable-hoc';
 
 export default {
     title: 'DropDown',
@@ -52,8 +52,7 @@ const DropSortable: React.FC = () => {
         ]),
     );
 
-    const sortEndHandler = (sortEnd: SortEnd, e: SortEvent) => {
-        console.log(sortEnd, e);
+    const sortEndHandler = (sortEnd: SortEnd) => {
         const oldValue = valueMap.get(sortEnd.oldIndex);
         const newValue = valueMap.get(sortEnd.newIndex);
         if (oldValue && newValue) {
