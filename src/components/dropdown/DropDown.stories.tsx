@@ -82,18 +82,28 @@ const DropSortable: React.FC = () => {
     );
 };
 
-const DropCustomBody: React.FC = () => {
+const DropCustomBodyImperative: React.FC = () => {
+    const [isDPOpen, setIsDPOpen] = useState(false);
+    const handleClose = () => {
+        setIsDPOpen(false);
+    };
+
     return (
         <>
-            <Dropdown modifier={'custombody'} trigger={() => <Button>Выпадающий список</Button>}>
+            <Dropdown
+                show={isDPOpen}
+                onClose={handleClose}
+                modifier={'custombody'}
+                trigger={({isOpen}) => <Button onClick={() => setIsDPOpen(!isOpen)}>Выпадающий список</Button>}
+            >
                 <List size={'lg'} variant={'dark'}>
-                    <List.Item as={'button'} type={'button'}>
+                    <List.Item as={'button'} type={'button'} onClick={handleClose}>
                         Primary text
                     </List.Item>
-                    <List.Item href={'#'} as={'a'}>
+                    <List.Item as={'div'} onClick={handleClose}>
                         Primary text
                     </List.Item>
-                    <List.Item href={'#'} as={'a'}>
+                    <List.Item as={'div'} onClick={handleClose}>
                         Primary text
                     </List.Item>
                 </List>
@@ -174,12 +184,12 @@ export const SortableList: IStorybookComponent = () => {
         </>
     );
 };
-export const CustomBody: IStorybookComponent = () => {
+export const CustomBodyImperative: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Custom body</StoryTitle>
             <div style={{marginTop: '130px'}}>
-                <DropCustomBody />
+                <DropCustomBodyImperative />
             </div>
         </>
     );

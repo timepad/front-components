@@ -167,12 +167,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
         const closePopup = useCallback(
             (event?: React.SyntheticEvent | KeyboardEvent | TouchEvent | MouseEvent) => {
-                if (!isOpen || disabled) return;
+                if (!isOpen || disabled || !on?.includes('click')) return;
                 setIsOpen(false);
                 if (isModal) (focusedElBeforeOpen.current as HTMLElement)?.focus();
                 setTimeout(() => onClose(event), 0);
             },
-            [disabled, isOpen, onOpen, isModal, onClose],
+            [disabled, isOpen, isModal, onClose, on],
         );
 
         const togglePopup = (event?: React.SyntheticEvent) => {
@@ -186,7 +186,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 if (open) openPopup();
                 else closePopup();
             }
-        }, [open, disabled, openPopup, closePopup]);
+        }, [open, disabled]);
 
         const onMouseEnter = (event?: React.SyntheticEvent) => {
             clearTimeout(timeOut.current);
