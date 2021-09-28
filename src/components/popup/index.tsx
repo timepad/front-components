@@ -298,8 +298,10 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         };
 
         const renderContent = () => {
+            // input нужен что бы не было автофокуса по 1ому элементу
             return (
                 <div {...addWarperAction()} key="C" role={isModal ? 'dialog' : 'tooltip'} id={popupId.current}>
+                    <input style={{display: 'none'}} />
                     {children && typeof children === 'function' ? children(closePopup, isOpen) : children}
                 </div>
             );
