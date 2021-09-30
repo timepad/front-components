@@ -8,18 +8,19 @@ type Actions = 'expandable' | 'hoverable';
 
 export interface ILogoProps {
     short?: boolean;
-    action?: Actions | '';
-    color?: Colors | '';
+    action?: Actions;
+    color?: Colors;
 }
 
 export const Logo: React.FC<ILogoProps> = ({short, action, color}) => {
-    const className = component('logo')();
+    const className = component('logo')({
+        expandable: action === 'expandable',
+        hoverable: action === 'hoverable',
+    });
 
     return (
         <div className={className}>
-            <div className={action}>
-                <LogoSVG className={color ?? ''} width={short ? 12 : 107} />
-            </div>
+            <LogoSVG className={color ?? ''} width={short ? 12 : 107} />
         </div>
     );
 };
