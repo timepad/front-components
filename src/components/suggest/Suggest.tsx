@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
-import {Input, IInputProps} from '../forms/Input/Input';
+import {TextLight} from '../form/TextLight';
+import {IFormTextLightProps} from '../form/TextLight/TextLight.types';
 import {Suggestlist} from './SuggestList';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
@@ -11,14 +12,14 @@ export interface ISuggestion {
     text?: string;
 }
 
-export interface ISuggestProps extends IInputProps {
+export type ISuggestProps = {
     value: string;
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
     url?: string;
     className?: string;
     reloadOnFocus?: boolean;
-}
+} & IFormTextLightProps;
 
 interface IState {
     suggestions: ISuggestion[];
@@ -27,7 +28,7 @@ interface IState {
 }
 
 export const Suggest: React.FC<ISuggestProps> = (props) => {
-    const {className, value, setInputValue, data, url, reloadOnFocus, onChange, onBlur, onFocus, onKeyDown} = props;
+    const {className, value, setInputValue, data, url, reloadOnFocus} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
 
@@ -51,7 +52,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     };
 
     const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
-        onFocus?.(event);
+        !props.multiline && props.onFocus?.(event);
 
         if (!state.visible) {
             setState({...state, visible: true});
@@ -61,7 +62,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
         }
     };
     const onInputBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
-        onBlur?.(event);
+        !props.multiline && props.onBlur?.(event);
 
         if (state.visible) {
             setTimeout(() => setState({...state, visible: false, cursor: -1}), 100);
@@ -69,7 +70,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     };
 
     const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        onChange?.(event);
+        !props.multiline && props.onChange?.(event);
 
         const query = event.target.value;
         if (query !== value) {
@@ -79,7 +80,7 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
     };
 
     const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-        onKeyDown?.(event);
+        !props.multiline && props.onKeyDown?.(event);
 
         const {visible, suggestions, cursor} = state;
 
@@ -137,15 +138,18 @@ export const Suggest: React.FC<ISuggestProps> = (props) => {
 
     return (
         <div className={classNames}>
-            <Input
-                {...props}
-                onChange={onInputChange}
-                onFocus={onInputFocus}
-                onBlur={onInputBlur}
-                onKeyDown={onInputKeyDown}
-            />
+            {!props.multiline && (
+                <TextLight
+                    {...props}
+                    onChange={onInputChange}
+                    onFocus={onInputFocus}
+                    onBlur={onInputBlur}
+                    onKeyDown={onInputKeyDown}
+                />
+            )}
+
             <Suggestlist
-                visible={state.visible}
+                visible={true}
                 suggestions={state.suggestions}
                 onClick={onSuggestionClick}
                 onMouseEnter={onSuggestionsHover}

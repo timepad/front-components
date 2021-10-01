@@ -44,7 +44,7 @@ export const BasicFromArray: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions from transferred data array (type su).</StoryTitle>
-            <Suggest label="Input label" value={value} setInputValue={setValue} data={temp} />
+            <Suggest placeholder="Input label" value={value} setInputValue={setValue} data={temp} />
         </>
     );
 };
@@ -58,10 +58,10 @@ export const BasicFromURL: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api from URL</StoryTitle>
-            <Suggest label="Input label" value={value} setInputValue={setValue} url={url} />
+            <Suggest placeholder="Input label" value={value} setInputValue={setValue} url={url} />
             <Brick size={2} />
             <StoryTitle>Basic input with suggestions received from URL each time when focused.</StoryTitle>
-            <Suggest label="Input label" value={value2} setInputValue={setValue2} url={url} reloadOnFocus />
+            <Suggest placeholder="Input label" value={value2} setInputValue={setValue2} url={url} reloadOnFocus />
         </>
     );
 };
