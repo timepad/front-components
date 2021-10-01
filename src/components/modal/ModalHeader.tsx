@@ -36,6 +36,12 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
         'bg-transparent': titleIsTransparent,
     });
 
+    const handleClose = () => {
+        if (closeHandler) {
+            closeHandler();
+            document.body.classList.contains('modal-open') && document.body.classList.remove('modal-open');
+        }
+    };
     return (
         <div className={titleClass}>
             {backHandler && (
@@ -55,7 +61,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                     variant={Button.variant.transparent}
                     icon={<CloseSvg />}
                     className={component('form', 'icon')({close: true})}
-                    onClick={closeHandler}
+                    onClick={handleClose}
                 />
             )}
         </div>
