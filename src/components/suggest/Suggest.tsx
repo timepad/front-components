@@ -149,7 +149,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) =>
             )}
 
             <Suggestlist
-                visible={true}
+                visible={state.visible}
                 suggestions={state.suggestions}
                 onClick={onSuggestionClick}
                 onMouseEnter={onSuggestionsHover}

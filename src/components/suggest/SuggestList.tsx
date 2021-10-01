@@ -23,7 +23,6 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     const suggestionsListRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        // console.log('suggestionsListRef.current', suggestionsListRef.current);
         if (cursor < 0 || cursor > suggestions.length || !suggestionsListRef) {
             return;
         } else if (suggestionsListRef.current) {
@@ -35,31 +34,23 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     return visible ? (
         <div className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
             {suggestions.map((item, i) => (
-                // <li
-                //     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
-                //     key={item.title + i}
-                //     onClick={() => onClick(item.title)}
-                // >
-                //     <p className="t-caption suggest-list__item-title">{item.title}</p>
-                //     {item.text && (
-                //         <p className="t-small t-color-gray suggest-list__item-text">
-                //             {item.text.length > captionTextMaxLength
-                //                 ? `${item.text.slice(0, captionTextMaxLength)}...`
-                //                 : item.text}
-                //         </p>
-                //     )}
-                // </li>
                 <Row
                     key={item.title + i}
                     ffFont
+                    small
                     style={{boxShadow: 'inset 0px -1px 0px rgba(128, 128, 128, 0.2)'}}
                     onClick={() => onClick(item.title)}
-                    horizontalPadding={8}
                     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
                 >
                     <Row.Body>
                         <Row.Text>{item.title}</Row.Text>
-                        <Row.Caption>{item.text}</Row.Caption>
+                        {item.text && (
+                            <Row.Caption>
+                                {item.text.length > captionTextMaxLength
+                                    ? `${item.text.slice(0, captionTextMaxLength)}...`
+                                    : item.text}
+                            </Row.Caption>
+                        )}
                     </Row.Body>
                 </Row>
             ))}
