@@ -38,7 +38,6 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
                     key={item.title + i}
                     ffFont
                     small
-                    style={{boxShadow: 'inset 0px -1px 0px rgba(128, 128, 128, 0.2)'}}
                     onClick={() => onClick(item.title)}
                     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
                 >
