@@ -12,14 +12,14 @@ export interface ISuggestion {
     text?: string;
 }
 
-export type ISuggestProps = {
+export interface ISuggestProps {
     value: string;
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
     url?: string;
     className?: string;
     reloadOnFocus?: boolean;
-} & IFormTextLightProps;
+}
 
 interface IState {
     suggestions: ISuggestion[];
@@ -27,7 +27,7 @@ interface IState {
     cursor: number;
 }
 
-export const Suggest: React.FC<ISuggestProps> = (props) => {
+export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
