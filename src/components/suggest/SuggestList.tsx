@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {ISuggestion} from './Suggest';
 import {useRef, useEffect} from 'react';
+import {Row} from '../row';
 
 interface ISuggestListProps {
     visible: boolean;
@@ -19,7 +20,7 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     onMouseEnter,
     captionTextMaxLength = 20,
 }) => {
-    const suggestionsListRef = useRef<HTMLUListElement>(null);
+    const suggestionsListRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         // console.log('suggestionsListRef.current', suggestionsListRef.current);
@@ -32,23 +33,36 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
     }, [cursor]);
 
     return visible ? (
-        <ul className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
+        <div className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
             {suggestions.map((item, i) => (
-                <li
-                    className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
+                // <li
+                //     className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
+                //     key={item.title + i}
+                //     onClick={() => onClick(item.title)}
+                // >
+                //     <p className="t-caption suggest-list__item-title">{item.title}</p>
+                //     {item.text && (
+                //         <p className="t-small t-color-gray suggest-list__item-text">
+                //             {item.text.length > captionTextMaxLength
+                //                 ? `${item.text.slice(0, captionTextMaxLength)}...`
+                //                 : item.text}
+                //         </p>
+                //     )}
+                // </li>
+                <Row
                     key={item.title + i}
+                    ffFont
+                    style={{boxShadow: 'inset 0px -1px 0px rgba(128, 128, 128, 0.2)'}}
                     onClick={() => onClick(item.title)}
+                    horizontalPadding={8}
+                    className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
                 >
-                    <p className="t-caption suggest-list__item-title">{item.title}</p>
-                    {item.text && (
-                        <p className="t-small t-color-gray suggest-list__item-text">
-                            {item.text.length > captionTextMaxLength
-                                ? `${item.text.slice(0, captionTextMaxLength)}...`
-                                : item.text}
-                        </p>
-                    )}
-                </li>
+                    <Row.Body>
+                        <Row.Text>{item.title}</Row.Text>
+                        <Row.Caption>{item.text}</Row.Caption>
+                    </Row.Body>
+                </Row>
             ))}
-        </ul>
+        </div>
     ) : null;
 };
