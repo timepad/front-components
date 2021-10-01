@@ -1,52 +1,27 @@
-
 .cbadge {
   position: relative;
 
   .cbadge__inner {
     position: absolute;
-    font-size: @fs-small;
-    line-height: @lh-really-small;
     left: calc(100% - 13px);
     top: -8px;
-    border-radius: 20px;
-    border: 2px solid #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-    background: #643FFF;
-    min-width: 17px;
-    height: 16.5px;
+    border-radius: 30px;
+    border: 2px solid @c-white;
+    color: @c-white;
+    background: @c-primary-blue;
+    min-width: 6px;
+    min-height: 6px;
 
     span {
-      padding: 0 5px 0.5px 4px;
+      display: block;
+      font-size: @fs-small;
+      line-height: @lh-really-small;
+      padding: 0 4.5px 0.5px 4.5px;
     }
 
-  }
-  .cbadge__inner-single {
-    position: absolute;
-    font-size: @fs-small;
-    line-height: @lh-really-small;
-    left: calc(100% - 13px);
-    top: -8px;
-    border-radius: 50%;
-    border: 2px solid #FFFFFF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #FFFFFF;
-    padding-bottom: 1px;
-    background: #643FFF;
-    width: 17px;
-    height: 16px;
-  }
-  .cbadge__inner-empty {
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    border-radius: 50%;
-    border: 2px solid @c-white;
-    padding: 3px;
-    background: @c-primary-blue;
+    &.cbadge__inner--empty {
+      left: calc(100% - 8px);
+      top: -2px;
+    }
   }
 }
