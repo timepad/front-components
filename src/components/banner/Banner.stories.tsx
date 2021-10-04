@@ -23,12 +23,12 @@ export const Default: IStorybookComponent = () => {
                 You will need to enable two-factor or multi-factor authentication with your identity provider instead.
             </Banner>
             <StoryTitle>With Icon</StoryTitle>
-            <Banner withIcon>
+            <Banner icon>
                 Note: If you login to Figma via Google SSO or SAML SSO, you wont be able to enable two-factor in Figma.
                 You will need to enable two-factor or multi-factor authentication with your identity provider instead.
             </Banner>
             <StoryTitle>With custom Icon & Closable</StoryTitle>
-            <Banner closeable icon={IconEdit}>
+            <Banner closeable icon={<IconEdit />}>
                 Note: If you login to Figma via Google SSO or SAML SSO, you wont be able to enable two-factor in Figma.
                 You will need to enable two-factor or multi-factor authentication with your identity provider instead.
             </Banner>
