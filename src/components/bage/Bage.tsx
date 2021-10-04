@@ -1,22 +1,21 @@
 import * as React from 'react';
 import './index.less';
 import {component} from '../../services/helpers/classHelpers';
-import {cn} from '@bem-react/classname';
 
 export interface IBageProps {
     value?: number | string;
 }
 
 export const Bage: React.FC<IBageProps> = ({value, children}) => {
-    const badgeClasses = cn(
-        component('badge__inner')(),
-        value == null ? 'empty' : String(value).length === 1 ? 'single' : '',
-    )();
+    const isUndefined = !value && value !== 0;
+
+    const badgeClasses = component('badge__inner')({
+        empty: isUndefined,
+    });
+
     return (
         <div className={component('badge')()}>
-            <div className={badgeClasses}>
-                <span>{value}</span>
-            </div>
+            <div className={badgeClasses}>{!isUndefined && <span>{value}</span>}</div>
             {children}
         </div>
     );
