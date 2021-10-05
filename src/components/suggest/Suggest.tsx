@@ -26,7 +26,9 @@ interface IState {
     cursor: number;
 }
 
-export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttributes<HTMLElement>> = (props) => {
+export const Suggest: React.FC<
+    ISuggestProps & IFormTextLightProps & HTMLAttributes<HTMLInputElement & HTMLTextAreaElement>
+> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
@@ -50,7 +52,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
                 .catch(() => setSearchData([]));
     };
 
-    const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    const onInputFocus: React.FocusEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onFocus?.(event);
 
         if (!state.visible) {
@@ -60,7 +62,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
             fetchData(url);
         }
     };
-    const onInputBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    const onInputBlur: React.FocusEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onBlur?.(event);
 
         if (state.visible) {
@@ -68,7 +70,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
         }
     };
 
-    const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const onInputChange: React.ChangeEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onChange?.(event);
 
         const query = event.target.value;
@@ -78,7 +80,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
         }
     };
 
-    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onKeyDown?.(event);
 
         const {visible, suggestions, cursor} = state;
