@@ -50,7 +50,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
                 .catch(() => setSearchData([]));
     };
 
-    const onInputFocus: React.FocusEventHandler<HTMLElement> = (event) => {
+    const onInputFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
         !props.multiline && props.onFocus?.(event);
 
         if (!state.visible) {
@@ -60,7 +60,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
             fetchData(url);
         }
     };
-    const onInputBlur: React.FocusEventHandler<HTMLElement> = (event) => {
+    const onInputBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
         !props.multiline && props.onBlur?.(event);
 
         if (state.visible) {
@@ -68,7 +68,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
         }
     };
 
-    const onInputChange: React.ChangeEventHandler<HTMLElement & HTMLInputElement> = (event) => {
+    const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         !props.multiline && props.onChange?.(event);
 
         const query = event.target.value;
@@ -78,7 +78,7 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttribu
         }
     };
 
-    const onInputKeyDown: React.KeyboardEventHandler<HTMLElement> = (event) => {
+    const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
         !props.multiline && props.onKeyDown?.(event);
 
         const {visible, suggestions, cursor} = state;
