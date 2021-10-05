@@ -17,7 +17,7 @@ interface IProps {
     hoverable?: boolean;
     className?: string;
     bordered?: boolean;
-    mode?: 'light' | 'dark';
+    mode?: 'light' | 'dark' | 'white';
 }
 
 export const Pic: React.FC<IProps> = ({
