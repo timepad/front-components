@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState, HTMLAttributes} from 'react';
 import {TextLight} from '../form/TextLight';
 import {IFormTextLightProps} from '../form/TextLight/TextLight.types';
 import {Suggestlist} from './SuggestList';
@@ -17,7 +17,6 @@ export interface ISuggestProps {
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
     url?: string;
-    className?: string;
     reloadOnFocus?: boolean;
 }
 
@@ -27,7 +26,7 @@ interface IState {
     cursor: number;
 }
 
-export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
+export const Suggest: React.FC<ISuggestProps & IFormTextLightProps & HTMLAttributes<HTMLElement>> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<number | null> = useRef(null);
