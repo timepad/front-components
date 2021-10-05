@@ -21,6 +21,12 @@ export const Basic: IStorybookComponent = () => {
                 <Pic />
                 <Spacer />
                 <Pic bordered mode="dark" />
+                <Spacer />
+                <Pic bordered mode="light" label="A" />
+                <Spacer />
+                <Pic label="B" />
+                <Spacer />
+                <Pic bordered mode="dark" label="c" />
             </div>
             <Brick />
             <StoryTitle>Same basic Pic with click handler or just hover effect.</StoryTitle>
