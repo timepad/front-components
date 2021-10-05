@@ -15,7 +15,9 @@ export interface IDropdownProps {
     on?: IPopupProps['on'];
 }
 
-const DropdownButton: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps> = ({
+export type DropdownButtonProps = Omit<IDropdownProps, 'trigger'> & IButtonProps;
+
+const DropdownButton: FC<DropdownButtonProps> = ({
     show,
     modifier,
     onClose,
@@ -41,9 +43,7 @@ const DropdownButton: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps> = ({
     );
 };
 
-export const Dropdown: FC<IDropdownProps> & {Button: FC<Omit<IDropdownProps, 'trigger'> & IButtonProps>} & {
-    Button: typeof DropdownButton;
-} = ({
+export const Dropdown: FC<IDropdownProps> & {Button: FC<DropdownButtonProps>} = ({
     show,
     nested = false,
     on = 'click',

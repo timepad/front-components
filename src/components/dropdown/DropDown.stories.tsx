@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
 import './storybook/demo.less';
@@ -12,6 +12,7 @@ import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {SortableContainer, SortableElement, SortEnd} from 'react-sortable-hoc';
+import {DropdownButtonProps} from './Dropdown';
 
 export default {
     title: 'DropDown',
@@ -21,10 +22,10 @@ export default {
 const Prefix: React.FC = () => <Pic interactive />;
 const Suffix: React.FC = () => <AddIcon />;
 
-const DropBtn: React.FC = () => {
+const DropBtn: React.FC<DropdownButtonProps> = (props) => {
     return (
         <>
-            <Dropdown.Button label={'Выпадающий список'}>
+            <Dropdown.Button label={'Выпадающий список'} {...props}>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -163,12 +164,51 @@ export const Default: IStorybookComponent = () => {
     );
 };
 
-export const TopRightPosition: IStorybookComponent = () => {
+export const VariousPositions: IStorybookComponent = () => {
+    const allPositions: DropdownButtonProps['priorityPositions'][] = [
+        'top-left',
+        'top-center',
+        'top-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+    ];
+    const bottomTopPos: DropdownButtonProps['priorityPositions'][] = [
+        'right-top',
+        'right-center',
+        'right-bottom',
+        'left-top',
+        'left-center',
+        'left-bottom',
+    ];
     return (
         <>
-            <StoryTitle>Top right position</StoryTitle>
-            <div style={{marginTop: '130px'}}>
-                <DropBtn />
+            <StoryTitle>Various positions</StoryTitle>
+            <StoryDescription>Открывает дропдаун относительно контейнера кнопки</StoryDescription>
+            <div style={{marginTop: '40px'}}>
+                <div className="vertical-grid">
+                    {bottomTopPos.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
+                </div>
+                <div className="horizontal-grid">
+                    {allPositions.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
+                </div>
+                <div style={{margin: '0 auto', display: 'table'}}>
+                    <DropBtn priorityPositions="center-center" label="center-center" />
+                </div>
             </div>
         </>
     );
