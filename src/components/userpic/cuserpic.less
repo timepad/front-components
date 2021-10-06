@@ -25,19 +25,22 @@
   background-repeat: no-repeat;
 
   svg {
-    fill: @c-gray-50;
     position: absolute;
     z-index: 1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    path {
+      fill: @c-gray-50;
+    }
   }
 
   &.cuserpic--mode_light {
     background-color: @c-gray-50-fade-20;
     color: @c-gray-35;
 
-    svg {
+    svg path {
       fill: @c-gray-35;
     }
   }
@@ -45,7 +48,7 @@
   &.cuserpic--mode_dark {
     color: @c-gray-75;
 
-    svg {
+    svg path {
       fill: @c-gray-75;
     }
   }
@@ -54,7 +57,7 @@
     background-color: @c-white;
     color: @c-gray-35;
 
-    svg {
+    svg path {
       fill: @c-gray-35;
     }
 
@@ -62,7 +65,7 @@
       background-color: #c3c3c3;
       color: @c-gray-75;
 
-      svg {
+      svg path {
         fill: @c-gray-75;
       }
     }
@@ -101,7 +104,7 @@
         transform: scale(1);
       }
 
-      svg {
+      svg path {
         fill: @c-gray-75;
       }
     }
@@ -111,7 +114,7 @@
     background-color: @c-gray-75-fade-35;
     color: @c-gray-75;
 
-    svg {
+    svg path {
       fill: @c-gray-75;
     }
   }
