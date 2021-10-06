@@ -29,7 +29,7 @@ interface IState {
 export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
     const {className, value, setInputValue, data, url, reloadOnFocus} = props;
     const classNames = cx(className, component('suggest')());
-    const timeout: React.MutableRefObject<number | null> = useRef(null);
+    const timeout: React.MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null);
 
     const [searchData, setSearchData] = useState<ISuggestion[]>([]);
     const [state, setState] = useState<IState>({
