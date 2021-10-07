@@ -1,12 +1,84 @@
 .clogo {
   display: inline-flex;
-  align-items: center;
-  font-size: 48px;
-  line-height: 48px;
-  cursor: auto;
+
+  svg {
+    fill: @c-black;
+
+    &.gray {
+      fill: @c-gray-50;
+    }
+
+    &.white {
+      fill: @c-white;
+    }
+
+    &.blue {
+      fill: @c-primary-blue;
+    }
+
+    &.purple {
+      fill: @c-primary-blue-80;
+    }
+  }
+
+  &&--expandable, &&--hoverable {
+    position: relative;
+    width: 12px;
+    height: 14px;
+    z-index: 0;
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 12px;
+      transition: @duration-blink ease-in-out;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: -17px;
+      left: -18px;
+      height: 48px;
+      width: 48px;
+      background-color: @c-white;
+      box-shadow: @box-shadow;
+      border-radius: 24px;
+      transform: scale(0.5);
+      transform-origin: 24px 24px;
+      opacity: 0;
+      transition: width @duration-blink ease-in-out, transform @duration-blink/2 ease-in-out @duration-blink/2, opacity @duration-blink;
+    }
+
+    &:hover {
+      svg {
+        width: 107px;
+      }
+
+      &:before {
+        opacity: 1;
+        transform: scale(1);
+        width: 143px;
+      }
+    }
+  }
+
+  &&--hoverable {
+    &:before {
+      transition: @duration-blink ease-in-out;
+    }
+
+    &:hover {
+      svg {
+        width: 12px;
+      }
+
+      &:before {
+        width: 48px;
+      }
+    }
+  }
 }
 
-.clogo svg {
-  display: block;
-  fill: @c-black;
-}
