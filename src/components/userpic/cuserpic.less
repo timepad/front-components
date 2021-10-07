@@ -43,6 +43,15 @@
     svg path {
       fill: @c-gray-35;
     }
+
+    &:hover{
+      background-color: @c-gray-75-fade-35;
+      color: @c-gray-75;
+
+      svg path {
+        fill: @c-gray-75;
+      }
+    }
   }
 
   &.cuserpic--mode_dark {
@@ -50,6 +59,15 @@
 
     svg path {
       fill: @c-gray-75;
+    }
+
+    &:hover{
+      background-color: @c-gray-75-fade-35;
+      color: @c-gray-75;
+
+      svg path {
+        fill: @c-gray-75;
+      }
     }
   }
 
@@ -95,18 +113,9 @@
       transition: @duration-blink ease-in-out;
     }
 
-    &:hover {
-      background-color: @c-gray-75-fade-35;
-      color: @c-gray-75;
-
-      &:before {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      svg path {
-        fill: @c-gray-75;
-      }
+    &:hover:before {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
