@@ -11,8 +11,7 @@ import {Button} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
-import {SortableContainer, SortableElement, SortEnd} from 'react-sortable-hoc';
-import {DropdownButtonProps} from './Dropdown';
+import {DropdownButtonProps} from './interfaces';
 
 export default {
     title: 'DropDown',
@@ -42,43 +41,28 @@ const DropBtn: React.FC<DropdownButtonProps> = (props) => {
     );
 };
 
-const Slist = SortableContainer(List);
-const SListItem = SortableElement(List.Item);
 const DropSortable: React.FC = () => {
-    const [valueMap, setValueMap] = useState(
-        new Map([
-            [1, 1],
-            [2, 2],
-            [3, 3],
-        ]),
-    );
-
-    const sortEndHandler = (sortEnd: SortEnd) => {
-        const oldValue = valueMap.get(sortEnd.oldIndex);
-        const newValue = valueMap.get(sortEnd.newIndex);
-        if (oldValue && newValue) {
-            valueMap.set(sortEnd.oldIndex, newValue);
-            valueMap.set(sortEnd.newIndex, oldValue);
-
-            setValueMap(new Map(valueMap.entries()));
-        }
-    };
+    const data = [];
+    for (let i = 1; i < 10; i++) {
+        data.push(i);
+    }
+    const [sortedData, setSortedData] = useState<number[]>([]);
 
     return (
         <>
-            <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-                <Slist onSortEnd={sortEndHandler} as={'ul'} size={'lg'} variant={'dark'}>
-                    <SListItem className={'ztop'} as={'li'} key={'drop1'} index={1}>
-                        {valueMap.get(1)}
-                    </SListItem>
-                    <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop2'} index={2}>
-                        {valueMap.get(2)}
-                    </SListItem>
-                    <SListItem className={'ztop'} as={'li'} href={'#'} key={'drop3'} index={3}>
-                        {valueMap.get(3)}
-                    </SListItem>
-                </Slist>
-            </Dropdown>
+            <StoryDescription>Отсортированный список: {sortedData.join(' ')}</StoryDescription>
+            <Dropdown.SList
+                priorityPositions="right-top"
+                onClose={(sortedValues) => setSortedData(sortedValues)}
+                onSort={(sortedValues) => setSortedData(sortedValues)}
+                trigger={() => <Button>Выпадающий список</Button>}
+            >
+                {data.map((el) => (
+                    <Dropdown.SItem value={el} key={el}>
+                        Перемещаемый элемент {el}
+                    </Dropdown.SItem>
+                ))}
+            </Dropdown.SList>
         </>
     );
 };
@@ -217,7 +201,7 @@ export const SortableList: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Top right position</StoryTitle>
-            Для обработки перетаскивания смотри аттрибут SortEnd
+            <StoryDescription>Для обработки перетаскивания смотри аттрибут SortEnd</StoryDescription>
             <div style={{marginTop: '130px'}}>
                 <DropSortable />
             </div>

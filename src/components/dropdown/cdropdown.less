@@ -1,0 +1,39 @@
+.cdropdown {
+
+}
+
+.cdropdown__dragicon {
+  cursor: grab;
+}
+
+.cdropdown__dragging-row {
+  z-index: 99999 !important;
+  .clist-item__main-text {
+    color: @c-gray-50;
+  }
+  path {
+    fill: @c-gray-50;
+  }
+}
+
+.cdropdown__droptotop {
+  border-top: @c-primary-blue 2px solid!important;;
+}
+
+.cdropdown__droptobottom {
+  border-bottom: @c-primary-blue 2px solid!important;
+}
+
+.cdropdown__droptotop--rounded {
+  border-radius: 15px 15px 0 0;
+}
+
+.cdropdown__droptobottom--rounded {
+  border-radius: 0 0 15px 15px;
+}
+
+.cdropdown__dropable-item {
+  border-top: transparent 2px solid;
+  border-bottom: transparent 2px solid;
+}
+
