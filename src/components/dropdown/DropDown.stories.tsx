@@ -18,7 +18,7 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic interactive />;
+const Prefix: React.FC = () => <Pic />;
 const Suffix: React.FC = () => <AddIcon />;
 
 const DropBtn: React.FC<DropdownButtonProps> = (props) => {
@@ -201,7 +201,6 @@ export const SortableList: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Top right position</StoryTitle>
-            <StoryDescription>Для обработки перетаскивания смотри аттрибут SortEnd</StoryDescription>
             <div style={{marginTop: '130px'}}>
                 <DropSortable />
             </div>
