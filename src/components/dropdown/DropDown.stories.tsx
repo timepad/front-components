@@ -227,12 +227,16 @@ export const ProfileDrop: IStorybookComponent = () => {
     );
 };
 
-export const MemberFiltersEdit: IStorybookComponent = () => {
+export const RecursiveEditableDropdownExample: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Profile Drop</StoryTitle>
+            <StoryDescription>
+                Возможность вкладывать дропдауны друг в друга. Может быть использовано для настройки таблиц (например
+                участников)
+            </StoryDescription>
             <div style={{marginTop: '130px'}}>
-                <MemberFiltersEditCurrentTemplate />
+                <RecursiveEditableDropdown />
             </div>
         </>
     );
@@ -255,28 +259,29 @@ export const WithLongItemList: IStorybookComponent = () => {
     );
 };
 
-const MemberFiltersEditCurrentTemplate: FC = () => {
+const RecursiveEditableDropdown: FC<{text?: string}> = () => {
+    const [nextBlockText, setNextBlockText] = useState('');
     return (
         <Dropdown
             nested
             trigger={() => {
                 return (
                     <div className="mtheme--darkpic">
-                        <Button>open</Button>
+                        <Button>Open</Button>
                     </div>
                 );
             }}
         >
             <List variant="dark">
                 <List.Item
-                    suffix={<MemberFiltersEditCurrentTemplate />}
+                    suffix={<RecursiveEditableDropdown text={nextBlockText} />}
                     className="mtheme--darkpic"
                     onClick={(e: any) => e.stopPropagation()}
                 >
-                    тест
+                    {nextBlockText || 'Вложенный фильтр'}
                 </List.Item>
                 <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
-                    <input type="text" name="name" />
+                    <input type="text" name="name" onChange={(e: any) => setNextBlockText(e.target.value)} />
                 </List.Item>
             </List>
         </Dropdown>
