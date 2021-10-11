@@ -3,37 +3,21 @@ import {ComponentClass, FC, ReactChild, useCallback, useState} from 'react';
 import './index.less';
 import {Popup} from '../popup';
 import cx from 'classnames';
-import {Button} from '../button';
-import {DropdownButtonProps, IDropdownProps, IDropdownSortableListProps, ISortableItem} from './interfaces';
+import {Button, ButtonVariant, IButtonProps} from '../button';
+import {IDropdownProps, IDropdownSortableListProps, ISortableItem} from './interfaces';
 import {SortableContainer, SortableElement, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../list';
 import DragIcon from '../../assets/svg/16/icon-dragable-16.svg';
 import {arrayMoveImmutable} from '../../services/helpers/moveArray';
 import {component} from '../../services/helpers/classHelpers';
 
-const DropdownButton: FC<DropdownButtonProps> = ({
-    show,
-    modifier,
-    onClose,
-    nested = false,
-    priorityPositions,
-    children,
-    on = 'click',
-    ...buttonProps
-}) => {
-    const Btn = useCallback(() => <Button {...buttonProps} />, [buttonProps]);
+const DropdownButton: FC<IButtonProps> = ({children, variant = ButtonVariant.secondary, ...buttonProps}) => {
     return (
-        <Dropdown
-            nested={nested}
-            show={show}
-            trigger={Btn}
-            modifier={modifier}
-            onClose={onClose}
-            priorityPositions={priorityPositions}
-            on={on}
-        >
-            {children}
-        </Dropdown>
+        <div className={cx('cdropdown__button', {'mtheme--darkpic': variant === ButtonVariant.secondary})}>
+            <Button variant={variant} {...buttonProps}>
+                {children}
+            </Button>
+        </div>
     );
 };
 
@@ -170,19 +154,10 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
 };
 
 export const Dropdown: FC<IDropdownProps> & {
-    Button: FC<DropdownButtonProps>;
+    Button: FC<IButtonProps>;
     SList: FC<IDropdownSortableListProps>;
     SItem: ComponentClass<Omit<ISortableItem, 'prefix'>>;
-} = ({
-    show,
-    nested = false,
-    on = 'click',
-    modifier,
-    trigger,
-    onClose,
-    children,
-    priorityPositions = 'right-center',
-}) => {
+} = ({show, nested = false, on = 'click', modifier, trigger, onClose, children, priorityPositions = 'right-top'}) => {
     return (
         <Popup
             className="cdropdown"
@@ -190,10 +165,13 @@ export const Dropdown: FC<IDropdownProps> & {
             open={show}
             on={on}
             position={priorityPositions}
+            keepTooltipInside
             onClose={onClose}
             trigger={trigger}
         >
-            <div className={cx('dropdown-body', modifier)}>{children}</div>
+            <div className="dropdown-container">
+                <div className={cx('dropdown-body', modifier)}>{children}</div>
+            </div>
         </Popup>
     );
 };

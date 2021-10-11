@@ -7,11 +7,11 @@ import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/
 import 'css/bundle.less';
 import './storybook/demo.less';
 import {List} from '../list';
-import {Button} from '../button';
+import {Button, IButtonProps} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
-import {DropdownButtonProps} from './interfaces';
+import {IDropdownProps} from './interfaces';
 
 export default {
     title: 'DropDown',
@@ -21,10 +21,10 @@ export default {
 const Prefix: React.FC = () => <Pic />;
 const Suffix: React.FC = () => <AddIcon />;
 
-const DropBtn: React.FC<DropdownButtonProps> = (props) => {
+const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
     return (
         <>
-            <Dropdown.Button label={'Выпадающий список'} {...props}>
+            <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -36,7 +36,7 @@ const DropBtn: React.FC<DropdownButtonProps> = (props) => {
                         Primary text
                     </List.Item>
                 </List>
-            </Dropdown.Button>
+            </Dropdown>
         </>
     );
 };
@@ -119,17 +119,15 @@ const DropProfile: React.FC = () => {
                     Избранное
                 </List.Item>
                 <List.Item as={'button'} type={'button'} label="Выход" />
-                <List.Item className={'mtheme--darkpic'} as={'button'} type={'button'}>
-                    <Button label="Стать организатором" />
-                </List.Item>
+                <Dropdown.Button label="Стать организатором" />
             </List>
         </Dropdown>
     );
 };
 
-const DropLongItemList: React.FC = () => {
+const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
     return (
-        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
+        <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
             <List variant="dark" size="lg">
                 {cities.map((item, index) => {
                     return <List.Item key={index}>{item}</List.Item>;
@@ -149,7 +147,7 @@ export const Default: IStorybookComponent = () => {
 };
 
 export const VariousPositions: IStorybookComponent = () => {
-    const allPositions: DropdownButtonProps['priorityPositions'][] = [
+    const allPositions: IDropdownProps['priorityPositions'][] = [
         'top-left',
         'top-center',
         'top-right',
@@ -157,7 +155,7 @@ export const VariousPositions: IStorybookComponent = () => {
         'bottom-center',
         'bottom-right',
     ];
-    const bottomTopPos: DropdownButtonProps['priorityPositions'][] = [
+    const bottomTopPos: IDropdownProps['priorityPositions'][] = [
         'right-top',
         'right-center',
         'right-bottom',
@@ -244,8 +242,14 @@ export const WithLongItemList: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>With long item list</StoryTitle>
-            <div style={{marginTop: '130px'}}>
+            <StoryDescription>Ниже есть еще 2 кнопки</StoryDescription>
+            <div style={{marginTop: '130px', display: 'flex', justifyContent: 'space-between'}}>
                 <DropLongItemList />
+                <DropLongItemList priorityPositions={'left-center'} />
+            </div>
+            <div style={{marginTop: '1000px', display: 'flex', justifyContent: 'space-between'}}>
+                <DropLongItemList />
+                <DropLongItemList priorityPositions={'left-center'} />
             </div>
         </>
     );

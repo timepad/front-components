@@ -1,5 +1,4 @@
 import {IPopupProps} from '../popup';
-import {IButtonProps} from '../button';
 import {ReactChild} from 'react';
 import {IItem} from '../list/Item';
 
@@ -12,8 +11,6 @@ export interface IDropdownProps {
     nested?: boolean;
     on?: IPopupProps['on'];
 }
-
-export type DropdownButtonProps = Omit<IDropdownProps, 'trigger'> & IButtonProps;
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
     children: ReactChild | ReactChild[];
