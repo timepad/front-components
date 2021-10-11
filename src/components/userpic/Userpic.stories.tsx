@@ -1,125 +1,150 @@
-import '../../assets/css/bundle.less';
 import * as React from 'react';
-import {StoryTitle, Spacer} from '../../services/helpers/storyBookHelpers';
-import {PicSize, PicShape, Pic} from './Pic';
-
-const argTypes = {
-    fillUrl: {
-        type: {required: false},
-        table: {
-            type: {summary: 'String'},
-            defaultValue: {summary: 'null'},
-        },
-        control: {type: null},
-    },
-    fillChar: {
-        type: {required: false},
-        table: {
-            type: {summary: 'String'},
-            defaultValue: {summary: 'null'},
-        },
-        control: {type: null},
-    },
-    onClick: {
-        type: {required: false},
-        table: {
-            type: {summary: '() => void'},
-            defaultValue: {summary: 'null'},
-        },
-        control: {type: null},
-    },
-};
+import {StoryTitle, Spacer, IStorybookComponent} from '../../services/helpers/storyBookHelpers';
+import {Pic} from './Pic';
+import {Meta} from '@storybook/react/types-6-0';
+import {Brick} from '../brick';
 
 export default {
     title: 'Pics',
-    argTypes,
-};
+    component: Pic,
+} as Meta;
 
-const imageUrl = 'https://ucarecdn.com/a6b28451-2340-4b61-9776-8e186bf976fa/';
-const char = 'A';
+export const Basic: IStorybookComponent = () => {
+    const clickCb = () => alert('Pic clicked');
 
-export const Basic: React.FC = () => {
-    return (
-        <div>
-            <Pic />
-        </div>
-    );
-};
-
-export const InteractiveStyle: React.FC = () => {
-    return (
-        <div>
-            <Pic interactive />
-        </div>
-    );
-};
-
-export const WithImage: React.FC = () => {
-    return (
-        <div>
-            <Pic fillURL={imageUrl} />
-        </div>
-    );
-};
-
-export const WithCharacter: React.FC = () => {
-    return (
-        <div>
-            <Pic fillChar={char} />
-        </div>
-    );
-};
-
-export const Orgpics: React.FC = () => {
     return (
         <>
-            <StoryTitle>Organization square default icon</StoryTitle>
+            <StoryTitle>Basic Pic. Modes: light, standart, dark. With border and borderless.</StoryTitle>
             <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} />
+                <Pic bordered mode="light" />
                 <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} />
-            </div>
-            <div className="lbrick-2" />
+                <Pic />
+                <Spacer />
+                <Pic bordered mode="dark" />
+                <Spacer />
+                <Pic bordered mode="light" label="A" />
+                <Spacer />
+                <Pic label="B" />
+                <Spacer />
+                <Pic bordered mode="dark" label="c" />
+                <Spacer />
 
-            <StoryTitle>Organization square small icon</StoryTitle>
-            <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} size={PicSize.small} />
-                <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.small} />
+                <div style={{background: 'black', padding: '20px'}}>
+                    <Pic bordered mode="white" />
+                </div>
             </div>
-            <div className="lbrick-2" />
-
-            <StoryTitle>Organization square thin icon</StoryTitle>
+            <Brick />
+            <StoryTitle>Same basic Pic with click handler or just hover effect.</StoryTitle>
             <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} size={PicSize.thin} />
+                <Pic bordered mode="light" onClick={clickCb} />
                 <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.thin} />
+                <Pic hoverable />
+                <Spacer />
+                <Pic bordered mode="dark" hoverable />
             </div>
-            <div className="lbrick-2" />
-
-            <StoryTitle>Organization square big icon</StoryTitle>
+            <Brick />
+            <StoryTitle>Same basic Pic with image, first symbol of name.</StoryTitle>
             <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} size={PicSize.big} />
+                <Pic
+                    imgURL="https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg"
+                    hoverable
+                />
                 <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.big} />
-            </div>
-            <div className="lbrick-2" />
-
-            <StoryTitle>Organization square bigger icon</StoryTitle>
-            <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} size={PicSize.bigger} />
+                <Pic label="Avatar" mode="light" hoverable />
                 <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.bigger} />
             </div>
-            <div className="lbrick-2" />
-
-            <StoryTitle>Organization square biggest icon</StoryTitle>
-            <div className="lflex">
-                <Pic shape={PicShape.square} fillChar={char} size={PicSize.biggest} />
-                <Spacer />
-                <Pic shape={PicShape.square} fillURL={imageUrl} size={PicSize.biggest} />
-            </div>
-            <div className="lbrick-2" />
         </>
     );
 };
+Basic.storyName = 'Basic Pic';
+
+export const PicSizes: IStorybookComponent = () => {
+    const imageUrl =
+        'https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg';
+    const label = 'Simon';
+
+    return (
+        <>
+            <StoryTitle>Default icon (size 32x32px)</StoryTitle>
+            <div className="lflex">
+                <Pic hoverable />
+                <Spacer />
+                <Pic label={label} hoverable />
+                <Spacer />
+                <Pic imgURL={imageUrl} hoverable />
+                <Spacer />
+                <Pic hoverable square />
+                <Spacer />
+                <Pic label={label} hoverable square />
+                <Spacer />
+                <Pic imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+
+            <StoryTitle>Icon in size S</StoryTitle>
+            <div className="lflex">
+                <Pic size="s" hoverable />
+                <Spacer />
+                <Pic size="s" label={label} hoverable />
+                <Spacer />
+                <Pic size="s" imgURL={imageUrl} hoverable />
+                <Spacer />
+                <Pic size="s" hoverable square />
+                <Spacer />
+                <Pic size="s" label={label} hoverable square />
+                <Spacer />
+                <Pic size="s" imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+
+            <StoryTitle>Icon in size M</StoryTitle>
+            <div className="lflex">
+                <Pic size="m" hoverable />
+                <Spacer />
+                <Pic size="m" label={label} hoverable />
+                <Spacer />
+                <Pic size="m" imgURL={imageUrl} hoverable />
+                <Spacer />
+                <Pic size="m" hoverable square />
+                <Spacer />
+                <Pic size="m" label={label} hoverable square />
+                <Spacer />
+                <Pic size="m" imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+
+            <StoryTitle>Icon in size L</StoryTitle>
+            <div className="lflex">
+                <Pic size="l" hoverable />
+                <Spacer />
+                <Pic size="l" label={label} hoverable />
+                <Spacer />
+                <Pic size="l" imgURL={imageUrl} hoverable />
+                <Spacer />
+                <Pic size="l" hoverable square />
+                <Spacer />
+                <Pic size="l" label={label} hoverable square />
+                <Spacer />
+                <Pic size="l" imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+
+            <StoryTitle>Icon in size XL</StoryTitle>
+            <div className="lflex">
+                <Pic size="xl" hoverable />
+                <div style={{minWidth: 32}} />
+                <Pic size="xl" label={label} hoverable />
+                <div style={{minWidth: 32}} />
+                <Pic size="xl" imgURL={imageUrl} hoverable />
+                <div style={{minWidth: 32}} />
+                <Pic size="xl" hoverable square />
+                <div style={{minWidth: 32}} />
+                <Pic size="xl" label={label} hoverable square />
+                <div style={{minWidth: 32}} />
+                <Pic size="xl" imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+        </>
+    );
+};
+PicSizes.storyName = 'Pic sizes';
