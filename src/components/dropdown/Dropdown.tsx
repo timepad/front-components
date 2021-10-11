@@ -4,7 +4,7 @@ import './index.less';
 import {Popup} from '../popup';
 import cx from 'classnames';
 import {Button, ButtonVariant, IButtonProps} from '../button';
-import {IDropdownProps, IDropdownSortableListProps, ISortableItem} from './interfaces';
+import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
 import {SortableContainer, SortableElement, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../list';
 import DragIcon from '../../assets/svg/16/icon-dragable-16.svg';
@@ -156,7 +156,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
 export const Dropdown: FC<IDropdownProps> & {
     Button: FC<IButtonProps>;
     SList: FC<IDropdownSortableListProps>;
-    SItem: ComponentClass<Omit<ISortableItem, 'prefix'>>;
+    SItem: ComponentClass<ISortableItemProps>;
 } = ({show, nested = false, on = 'click', modifier, trigger, onClose, children, priorityPositions = 'right-top'}) => {
     return (
         <Popup
@@ -178,4 +178,4 @@ export const Dropdown: FC<IDropdownProps> & {
 
 Dropdown.Button = DropdownButton;
 Dropdown.SList = DropdownSortableList;
-Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'> | any>(List.Item);
+Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as ComponentClass<ISortableItemProps>;
