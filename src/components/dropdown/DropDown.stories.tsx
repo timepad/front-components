@@ -168,7 +168,7 @@ export const VariousPositions: IStorybookComponent = () => {
             <StoryTitle>Various positions</StoryTitle>
             <StoryDescription>Открывает дропдаун относительно контейнера кнопки</StoryDescription>
             <div style={{marginTop: '40px'}}>
-                <div className="vertical-grid">
+                <div className="horizontal-grid">
                     {bottomTopPos.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
@@ -178,7 +178,7 @@ export const VariousPositions: IStorybookComponent = () => {
                         />
                     ))}
                 </div>
-                <div className="horizontal-grid">
+                <div className="vertical-grid">
                     {allPositions.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
