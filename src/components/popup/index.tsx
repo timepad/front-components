@@ -109,12 +109,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const timeOut = useRef(0);
 
         const handleLockScroll = useCallback(() => {
-            if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-        }, [isModal, lockScroll]);
+            if (lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        }, [lockScroll]);
 
         const resetScroll = useCallback(() => {
-            if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
-        }, [isModal, lockScroll]);
+            if (lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
+        }, [lockScroll]);
 
         const setPosition = useCallback(() => {
             if (isModal || !isOpen) {

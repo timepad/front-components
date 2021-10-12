@@ -5,6 +5,7 @@ import {SortableElementProps} from 'react-sortable-hoc';
 
 export interface IDropdownProps {
     trigger: IPopupProps['trigger'];
+    keepInsideParent?: IPopupProps['keepTooltipInside'];
     show?: boolean;
     onClose?: () => void;
     priorityPositions?: IPopupProps['position'];

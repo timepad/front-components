@@ -10,6 +10,7 @@ import {List} from '../list';
 import DragIcon from '../../assets/svg/16/icon-dragable-16.svg';
 import {arrayMoveImmutable} from '../../services/helpers/moveArray';
 import {component} from '../../services/helpers/classHelpers';
+import {useClientRect} from '../../services/hooks/useClientRect';
 
 const DropdownButton: FC<IButtonProps> = ({children, variant = ButtonVariant.secondary, ...buttonProps}) => {
     return (
@@ -157,7 +158,18 @@ export const Dropdown: FC<IDropdownProps> & {
     Button: FC<IButtonProps>;
     SList: FC<IDropdownSortableListProps>;
     SItem: ComponentClass<ISortableItemProps>;
-} = ({show, nested = false, on = 'click', modifier, trigger, onClose, children, priorityPositions = 'right-top'}) => {
+} = ({
+    show,
+    nested = false,
+    keepInsideParent = true,
+    on = 'click',
+    modifier,
+    trigger,
+    onClose,
+    children,
+    priorityPositions = 'right-top',
+}) => {
+    const [rect, ref] = useClientRect();
     return (
         <Popup
             className="cdropdown"
@@ -165,11 +177,12 @@ export const Dropdown: FC<IDropdownProps> & {
             open={show}
             on={on}
             position={priorityPositions}
-            keepTooltipInside
+            keepTooltipInside={keepInsideParent}
             onClose={onClose}
             trigger={trigger}
+            lockScroll={window.innerHeight <= Number(rect?.height)}
         >
-            <div className="dropdown-container">
+            <div className="dropdown-container" ref={ref}>
                 <div className={cx('dropdown-body', modifier)}>{children}</div>
             </div>
         </Popup>
