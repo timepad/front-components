@@ -34,8 +34,6 @@ type ControlClickHandler = (ControlId: string) => void;
 export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
     defaultControlId?: ControlId;
     activeControlId?: ControlId;
-    light?: boolean;
-    dark?: boolean;
     fix?: boolean;
     onControlClick?: (ControlId: string, setActiveControlId: ControlClickHandler) => void;
 }
