@@ -1,5 +1,4 @@
-import React from 'react';
-import {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import React, {createContext, FC, HTMLAttributes, useMemo} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import {Control, ControlId} from './Control';
@@ -52,10 +51,12 @@ export const SegmentedControl: FC<ISegmentedControlProps> & {
 }: ISegmentedControlProps) => {
     const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
     const divClasses = cx(component('segmentedcontrol')({fix}), className);
+
     const segmentedControlStore = useMemo(
         () => new SegmentedControlStore(initialControlId ?? activeControlId),
         [initialControlId, activeControlId],
     );
+
     const handleOnControlClick: ControlClickHandler = onControlClick
         ? (ControlId: string) => {
               onControlClick(ControlId, segmentedControlStore.setActiveControlId);

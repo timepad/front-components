@@ -1,5 +1,4 @@
-import React from 'react';
-import {FC, HTMLAttributes, useContext, useEffect, useRef, useState} from 'react';
+import React, {FC, HTMLAttributes, useContext, useEffect, useRef, useState} from 'react';
 import cx from 'classnames';
 import {SegmentedControlContext} from './SegmentedControl';
 import {component} from '../../services/helpers/classHelpers';
@@ -30,6 +29,7 @@ export const ControlList: FC<HTMLAttributes<HTMLUListElement>> = observer(({chil
     const boxRef = useRef<HTMLDivElement>(null);
     const {segmentedControlStore} = useContext(SegmentedControlContext);
     const [highlighterStyles, setHighlighterStyles] = useState<IHighlighterStyle>(initialStyles);
+
     const getHighlighterStyles = (): IHighlighterStyle => {
         let value = {...initialStyles};
         const activeEl = boxRef?.current?.querySelector<HTMLLIElement>(activeElSelector);
@@ -41,6 +41,7 @@ export const ControlList: FC<HTMLAttributes<HTMLUListElement>> = observer(({chil
         }
         return value;
     };
+
     useEffect(() => {
         setHighlighterStyles(getHighlighterStyles());
     }, [segmentedControlStore.activeControlId]);

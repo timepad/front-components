@@ -77,20 +77,30 @@ export const Dark: IStorybookComponent = () => {
         <>
             <StoryTitle>Dark Segmented Control</StoryTitle>
             <div className={themes['dark'].containerClasses.join(' ')}>
-                <SegmentedControl activeControlId={'first'}>
-                    <SegmentedControl.List>
-                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
-                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
-                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
-                    </SegmentedControl.List>
-                </SegmentedControl>
-                <SegmentedControl activeControlId={'first'} fix={true}>
-                    <SegmentedControl.List>
-                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
-                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
-                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
-                    </SegmentedControl.List>
-                </SegmentedControl>
+                <div className="mtheme__typo mtheme--bg--demo">
+                    <div className="lbrick-2"></div>
+                    <div className="lflex">
+                        <div className="lgap-4-0"></div>
+                        <div className="lflex--y-axis" style={{flexGrow: 1}}>
+                            <SegmentedControl activeControlId={'first'}>
+                                <SegmentedControl.List>
+                                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                                </SegmentedControl.List>
+                            </SegmentedControl>
+                            <SegmentedControl activeControlId={'first'} fix={true}>
+                                <SegmentedControl.List>
+                                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                                </SegmentedControl.List>
+                            </SegmentedControl>
+                        </div>
+                        <div className="lgap-4-0"></div>
+                    </div>
+                    <div className="lbrick-2"></div>
+                </div>
             </div>
         </>
     );

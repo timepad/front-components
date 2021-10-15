@@ -1,5 +1,4 @@
-import React from 'react';
-import {FC, HTMLAttributes, useContext, useEffect} from 'react';
+import React, {FC, HTMLAttributes, useContext, useEffect} from 'react';
 import cx from 'classnames';
 import {SegmentedControlContext} from './SegmentedControl';
 import {component} from '../../services/helpers/classHelpers';
