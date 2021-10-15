@@ -36,7 +36,7 @@ export const Default: IStorybookComponent = () => {
                     <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
                 </SegmentedControl.List>
             </SegmentedControl>
-
+            <div className="lbrick-2"></div>
             <SegmentedControl activeControlId={'first'} fix={true}>
                 <SegmentedControl.List>
                     <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
@@ -60,6 +60,7 @@ export const Light: IStorybookComponent = () => {
                         <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
                     </SegmentedControl.List>
                 </SegmentedControl>
+                <div className="lbrick-2"></div>
                 <SegmentedControl activeControlId={'first'} fix={true}>
                     <SegmentedControl.List>
                         <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
@@ -89,6 +90,7 @@ export const Dark: IStorybookComponent = () => {
                                     <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
                                 </SegmentedControl.List>
                             </SegmentedControl>
+                            <div className="lbrick-2"></div>
                             <SegmentedControl activeControlId={'first'} fix={true}>
                                 <SegmentedControl.List>
                                     <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
