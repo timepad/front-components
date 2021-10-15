@@ -1,2 +1,2 @@
-export * from './Segmentedcontrol';
+export * from './SegmentedControl';
 export * from './Control';

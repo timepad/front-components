@@ -10,19 +10,16 @@
         align-items: flex-end;
         list-style: none;
         margin: 0;
-        padding: 2px;
+        padding: 2px 1px;
     }
 
     .csegmentedcontrol__li {
-        margin-right: 2px;
+        margin: 0;
         text-align: center;
-        &:last-of-type {
-            margin-right: 0;
-        }
     }
 
     .csegmentedcontrol__button {
-        padding: 3px 16px;
+        padding: 4px 16px;
         width: 100%;
         background-color: transparent;
         border: 0;
@@ -37,9 +34,17 @@
         }
     }
 
+    .csegmentedcontrol__li--is-active {
+        .csegmentedcontrol__button {
+            &:hover {
+                color: @c-primary-blue;
+            }
+        }
+    }
+
     .csegmentedcontrol__highlighter {
         position: absolute;
-        top: 2px;
+        top: 1px;
         display: block;
         height: calc(100% - 4px);
         z-index: 0;
@@ -47,6 +52,7 @@
         transform: translateX(0px);
         transition: inherit;
         border-radius: @br-rounded;
+        border: 1px solid @c-dark-gray-fade-35;
     }
 
     .csegmentedcontrol__highlightBox {
@@ -67,9 +73,12 @@
         }
     }
 
-    &.csegmentedcontrol--light {
+    html body .mtheme--lightpic & {
         .csegmentedcontrol__highlightBox {
             background: @c-gray-50-fade-20;
+        }
+        .csegmentedcontrol__highlighter {
+            border: 1px solid @c-gray-50-fade-20;
         }
 
         .csegmentedcontrol__button {
@@ -78,17 +87,36 @@
                 color: @c-gray-75;
             }
         }
+
+        .csegmentedcontrol__li--is-active {
+            .csegmentedcontrol__button {
+                &:hover {
+                    color: @c-black;
+                }
+            }
+        }
     }
 
-    &.csegmentedcontrol--dark {
+    html body .mtheme--darkpic & {
         .csegmentedcontrol__highlightBox {
             background: @c-gray-50-fade-20;
+        }
+        .csegmentedcontrol__highlighter {
+            border: 1px solid @c-gray-50-fade-20;
         }
 
         .csegmentedcontrol__button {
             color: @c-white;
+
             &:hover {
                 color: @c-gray-35;
+            }
+        }
+        .csegmentedcontrol__li--is-active {
+            .csegmentedcontrol__button {
+                &:hover {
+                    color: @c-white;
+                }
             }
         }
 
@@ -96,4 +124,9 @@
             background: @c-gray-75;
         }
     }
+}
+
+.mtheme--darkpic {
+    padding: 20px;
+    background: @c-black;
 }

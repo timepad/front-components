@@ -1,64 +1,121 @@
 import React from 'react';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
-import {Segmentedcontrol} from './index';
+import {SegmentedControl} from './index';
 
 import 'css/bundle.less';
 
 export default {
     title: 'SegmentedControl',
-    component: Segmentedcontrol,
+    component: SegmentedControl,
 } as Meta;
 
-export const Simple: IStorybookComponent = () => {
+const themes = {
+    default: {
+        title: 'Default theme',
+        containerClasses: [],
+    },
+    light: {
+        title: 'Light theme',
+        containerClasses: ['mtheme--lightpic'],
+    },
+    dark: {
+        title: 'Dark theme',
+        containerClasses: ['mtheme--darkpic'],
+    },
+};
+
+export const Default: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Simple Segmentedcontrol Example</StoryTitle>
-            <Segmentedcontrol activeControlId={'first'}>
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
-            <Segmentedcontrol activeControlId={'first'} light={true}>
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'third'}>Third</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
-            <Segmentedcontrol
+            <StoryTitle>Default Segmented Control</StoryTitle>
+            <SegmentedControl activeControlId={'first'}>
+                <SegmentedControl.List>
+                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                </SegmentedControl.List>
+            </SegmentedControl>
+
+            <SegmentedControl activeControlId={'first'} fix={true}>
+                <SegmentedControl.List>
+                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                </SegmentedControl.List>
+            </SegmentedControl>
+        </>
+    );
+};
+
+export const Light: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Light Segmented Control</StoryTitle>
+            <div className={themes['light'].containerClasses.join(' ')}>
+                <SegmentedControl activeControlId={'first'}>
+                    <SegmentedControl.List>
+                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                    </SegmentedControl.List>
+                </SegmentedControl>
+                <SegmentedControl activeControlId={'first'} fix={true}>
+                    <SegmentedControl.List>
+                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                    </SegmentedControl.List>
+                </SegmentedControl>
+            </div>
+        </>
+    );
+};
+
+export const Dark: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Dark Segmented Control</StoryTitle>
+            <div className={themes['dark'].containerClasses.join(' ')}>
+                <SegmentedControl activeControlId={'first'}>
+                    <SegmentedControl.List>
+                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                    </SegmentedControl.List>
+                </SegmentedControl>
+                <SegmentedControl activeControlId={'first'} fix={true}>
+                    <SegmentedControl.List>
+                        <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                        <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                    </SegmentedControl.List>
+                </SegmentedControl>
+            </div>
+        </>
+    );
+};
+
+export const CustomClick: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Custom click Segmented Control</StoryTitle>
+            <StoryDescription>
+                This control will log <b>controlId</b> to console on click.
+            </StoryDescription>
+            <SegmentedControl
                 activeControlId={'first'}
-                dark={true}
                 onControlClick={(controlId, setActiveControlId) => {
                     window.console.log(controlId);
                     setActiveControlId(controlId);
                 }}
             >
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
-            <Segmentedcontrol activeControlId={'first'} fix={true}>
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
-            <Segmentedcontrol activeControlId={'first'} fix={true} light={true}>
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'third'}>Third</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
-            <Segmentedcontrol activeControlId={'first'} fix={true} dark={true}>
-                <Segmentedcontrol.List>
-                    <Segmentedcontrol.Control controlId={'first'}>First</Segmentedcontrol.Control>
-                    <Segmentedcontrol.Control controlId={'second'}>Second</Segmentedcontrol.Control>
-                </Segmentedcontrol.List>
-            </Segmentedcontrol>
+                <SegmentedControl.List>
+                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                </SegmentedControl.List>
+            </SegmentedControl>
         </>
     );
 };

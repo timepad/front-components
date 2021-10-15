@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {createContext, FC, HTMLAttributes, useMemo} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
@@ -8,81 +8,77 @@ import {action, observable} from 'mobx';
 
 import './index.less';
 
-class SegmentedcontrolStore {
+class SegmentedControlStore {
+    @observable activeControlId: string;
+
     constructor(activeControlId = '') {
         this.activeControlId = activeControlId;
     }
 
-    @observable activeControlId: string;
     @action.bound setActiveControlId(id: string) {
         this.activeControlId = id;
     }
 }
 
-interface ISegmentedcontrolStoreContext {
-    segmentedcontrolStore: SegmentedcontrolStore;
-    handleOnControlClick: ControlClickHandler;
+interface ISegmentedControlStoreContext {
+    segmentedControlStore: SegmentedControlStore;
+    onControlClick: ControlClickHandler;
 }
 
-export const SegmentedcontrolContext = createContext<ISegmentedcontrolStoreContext>(
-    {} as ISegmentedcontrolStoreContext,
+export const SegmentedControlContext = createContext<ISegmentedControlStoreContext>(
+    {} as ISegmentedControlStoreContext,
 );
 
 type ControlClickHandler = (ControlId: string) => void;
 
-export interface ISegmentedcontrolProps extends HTMLAttributes<HTMLDivElement> {
+export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
     defaultControlId?: ControlId;
     activeControlId?: ControlId;
     light?: boolean;
     dark?: boolean;
     fix?: boolean;
-    onControlClick?: (ControlId: string, setActiveControlId: (id: string) => void) => void;
+    onControlClick?: (ControlId: string, setActiveControlId: ControlClickHandler) => void;
 }
 
-const SegmentedcontrolBase: FC<ISegmentedcontrolProps> = ({
+export const SegmentedControl: FC<ISegmentedControlProps> & {
+    Control: typeof Control;
+    List: typeof ControlList;
+} = ({
     children,
     defaultControlId,
     activeControlId,
-    light,
-    dark,
     fix,
     onControlClick,
     className,
     ...rest
-}) => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const initialControlId = useMemo(() => defaultControlId, []);
-    const divClasses = cx(component('segmentedcontrol')({light, dark, fix}), className);
-    const segmentedcontrolStore = useMemo(
-        () => new SegmentedcontrolStore(initialControlId !== undefined ? initialControlId : activeControlId),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [activeControlId],
+}: ISegmentedControlProps) => {
+    const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
+    const divClasses = cx(component('segmentedcontrol')({fix}), className);
+    const segmentedControlStore = useMemo(
+        () => new SegmentedControlStore(initialControlId ?? activeControlId),
+        [initialControlId, activeControlId],
     );
     const handleOnControlClick: ControlClickHandler = onControlClick
         ? (ControlId: string) => {
-              onControlClick(ControlId, segmentedcontrolStore.setActiveControlId);
+              onControlClick(ControlId, segmentedControlStore.setActiveControlId);
           }
         : (ControlId: string) => {
-              segmentedcontrolStore.setActiveControlId(ControlId);
+              segmentedControlStore.setActiveControlId(ControlId);
           };
 
     return (
         <div {...rest} className={divClasses}>
-            <SegmentedcontrolContext.Provider
+            <SegmentedControlContext.Provider
                 value={{
-                    segmentedcontrolStore: segmentedcontrolStore,
-                    handleOnControlClick: handleOnControlClick,
+                    segmentedControlStore,
+                    onControlClick: handleOnControlClick,
                 }}
             >
                 {children}
-            </SegmentedcontrolContext.Provider>
+            </SegmentedControlContext.Provider>
         </div>
     );
 };
 
-const segmentedcontrolChildren = {
-    Control,
-    List: ControlList,
-};
-
-export const Segmentedcontrol = Object.assign(SegmentedcontrolBase, segmentedcontrolChildren);
+SegmentedControl.Control = Control;
+SegmentedControl.List = ControlList;
