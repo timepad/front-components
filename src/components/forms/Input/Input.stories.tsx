@@ -6,6 +6,7 @@ import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBo
 
 import 'css/bundle.less';
 import '../storybook/demo.less';
+import {InputKind} from '../enums';
 
 export default {
     title: 'Input',
@@ -34,6 +35,7 @@ interface IInputData {
     success?: boolean;
     error?: string;
     autoFocus?: boolean;
+    kind?: InputKind;
 }
 
 const inputsData: IInputData[] = [
@@ -86,10 +88,19 @@ const inputsData: IInputData[] = [
         success: false,
         error: 'Error input caption (error text)',
     },
+    // Ghost input
+    {
+        label: 'Ghost input caption',
+        value: '',
+        disabled: false,
+        success: false,
+        error: undefined,
+        kind: InputKind.ghost,
+    },
 ];
 
 const InputRow = (props: IInputData) => {
-    const {label, value: valueDefault, disabled, success, error, autoFocus} = props;
+    const {label, value: valueDefault, disabled, success, error, autoFocus, kind} = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Input
@@ -99,6 +110,7 @@ const InputRow = (props: IInputData) => {
             success={success}
             error={error}
             autoFocus={autoFocus}
+            kind={kind}
             onChange={(event) => setValue(event.target.value)}
         />
     );
@@ -129,6 +141,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                         success={input.success}
                                         error={input.error}
                                         autoFocus={input.autoFocus}
+                                        kind={input.kind}
                                     />
                                     <div className="lbrick-2" />
                                 </div>

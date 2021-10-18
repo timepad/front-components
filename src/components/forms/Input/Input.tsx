@@ -3,7 +3,7 @@ import {ChangeEventHandler, FocusEventHandler, useState, useEffect, useRef, useC
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {State} from '../enums';
+import {InputKind, State} from '../enums';
 
 export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -21,6 +21,7 @@ export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement>
     onStateChange?: (state: State) => void;
     onErrorTruncation?: (truncated: boolean) => void;
     type?: string;
+    kind?: InputKind;
 }
 
 export const Input: React.FC<IInputProps> = (props) => {
@@ -40,6 +41,7 @@ export const Input: React.FC<IInputProps> = (props) => {
         onStateChange,
         onErrorTruncation,
         type,
+        kind,
         ...othersProps
     } = props;
 
@@ -60,6 +62,7 @@ export const Input: React.FC<IInputProps> = (props) => {
             disabled: inputState === State.disabled,
             error: inputState === State.error,
             success: inputState === State.success,
+            ghost: kind === InputKind.ghost,
         }),
     );
 

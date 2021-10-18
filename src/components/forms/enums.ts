@@ -5,3 +5,8 @@ export enum State {
     success = 'success',
     idle = 'idle',
 }
+
+export enum InputKind {
+    primary = 'primary',
+    ghost = 'ghost',
+}
