@@ -381,17 +381,20 @@
 
       input:placeholder-shown ~ label,
       textarea:placeholder-shown ~ label {
-        transform: translateY(-10px);
+        transform: translateY(-9px);
+        font-size: @fs-caption-mobile;
+        line-height: @fs-caption-mobile;
+        color: @c-gray-35;
       }
 
       input:not(:placeholder-shown) ~ label,
       textarea:not(:placeholder-shown) ~ label,
       input:focus ~ label,
       textarea:focus ~ label {
-        font-size: @fs-caption;
-        line-height: @lh-caption;
-        color: @c-gray-75;
-        transform: translateY(-10px);
+        font-size: @fs-caption-mobile;
+        line-height: @fs-caption-mobile;
+        color: @c-gray-35;
+        transform: translateY(-9px);
         opacity: 0;
         z-index: -1;
       }
