@@ -1,183 +1,138 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useState} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import 'css/bundle.less';
 import './storybook/demo.less';
 import {List} from '../list';
-import {Button} from '../button';
-import {IDropdownProps} from './Dropdown';
+import {Button, IButtonProps} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
+import {IDropdownProps} from './interfaces';
 
 export default {
     title: 'DropDown',
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic interactive />;
+const Prefix: React.FC = () => <Pic />;
 const Suffix: React.FC = () => <AddIcon />;
 
-const DropBtn: React.FC<IDropdownProps> = (props) => {
+const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
     return (
         <>
-            <Dropdown show={true} {...props}>
-                <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
-                <Dropdown.Body>
-                    <List size={'lg'} variant={'dark'}>
-                        <List.Item as={'button'} type={'button'}>
-                            Primary text
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Primary text
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Primary text
-                        </List.Item>
-                    </List>
-                </Dropdown.Body>
+            <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
+                <List size={'lg'} variant={'dark'}>
+                    <List.Item as={'button'} type={'button'}>
+                        Primary text
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Primary text
+                    </List.Item>
+                    <List.Item href={'#'} as={'a'}>
+                        Primary text
+                    </List.Item>
+                </List>
             </Dropdown>
         </>
     );
 };
 
-const DropCustomBody: React.FC = (props) => {
+const DropSortable: React.FC = () => {
+    const data = [];
+    for (let i = 1; i < 10; i++) {
+        data.push(i);
+    }
+    const [sortedData, setSortedData] = useState<number[]>([]);
+
     return (
         <>
-            <Dropdown show={true} {...props}>
-                <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
-                <Dropdown.Body className="my-super-class">
-                    <List size={'lg'} variant={'white'}>
-                        <List.Item href={'#'} as={'a'}>
-                            Главная
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Организация
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Рассылки
-                        </List.Item>
-                    </List>
-                </Dropdown.Body>
-            </Dropdown>
+            <StoryDescription>Отсортированный список: {sortedData.join(' ')}</StoryDescription>
+            <Dropdown.SList
+                priorityPositions="right-top"
+                onClose={(sortedValues) => setSortedData(sortedValues)}
+                onSort={(sortedValues) => setSortedData(sortedValues)}
+                trigger={() => <Button>Выпадающий список</Button>}
+            >
+                {data.map((el) => (
+                    <Dropdown.SItem value={el} key={el}>
+                        Перемещаемый элемент {el}
+                    </Dropdown.SItem>
+                ))}
+            </Dropdown.SList>
         </>
     );
 };
 
-const DropShowBtn: React.FC = () => {
-    const [show, setShow] = useState(true);
-    const ref = useRef<HTMLButtonElement | null>(null);
-
-    const toggleShow = () => setShow(!show);
-    const handleClose = () => setShow(false);
-
-    return (
-        <>
-            <Button buttonRef={ref as React.MutableRefObject<HTMLButtonElement>} onClick={toggleShow}>
-                Выпадающий список
-            </Button>
-            <Dropdown parent={ref} show={show} onClose={handleClose}>
-                <Dropdown.Body>
-                    <List size={'lg'} variant={'white'}>
-                        <List.Item href={'#'} as={'a'}>
-                            Главная
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Организация
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Рассылки
-                        </List.Item>
-                    </List>
-                </Dropdown.Body>
-            </Dropdown>
-        </>
-    );
-};
-
-const DropItemBtn: React.FC = () => {
-    const [show, setShow] = React.useState(true);
-    const ref = React.useRef<HTMLButtonElement | null>(null);
-
-    const toggleShow = () => {
-        setShow(!show);
+const DropCustomBodyImperative: React.FC = () => {
+    const [isDPOpen, setIsDPOpen] = useState(false);
+    const handleClose = () => {
+        setIsDPOpen(false);
     };
 
     return (
         <>
-            <List>
-                <List.Item ref={ref} as={'button'} type={'button'} onClick={toggleShow}>
-                    Выпадающий список
-                </List.Item>
-            </List>
-            <Dropdown parent={ref} show={show} onClose={toggleShow}>
-                <Dropdown.Body>
-                    <List size={'lg'} variant={'dark'}>
-                        <List.Item href={'#'} as={'a'}>
-                            Открыть главную страницу профиля
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Организация
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Рассылки
-                        </List.Item>
-                        <List.Item href={'#'} as={'a'}>
-                            Рассылки
-                        </List.Item>
-                        <Dropdown.Button textPosition={'center'} label="Стать организатором" />
-                    </List>
-                </Dropdown.Body>
+            <Dropdown
+                show={isDPOpen}
+                onClose={handleClose}
+                modifier={'custombody'}
+                trigger={({isOpen}) => <Button onClick={() => setIsDPOpen(!isOpen)}>Выпадающий список</Button>}
+            >
+                <List size={'lg'} variant={'dark'}>
+                    <List.Item as={'button'} type={'button'} onClick={handleClose}>
+                        Primary text
+                    </List.Item>
+                    <List.Item as={'div'} onClick={handleClose}>
+                        Primary text
+                    </List.Item>
+                    <List.Item as={'div'} onClick={handleClose}>
+                        Primary text
+                    </List.Item>
+                </List>
             </Dropdown>
         </>
     );
 };
 
-const DropProfile: React.FC = (props) => {
+const DropProfile: React.FC = () => {
     return (
-        <Dropdown show={true} {...props}>
-            <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
-            <Dropdown.Body>
-                <List variant="dark" size="lg">
-                    <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
-                        <div className="lflex lflex--y-axis">
-                            <div className="lflex lflex--y-axis profile--name">
-                                <span className="profile--main">Алексей</span>
-                                <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
-                            </div>
+        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
+            <List variant="dark" size="lg">
+                <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
+                    <div className="lflex lflex--y-axis">
+                        <div className="lflex lflex--y-axis profile--name">
+                            <span className="profile--main">Алексей</span>
+                            <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
                         </div>
-                    </List.Group>
-                    <List.Item href={'#'} as={'a'}>
-                        Мои события
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Мои подписки
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Избранное
-                    </List.Item>
-                    <List.Item as={'button'} type={'button'} label="Выход" />
-                    <Dropdown.Button textPosition={'center'} label="Стать организатором" />
-                </List>
-            </Dropdown.Body>
+                    </div>
+                </List.Group>
+                <List.Item href={'#'} as={'a'}>
+                    Мои события
+                </List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Мои подписки
+                </List.Item>
+                <List.Item href={'#'} as={'a'}>
+                    Избранное
+                </List.Item>
+                <List.Item as={'button'} type={'button'} label="Выход" />
+                <Dropdown.Button label="Стать организатором" />
+            </List>
         </Dropdown>
     );
 };
 
-const DropLongItemList: React.FC = () => {
+const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
     return (
-        <Dropdown show={true}>
-            <Dropdown.ToggleButton>Выпадающий список</Dropdown.ToggleButton>
-            <Dropdown.Body>
-                <List variant="dark" size="lg">
-                    {cities.map((item, index) => {
-                        return <List.Item key={index}>{item}</List.Item>;
-                    })}
-                </List>
-            </Dropdown.Body>
+        <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
+            <List variant="dark" size="lg">
+                {cities.map((item, index) => {
+                    return <List.Item key={index}>{item}</List.Item>;
+                })}
+            </List>
         </Dropdown>
     );
 };
@@ -191,40 +146,72 @@ export const Default: IStorybookComponent = () => {
     );
 };
 
-export const TopRightPosition: IStorybookComponent = () => {
+export const VariousPositions: IStorybookComponent = () => {
+    const allPositions: IDropdownProps['priorityPositions'][] = [
+        'top-left',
+        'top-center',
+        'top-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+    ];
+    const bottomTopPos: IDropdownProps['priorityPositions'][] = [
+        'right-top',
+        'right-center',
+        'right-bottom',
+        'left-top',
+        'left-center',
+        'left-bottom',
+    ];
     return (
         <>
-            <StoryTitle>Top right position</StoryTitle>
-            <div style={{marginTop: '130px'}}>
-                <DropBtn priorityPositions={['tl']} />
+            <StoryTitle>Various positions</StoryTitle>
+            <StoryDescription>Открывает дропдаун относительно контейнера кнопки</StoryDescription>
+            <div style={{marginTop: '40px'}}>
+                <div className="horizontal-grid">
+                    {bottomTopPos.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
+                </div>
+                <div className="vertical-grid">
+                    {allPositions.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
+                </div>
+                <div style={{margin: '0 auto', display: 'table'}}>
+                    <DropBtn priorityPositions="center-center" label="center-center" />
+                </div>
             </div>
         </>
     );
 };
-
-export const CustomBody: IStorybookComponent = () => {
+export const SortableList: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Top right position</StoryTitle>
+            <div style={{marginTop: '130px'}}>
+                <DropSortable />
+            </div>
+        </>
+    );
+};
+export const CustomBodyImperative: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Custom body</StoryTitle>
-            <DropCustomBody />
-        </>
-    );
-};
-
-export const OutsideOpenBtn: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>Outside open button</StoryTitle>
-            <DropShowBtn />
-        </>
-    );
-};
-
-export const ListItemAsButton: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>List item as button</StoryTitle>
-            <DropItemBtn />
+            <div style={{marginTop: '130px'}}>
+                <DropCustomBodyImperative />
+            </div>
         </>
     );
 };
@@ -233,7 +220,24 @@ export const ProfileDrop: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Profile Drop</StoryTitle>
-            <DropProfile />
+            <div style={{marginTop: '130px'}}>
+                <DropProfile />
+            </div>
+        </>
+    );
+};
+
+export const RecursiveEditableDropdownExample: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Profile Drop</StoryTitle>
+            <StoryDescription>
+                Возможность вкладывать дропдауны друг в друга. Может быть использовано для настройки таблиц (например
+                участников)
+            </StoryDescription>
+            <div style={{marginTop: '130px'}}>
+                <RecursiveEditableDropdown />
+            </div>
         </>
     );
 };
@@ -242,31 +246,44 @@ export const WithLongItemList: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>With long item list</StoryTitle>
-            <DropLongItemList />
+            <StoryDescription>Ниже есть еще 2 кнопки</StoryDescription>
+            <div style={{marginTop: '130px', display: 'flex', justifyContent: 'space-between'}}>
+                <DropLongItemList />
+                <DropLongItemList priorityPositions={'left-center'} />
+            </div>
+            <div style={{marginTop: '1000px', display: 'flex', justifyContent: 'space-between'}}>
+                <DropLongItemList />
+                <DropLongItemList priorityPositions={'left-center'} />
+            </div>
         </>
     );
 };
 
-const MemberFiltersEditCurrentTemplate: FC<any> = ({childrenRef}) => {
+const RecursiveEditableDropdown: FC<{text?: string}> = () => {
+    const [nextBlockText, setNextBlockText] = useState('');
     return (
-        <Dropdown priorityPositions={['br']}>
-            <div className="mtheme--darkpic">
-                <Dropdown.ToggleButton label="open" />
-            </div>
-            <Dropdown.Body ref={childrenRef}>
-                <List variant="dark">
-                    <List.Item
-                        suffix={<MemberFiltersEditCurrentTemplate />}
-                        className="mtheme--darkpic"
-                        onClick={(e: any) => e.stopPropagation()}
-                    >
-                        тест
-                    </List.Item>
-                    <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
-                        <input type="text" name="name" />
-                    </List.Item>
-                </List>
-            </Dropdown.Body>
+        <Dropdown
+            nested
+            trigger={() => {
+                return (
+                    <div className="mtheme--darkpic">
+                        <Button>Open</Button>
+                    </div>
+                );
+            }}
+        >
+            <List variant="dark">
+                <List.Item
+                    suffix={<RecursiveEditableDropdown text={nextBlockText} />}
+                    className="mtheme--darkpic"
+                    onClick={(e: any) => e.stopPropagation()}
+                >
+                    {nextBlockText || 'Вложенный фильтр'}
+                </List.Item>
+                <List.Item className="mtheme--darkpic" onClick={(e: any) => e.stopPropagation()}>
+                    <input type="text" name="name" onChange={(e: any) => setNextBlockText(e.target.value)} />
+                </List.Item>
+            </List>
         </Dropdown>
     );
 };
