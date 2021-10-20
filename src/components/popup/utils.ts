@@ -118,6 +118,7 @@ export const calculateModifiers = (
     let i = 0;
     const wrapperBox = getTooltipBoundary(keepTooltipInside);
     let positions = Array.isArray(position) ? position : [position];
+    let isPositionFind = false;
 
     if (keepTooltipInside || Array.isArray(position)) positions = [...positions, ...POSITION_TYPES];
 
@@ -142,9 +143,16 @@ export const calculateModifiers = (
         ) {
             i++;
         } else {
+            isPositionFind = true;
             break;
         }
+        if (!isPositionFind) {
+            modifiers = getModifiersForPosition(triggerBounding, ContentBounding, positions[0], {
+                offsetX,
+                offsetY,
+            });
+            modifiers.top = 0;
+        }
     }
-
     return modifiers;
 };
