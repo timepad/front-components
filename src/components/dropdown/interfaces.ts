@@ -9,6 +9,8 @@ export interface IDropdownProps {
     show?: boolean;
     onClose?: () => void;
     priorityPositions?: IPopupProps['position'];
+    mouseEnterDelay?: IPopupProps['mouseEnterDelay'];
+    mouseLeaveDelay?: IPopupProps['mouseLeaveDelay'];
     modifier?: string;
     nested?: boolean;
     on?: IPopupProps['on'];

@@ -168,6 +168,7 @@ export const Dropdown: FC<IDropdownProps> & {
     onClose,
     children,
     priorityPositions = 'right-top',
+    ...props
 }) => {
     const [rect, ref] = useClientRect();
     return (
@@ -181,6 +182,7 @@ export const Dropdown: FC<IDropdownProps> & {
             onClose={onClose}
             trigger={trigger}
             lockScroll={window.innerHeight <= Number(rect?.height)}
+            {...props}
         >
             <div className="dropdown-container" ref={ref}>
                 <div className={cx('dropdown-body', modifier)}>{children}</div>
