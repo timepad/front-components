@@ -164,8 +164,6 @@ export const Dropdown: FC<IDropdownProps> & {
     keepInsideParent = true,
     on = 'click',
     modifier,
-    trigger,
-    onClose,
     children,
     priorityPositions = 'right-top',
     ...props
@@ -175,12 +173,10 @@ export const Dropdown: FC<IDropdownProps> & {
         <Popup
             className="cdropdown"
             nested={nested}
-            open={show}
             on={on}
+            open={show}
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
-            onClose={onClose}
-            trigger={trigger}
             lockScroll={window.innerHeight <= Number(rect?.height)}
             {...props}
         >
