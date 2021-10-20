@@ -14,6 +14,7 @@ export interface IDropdownProps {
     mouseLeaveDelay?: IPopupProps['mouseLeaveDelay'];
     modifier?: string;
     nested?: boolean;
+    lockScroll?: boolean;
     on?: IPopupProps['on'];
 }
 

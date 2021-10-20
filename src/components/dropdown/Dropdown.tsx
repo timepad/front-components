@@ -166,6 +166,7 @@ export const Dropdown: FC<IDropdownProps> & {
     modifier,
     children,
     priorityPositions = 'right-top',
+    lockScroll = false,
     ...props
 }) => {
     const [rect, ref] = useClientRect();
@@ -177,7 +178,7 @@ export const Dropdown: FC<IDropdownProps> & {
             open={show}
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
-            lockScroll={window.innerHeight <= Number(rect?.height)}
+            lockScroll={lockScroll || window.innerHeight <= Number(rect?.height)}
             {...props}
         >
             <div className="dropdown-container" ref={ref}>
