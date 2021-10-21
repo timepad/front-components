@@ -1,22 +1,21 @@
 import React from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
-import {DropdownPopup} from './index';
-import {IDropdownProps} from '../dropdown/Dropdown';
+import {Popup} from './index';
 import {List} from '../list';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Button} from '../button';
 import {cities} from '../../data/cities';
 
 export default {
-    title: 'DropDown-popup',
-    component: DropdownPopup,
+    title: 'Popup',
+    component: Popup,
 } as Meta;
 
-const DropBtn: React.FC<IDropdownProps> = () => {
+const DropBtn: React.FC = () => {
     return (
         <>
-            <DropdownPopup
+            <Popup
                 trigger={() => <Button>Выпадающий список</Button>}
                 position="right-center"
                 on={['click', 'hover']}
@@ -36,14 +35,14 @@ const DropBtn: React.FC<IDropdownProps> = () => {
                         Primary text
                     </List.Item>
                 </List>
-            </DropdownPopup>
+            </Popup>
         </>
     );
 };
-const DropBtnLong: React.FC<IDropdownProps> = () => {
+const DropBtnLong: React.FC = () => {
     return (
         <>
-            <DropdownPopup
+            <Popup
                 trigger={() => <Button>Выпадающий список</Button>}
                 position="right-center"
                 on={['click', 'hover']}
@@ -57,14 +56,14 @@ const DropBtnLong: React.FC<IDropdownProps> = () => {
                         return <List.Item key={index}>{item}</List.Item>;
                     })}
                 </List>
-            </DropdownPopup>
+            </Popup>
         </>
     );
 };
-const DropBtnNested: React.FC<IDropdownProps> = () => {
+const DropBtnNested: React.FC = () => {
     return (
         <>
-            <DropdownPopup
+            <Popup
                 trigger={() => <Button>Выпадающий список</Button>}
                 position="right-top"
                 on={['click', 'hover']}
@@ -86,7 +85,7 @@ const DropBtnNested: React.FC<IDropdownProps> = () => {
                         Primary text
                     </List.Item>
                     <List.Item>
-                        <DropdownPopup
+                        <Popup
                             trigger={() => <Button>Выпадающий список</Button>}
                             position="right-top"
                             on={['click', 'hover']}
@@ -108,21 +107,17 @@ const DropBtnNested: React.FC<IDropdownProps> = () => {
                                     Primary text
                                 </List.Item>
                             </List>
-                        </DropdownPopup>
+                        </Popup>
                     </List.Item>
                 </List>
-            </DropdownPopup>
+            </Popup>
         </>
     );
 };
-const ModalBtn: React.FC<IDropdownProps> = () => {
+const ModalBtn: React.FC = () => {
     return (
         <>
-            <DropdownPopup
-                trigger={() => <Button>Выпадающий список</Button>}
-                overlayStyle={{background: '#ffffffdf'}}
-                modal
-            >
+            <Popup trigger={() => <Button>Выпадающий список</Button>} overlayStyle={{background: '#ffffffdf'}} modal>
                 <List size={'lg'} variant={'dark'}>
                     <List.Item as={'button'} type={'button'}>
                         Primary text
@@ -134,7 +129,7 @@ const ModalBtn: React.FC<IDropdownProps> = () => {
                         Primary text
                     </List.Item>
                     <List.Item>
-                        <DropdownPopup
+                        <Popup
                             trigger={() => <Button>Выпадающий список</Button>}
                             position="right-top"
                             on={['click', 'hover']}
@@ -155,10 +150,10 @@ const ModalBtn: React.FC<IDropdownProps> = () => {
                                     Primary text
                                 </List.Item>
                             </List>
-                        </DropdownPopup>
+                        </Popup>
                     </List.Item>
                 </List>
-            </DropdownPopup>
+            </Popup>
         </>
     );
 };
