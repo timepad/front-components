@@ -18,3 +18,4 @@ export * from './components/modules';
 export * from './components/gap';
 export * from './components/brick';
 export * from './components/form/Form';
+export * from './components/segmentedcontrol';
