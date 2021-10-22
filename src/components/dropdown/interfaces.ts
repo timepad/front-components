@@ -12,6 +12,7 @@ export interface IDropdownProps {
     modifier?: string;
     nested?: boolean;
     on?: IPopupProps['on'];
+    disabled?: boolean;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
