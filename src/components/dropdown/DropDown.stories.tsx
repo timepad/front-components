@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState, MouseEvent} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -48,7 +48,7 @@ const DropSortable: React.FC = () => {
     }
     const [sortedData, setSortedData] = useState<number[]>([]);
 
-    const handleItemClick = (e: MouseEvent, value: number) => {
+    const handleItemClick = (e: MouseEvent<HTMLDivElement>, value: number) => {
         // eslint-disable-next-line no-console
         console.log('Clicked value: ', value);
     };
