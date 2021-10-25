@@ -123,36 +123,38 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
             priorityPositions={priorityPositions}
             on={on}
         >
-            <Slist
-                helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
-                useDragHandle
-                hideSortableGhost={false}
-                transitionDuration={0}
-                getHelperDimensions={getDimensions}
-                axis="y"
-                as="ul"
-                size="lg"
-                variant="dark"
-                onSortOver={sortOverHandler}
-                onSortStart={sortStartHandler}
-                onSortEnd={sortEndHandler}
-            >
-                {React.Children.map<ReactChild, ReactChild>(children, (child, index) => {
-                    if (React.isValidElement(child)) {
-                        return React.cloneElement(child, {
-                            key: `drop${index}`,
-                            index,
-                            children: valueNodes[index].children,
-                            prefix: <SortIcon />,
-                            className: 'cdropdown__dropable-item',
-                            onClick: (e: MouseEvent) => {
-                                child.props.onClick(e, valueNodes[index].value);
-                            },
-                        });
-                    }
-                    return child;
-                })}
-            </Slist>
+            {valueNodes.length > 0 ? (
+                <Slist
+                    helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
+                    useDragHandle
+                    hideSortableGhost={false}
+                    transitionDuration={0}
+                    getHelperDimensions={getDimensions}
+                    axis="y"
+                    as="ul"
+                    size="lg"
+                    variant="dark"
+                    onSortOver={sortOverHandler}
+                    onSortStart={sortStartHandler}
+                    onSortEnd={sortEndHandler}
+                >
+                    {React.Children.map<ReactChild, ReactChild>(children, (child, index) => {
+                        if (React.isValidElement(child)) {
+                            return React.cloneElement(child, {
+                                key: `drop${index}`,
+                                index,
+                                children: valueNodes[index].children,
+                                prefix: <SortIcon />,
+                                className: 'cdropdown__dropable-item',
+                                onClick: (e: MouseEvent) => {
+                                    child.props.onClick(e, valueNodes[index].value);
+                                },
+                            });
+                        }
+                        return child;
+                    })}
+                </Slist>
+            ) : null}
         </Dropdown>
     );
 };
