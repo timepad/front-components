@@ -145,6 +145,9 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
                             children: valueNodes[index].children,
                             prefix: <SortIcon />,
                             className: 'cdropdown__dropable-item',
+                            onClick: (e: MouseEvent) => {
+                                child.props.onClick(e, valueNodes[index].value);
+                            },
                         });
                     }
                     return child;

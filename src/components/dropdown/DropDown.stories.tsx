@@ -42,11 +42,16 @@ const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props
 };
 
 const DropSortable: React.FC = () => {
-    const data = [];
+    const data: number[] = [];
     for (let i = 1; i < 10; i++) {
         data.push(i);
     }
     const [sortedData, setSortedData] = useState<number[]>([]);
+
+    const handleItemClick = (e: MouseEvent, value: number) => {
+        // eslint-disable-next-line no-console
+        console.log('Clicked value: ', value);
+    };
 
     return (
         <>
@@ -58,7 +63,7 @@ const DropSortable: React.FC = () => {
                 trigger={() => <Button>Выпадающий список</Button>}
             >
                 {data.map((el) => (
-                    <Dropdown.SItem value={el} key={el}>
+                    <Dropdown.SItem value={el} key={el} onClick={handleItemClick}>
                         Перемещаемый элемент {el}
                     </Dropdown.SItem>
                 ))}

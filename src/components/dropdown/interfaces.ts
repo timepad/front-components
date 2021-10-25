@@ -25,4 +25,5 @@ export type ISortableItemProps = Omit<ISortableItem, 'prefix'> & Partial<Sortabl
 
 export type ISortableItem = IItem & {
     value: any;
+    onClick?: (e: MouseEvent, value: any) => void;
 };
