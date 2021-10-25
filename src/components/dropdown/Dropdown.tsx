@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {ComponentClass, FC, ReactChild, useCallback, useEffect, useState} from 'react';
+import {
+    Children,
+    cloneElement,
+    ComponentClass,
+    FC,
+    isValidElement,
+    ReactChild,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 import './index.less';
 import {Popup} from '../popup';
 import cx from 'classnames';
@@ -130,7 +140,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
             priorityPositions={priorityPositions}
             on={on}
         >
-            {valueNodes.length > 0 ? (
+            {valueNodes.length > 0 && Children.count(children) === valueNodes.length ? (
                 <Slist
                     helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
                     useDragHandle
@@ -145,9 +155,9 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
                     onSortStart={sortStartHandler}
                     onSortEnd={sortEndHandler}
                 >
-                    {React.Children.map<ReactChild, ReactChild>(children, (child, index) => {
-                        if (React.isValidElement(child)) {
-                            return React.cloneElement(child, {
+                    {Children.map<ReactChild, ReactChild>(children, (child, index) => {
+                        if (isValidElement(child)) {
+                            return cloneElement(child, {
                                 key: `drop${index}`,
                                 index,
                                 children: valueNodes[index].children,
