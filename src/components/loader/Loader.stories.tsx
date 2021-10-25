@@ -63,7 +63,7 @@ const LoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
             style={{
                 display: 'grid',
                 alignItems: 'center',
-                gridTemplateColumns: '200px 1fr',
+                gridTemplateColumns: '200px 1fr 1fr',
             }}
             className={`mtheme mtheme--${theme}`}
         >
@@ -82,7 +82,7 @@ const WithLoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
             style={{
                 display: 'grid',
                 alignItems: 'center',
-                gridTemplateColumns: '200px 1fr',
+                gridTemplateColumns: '200px 1fr 1fr',
             }}
             className={`mtheme mtheme--${theme}`}
         >
@@ -98,13 +98,15 @@ const WithLoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
                     <div
                         style={{
                             width: '100%',
-                            height: '44px',
+                            height: '32px',
                         }}
                         className="lflex lflex--justify-centered"
                     >
                         Some content
                     </div>
                 </SpinLoaderWrapper>
+            </div>
+            <div>
                 <Button onClick={() => setIsLoading(!isLoading)}>Switch state</Button>
             </div>
         </div>
