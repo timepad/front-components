@@ -1,5 +1,5 @@
 import {IPopupProps} from '../popup';
-import {ReactChild, MouseEvent} from 'react';
+import {ReactChild} from 'react';
 import {IItem} from '../list/Item';
 import {SortableElementProps} from 'react-sortable-hoc';
 
