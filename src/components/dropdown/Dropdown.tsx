@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentClass, FC, ReactChild, useCallback, useState} from 'react';
+import {ComponentClass, FC, ReactChild, useCallback, useEffect, useState} from 'react';
 import './index.less';
 import {Popup} from '../popup';
 import cx from 'classnames';
@@ -40,14 +40,21 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
     children = [],
     on = 'click',
 }) => {
-    const [valueNodes, setValueNodes] = useState(
-        React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
+    // region Sortable list state
+    const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
+        return React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
             return {
                 value: child.props.value,
                 children: child.props.children,
             };
-        }),
-    );
+        });
+    };
+
+    const [valueNodes, setValueNodes] = useState(ChildrenToValueNodes(children));
+    useEffect(() => {
+        setValueNodes(ChildrenToValueNodes(children));
+    }, [children]);
+    // endregion
 
     const getValues = useCallback(
         (nodes: ISortableListState[] = valueNodes) => {
