@@ -1,5 +1,5 @@
 import {IPopupProps} from '../popup';
-import {ReactChild} from 'react';
+import {ReactChild, MouseEvent} from 'react';
 import {IItem} from '../list/Item';
 import {SortableElementProps} from 'react-sortable-hoc';
 
@@ -25,4 +25,5 @@ export type ISortableItemProps = Omit<ISortableItem, 'prefix'> & Partial<Sortabl
 
 export type ISortableItem = IItem & {
     value: any;
+    onClick?: (e: MouseEvent<any>, value: any) => void;
 };
