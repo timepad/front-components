@@ -1,0 +1,130 @@
+.csegmentedcontrol {
+    font-family: @ff-system;
+
+    .csegmentedcontrol__list {
+        position: relative;
+        z-index: @z-index-lifted;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        list-style: none;
+        margin: 0;
+        padding: 2px;
+    }
+
+    .csegmentedcontrol__li {
+        margin-right: 2px;
+        text-align: center;
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+
+    .csegmentedcontrol__button {
+        padding: 4px 16px;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        font-size: @fs-caption-mobile;
+        line-height: @lh-caption-mobile;
+        font-weight: normal;
+        color: @c-primary-blue;
+        cursor: pointer;
+        transition: inherit;
+        font-family: inherit;
+        &:hover {
+            color: @c-primary-blue-80;
+        }
+    }
+
+    .csegmentedcontrol__li--is-active {
+        .csegmentedcontrol__button {
+            &:hover {
+                color: @c-primary-blue;
+            }
+        }
+    }
+
+    .csegmentedcontrol__highlighter {
+        position: absolute;
+        top: 1px;
+        display: block;
+        height: calc(100% - 4px);
+        z-index: 0;
+        background: @c-white;
+        transform: translateX(0px);
+        transition: inherit;
+        border-radius: @br-rounded;
+        border: 1px solid @c-dark-gray-fade-35;
+    }
+
+    .csegmentedcontrol__highlightBox {
+        background: @c-dark-gray-fade-35;
+        border-radius: @br-rounded;
+        position: relative;
+        display: inline-block;
+        transition: all 150ms;
+    }
+
+    &.csegmentedcontrol--fix {
+        .csegmentedcontrol__li {
+            flex-grow: 1;
+        }
+
+        .csegmentedcontrol__highlightBox {
+            display: block;
+        }
+    }
+
+    html body .mtheme--lightpic & {
+        .csegmentedcontrol__highlightBox {
+            background: @c-gray-50-fade-20;
+        }
+        .csegmentedcontrol__highlighter {
+            border: 1px solid @c-gray-50-fade-20;
+        }
+
+        .csegmentedcontrol__button {
+            color: @c-black;
+            &:hover {
+                color: @c-gray-75;
+            }
+        }
+
+        .csegmentedcontrol__li--is-active {
+            .csegmentedcontrol__button {
+                &:hover {
+                    color: @c-black;
+                }
+            }
+        }
+    }
+
+    html body .mtheme--darkpic & {
+        .csegmentedcontrol__highlightBox {
+            background: @c-gray-50-fade-20;
+        }
+        .csegmentedcontrol__highlighter {
+            border: 1px solid @c-gray-50-fade-20;
+        }
+
+        .csegmentedcontrol__button {
+            color: @c-white;
+
+            &:hover {
+                color: @c-gray-35;
+            }
+        }
+        .csegmentedcontrol__li--is-active {
+            .csegmentedcontrol__button {
+                &:hover {
+                    color: @c-white;
+                }
+            }
+        }
+
+        .csegmentedcontrol__highlighter {
+            background: @c-gray-75;
+        }
+    }
+}

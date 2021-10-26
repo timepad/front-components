@@ -4,7 +4,6 @@ import {Item} from './Item';
 import {Group} from './Group';
 import {Divider} from './Divider';
 import {component} from '../../services/helpers/classHelpers';
-
 import './index.less';
 
 export interface IList {
@@ -27,7 +26,6 @@ const ListBase: React.FC<IList> = ({
     size,
     fontSize,
     fontFamily,
-    ...props
 }): JSX.Element => {
     const Tag = as;
     const classNames = cx(
@@ -40,13 +38,13 @@ const ListBase: React.FC<IList> = ({
         }),
         className,
     );
+
     return (
-        <Tag className={classNames} {...props}>
+        <Tag as={as} className={classNames}>
             {children}
         </Tag>
     );
 };
-
 const listChildren = {
     Item,
     Group,

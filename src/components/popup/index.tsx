@@ -1,11 +1,11 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
+
 import {useOnClickOutside, useOnEscape, useRepositionOnResize} from './hooks';
-
-import './index.less';
-
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
+
+import './index.less';
 
 const getRootPopup = () => {
     let PopupRoot = document.getElementById('popup-root');
@@ -70,7 +70,7 @@ const noop = () => {
 };
 
 let dropdownIdCounter = 0;
-export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
+export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
     (
         {
             trigger = null,
@@ -109,12 +109,12 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
         const timeOut = useRef(0);
 
         const handleLockScroll = useCallback(() => {
-            if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-        }, [isModal, lockScroll]);
+            if (lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        }, [lockScroll]);
 
         const resetScroll = useCallback(() => {
-            if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
-        }, [isModal, lockScroll]);
+            if (lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
+        }, [lockScroll]);
 
         const setPosition = useCallback(() => {
             if (isModal || !isOpen) {
@@ -162,7 +162,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
                 setIsOpen(true);
                 setTimeout(() => onOpen(event), 0);
             },
-            [disabled, isOpen],
+            [disabled, isOpen, onOpen],
         );
 
         const closePopup = useCallback(
@@ -172,7 +172,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
                 if (isModal) (focusedElBeforeOpen.current as HTMLElement)?.focus();
                 setTimeout(() => onClose(event), 0);
             },
-            [disabled, isOpen],
+            [disabled, isOpen, isModal, onClose, on],
         );
 
         const togglePopup = (event?: React.SyntheticEvent) => {
@@ -186,7 +186,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
                 if (open) openPopup();
                 else closePopup();
             }
-        }, [open, disabled, openPopup, closePopup]);
+        }, [open, disabled]);
 
         const onMouseEnter = (event?: React.SyntheticEvent) => {
             clearTimeout(timeOut.current);
@@ -232,7 +232,7 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
         );
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
-            const triggerProps: Record<string, any> = {
+            const triggerProps: Record<string, unknown> = {
                 key: 'T',
                 ref: triggerRef,
                 'aria-describedby': popupId.current,
@@ -298,8 +298,10 @@ export const DropdownPopup = React.forwardRef<IPopupActions, IPopupProps>(
         };
 
         const renderContent = () => {
+            // input нужен что бы не было автофокуса по 1ому элементу
             return (
                 <div {...addWarperAction()} key="C" role={isModal ? 'dialog' : 'tooltip'} id={popupId.current}>
+                    <input style={{display: 'none'}} />
                     {children && typeof children === 'function' ? children(closePopup, isOpen) : children}
                 </div>
             );
