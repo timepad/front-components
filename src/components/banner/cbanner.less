@@ -6,8 +6,15 @@
   background-color: @c-light-yellow;
 
   .cbanner__content {
-    padding: 20px 0;
     margin: 0 16px;
+    font-size: 15px;
+    line-height:22px;
+
+    button {
+      margin-top:11px;
+      align-self: flex-start;
+      --text-color: @c-black;
+    }
   };
 
   .cbanner__icon {
@@ -15,6 +22,9 @@
     margin: 0;
     button svg * {
       fill: @c-black;
+    }
+    & ~ .cbanner__content {
+      margin-left: 0px;
     }
   };
 }

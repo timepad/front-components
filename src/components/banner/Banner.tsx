@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Row} from '../row';
 import InfoIcon from '../../assets/svg/24/icon-info-circle-24.svg';
+import ErrorIcon from '../../assets/svg/24/icon-error-24.svg';
 import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
@@ -33,4 +34,8 @@ export const Banner: FC<IBannerProps> = ({children, closeable = false, icon}) =>
 
 export const InfoBanner: FC<Omit<IBannerProps, 'icon'>> = (props) => {
     return <Banner {...props} icon={<InfoIcon />} />;
+};
+
+export const WarningBanner: FC<Omit<IBannerProps, 'icon'>> = (props) => {
+    return <Banner {...props} icon={<ErrorIcon />} />;
 };
