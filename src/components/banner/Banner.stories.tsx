@@ -3,7 +3,7 @@ import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookH
 import React from 'react';
 import IconEdit from 'svg/24/icon-edit-24.svg';
 import {Banner, InfoBanner, WarningBanner} from './index';
-import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from '../button/index';
+import {Button, ButtonVariant} from '../button/index';
 
 export default {
     title: 'Banner',
