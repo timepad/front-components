@@ -1,5 +1,5 @@
 import {Meta} from '@storybook/react/types-6-0';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import React from 'react';
 import IconEdit from 'svg/24/icon-edit-24.svg';
 import {Banner, InfoBanner, WarningBanner} from './index';
@@ -40,6 +40,15 @@ export const Default: IStorybookComponent = () => {
             </Banner>
             <StoryTitle>With button</StoryTitle>
             <Banner closeable>
+                Note: If you login to Figma via Google SSO or SAML SSO, you wont be able to enable two-factor in Figma.
+                You will need to enable two-factor or multi-factor authentication with your identity provider instead.
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" />
+            </Banner>
+            <StoryTitle>With callback</StoryTitle>
+            <StoryDescription>
+                This banner will log <b>close clicked</b> to console on click close button.
+            </StoryDescription>
+            <Banner closeable onCloseClick={() => window.console.log('close clicked')}>
                 Note: If you login to Figma via Google SSO or SAML SSO, you wont be able to enable two-factor in Figma.
                 You will need to enable two-factor or multi-factor authentication with your identity provider instead.
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" />

@@ -7,17 +7,29 @@ import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {Button, ButtonVariant} from '../button';
 
+type CloseClickHandler = () => void;
+
 interface IBannerProps {
     theme?: string;
     closeable?: boolean;
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+    onCloseClick?: CloseClickHandler;
 }
 
-export const Banner: FC<IBannerProps> = ({children, closeable = false, icon}) => {
+export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseClick, icon}) => {
     const [show, setShow] = useState(true);
     if (!show) {
         return null;
     }
+
+    const handleOnCloseClick = () => {
+        if (onCloseClick) {
+            setShow(false);
+            onCloseClick();
+        } else {
+            setShow(false);
+        }
+    };
 
     return (
         <Row className={component('banner')()}>
@@ -25,7 +37,11 @@ export const Banner: FC<IBannerProps> = ({children, closeable = false, icon}) =>
             <Row.Body className={component('banner', 'content')()}>{children}</Row.Body>
             {closeable && (
                 <Row.Icon className={component('banner', 'icon')()}>
-                    <Button onClick={() => setShow(false)} variant={ButtonVariant.transparent} icon={<CloseIcon />} />
+                    <Button
+                        onClick={() => handleOnCloseClick()}
+                        variant={ButtonVariant.transparent}
+                        icon={<CloseIcon />}
+                    />
                 </Row.Icon>
             )}
         </Row>

@@ -6,11 +6,13 @@
   background-color: @c-light-yellow;
 
   .cbanner__content {
+    display: block;
     margin: 0 16px;
     font-size: @fs-caption;
     line-height: @lh-caption;
 
-    button {
+    button, .abtn {
+      display: flex;
       margin-top: 11px;
       align-self: flex-start;
       --text-color: @c-black;
