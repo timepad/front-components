@@ -10,6 +10,7 @@ export * from './components/dropdown';
 export * from './components/list';
 export * from './components/forms';
 export * from './components/loader';
+export * from './components/banner';
 export * from './components/tooltip';
 export * as Forms from './components/forms';
 export * from './components/pagination';
