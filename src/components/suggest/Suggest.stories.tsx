@@ -60,7 +60,12 @@ export const BasicFromURL: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api.</StoryTitle>
-            <Suggest placeholder="Input label" value={value} setInputValue={setValue} asyncFetch={fetchData} />
+            <Suggest
+                placeholder="Input label"
+                value={value}
+                setInputValue={setValue}
+                asyncFetchSuggestions={fetchData}
+            />
         </>
     );
 };

@@ -16,7 +16,7 @@ export interface ISuggestProps {
     value: string;
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
-    asyncFetch?: () => Promise<ISuggestion[]>;
+    asyncFetchSuggestions?: () => Promise<ISuggestion[]>;
     reloadOnFocus?: boolean;
 }
 
@@ -27,7 +27,7 @@ interface IState {
 }
 
 export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
-    const {className, value, setInputValue, data, asyncFetch} = props;
+    const {className, value, setInputValue, data, asyncFetchSuggestions} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null);
 
@@ -101,8 +101,8 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) =>
     };
 
     useEffect(() => {
-        if (asyncFetch) {
-            asyncFetch()
+        if (asyncFetchSuggestions) {
+            asyncFetchSuggestions()
                 .then((data) => setSearchData(data))
                 .catch((error) => {
                     console.error(error);
