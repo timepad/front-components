@@ -31,28 +31,32 @@ export const Suggestlist: React.FC<ISuggestListProps> = ({
         }
     }, [cursor]);
 
-    return visible ? (
-        <div className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
-            {suggestions.map((item, i) => (
-                <Row
-                    key={item.title + i}
-                    ffFont
-                    small
-                    onClick={() => onClick(item.title)}
-                    className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
-                >
-                    <Row.Body>
-                        <Row.Text>{item.title}</Row.Text>
-                        {item.text && (
-                            <Row.Caption>
-                                {item.text.length > captionTextMaxLength
-                                    ? `${item.text.slice(0, captionTextMaxLength)}...`
-                                    : item.text}
-                            </Row.Caption>
-                        )}
-                    </Row.Body>
-                </Row>
-            ))}
-        </div>
-    ) : null;
+    return (
+        <>
+            {visible && (
+                <div className="suggest-list" ref={suggestionsListRef} onMouseEnter={onMouseEnter}>
+                    {suggestions.map((item, i) => (
+                        <Row
+                            key={item.title + i}
+                            ffFont
+                            small
+                            onClick={() => onClick(item.title)}
+                            className={`suggest-list__item${cursor === i ? ' selected' : ''}`}
+                        >
+                            <Row.Body>
+                                <Row.Text>{item.title}</Row.Text>
+                                {item.text && (
+                                    <Row.Caption>
+                                        {item.text.length > captionTextMaxLength
+                                            ? `${item.text.slice(0, captionTextMaxLength)}...`
+                                            : item.text}
+                                    </Row.Caption>
+                                )}
+                            </Row.Body>
+                        </Row>
+                    ))}
+                </div>
+            )}
+        </>
+    );
 };

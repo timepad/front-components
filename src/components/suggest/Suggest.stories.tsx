@@ -1,5 +1,5 @@
 import '../../assets/css/bundle.less';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Suggest, ISuggestion} from './Suggest';
 import {FC, useState} from 'react';
@@ -51,16 +51,24 @@ BasicFromArray.storyName = 'Basic from array';
 
 export const BasicFromURL: IStorybookComponent = () => {
     const [value, setValue] = useState('');
+    const [suggestions, setSuggestions] = useState<ISuggestion[]>([]);
 
     const url = 'https://jsonplaceholder.typicode.com/todos/';
-    const fetchData = async (): Promise<ISuggestion[]> => {
-        return await fetch(url).then((response) => response.json());
-    };
+
+    useEffect(() => {
+        try {
+            fetch(url)
+                .then((response) => response.json())
+                .then((items) => setSuggestions(items));
+        } catch (e) {
+            console.error(e);
+        }
+    }, []);
 
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api.</StoryTitle>
-            <Suggest placeholder="Input label" value={value} setInputValue={setValue} fetchSuggestions={fetchData} />
+            <Suggest placeholder="Input label" value={value} setInputValue={setValue} data={suggestions} />
         </>
     );
 };
