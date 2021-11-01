@@ -64,7 +64,7 @@ export const BasicFromURL: IStorybookComponent = () => {
                 placeholder="Input label"
                 value={value}
                 setInputValue={setValue}
-                asyncFetchSuggestions={fetchData}
+                fetchSuggestions={fetchData}
             />
         </>
     );
