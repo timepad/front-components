@@ -16,7 +16,7 @@ export interface ISuggestProps {
     value: string;
     setInputValue: (text: string) => void;
     data?: ISuggestion[];
-    url?: string;
+    asyncFetch?: () => Promise<ISuggestion[]>;
     reloadOnFocus?: boolean;
 }
 
@@ -27,7 +27,7 @@ interface IState {
 }
 
 export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
-    const {className, value, setInputValue, data, url, reloadOnFocus} = props;
+    const {className, value, setInputValue, data, asyncFetch} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null);
 
@@ -42,13 +42,6 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) =>
         const regex = new RegExp(value, 'i');
         return searchData.filter((item) => item.title !== value && regex.test(item.title));
     };
-    const fetchData = (url: string): void => {
-        url &&
-            fetch(url)
-                .then((response) => response.json())
-                .then((response) => setSearchData(response))
-                .catch(() => setSearchData([]));
-    };
 
     const onInputFocus: React.FocusEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onFocus?.(event);
@@ -56,10 +49,8 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) =>
         if (!state.visible) {
             setState({...state, visible: true});
         }
-        if (reloadOnFocus && url) {
-            fetchData(url);
-        }
     };
+
     const onInputBlur: React.FocusEventHandler<HTMLInputElement & HTMLTextAreaElement> = (event) => {
         !props.multiline && props.onBlur?.(event);
 
@@ -110,8 +101,13 @@ export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) =>
     };
 
     useEffect(() => {
-        if (url && !reloadOnFocus) {
-            fetchData(url);
+        if (asyncFetch) {
+            asyncFetch()
+                .then((data) => setSearchData(data))
+                .catch((error) => {
+                    console.error(error);
+                    setSearchData([]);
+                });
         } else {
             setSearchData(data || []);
         }

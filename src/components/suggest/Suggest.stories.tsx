@@ -2,7 +2,6 @@ import '../../assets/css/bundle.less';
 import * as React from 'react';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Suggest, ISuggestion} from './Suggest';
-import {Brick} from '../brick';
 import {FC, useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 
@@ -51,18 +50,18 @@ export const BasicFromArray: IStorybookComponent = () => {
 BasicFromArray.storyName = 'Basic from array';
 
 export const BasicFromURL: IStorybookComponent = () => {
-    const url = 'https://jsonplaceholder.typicode.com/todos/';
     const [value, setValue] = useState('');
-    const [value2, setValue2] = useState('');
+
+    const url = 'https://jsonplaceholder.typicode.com/todos/';
+    const fetchData = async (): Promise<ISuggestion[]> => {
+        return await fetch(url).then((response) => response.json());
+    };
 
     return (
         <>
-            <StoryTitle>Basic input with suggestions received by api from URL</StoryTitle>
-            <Suggest placeholder="Input label" value={value} setInputValue={setValue} url={url} />
-            <Brick size={2} />
-            <StoryTitle>Basic input with suggestions received from URL each time when focused.</StoryTitle>
-            <Suggest placeholder="Input label" value={value2} setInputValue={setValue2} url={url} reloadOnFocus />
+            <StoryTitle>Basic input with suggestions received by api.</StoryTitle>
+            <Suggest placeholder="Input label" value={value} setInputValue={setValue} asyncFetch={fetchData} />
         </>
     );
 };
-BasicFromURL.storyName = 'Basic from URL';
+BasicFromURL.storyName = 'Basic from fetch data';
