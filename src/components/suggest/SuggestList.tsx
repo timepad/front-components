@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {ISuggestion} from './Suggest';
 import {useRef, useEffect} from 'react';
 import {Row} from '../row';

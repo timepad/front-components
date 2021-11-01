@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {useEffect, useRef, useState} from 'react';
 import {TextLight} from '../form/TextLight';
 import {IFormTextLightProps} from '../form/TextLight/TextLight.types';

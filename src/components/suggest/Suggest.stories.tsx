@@ -1,5 +1,5 @@
 import '../../assets/css/bundle.less';
-import * as React from 'react';
+import React from 'react';
 import {StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Suggest, ISuggestion} from './Suggest';
 import {FC, useState} from 'react';
@@ -60,12 +60,7 @@ export const BasicFromURL: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Basic input with suggestions received by api.</StoryTitle>
-            <Suggest
-                placeholder="Input label"
-                value={value}
-                setInputValue={setValue}
-                fetchSuggestions={fetchData}
-            />
+            <Suggest placeholder="Input label" value={value} setInputValue={setValue} fetchSuggestions={fetchData} />
         </>
     );
 };
