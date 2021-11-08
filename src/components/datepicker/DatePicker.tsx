@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {FC, useEffect, useRef, useState} from 'react';
 
 import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
@@ -25,12 +25,12 @@ export const DatePicker: FC<ICalendarProps> = ({
     onChange,
     withShortcats,
     dateRange,
-}: ICalendarProps) => {
+}) => {
     const isMounted = useRef(false);
 
     const [today] = useState<Moment>(initialToday ? moment(initialToday) : moment());
     const [now, setNow] = useState<Moment>(initialStart || today);
-    const [start, setStart] = useState<Moment>(initialStart || moment());
+    const [start, setStart] = useState<Moment | null>(initialStart || null);
     const [end, setEnd] = useState<Moment | null>((dateRange && initialEnd) || initialStart || null);
     const weekdays = moment.weekdaysShort(true);
 
@@ -192,10 +192,7 @@ export const DatePicker: FC<ICalendarProps> = ({
                                     className={dayClasses(day)}
                                     onClick={() => dayClicked(day)}
                                 >
-                                    <span
-                                        className="cdatepicker__day-cell"
-                                        // variants={cellAnimationVariants}
-                                    >
+                                    <span className="cdatepicker__day-cell">
                                         <span className="cdatepicker__day-text">
                                             {isDayOfCurrentMonth(day) && day.date()}
                                         </span>

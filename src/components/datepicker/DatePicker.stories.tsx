@@ -14,7 +14,7 @@ export default {
     component: DatePicker,
 } as Meta;
 
-export const DatePickerPrimary: IStorybookComponent = () => {
+export const Simple: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>DatePicker</StoryTitle>
