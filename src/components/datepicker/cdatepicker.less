@@ -1,0 +1,202 @@
+.cdatepicker {
+  display: flex;
+  flex-direction: column;
+  // width: 328px;
+  background: @c-white;
+  color: @c-black;
+  font-family: @ff;
+  user-select: none;
+  z-index: @z-index-dropdowns;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  &__title:extend(.t-body) {}
+
+  &__month {
+    text-transform: capitalize;
+  }
+
+  &__year {
+    color: @c-gray-35;
+  }
+
+  &__pager {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 8px;
+    color: @c-primary-blue;
+  }
+
+  &__weekdays {
+    display: grid;
+    grid-auto-flow: column;
+    height: 32px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
+  }
+
+  &__weekday:extend(.t-small) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: @c-gray-50;
+    text-transform: uppercase;
+    min-width: 32px;
+
+    &:nth-last-child(-n+2) {
+      font-weight: bold;
+    }
+    // TODO: вынести в отдельный компонент
+  }
+
+  &__body {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 10px;
+    padding: 16px;
+  }
+
+  &__week {
+    display: grid;
+    grid-auto-flow: column;
+    position: relative;
+    height: 32px;
+    box-sizing: border-box;
+
+    &--start {
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -16px;
+        top: 0;
+        width: 16px;
+        height: 100%;
+        background: @c-dark-gray-fade-20;
+      }
+    }
+
+    &--end {
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: -16px;
+        top: 0;
+        width: 16px;
+        height: 100%;
+        background: @c-dark-gray-fade-20;
+      }
+    }
+  }
+
+  &__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: @c-primary-blue;
+    cursor: pointer;
+
+    .on-hover({
+      .cdatepicker__day-cell {
+        background: @c-dark-gray-fade-35;
+        border-radius: 4px;
+      }
+    });
+
+    &--inactive {
+      color: @c-gray-35;
+      pointer-events: none;
+    }
+
+    &--edge {
+      .cdatepicker__day-cell {
+        background: @c-dark-gray-fade-35;
+        border-radius: 4px;
+      }
+    }
+
+    &--start {
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%; // TODO: проработать этот момент
+        height: 100%;
+        background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+      }
+    }
+
+    &--end {
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+      }
+    }
+
+
+    &--month {
+      &_start {
+        background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+        pointer-events: none;
+      }
+
+      &_end {
+        background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+        pointer-events: none;
+      }
+    }
+
+    &--span {
+      background: @c-dark-gray-fade-20;
+    }
+
+    &--today {
+
+      .cdatepicker__day-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: @c-red;
+        color: @c-white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &__day-cell:extend(.t-caption) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  &__shortcuts {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 8px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+}
