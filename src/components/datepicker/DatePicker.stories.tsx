@@ -19,7 +19,7 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>DatePicker</StoryTitle>
             <Dropdown trigger={() => <Button>Date</Button>}>
-                <DatePicker />
+                <DatePicker dateRange withShortcats />
             </Dropdown>
         </>
     );

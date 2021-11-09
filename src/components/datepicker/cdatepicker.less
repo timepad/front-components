@@ -1,7 +1,7 @@
 .cdatepicker {
   display: flex;
   flex-direction: column;
-  // width: 328px;
+  width: 328px;
   background: @c-white;
   color: @c-black;
   font-family: @ff;
@@ -12,8 +12,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
     padding: 16px;
+    height: 64px;
     box-sizing: border-box;
   }
 
@@ -43,7 +43,9 @@
     box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
   }
 
-  &__weekday:extend(.t-small) {
+  &__weekday {
+    font-size: @fs-small;
+    line-height: @lh-small;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +56,6 @@
     &:nth-last-child(-n+2) {
       font-weight: bold;
     }
-    // TODO: вынести в отдельный компонент
   }
 
   &__body {
@@ -164,12 +165,11 @@
       }
     }
 
-    &--span {
+    &--cell {
       background: @c-dark-gray-fade-20;
     }
 
     &--today {
-
       .cdatepicker__day-text {
         display: flex;
         align-items: center;
@@ -183,7 +183,9 @@
     }
   }
 
-  &__day-cell:extend(.t-caption) {
+  &__day-cell {
+    font-size: @fs-caption;
+    line-height: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -200,3 +202,4 @@
     overflow-x: auto;
   }
 }
+

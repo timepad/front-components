@@ -1,5 +1,4 @@
-import React from 'react';
-import {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 
 import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
 
@@ -95,7 +94,7 @@ export const DatePicker: FC<ICalendarProps> = ({
             start: !!end && !start?.isSame(end, 'days') && day.isSame(start, 'days') && isDayOfCurrentMonth(day),
             end: !start?.isSame(end, 'days') && day.isSame(end, 'days') && isDayOfCurrentMonth(day),
             edge: isDayOfCurrentMonth(day) && (day.isSame(start, 'days') || day.isSame(end, 'days')),
-            month: !!getMonthEdgeStateForDay(day),
+            month: !getMonthEdgeStateForDay(day),
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
@@ -122,16 +121,6 @@ export const DatePicker: FC<ICalendarProps> = ({
             }
         }
     };
-    // const cellAnimationVariants = {
-    //     tap: {
-    //         scale: 1.2,
-    //         transition: {
-    //             type: 'spring',
-    //             stiffness: 360,
-    //             damping: 12,
-    //         },
-    //     },
-    // };
 
     useEffect(() => {
         if (start && end && isMounted.current) {
@@ -141,7 +130,7 @@ export const DatePicker: FC<ICalendarProps> = ({
             );
         }
         isMounted.current = true;
-    }, [start, end, today]);
+    }, [onChange, start, end, today]);
 
     const IconArrowLeft = (
         <div style={{transform: 'rotate(90deg)'}}>
