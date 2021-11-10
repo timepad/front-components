@@ -37,7 +37,7 @@ export const Pic: React.FC<IProps> = ({
             hoverable: !!onClick || hoverable,
             square,
             size,
-            bordered,
+            bordered: !!imgURL,
             ['mode']: mode,
         }),
     );
