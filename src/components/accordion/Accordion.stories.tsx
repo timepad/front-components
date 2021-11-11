@@ -32,6 +32,9 @@ export const Default: IStorybookComponent = () => {
             <Accordion text="Text" caption="Caption">
                 <p>Inner content</p>
             </Accordion>
+            <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
+                <p>Inner content</p>
+            </Accordion>
             <Accordion text="Text" big>
                 <p>Inner content</p>
             </Accordion>
@@ -62,6 +65,9 @@ export const Dark: IStorybookComponent = () => {
                                 <p>Inner content</p>
                             </Accordion>
                             <Accordion text="Text" caption="Caption">
+                                <p>Inner content</p>
+                            </Accordion>
+                            <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
                                 <p>Inner content</p>
                             </Accordion>
                             <Accordion text="Text" big>
