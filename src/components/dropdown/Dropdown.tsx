@@ -164,22 +164,23 @@ export const Dropdown: FC<IDropdownProps> & {
     keepInsideParent = true,
     on = 'click',
     modifier,
+    trigger,
+    onClose,
     children,
     priorityPositions = 'right-top',
-    lockScroll = false,
-    ...props
 }) => {
     const [rect, ref] = useClientRect();
     return (
         <Popup
             className="cdropdown"
             nested={nested}
-            on={on}
             open={show}
+            on={on}
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
-            lockScroll={lockScroll || window.innerHeight <= Number(rect?.height)}
-            {...props}
+            onClose={onClose}
+            trigger={trigger}
+            lockScroll={window.innerHeight <= Number(rect?.height)}
         >
             <div className="dropdown-container" ref={ref}>
                 <div className={cx('dropdown-body', modifier)}>{children}</div>
