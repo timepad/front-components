@@ -7,14 +7,10 @@ export interface IDropdownProps {
     trigger: IPopupProps['trigger'];
     keepInsideParent?: IPopupProps['keepTooltipInside'];
     show?: boolean;
-    onClose?: IPopupProps['onClose'];
-    onOpen?: IPopupProps['onOpen'];
+    onClose?: () => void;
     priorityPositions?: IPopupProps['position'];
-    mouseEnterDelay?: IPopupProps['mouseEnterDelay'];
-    mouseLeaveDelay?: IPopupProps['mouseLeaveDelay'];
     modifier?: string;
     nested?: boolean;
-    lockScroll?: boolean;
     on?: IPopupProps['on'];
 }
 
