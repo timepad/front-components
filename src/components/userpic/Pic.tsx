@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {FC, HTMLAttributes} from 'react';
 import {MouseEventHandler} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
@@ -20,6 +20,22 @@ interface IProps {
     mode?: 'light' | 'dark' | 'white';
 }
 
+interface IUserImageProps extends HTMLAttributes<HTMLLIElement> {
+    imgURL: string;
+}
+
+interface IUserLabel {
+    label?: string;
+}
+
+const UserImage: FC<IUserImageProps> = ({className, imgURL}) => (
+    <div className={className} style={{backgroundImage: `url("${imgURL ?? ''}")`}} />
+ )
+
+const UserLabel: FC<IUserLabel> = ({label}) => (
+    label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon />
+)
+
 export const Pic: React.FC<IProps> = ({
     imgURL,
     label,
@@ -37,14 +53,20 @@ export const Pic: React.FC<IProps> = ({
             hoverable: !!onClick || hoverable,
             square,
             size,
-            bordered: !!imgURL,
+            bordered: !!imgURL || bordered,
             ['mode']: mode,
         }),
     );
 
+    const imgClassName = component('userpic', 'img')();
+
     return (
-        <div className={classNames} onClick={onClick} style={{backgroundImage: `url("${imgURL ?? ''}")`}}>
-            {!imgURL && (label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon />)}
+        <div className={classNames} onClick={onClick} >
+            {
+                !!imgURL
+                ? <UserImage className={imgClassName} imgURL={imgURL} />
+                : <UserLabel label={label} />
+            }
         </div>
-    );
+   );
 };

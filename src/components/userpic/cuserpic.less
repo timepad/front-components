@@ -16,14 +16,10 @@
   border: 1px solid transparent;
   border-radius: 50%;
   background-color: @c-gray-50-fade-35;
-  background-origin: border-box;
   color: @c-gray-50;
   font-weight: 900;
   font-size: 15px;
   transition: @duration-blink;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
 
   svg {
     position: absolute;
@@ -215,5 +211,19 @@
         border-radius: 10px;
       }
     }
+  }
+
+  &__img {
+    .size(inherit);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: inherit;
+    background-origin: border-box; 
+    box-sizing: inherit;    
+  }
+
+  .cuserpic--bordered  &__img {
+    border: 1px solid @c-gray-50-fade-20;
   }
 }
