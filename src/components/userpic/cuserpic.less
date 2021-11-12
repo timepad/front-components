@@ -13,11 +13,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
   border-radius: 50%;
   background-color: @c-gray-50-fade-20;
-  background-clip: border-box;
-  background-origin: border-box;
   color: @c-gray-35;
   font-weight: 900;
   font-size: 15px;
@@ -27,8 +26,8 @@
     content: '';
     position: absolute;
     z-index: -1;
-    top: -1px;
-    left: -1px;
+    top: 0px;
+    left: 0px;
     height: 32px;
     width: 32px;
     border-radius: 50%;
@@ -53,15 +52,13 @@
     background-position: center center;
     background-repeat: no-repeat;
     border-radius: inherit;
-    background-clip: border-box; 
-    background-origin: border-box;
     box-sizing: inherit; 
 
      &::after {
       content: '';
       position: absolute;
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 32px;
       width: 32px;
       border-radius: 50%;
@@ -81,7 +78,8 @@
   }
 
   .cuserpic--bordered  &__img {
-    border: 1px solid @c-gray-50-fade-20;
+    outline: 1px solid @c-gray-50-fade-20;
+    outline-offset: -1px;
   }
 
   &.cuserpic--mode_light {
@@ -163,15 +161,15 @@
     font-size: 11px;
 
     &::before {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 24px;
       width: 24px;
     }
 
     &.cuserpic--hoverable .cuserpic__img::after {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 24px;
       width: 24px;
     }
@@ -194,15 +192,15 @@
     font-size: 22px;
 
     &::before {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 48px;
       width: 48px;
     }
 
     &.cuserpic--hoverable .cuserpic__img::after {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 48px;
       width: 48px;
     }
@@ -225,15 +223,15 @@
     font-size: 60px;
 
     &::before {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 128px;
       width: 128px;
     }
 
     &.cuserpic--hoverable .cuserpic__img::after {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 128px;
       width: 128px;
     }
@@ -256,15 +254,15 @@
     font-size: 75px;
 
     &::before {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 160px;
       width: 160px;
     }
 
     &.cuserpic--hoverable .cuserpic__img::after {
-      top: -1px;
-      left: -1px;
+      top: 0px;
+      left: 0px;
       height: 160px;
       width: 160px;
     }
