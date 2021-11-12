@@ -26,10 +26,10 @@
     content: '';
     position: absolute;
     z-index: -1;
-    top: 0px;
-    left: 0px;
-    height: 32px;
-    width: 32px;
+    top: 1px;
+    left: 1px;
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
     border-radius: 50%;
     background-color: @c-white;
   }
@@ -59,8 +59,8 @@
       position: absolute;
       top: 0px;
       left: 0px;
-      height: 32px;
-      width: 32px;
+      height: 100%;
+      width: 100%;
       border-radius: 50%;
       opacity: 0;
       transition: @duration-blink ease-in-out;
@@ -148,11 +148,11 @@
     border-radius: 4px;
 
     &::before {
-      border-radius: 4px;
+      border-radius: inherit;
     }
 
     .cuserpic__img::after {
-      border-radius: 4px;
+      border-radius: inherit;
     }
   }
 
@@ -160,30 +160,8 @@
     .size(24px);
     font-size: 11px;
 
-    &::before {
-      top: 0px;
-      left: 0px;
-      height: 24px;
-      width: 24px;
-    }
-
-    &.cuserpic--hoverable .cuserpic__img::after {
-      top: 0px;
-      left: 0px;
-      height: 24px;
-      width: 24px;
-    }
-
     &.cuserpic--square {
       border-radius: 3px;
-
-      &::before {
-        border-radius: 3px;
-      }
-
-      .cuserpic__img::after {
-        border-radius: 3px;
-      }
     }
   }
 
@@ -191,30 +169,8 @@
     .size(48px);
     font-size: 22px;
 
-    &::before {
-      top: 0px;
-      left: 0px;
-      height: 48px;
-      width: 48px;
-    }
-
-    &.cuserpic--hoverable .cuserpic__img::after {
-      top: 0px;
-      left: 0px;
-      height: 48px;
-      width: 48px;
-    }
-
     &.cuserpic--square {
       border-radius: 6px;
-
-      &::before {
-        border-radius: 6px;
-      }
-
-      .cuserpic__img:after {
-        border-radius: 6px;
-      }
     }
   }
 
@@ -222,30 +178,8 @@
     .size(128px);
     font-size: 60px;
 
-    &::before {
-      top: 0px;
-      left: 0px;
-      height: 128px;
-      width: 128px;
-    }
-
-    &.cuserpic--hoverable .cuserpic__img::after {
-      top: 0px;
-      left: 0px;
-      height: 128px;
-      width: 128px;
-    }
-
     &.cuserpic--square {
       border-radius: 8px;
-
-      &::before {
-        border-radius: 8px;
-      }
-
-      .cuserpic__img::after {
-        border-radius: 8px;
-      }
     }
   }
 
@@ -253,30 +187,8 @@
     .size(160px);
     font-size: 75px;
 
-    &::before {
-      top: 0px;
-      left: 0px;
-      height: 160px;
-      width: 160px;
-    }
-
-    &.cuserpic--hoverable .cuserpic__img::after {
-      top: 0px;
-      left: 0px;
-      height: 160px;
-      width: 160px;
-    }
-
     &.cuserpic--square {
       border-radius: 8px;
-
-      &::before {
-        border-radius: 8px;
-      }
-
-      .cuserpic__img::after {
-        border-radius: 8px;
-      }
     }
   }
 }
