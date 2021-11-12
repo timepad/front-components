@@ -95,7 +95,7 @@ export const Dark: IStorybookComponent = () => {
 export const WithPadding: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>Default Accordion</StoryTitle>
+            <StoryTitle>Accordion with padding</StoryTitle>
             <Accordion text="Text">
                 <p>Inner content</p>
             </Accordion>
