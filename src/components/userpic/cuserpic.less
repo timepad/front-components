@@ -16,6 +16,8 @@
   border: 1px solid transparent;
   border-radius: 50%;
   background-color: @c-gray-50-fade-20;
+  background-clip: border-box;
+  background-origin: border-box;
   color: @c-gray-35;
   font-weight: 900;
   font-size: 15px;
@@ -51,7 +53,8 @@
     background-position: center center;
     background-repeat: no-repeat;
     border-radius: inherit;
-    background-origin: border-box; 
+    background-clip: border-box; 
+    background-origin: border-box;
     box-sizing: inherit; 
 
      &::after {
