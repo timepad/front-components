@@ -30,11 +30,9 @@ interface IUserLabel {
 
 const UserImage: FC<IUserImageProps> = ({className, imgURL}) => (
     <div className={className} style={{backgroundImage: `url("${imgURL ?? ''}")`}} />
- )
+);
 
-const UserLabel: FC<IUserLabel> = ({label}) => (
-    label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon />
-)
+const UserLabel: FC<IUserLabel> = ({label}) => (label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon />);
 
 export const Pic: React.FC<IProps> = ({
     imgURL,
@@ -61,12 +59,8 @@ export const Pic: React.FC<IProps> = ({
     const imgClassName = component('userpic', 'img')();
 
     return (
-        <div className={classNames} onClick={onClick} >
-            {
-                !!imgURL
-                ? <UserImage className={imgClassName} imgURL={imgURL} />
-                : <UserLabel label={label} />
-            }
+        <div className={classNames} onClick={onClick}>
+            {!!imgURL ? <UserImage className={imgClassName} imgURL={imgURL} /> : <UserLabel label={label} />}
         </div>
-   );
+    );
 };
