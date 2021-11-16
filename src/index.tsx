@@ -23,3 +23,5 @@ export * from './components/brick';
 export * from './components/suggest';
 export * from './components/form/Form';
 export * from './components/segmentedcontrol';
+import * as Icons from './assets/icons';
+export {Icons};
