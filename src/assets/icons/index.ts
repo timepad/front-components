@@ -28,7 +28,7 @@ import IconDocument24 from './24/icon-document-24.svg';
 import IconHome24 from './24/icon-home-24.svg';
 import IconAddCalendar24 from './24/icon-add-calendar-24.svg';
 import IconAlert24 from './24/icon-alert-24.svg';
-import IconApplePay24 from './24/icon-apple pay-24.svg';
+import IconApplePay24 from './24/icon-apple-pay-24.svg';
 import IconArrowNW24 from './24/icon-arrow_NW-24.svg';
 import IconArrowTale24 from './24/icon-arrow_tale-24.svg';
 import IconArrowTaleCurve24 from './24/icon-arrow_tale-curve-24.svg';
