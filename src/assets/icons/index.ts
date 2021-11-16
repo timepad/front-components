@@ -31,7 +31,7 @@ import IconAlert24 from './24/icon-alert-24.svg';
 import IconApplePay24 from './24/icon-apple pay-24.svg';
 import IconArrowNW24 from './24/icon-arrow_NW-24.svg';
 import IconArrowTale24 from './24/icon-arrow_tale-24.svg';
-import IconArrowTaleCurve from './24/icon-arrow_tale-curve.svg';
+import IconArrowTaleCurve24 from './24/icon-arrow_tale-curve-24.svg';
 import IconArrowDown24 from './24/icon-arrow-down-24.svg';
 import IconArrowLeft24 from './24/icon-arrow-left-24.svg';
 import IconArrowRight24 from './24/icon-arrow-right-24.svg';
@@ -146,7 +146,7 @@ export {
     IconApplePay24,
     IconArrowNW24,
     IconArrowTale24,
-    IconArrowTaleCurve,
+    IconArrowTaleCurve24,
     IconArrowDown24,
     IconArrowLeft24,
     IconArrowRight24,
