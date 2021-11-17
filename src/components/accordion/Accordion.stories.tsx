@@ -35,16 +35,16 @@ export const Default: IStorybookComponent = () => {
             <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" big>
+            <Accordion text="Text" large>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" big>
+            <Accordion text="Text" caption="Caption" large>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" big reverse>
+            <Accordion text="Text" caption="Caption" large reverse>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" big secondIcon={<AddIcon />}>
+            <Accordion text="Text" caption="Caption" large secondIcon={<AddIcon />}>
                 <p>Inner content</p>
             </Accordion>
         </>
@@ -70,16 +70,16 @@ export const Dark: IStorybookComponent = () => {
                             <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" big>
+                            <Accordion text="Text" large>
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" caption="Caption" big>
+                            <Accordion text="Text" caption="Caption" large>
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" caption="Caption" big reverse>
+                            <Accordion text="Text" caption="Caption" large reverse>
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" caption="Caption" big secondIcon={<AddIcon />}>
+                            <Accordion text="Text" caption="Caption" large secondIcon={<AddIcon />}>
                                 <p>Inner content</p>
                             </Accordion>
                         </div>
@@ -102,13 +102,13 @@ export const WithPadding: IStorybookComponent = () => {
             <Accordion text="Text" caption="Caption" horizontalPadding={8}>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" big horizontalPadding={16}>
+            <Accordion text="Text" large horizontalPadding={16}>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" big horizontalPadding={24}>
+            <Accordion text="Text" caption="Caption" large horizontalPadding={24}>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" big reverse horizontalPadding={32}>
+            <Accordion text="Text" caption="Caption" large reverse horizontalPadding={32}>
                 <p>Inner content</p>
             </Accordion>
         </>

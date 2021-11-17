@@ -10,7 +10,7 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
     text: string;
     caption?: string;
     secondIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    big?: boolean;
+    large?: boolean;
     reverse?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
 }
@@ -19,7 +19,7 @@ export const Accordion: FC<IProps> = ({
     text = '',
     caption,
     horizontalPadding = 0,
-    big = false,
+    large = false,
     reverse = false,
     secondIcon,
     className = '',
@@ -33,7 +33,7 @@ export const Accordion: FC<IProps> = ({
         component(baseClassName)({
             [`${horizontalPadding}`]: true,
             open,
-            big,
+            large,
             reverse,
         }),
         className,
