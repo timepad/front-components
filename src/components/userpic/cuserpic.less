@@ -16,7 +16,7 @@
   outline: 1px solid transparent;
   outline-offset: -1px;
   border-radius: 50%;
-  background-color: @c-gray-50-fade-20;
+  background-color: @c-white;
   color: @c-gray-35;
   font-weight: 900;
   font-size: 15px;
@@ -25,16 +25,16 @@
   &::before {
     content: '';
     position: absolute;
-    z-index: -1;
-    top: 1px;
-    left: 1px;
-    height: calc(100% - 2px);
-    width: calc(100% - 2px);
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
     border-radius: 50%;
-    background-color: @c-white;
+    background-color: @c-gray-50-fade-20;
   }
 
-  svg {
+  // сделано чтобы повысить специфичность при использовании в дропдауне
+  svg.cuserpic__svg {
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -42,8 +42,17 @@
     transform: translate(-50%, -50%);
 
     path {
-      fill: @c-gray-50-fade-35;
+      fill: @c-gray-35;
     }
+  }
+
+  span {
+    z-index: 1;
+    cursor: default;
+  }
+
+  &--imaged {
+    background-color: transparent;
   }
 
   &__img {
@@ -52,7 +61,8 @@
     background-position: center center;
     background-repeat: no-repeat;
     border-radius: inherit;
-    box-sizing: inherit; 
+    box-sizing: inherit;
+    z-index: 1;
 
      &::after {
       content: '';
@@ -82,65 +92,31 @@
     outline-offset: -1px;
   }
 
-  &.cuserpic--mode_light {
-    background-color: @c-gray-50-fade-20;
-    color: @c-gray-35;
-
-    svg path {
-      fill: @c-gray-35;
-    }
-  }
-
-  &.cuserpic--mode_dark {
-    color: @c-gray-35;
-    background-color: @c-gray-50-fade-20;
-
-    svg path {
-      fill: @c-gray-35;
-    }
-  }
-
-    &:active {
-      background-color: @c-gray-75-fade-35;
-      color: @c-gray-50;
-
-      svg path {
-        fill: @c-gray-50;
-      }
-  }
-  
-
-  &.cuserpic--mode_white {
-    background-color: @c-white;
-    color: @c-gray-35;
-
-    svg path {
-      fill: @c-gray-35;
-    }
-  }
-
   &.cuserpic--bordered {
-    border-color: @c-gray-50-fade-20;
+    outline-color: @c-gray-50-fade-20;
   }
 
   &.cuserpic--hoverable {
     cursor: pointer;
-  }
 
-  &:hover {
-    background-color: @c-gray-75-fade-35;
-    color: @c-gray-75;
+    &:hover::before {
+      background-color: @c-gray-50-fade-35;
+    }
+
+    &:hover {  
+      color: @c-gray-75;
 
     svg path {
       fill: @c-gray-75;
+      }
     }
-  }
 
-  &:active {
-    color: @c-gray-50;
+    &:active {  
+      color: @c-gray-50;
 
     svg path {
       fill: @c-gray-50;
+      }
     }
   }
 
