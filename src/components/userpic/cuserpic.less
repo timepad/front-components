@@ -13,9 +13,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  outline: 1px solid transparent;
-  outline-offset: -1px;
+  box-shadow: inset 0 0 1px transparent;
   border-radius: 50%;
+  background-clip: border-box;
+  background-origin: border-box;
   background-color: @c-white;
   color: @c-gray-35;
   font-weight: 900;
@@ -60,8 +61,11 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    background-clip: border-box;
+    background-origin: border-box;
     border-radius: inherit;
     box-sizing: inherit;
+    border: 1px solid @c-gray-50-fade-20;
     z-index: 1;
 
      &::after {
@@ -87,13 +91,13 @@
     }
   }
 
-  .cuserpic--bordered  &__img {
-    outline: 1px solid @c-gray-50-fade-20;
-    outline-offset: -1px;
+  &.cuserpic--bordered {
+    box-shadow: inset 0 0 1px @c-gray-50-fade-20;
   }
 
-  &.cuserpic--bordered {
-    outline-color: @c-gray-50-fade-20;
+  .cuserpic--bordered  &__img {
+    box-shadow: inset 0 0 1px transparent;
+    box-sizing: inherit;
   }
 
   &.cuserpic--hoverable {
