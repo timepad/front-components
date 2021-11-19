@@ -53,7 +53,7 @@ export const Pic: React.FC<IProps> = ({
             square,
             size,
             bordered: !!imgURL || bordered,
-            imaged: !!imgURL,
+            isImg: !!imgURL,
         }),
     );
 
