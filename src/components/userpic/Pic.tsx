@@ -17,7 +17,6 @@ interface IProps {
     hoverable?: boolean;
     className?: string;
     bordered?: boolean;
-    // mode?: 'light' | 'dark' | 'white';
 }
 
 interface IUserImageProps extends HTMLAttributes<HTMLLIElement> {
@@ -46,7 +45,6 @@ export const Pic: React.FC<IProps> = ({
     className,
     hoverable,
     bordered,
-    // mode,
 }: IProps) => {
     const classNames = cx(
         className,
@@ -56,7 +54,6 @@ export const Pic: React.FC<IProps> = ({
             size,
             bordered: !!imgURL || bordered,
             imaged: !!imgURL,
-            // ['mode']: mode,
         }),
     );
 
