@@ -1,0 +1,107 @@
+@offsets: 0, 8, 16, 24, 32;
+
+.caccordion {
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0px 1px 0px rgba(128, 128, 128, 0.2);
+
+    --text-size: @fs-caption;
+    --text-height: @lh-caption;
+    --caption-size: @fs-caption;
+    --caption-height: @lh-caption;
+    --direction: row;
+
+    &--large {
+        --text-size: @fs-body;
+        --text-height: @lh-body;
+        --caption-size: @fs-small;
+        --caption-height: @lh-small;
+        --direction: column;
+    }
+
+    &--reverse {
+        --direction: column-reverse;
+    }
+
+    &.caccordion--0,
+    &.caccordion--8,
+    &.caccordion--16,
+    &.caccordion--24,
+    &.caccordion--32 {}
+    each(@offsets, {
+        &--@{value} {
+            .caccordion__body {
+                padding: 5px unit(@value, px);
+            }
+        }
+    })
+
+    .caccordion__body {
+        display: flex;
+        cursor: pointer;
+        height: 54px;
+
+        .caccordion__text {
+            display: flex;
+            flex: 1;
+            align-self: center;
+            flex-direction: var(--direction);
+            margin-bottom: 4px;
+            overflow: hidden;
+
+            .caccordion__title {
+                display: inline-block;
+                margin-right: auto;
+                font-size: var(--text-size);
+                line-height: var(--text-height);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 100%;
+            }
+
+            .caccordion__caption {
+                display: inline-block;
+                font-size: var(--caption-size);
+                line-height: var(--caption-height);
+                color: @c-gray-50;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 100%;
+            }
+        }
+
+        .caccordion__icon {
+            display: flex;
+            align-self: center;
+            margin-left: 8px;
+        }
+    }
+
+    &.caccordion--large .caccordion__text .caccordion__caption  {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    &.caccordion--large.caccordion--reverse .caccordion__text .caccordion__caption  {
+        margin-top: 3px;
+        margin-bottom: 1px;
+    }
+
+    .caccordion__content {
+        display: none;
+    }
+
+    &--open {
+        .caccordion__content {
+            display: block;
+        }
+    }
+
+    html body .mtheme--darkpic & {
+        svg * {
+            fill: @c-white;
+        }
+    }
+}
