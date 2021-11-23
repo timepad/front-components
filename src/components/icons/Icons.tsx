@@ -5,8 +5,8 @@ import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
 interface IProps {
-    iconName?: string;
-    children?: any;
+    iconName: string;
+    children: React.FC;
 }
 
 const story = true;
