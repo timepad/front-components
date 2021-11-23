@@ -19,9 +19,47 @@ export const Icons24: IStorybookComponent = () => {
         <>
             <StoryTitle>Basic Icons 24.</StoryTitle>
             <div className="lgrid">
+                {arrIcons
+                    .filter((el) => el.name.includes('24'))
+                    .map((Item, ind) => (
+                        <Icon key={ind} iconName={Item.name}>
+                            <Item />
+                        </Icon>
+                    ))}
+            </div>
+        </>
+    );
+};
+
+Icons24.storyName = 'Basic icons 24';
+
+export const Icons16: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Basic Icons 16.</StoryTitle>
+            <div className="lgrid">
+                {arrIcons
+                    .filter((el) => el.name.includes('16'))
+                    .map((Item, ind) => (
+                        <Icon key={ind} iconName={Item.name}>
+                            <Item />
+                        </Icon>
+                    ))}
+            </div>
+        </>
+    );
+};
+
+Icons16.storyName = 'Basic icons 16';
+
+export const IconsColored: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>All icons colored.</StoryTitle>
+            <div className="lgrid">
                 {arrIcons.map((Item, ind) => (
                     <Icon key={ind} iconName={Item.name}>
-                        <Item />
+                        <Item className="colored" />
                     </Icon>
                 ))}
             </div>
@@ -29,4 +67,4 @@ export const Icons24: IStorybookComponent = () => {
     );
 };
 
-Icons24.storyName = 'Basic icons 24';
+IconsColored.storyName = 'All icons colored';

@@ -9,17 +9,20 @@ interface IProps {
     children?: any;
 }
 
+const story = true;
+
 export const Icon: React.FC<IProps> = ({iconName, children}: IProps) => {
     const classNames = cx(
         component('icon')({
+            story,
             iconName,
         }),
     );
 
     return (
         <div className={classNames}>
-            <div>{iconName}</div>
             {children}
+            <div>{iconName}</div>
         </div>
     );
 };
