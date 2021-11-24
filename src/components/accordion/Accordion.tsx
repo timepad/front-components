@@ -45,8 +45,8 @@ export const Accordion: FC<IProps> = ({
     };
 
     return (
-        <div className={containerClassNames} onClick={handleClick}>
-            <div className={component(baseClassName, 'body')()}>
+        <div className={containerClassNames}>
+            <div className={component(baseClassName, 'body')()} onClick={handleClick}>
                 <div className={component(baseClassName, 'text')()}>
                     <div className={component(baseClassName, 'title')()}>{text}</div>
                     {caption && <div className={component(baseClassName, 'caption')()}>{caption}</div>}
