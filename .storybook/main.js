@@ -62,6 +62,7 @@ module.exports = {
       assets: path.resolve(__dirname, '../src/assets'),
       svg: path.resolve(__dirname, '../src/assets/svg'),
       css: path.resolve(__dirname, '../src/assets/css'),
+      tpIcons: path.resolve(__dirname, '../src/assets/icons/'),
     }
 
     // и определяем точки входа

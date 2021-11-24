@@ -22,7 +22,10 @@
     "outDir": "./src",
     "baseUrl": "./src",
     "typeRoots": ["./types"],
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "tpIcons": ["assets/icons"]
+    }
   },
   "exclude": [
     "node_modules",
