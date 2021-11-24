@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StoryTitle, IStorybookComponent} from '../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
-import * as IconNames from '../assets/icons';
+import * as IconNames from 'tpIcons';
 import cx from 'classnames';
 import '../assets/css/bundle.less';
 import {component} from '../services/helpers/classHelpers';
