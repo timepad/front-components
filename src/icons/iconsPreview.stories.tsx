@@ -1,12 +1,38 @@
 import * as React from 'react';
-import {StoryTitle, IStorybookComponent} from '../../services/helpers/storyBookHelpers';
-import {Icon} from './Icons';
+import {StoryTitle, IStorybookComponent} from '../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
-import * as IconNames from '../../icons';
+import * as IconNames from '../assets/icons';
+import cx from 'classnames';
+import '../assets/css/bundle.less';
+import {component} from '../services/helpers/classHelpers';
+import './iconsPreview.less';
+
+interface IProps {
+    iconSampleName: string;
+    children: any;
+}
+
+const story = true;
+
+const IconSample: React.FC<IProps> = ({iconSampleName, children}: IProps) => {
+    const classNames = cx(
+        component('icon')({
+            story,
+            iconSampleName,
+        }),
+    );
+
+    return (
+        <div className={classNames}>
+            {children}
+            <div>{iconSampleName}</div>
+        </div>
+    );
+};
 
 export default {
-    title: 'Icons',
-    component: Icon,
+    title: 'Icons Preview',
+    component: IconSample,
 } as Meta;
 
 const arrIcons: any[] = [];
@@ -22,9 +48,9 @@ export const Icons24: IStorybookComponent = () => {
                 {arrIcons
                     .filter((el) => el.name.includes('24'))
                     .map((Item, ind) => (
-                        <Icon key={ind} iconName={Item.name}>
+                        <IconSample key={ind} iconSampleName={Item.name}>
                             <Item />
-                        </Icon>
+                        </IconSample>
                     ))}
             </div>
         </>
@@ -41,9 +67,9 @@ export const Icons16: IStorybookComponent = () => {
                 {arrIcons
                     .filter((el) => el.name.includes('16'))
                     .map((Item, ind) => (
-                        <Icon key={ind} iconName={Item.name}>
+                        <IconSample key={ind} iconSampleName={Item.name}>
                             <Item />
-                        </Icon>
+                        </IconSample>
                     ))}
             </div>
         </>
@@ -58,9 +84,9 @@ export const IconsColored: IStorybookComponent = () => {
             <StoryTitle>All icons colored.</StoryTitle>
             <div className="lgrid">
                 {arrIcons.map((Item, ind) => (
-                    <Icon key={ind} iconName={Item.name}>
+                    <IconSample key={ind} iconSampleName={Item.name}>
                         <Item className="colored" />
-                    </Icon>
+                    </IconSample>
                 ))}
             </div>
         </>
