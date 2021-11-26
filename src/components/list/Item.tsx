@@ -52,7 +52,6 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
 
         const Tag: any = as;
         const mainText = label ? label : children;
-
         return (
             <Tag ref={ref} className={classNames} {...props}>
                 {prefix ? (
