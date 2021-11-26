@@ -57,7 +57,11 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                 {prefix ? (
                     <div className={component('list-item', 'prefix')()}>
                         {React.cloneElement(prefix, {
-                            className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                            className: cx(
+                                component('icon')(),
+                                component('list-item', 'row-icon')(),
+                                prefix?.props.className,
+                            ),
                         })}
                     </div>
                 ) : null}
@@ -74,7 +78,11 @@ const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
                 {suffix ? (
                     <div className={component('list-item', 'suffix')()}>
                         {React.cloneElement(suffix, {
-                            className: cx(component('icon')(), component('list-item', 'row-icon')()),
+                            className: cx(
+                                component('icon')(),
+                                component('list-item', 'row-icon')(),
+                                suffix?.props.className,
+                            ),
                         })}
                     </div>
                 ) : null}
