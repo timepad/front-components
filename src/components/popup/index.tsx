@@ -142,6 +142,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
         useLayoutEffect(() => {
             if (isOpen) {
+                if (triggerRef.current) triggerRef.current.className = 'popup-hovered-trigger';
                 focusedElBeforeOpen.current = document.activeElement;
                 setPosition();
                 if (contentRef.current) {
@@ -149,6 +150,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 }
                 handleLockScroll();
             } else {
+                if (triggerRef.current) triggerRef.current.className = '';
                 resetScroll();
             }
             return () => {
