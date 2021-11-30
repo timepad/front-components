@@ -18,7 +18,7 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic />;
+const Prefix: React.FC = () => <Pic hoverable />;
 const Suffix: React.FC = () => <AddIcon />;
 
 const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
