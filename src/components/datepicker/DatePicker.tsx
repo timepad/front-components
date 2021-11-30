@@ -17,6 +17,8 @@ interface ICalendarProps {
     dateRange?: boolean;
 }
 
+moment.locale('ru');
+
 export const DatePicker: FC<ICalendarProps> = ({
     initialToday,
     initialStart,

@@ -62,9 +62,9 @@ export const WithRange: IStorybookComponent = () => {
                 <DatePicker
                     withShortcats
                     dateRange
-                    initialStart={moment('20320214')}
-                    initialEnd={moment('20320308')}
-                    initialToday={moment('20320223')}
+                    initialStart={moment('20330214')}
+                    initialEnd={moment('20330308')}
+                    initialToday={moment('20330223')}
                 />
             </Dropdown>
         </>
