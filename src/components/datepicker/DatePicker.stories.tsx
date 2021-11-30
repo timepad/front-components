@@ -8,6 +8,7 @@ import {Dropdown} from '../dropdown';
 import {Button} from '../button';
 
 import 'css/bundle.less';
+import moment from 'moment';
 
 export default {
     title: 'DatePicker',
@@ -17,10 +18,57 @@ export default {
 export const Simple: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>DatePicker</StoryTitle>
+            <StoryTitle>DatePicker simple</StoryTitle>
             <Dropdown trigger={() => <Button>Date</Button>}>
-                <DatePicker dateRange withShortcats />
+                <DatePicker initialToday={moment('20300214')} />
             </Dropdown>
         </>
     );
 };
+
+Simple.storyName = 'DatePicker simple';
+
+export const WithAllButtons: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>DatePicker with all buttons</StoryTitle>
+            <Dropdown trigger={() => <Button>Date</Button>}>
+                <DatePicker dateRange withShortcats initialToday={moment('20300214')} />
+            </Dropdown>
+        </>
+    );
+};
+
+WithAllButtons.storyName = 'DatePicker with all buttons';
+
+export const WithTwoButtons: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>DatePicker with two buttons</StoryTitle>
+            <Dropdown trigger={() => <Button>Date</Button>}>
+                <DatePicker withShortcats initialToday={moment('20300214')} />
+            </Dropdown>
+        </>
+    );
+};
+
+WithTwoButtons.storyName = 'DatePicker with two buttons';
+
+export const WithRange: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>DatePicker with date range</StoryTitle>
+            <Dropdown trigger={() => <Button>Date</Button>}>
+                <DatePicker
+                    withShortcats
+                    dateRange
+                    initialStart={moment('20320214')}
+                    initialEnd={moment('20320308')}
+                    initialToday={moment('20320223')}
+                />
+            </Dropdown>
+        </>
+    );
+};
+
+WithRange.storyName = 'DatePicker with date range';
