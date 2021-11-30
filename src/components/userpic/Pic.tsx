@@ -17,7 +17,6 @@ interface IProps {
     hoverable?: boolean;
     className?: string;
     bordered?: boolean;
-    mode?: 'light' | 'dark' | 'white';
 }
 
 interface IUserImageProps extends HTMLAttributes<HTMLLIElement> {
@@ -28,11 +27,14 @@ interface IUserLabel {
     label?: string;
 }
 
+const svgClassName = component('userpic', 'svg')();
+
 const UserImage: FC<IUserImageProps> = ({className, imgURL}) => (
     <div className={className} style={{backgroundImage: `url("${imgURL ?? ''}")`}} />
 );
 
-const UserLabel: FC<IUserLabel> = ({label}) => (label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon />);
+const UserLabel: FC<IUserLabel> = ({label}) =>
+    label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon className={svgClassName} />;
 
 export const Pic: React.FC<IProps> = ({
     imgURL,
@@ -43,7 +45,6 @@ export const Pic: React.FC<IProps> = ({
     className,
     hoverable,
     bordered,
-    mode,
 }: IProps) => {
     const classNames = cx(
         className,
@@ -52,7 +53,7 @@ export const Pic: React.FC<IProps> = ({
             square,
             size,
             bordered: !!imgURL || bordered,
-            ['mode']: mode,
+            isImg: !!imgURL,
         }),
     );
 
