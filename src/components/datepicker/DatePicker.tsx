@@ -58,13 +58,16 @@ export const DatePicker: FC<ICalendarProps> = ({
     const isBetweenSelected = (day: Moment) => day.isBetween(start, end, 'days', '()');
 
     const getMonthEdgeStateForDay = (day: Moment) => {
+        
         if (isLastDayOfMonth(moment(day).subtract(1, 'day')) && !isDayOfCurrentMonth(end) && isBetweenSelected(day)) {
+            console.log('this is the end');
             return 'end';
         } else if (
             isFirstDayOfMonth(moment(day).add(1, 'day')) &&
             !isDayOfCurrentMonth(start) &&
             isBetweenSelected(day)
         ) {
+            console.log('this is the start');
             return 'start';
         } else {
             return null;
@@ -97,6 +100,8 @@ export const DatePicker: FC<ICalendarProps> = ({
             end: !start?.isSame(end, 'days') && day.isSame(end, 'days') && isDayOfCurrentMonth(day),
             edge: isDayOfCurrentMonth(day) && (day.isSame(start, 'days') || day.isSame(end, 'days')),
             month: !getMonthEdgeStateForDay(day),
+            month_end: getMonthEdgeStateForDay(day)==='end',
+            month_start: getMonthEdgeStateForDay(day) === 'start',
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
