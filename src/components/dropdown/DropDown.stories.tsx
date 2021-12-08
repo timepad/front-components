@@ -123,6 +123,18 @@ const DropProfile: React.FC = () => {
                 <List.Item href={'#'} as={'a'}>
                     Избранное
                 </List.Item>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <Dropdown trigger={() => <List.Item>Выпадающий список</List.Item>} on="hover">
+                        <List variant="dark" size="lg">
+                            <List.Item href={'#'} as={'a'}>
+                                Мои события
+                            </List.Item>
+                            <List.Item href={'#'} as={'a'}>
+                                Мои подписки
+                            </List.Item>
+                        </List>
+                    </Dropdown>
+                </div>
                 <List.Item as={'button'} type={'button'} label="Выход" />
                 <Dropdown.Button label="Стать организатором" />
             </List>

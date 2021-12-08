@@ -204,7 +204,15 @@ export const Dropdown: FC<IDropdownProps> & {
             {...props}
         >
             <div className="dropdown-container" ref={ref}>
-                <div className={cx('dropdown-body', modifier)}>{children}</div>
+                <div
+                    className={cx(
+                        'dropdown-body',
+                        {'dropdown-body--scrollable': window.innerHeight <= Number(rect?.height)},
+                        modifier,
+                    )}
+                >
+                    {children}
+                </div>
             </div>
         </Popup>
     );
