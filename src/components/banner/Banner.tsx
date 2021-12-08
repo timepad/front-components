@@ -9,14 +9,14 @@ import {Button, ButtonVariant} from '../button';
 
 type CloseClickHandler = () => void;
 
-interface IBannerProps {
+interface IBannerProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     theme?: string;
     closeable?: boolean;
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onCloseClick?: CloseClickHandler;
 }
 
-export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseClick, icon}) => {
+export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseClick, icon, ...props}) => {
     const [show, setShow] = useState(true);
     if (!show) {
         return null;
@@ -32,7 +32,7 @@ export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseCl
     };
 
     return (
-        <Row className={component('banner')()}>
+        <Row {...props} className={component('banner')()}>
             {icon && <Row.Icon className={component('banner', 'icon')()}>{icon}</Row.Icon>}
             <Row.Body className={component('banner', 'content')()}>{children}</Row.Body>
             {closeable && (
