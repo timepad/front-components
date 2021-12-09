@@ -162,7 +162,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
                                 index,
                                 children: valueNodes[index].children,
                                 prefix: <SortIcon />,
-                                className: 'cdropdown__dropable-item',
+                                className: 'cdropdown__dropable-item ' + child.props.className,
                                 onClick: (e: MouseEvent) => {
                                     child.props.onClick && child.props.onClick(e, valueNodes[index].value);
                                 },
@@ -221,3 +221,8 @@ export const Dropdown: FC<IDropdownProps> & {
 Dropdown.Button = DropdownButton;
 Dropdown.SList = DropdownSortableList;
 Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as ComponentClass<ISortableItemProps>;
+
+Dropdown.SItem.propTypes = {
+    ...Dropdown.SItem.propTypes,
+    index: () => null,
+};
