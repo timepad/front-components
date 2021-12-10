@@ -60,7 +60,7 @@
 .clist--variant_white .clist-item,
 .clist--variant_transparent .clist-item {
   background-color: transparent;
-  &:hover {
+  &:hover, .popup-hovered-trigger & {
     background-color: @graydark-fade-20;
   }
   &:focus,
@@ -94,7 +94,7 @@
   padding: inherit;
   padding-top: var(--spacing-vertical, 0);
   padding-bottom: var(--spacing-vertical, 0);
-  &:hover {
+  &:hover, .popup-hovered-trigger & {
     background-color: @c-gray-50-fade-20;
   }
   &:focus,
