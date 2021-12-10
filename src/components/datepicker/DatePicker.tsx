@@ -8,6 +8,8 @@ import {Button} from '../button';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
+moment.locale('ru');
+
 interface ICalendarProps {
     initialToday?: Moment;
     initialStart?: Moment;
@@ -16,8 +18,6 @@ interface ICalendarProps {
     withShortcats?: boolean;
     dateRange?: boolean;
 }
-
-moment.locale('ru');
 
 export const DatePicker: FC<ICalendarProps> = ({
     initialToday,
@@ -29,6 +29,7 @@ export const DatePicker: FC<ICalendarProps> = ({
 }) => {
     const isMounted = useRef(false);
 
+    const oneDay = 1; // fix проблемы moment().add
     const [today] = useState<Moment>(initialToday ? moment(initialToday) : moment());
     const [now, setNow] = useState<Moment>(initialStart || today);
     const [start, setStart] = useState<Moment | null>(initialStart || null);
@@ -58,21 +59,26 @@ export const DatePicker: FC<ICalendarProps> = ({
     const isBetweenSelected = (day: Moment) => day.isBetween(start, end, 'days', '()');
 
     const getMonthEdgeStateForDay = (day: Moment) => {
-        
         if (isLastDayOfMonth(moment(day).subtract(1, 'day')) && !isDayOfCurrentMonth(end) && isBetweenSelected(day)) {
-            console.log('this is the end');
             return 'end';
         } else if (
-            isFirstDayOfMonth(moment(day).add(1, 'day')) &&
+            isFirstDayOfMonth(moment(day).add(oneDay, 'day')) &&
             !isDayOfCurrentMonth(start) &&
             isBetweenSelected(day)
         ) {
-            console.log('this is the start');
             return 'start';
         } else {
             return null;
         }
     };
+
+    // TODO: Переработать правила, на основе имеющихся
+    const selectedToday = start?.isSame(today, 'day') && end?.isSame(today, 'day');
+    const selectedTomorrow =
+        start?.isSame(moment(today).add(oneDay, 'day'), 'day') && end?.isSame(moment(today).add(oneDay, 'day'), 'day');
+    const selectedWeekend =
+        end?.isSame(moment(today).isoWeekday(7), 'day') &&
+        (today.isAfter(moment(today).isoWeekday(6)) || start?.isSame(moment(today).isoWeekday(6), 'day'));
 
     const weekClasses = (week: Moment) =>
         component(
@@ -100,32 +106,33 @@ export const DatePicker: FC<ICalendarProps> = ({
             end: !start?.isSame(end, 'days') && day.isSame(end, 'days') && isDayOfCurrentMonth(day),
             edge: isDayOfCurrentMonth(day) && (day.isSame(start, 'days') || day.isSame(end, 'days')),
             month: !getMonthEdgeStateForDay(day),
-            month_end: getMonthEdgeStateForDay(day)==='end',
+            month_end: getMonthEdgeStateForDay(day) === 'end',
             month_start: getMonthEdgeStateForDay(day) === 'start',
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
     const prevMonth = () => setNow(moment(now).subtract(1, 'month'));
-    const nextMonth = () => setNow(moment(now).add(1, 'month'));
+    const nextMonth = () => setNow(moment(now).add(oneDay, 'month'));
+
+    const selectDates = (start: Moment, end: Moment | null = start) => {
+        setStart(start);
+        setEnd(end);
+        setNow(start);
+    };
 
     const dayClicked = (day: Moment) => {
         // для одной даты
-        if (!dateRange) {
-            setStart(day);
-            setEnd(day);
-            return;
-        }
+        if (!dateRange) return selectDates(day);
 
-        if (end) {
-            setStart(day);
-            setEnd(null);
+        // если есть конечная дата, начинаем сначала
+        if (end) return selectDates(day, null);
+
+        // выделение конечной точки
+        if (day.isAfter(start, 'days')) {
+            setEnd(day);
         } else {
-            if (day.isAfter(start, 'days')) {
-                setEnd(day);
-            } else {
-                setEnd(start);
-                setStart(day);
-            }
+            // инвертируем выделение
+            selectDates(day, start);
         }
     };
 
@@ -138,18 +145,6 @@ export const DatePicker: FC<ICalendarProps> = ({
         }
         isMounted.current = true;
     }, [onChange, start, end, today]);
-
-    const IconArrowLeft = (
-        <div style={{transform: 'rotate(90deg)'}}>
-            <IconArrow />
-        </div>
-    );
-
-    const IconArrowRight = (
-        <div style={{transform: 'rotate(-90deg)'}}>
-            <IconArrow />
-        </div>
-    );
 
     return (
         <div className="cdatepicker">
@@ -165,9 +160,13 @@ export const DatePicker: FC<ICalendarProps> = ({
                         variant={Button.variant.transparent}
                         onClick={prevMonth}
                         disabled={today.isSame(now, 'month')}
-                        icon={IconArrowLeft}
+                        icon={<IconArrow style={{transform: 'rotate(90deg)'}} />}
                     />
-                    <Button variant={Button.variant.transparent} onClick={nextMonth} icon={IconArrowRight} />
+                    <Button
+                        variant={Button.variant.transparent}
+                        onClick={nextMonth}
+                        icon={<IconArrow style={{transform: 'rotate(-90deg)'}} />}
+                    />
                 </div>
             </div>
             <div className="cdatepicker__weekdays">
@@ -205,52 +204,28 @@ export const DatePicker: FC<ICalendarProps> = ({
                         <Button
                             label="Сегодня"
                             fixed
-                            variant={
-                                start?.isSame(today, 'day') && end?.isSame(today, 'day')
-                                    ? Button.variant.primary
-                                    : Button.variant.stroke
-                            }
-                            onClick={() => {
-                                setStart(today);
-                                setEnd(today);
-                            }}
+                            variant={selectedToday ? Button.variant.primary : Button.variant.stroke}
+                            onClick={() => selectDates(today)}
                         />
                         <Button
                             label="Завтра"
                             fixed
-                            variant={
-                                start?.isSame(moment(today).add(1, 'day'), 'day') &&
-                                end?.isSame(moment(today).add(1, 'day'), 'day')
-                                    ? Button.variant.primary
-                                    : Button.variant.stroke
-                            }
-                            onClick={() => {
-                                setStart(moment(today).add(1, 'day'));
-                                setEnd(moment(today).add(1, 'day'));
-                            }}
+                            variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
+                            onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
                         />
                         {dateRange && (
                             <Button
                                 label="В выходные"
                                 fixed
-                                variant={
-                                    // TODO: да, я знаю, это все в топку
-                                    end?.isSame(moment(today).isoWeekday(7), 'day') &&
-                                    (today.isAfter(moment(today).isoWeekday(6)) ||
-                                        start?.isSame(moment(today).isoWeekday(6), 'day'))
-                                        ? Button.variant.primary
-                                        : Button.variant.stroke
-                                }
+                                variant={selectedWeekend ? Button.variant.primary : Button.variant.stroke}
                                 onClick={() => {
                                     const saturday = moment(today).isoWeekday(6);
                                     const sunday = moment(today).isoWeekday(7);
 
                                     if (today.isAfter(saturday, 'days')) {
-                                        setStart(sunday);
-                                        setEnd(sunday);
+                                        selectDates(sunday);
                                     } else {
-                                        setStart(saturday);
-                                        setEnd(sunday);
+                                        selectDates(saturday, sunday);
                                     }
                                 }}
                             />

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, FC} from 'react';
+import moment, {Moment} from 'moment';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
@@ -8,67 +9,109 @@ import {Dropdown} from '../dropdown';
 import {Button} from '../button';
 
 import 'css/bundle.less';
-import moment from 'moment';
+import {Brick} from "../brick";
 
 export default {
     title: 'DatePicker',
     component: DatePicker,
 } as Meta;
 
+const initialDate = moment('2030-02-14');
+
+const Wrapper: FC = ({children}) => (
+    <div className="dropdown-body" style={{width: 'fit-content'}}>
+        {children}
+    </div>
+);
+
 export const Simple: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>DatePicker simple</StoryTitle>
-            <Dropdown trigger={() => <Button>Date</Button>}>
-                <DatePicker initialToday={moment('20300214')} />
-            </Dropdown>
+            <StoryTitle>Datepicker</StoryTitle>
+            <Wrapper>
+                <DatePicker initialToday={initialDate} />
+            </Wrapper>
+            <Brick size={3} />
+            <StoryTitle>DatePicker with shortcats</StoryTitle>
+            <Wrapper>
+                <DatePicker withShortcats initialStart={initialDate} />
+            </Wrapper>
         </>
     );
 };
 
-Simple.storyName = 'DatePicker simple';
+Simple.storyName = 'Simple';
 
-export const WithAllButtons: IStorybookComponent = () => {
+export const Range: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>DatePicker with all buttons</StoryTitle>
-            <Dropdown trigger={() => <Button>Date</Button>}>
-                <DatePicker dateRange withShortcats initialToday={moment('20300214')} />
-            </Dropdown>
+            <StoryTitle>Date Range</StoryTitle>
+            <Wrapper>
+                <DatePicker dateRange initialToday={initialDate} />
+            </Wrapper>
+            <Brick size={3} />
+            <StoryTitle>Date Range with shortcats</StoryTitle>
+            <Wrapper>
+                <DatePicker withShortcats dateRange initialStart={initialDate} />
+            </Wrapper>
         </>
     );
 };
 
-WithAllButtons.storyName = 'DatePicker with all buttons';
+Range.storyName = 'Date Range';
 
-export const WithTwoButtons: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>DatePicker with two buttons</StoryTitle>
-            <Dropdown trigger={() => <Button>Date</Button>}>
-                <DatePicker withShortcats initialToday={moment('20300214')} />
-            </Dropdown>
-        </>
-    );
+const dateFormater = (date?: Moment) => {
+    return date && moment(date).format('DD.MM.YYYY');
 };
 
-WithTwoButtons.storyName = 'DatePicker with two buttons';
+export const WithTrigger: IStorybookComponent = () => {
+    const [date, setDate] = useState<Moment>();
+    const [dateVisible, setDateVisible] = useState(false);
 
-export const WithRange: IStorybookComponent = () => {
+    const [range, setRange] = useState<[Moment?, Moment?]>([]);
+    const [rangeVisible, setRangeVisible] = useState(false);
+
     return (
         <>
-            <StoryTitle>DatePicker with date range</StoryTitle>
-            <Dropdown trigger={() => <Button>Date</Button>}>
+            <StoryTitle>DatePicker with trigger</StoryTitle>
+            <Dropdown
+                show={dateVisible}
+                trigger={() => (
+                    <Button onClick={() => setDateVisible(true)}>
+                        Date{date && `: ${dateFormater(date)}`}
+                    </Button>
+                )}
+            >
                 <DatePicker
                     withShortcats
+                    initialStart={date}
+                    onChange={(start) => {
+                        setDate(start);
+                        setDateVisible(false);
+                    }}
+                />
+            </Dropdown>
+            <Brick size={3} />
+            <StoryTitle>DateRange with trigger</StoryTitle>
+            <Dropdown show={rangeVisible} trigger={() => (
+                    <Button onClick={() => setRangeVisible(true)}>
+                        DateRange{range.length > 0 && `: ${dateFormater(range[0])} - ${dateFormater(range[1])}`}
+                    </Button>
+                )}
+            >
+                <DatePicker
                     dateRange
-                    initialStart={moment('20330214')}
-                    initialEnd={moment('20330308')}
-                    initialToday={moment('20330223')}
+                    withShortcats
+                    initialStart={range[0]}
+                    initialEnd={range[1]}
+                    onChange={(start, end) => {
+                        setRange([start, end]);
+                        setRangeVisible(false);
+                    }}
                 />
             </Dropdown>
         </>
     );
 };
 
-WithRange.storyName = 'DatePicker with date range';
+WithTrigger.storyName = 'DatePicker with Trigger';
