@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import CheckboxIcon from '../../../assets/svg/24/icon-check-24.svg';
 import IndeterminateCheckBoxIcon from '../../../assets/svg/24/icon-minus-24.svg';
+import cn from 'classnames';
 import {ICheckboxProps} from './Checkbox.types';
 import {Row} from '../../row';
 import {uniqueId} from '../../../services/helpers/uniqueId';
@@ -20,8 +21,9 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         caption = '',
         small = false,
         onChange = noop,
+        className,
     } = props;
-    const wrapperClasses = component('form__checkbox')({error: !!error, disabled: disabled});
+    const wrapperClasses = cn(component('form__checkbox')({error: !!error, disabled: disabled}), className);
     const idx = id + '_field_checkbox';
     const checkboxClasses = component(
         'form__checkbox',
@@ -33,7 +35,7 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
     const icon = indeterminate ? <IndeterminateCheckBoxIcon /> : <CheckboxIcon />;
 
     return (
-        <Row ffFont small={small} disabled={disabled} className={wrapperClasses}>
+        <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>
             <label htmlFor={idx}>
                 <Row.Icon top={!!caption}>
                     <label>
@@ -41,7 +43,7 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
                         <span className={checkboxClasses}>{icon}</span>
                     </label>
                 </Row.Icon>
-                <Row.Body>
+                <Row.Body style={{margin: small ? '0 8px' : '0 16px'}}>
                     {props.text && <Row.Text id={idx}>{text}</Row.Text>}
                     {props.caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
