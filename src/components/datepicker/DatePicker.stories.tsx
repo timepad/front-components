@@ -9,7 +9,11 @@ import {Dropdown} from '../dropdown';
 import {Button} from '../button';
 
 import 'css/bundle.less';
+
 import {Brick} from "../brick";
+
+import {IAnalyticsProps} from './DatePicker';
+
 
 export default {
     title: 'DatePicker',
@@ -24,6 +28,12 @@ const Wrapper: FC = ({children}) => (
     </div>
 );
 
+const dataAnalyticsProps: IAnalyticsProps = {
+    dataBtnToday: 'test_DataAnalytics.userDateToday',
+    dataBtnTomorrow: 'test_DataAnalytics.userDateTomorrow',
+    dataBtnDayOff: 'test_DataAnalytics.userDateDayoff',
+};
+
 export const Simple: IStorybookComponent = () => {
     return (
         <>
@@ -34,7 +44,7 @@ export const Simple: IStorybookComponent = () => {
             <Brick size={3} />
             <StoryTitle>DatePicker with shortcats</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats initialStart={initialDate} />
+                <DatePicker withShortcats initialStart={initialDate} analyticProps={dataAnalyticsProps}/>
             </Wrapper>
         </>
     );
@@ -52,7 +62,7 @@ export const Range: IStorybookComponent = () => {
             <Brick size={3} />
             <StoryTitle>Date Range with shortcats</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats dateRange initialStart={initialDate} />
+                <DatePicker withShortcats dateRange initialStart={initialDate} analyticProps={dataAnalyticsProps}/>
             </Wrapper>
         </>
     );
@@ -108,6 +118,7 @@ export const WithTrigger: IStorybookComponent = () => {
                         setRange([start, end]);
                         setRangeVisible(false);
                     }}
+                    analyticProps={dataAnalyticsProps}
                 />
             </Dropdown>
         </>

@@ -10,6 +10,12 @@ import './index.less';
 
 moment.locale('ru');
 
+export interface IAnalyticsProps {
+    dataBtnToday: string;
+    dataBtnTomorrow: string;
+    dataBtnDayOff: string;
+}
+
 interface ICalendarProps {
     initialToday?: Moment;
     initialStart?: Moment;
@@ -17,6 +23,7 @@ interface ICalendarProps {
     onChange?: (start: Moment, end: Moment) => void;
     withShortcats?: boolean;
     dateRange?: boolean;
+    analyticProps?: IAnalyticsProps;
 }
 
 export const DatePicker: FC<ICalendarProps> = ({
@@ -26,6 +33,7 @@ export const DatePicker: FC<ICalendarProps> = ({
     onChange,
     withShortcats,
     dateRange,
+    analyticProps,
 }) => {
     const isMounted = useRef(false);
 
@@ -46,6 +54,8 @@ export const DatePicker: FC<ICalendarProps> = ({
     const weeks = [...Array.from(Array(weekCount).keys())].map((weekNumber) =>
         moment(startOfMonth).add(weekNumber, 'weeks'),
     );
+
+    console.log(analyticProps);
 
     const getDaysOfWeek = (week: Moment) => {
         return [...Array.from(Array(7).keys())].map((idx) => moment(week).weekday(idx) as Moment);
@@ -206,12 +216,14 @@ export const DatePicker: FC<ICalendarProps> = ({
                             fixed
                             variant={selectedToday ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(today)}
+                            data-analytics={analyticProps?.dataBtnToday}
                         />
                         <Button
                             label="Завтра"
                             fixed
                             variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
+                            data-analytics={analyticProps?.dataBtnTomorrow}
                         />
                         {dateRange && (
                             <Button
@@ -228,6 +240,7 @@ export const DatePicker: FC<ICalendarProps> = ({
                                         selectDates(saturday, sunday);
                                     }
                                 }}
+                                data-analytics={analyticProps?.dataBtnDayOff}
                             />
                         )}
                     </div>
