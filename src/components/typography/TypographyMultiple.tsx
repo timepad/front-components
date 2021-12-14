@@ -8,7 +8,7 @@ interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttribut
     reverse?: boolean;
 }
 
-export const TypographyMultiple: FC<ITypographyMultiple> = ({text, caption, reverse = false, className, ...props}) => {
+export const TypographyMultiple: FC<ITypographyMultiple> = ({text, caption, reverse = false, ...props}) => {
     const textClassNames = component('typography__multiple', 'text')();
     const captionClassNames = component('typography__multiple', 'caption')();
 
