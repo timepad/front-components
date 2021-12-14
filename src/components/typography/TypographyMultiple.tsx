@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import Typography from './Typography';
 import {component} from '../../services/helpers/classHelpers';
-import cn from 'classnames';
 
 interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     text: string;
@@ -10,16 +9,6 @@ interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttribut
 }
 
 export const TypographyMultiple: FC<ITypographyMultiple> = ({text, caption, reverse = false, className, ...props}) => {
-    const classNames = cn(
-        component(
-            'typography',
-            'multiple',
-        )({
-            reverse,
-        }),
-        className,
-    );
-
     const textClassNames = component('typography__multiple', 'text')();
     const captionClassNames = component('typography__multiple', 'caption')();
 
@@ -33,7 +22,7 @@ export const TypographyMultiple: FC<ITypographyMultiple> = ({text, caption, reve
     ];
 
     return (
-        <Typography {...props} className={classNames}>
+        <Typography {...props} variant="multiple" reverse={reverse}>
             {!reverse ? content.map((component) => component) : content.reverse().map((component) => component)}
         </Typography>
     );

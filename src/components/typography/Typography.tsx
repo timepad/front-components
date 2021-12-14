@@ -20,10 +20,32 @@ interface ITypographyChildren {
     Multiple: typeof TypographyMultiple;
 }
 
-type ITypographyProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+interface ITypographyProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+    variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
+    size?: 8 | 16 | 24 | 32;
+    reverse?: boolean;
+}
 
-const Typography: FC<ITypographyProps> & ITypographyChildren = ({children, className, ...props}) => {
-    const classNames = cn(component('typography')(), className);
+const Typography: FC<ITypographyProps> & ITypographyChildren = ({
+    children,
+    variant,
+    size,
+    className,
+    reverse,
+    ...props
+}) => {
+    const elementClassNames = cn(
+        component(
+            'typography',
+            variant,
+        )({
+            [`${size}`]: !!size,
+            reverse,
+        }),
+        className,
+    );
+
+    const classNames = cn(component('typography')(), elementClassNames);
 
     return (
         <div {...props} className={classNames}>
