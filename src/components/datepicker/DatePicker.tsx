@@ -23,7 +23,7 @@ interface IDatePickerProps {
     onChange?: (start: Moment, end: Moment) => void;
     withShortcats?: boolean;
     dateRange?: boolean;
-    analyticProps?: IAnalyticsProps;
+    analytic?: IAnalyticsProps;
 }
 
 export const DatePicker: FC<IDatePickerProps> = ({
@@ -33,7 +33,7 @@ export const DatePicker: FC<IDatePickerProps> = ({
     onChange,
     withShortcats,
     dateRange,
-    analyticProps,
+    analytic,
 }) => {
     const isMounted = useRef(false);
 
@@ -216,14 +216,14 @@ export const DatePicker: FC<IDatePickerProps> = ({
                             fixed
                             variant={selectedToday ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(today)}
-                            data-analytics={analyticProps?.dataBtnToday}
+                            data-analytics={analytic?.dataBtnToday}
                         />
                         <Button
                             label="Завтра"
                             fixed
                             variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
-                            data-analytics={analyticProps?.dataBtnTomorrow}
+                            data-analytics={analytic?.dataBtnTomorrow}
                         />
                         {dateRange && (
                             <Button
@@ -240,7 +240,7 @@ export const DatePicker: FC<IDatePickerProps> = ({
                                         selectDates(saturday, sunday);
                                     }
                                 }}
-                                data-analytics={analyticProps?.dataBtnWeekend}
+                                data-analytics={analytic?.dataBtnWeekend}
                             />
                         )}
                     </div>
