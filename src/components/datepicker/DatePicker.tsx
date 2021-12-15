@@ -13,7 +13,7 @@ moment.locale('ru');
 export interface IAnalyticsProps {
     dataBtnToday: string;
     dataBtnTomorrow: string;
-    dataBtnDayOff: string;
+    dataBtnWeekend: string;
 }
 
 interface ICalendarProps {
@@ -240,7 +240,7 @@ export const DatePicker: FC<ICalendarProps> = ({
                                         selectDates(saturday, sunday);
                                     }
                                 }}
-                                data-analytics={analyticProps?.dataBtnDayOff}
+                                data-analytics={analyticProps?.dataBtnWeekend}
                             />
                         )}
                     </div>
