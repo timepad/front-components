@@ -55,8 +55,6 @@ export const DatePicker: FC<IDatePickerProps> = ({
         moment(startOfMonth).add(weekNumber, 'weeks'),
     );
 
-    console.log(analyticProps);
-
     const getDaysOfWeek = (week: Moment) => {
         return [...Array.from(Array(7).keys())].map((idx) => moment(week).weekday(idx) as Moment);
     };
