@@ -11,9 +11,9 @@ import './index.less';
 moment.locale('ru');
 
 export interface IAnalyticsProps {
-    dataBtnToday: string;
-    dataBtnTomorrow: string;
-    dataBtnWeekend: string;
+    todayBtn?: string;
+    tomorrowBtn?: string;
+    weekendBtn?: string;
 }
 
 interface IDatePickerProps {
@@ -216,14 +216,14 @@ export const DatePicker: FC<IDatePickerProps> = ({
                             fixed
                             variant={selectedToday ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(today)}
-                            data-analytics={analytic?.dataBtnToday}
+                            data-analytics={analytic?.todayBtn}
                         />
                         <Button
                             label="Завтра"
                             fixed
                             variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
-                            data-analytics={analytic?.dataBtnTomorrow}
+                            data-analytics={analytic?.tomorrowBtn}
                         />
                         {dateRange && (
                             <Button
@@ -240,7 +240,7 @@ export const DatePicker: FC<IDatePickerProps> = ({
                                         selectDates(saturday, sunday);
                                     }
                                 }}
-                                data-analytics={analytic?.dataBtnWeekend}
+                                data-analytics={analytic?.weekendBtn}
                             />
                         )}
                     </div>
