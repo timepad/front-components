@@ -248,5 +248,3 @@ export const DatePicker: FC<IDatePickerProps> = ({
         </div>
     );
 };
-
-export const DateRangePicker: React.FC<IDatePickerProps> = (props) => <DatePicker {...props} dateRange />;

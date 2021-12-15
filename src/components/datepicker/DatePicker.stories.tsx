@@ -10,10 +10,9 @@ import {Button} from '../button';
 
 import 'css/bundle.less';
 
-import {Brick} from "../brick";
+import {Brick} from '../brick';
 
 import {IAnalyticsProps} from './DatePicker';
-
 
 export default {
     title: 'DatePicker',
@@ -29,9 +28,9 @@ const Wrapper: FC = ({children}) => (
 );
 
 const dataAnalyticsProps: IAnalyticsProps = {
-    dataBtnToday: 'test_DataAnalytics.userDateToday',
-    dataBtnTomorrow: 'test_DataAnalytics.userDateTomorrow',
-    dataBtnDayOff: 'test_DataAnalytics.userDateDayoff',
+    todayBtn: 'test_DataAnalytics.userDateToday',
+    tomorrowBtn: 'test_DataAnalytics.userDateTomorrow',
+    weekendBtn: 'test_DataAnalytics.userDateDayoff',
 };
 
 export const Simple: IStorybookComponent = () => {
@@ -44,7 +43,7 @@ export const Simple: IStorybookComponent = () => {
             <Brick size={3} />
             <StoryTitle>DatePicker with shortcats</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats initialStart={initialDate} analyticProps={dataAnalyticsProps}/>
+                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} />
             </Wrapper>
         </>
     );
@@ -62,7 +61,7 @@ export const Range: IStorybookComponent = () => {
             <Brick size={3} />
             <StoryTitle>Date Range with shortcats</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats dateRange initialStart={initialDate} analyticProps={dataAnalyticsProps}/>
+                <DatePicker withShortcats dateRange initialStart={initialDate} analytic={dataAnalyticsProps} />
             </Wrapper>
         </>
     );
@@ -87,9 +86,7 @@ export const WithTrigger: IStorybookComponent = () => {
             <Dropdown
                 show={dateVisible}
                 trigger={() => (
-                    <Button onClick={() => setDateVisible(true)}>
-                        Date{date && `: ${dateFormater(date)}`}
-                    </Button>
+                    <Button onClick={() => setDateVisible(true)}>Date{date && `: ${dateFormater(date)}`}</Button>
                 )}
             >
                 <DatePicker
@@ -103,7 +100,9 @@ export const WithTrigger: IStorybookComponent = () => {
             </Dropdown>
             <Brick size={3} />
             <StoryTitle>DateRange with trigger</StoryTitle>
-            <Dropdown show={rangeVisible} trigger={() => (
+            <Dropdown
+                show={rangeVisible}
+                trigger={() => (
                     <Button onClick={() => setRangeVisible(true)}>
                         DateRange{range.length > 0 && `: ${dateFormater(range[0])} - ${dateFormater(range[1])}`}
                     </Button>
@@ -118,7 +117,7 @@ export const WithTrigger: IStorybookComponent = () => {
                         setRange([start, end]);
                         setRangeVisible(false);
                     }}
-                    analyticProps={dataAnalyticsProps}
+                    analytic={dataAnalyticsProps}
                 />
             </Dropdown>
         </>
