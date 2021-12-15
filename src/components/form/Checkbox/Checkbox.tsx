@@ -15,7 +15,7 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         checked = false,
         indeterminate = false,
         disabled = false,
-        id = uniqueId(),
+        id = uniqueId() + '_field_checkbox',
         error = '',
         text = '',
         caption = '',
@@ -24,27 +24,32 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         className,
     } = props;
     const wrapperClasses = cn(component('form__checkbox')({error: !!error, disabled: disabled}), className);
-    const idx = id + '_field_checkbox';
     const checkboxClasses = component(
         'form__checkbox',
         'icon',
     )({
         checked: checked || indeterminate,
     });
+    const bodyClassNames = component(
+        'form__checkbox',
+        'body',
+    )({
+        small,
+    });
 
     const icon = indeterminate ? <IndeterminateCheckBoxIcon /> : <CheckboxIcon />;
 
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>
-            <label htmlFor={idx}>
+            <label htmlFor={id}>
                 <Row.Icon top={!!caption}>
                     <label>
-                        <input type="checkbox" id={idx} onChange={onChange} {...props} />
+                        <input type="checkbox" id={id} onChange={onChange} {...props} />
                         <span className={checkboxClasses}>{icon}</span>
                     </label>
                 </Row.Icon>
-                <Row.Body style={{margin: small ? '0 8px' : '0 16px'}}>
-                    {props.text && <Row.Text id={idx}>{text}</Row.Text>}
+                <Row.Body className={bodyClassNames}>
+                    {props.text && <Row.Text id={id}>{text}</Row.Text>}
                     {props.caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
             </label>
