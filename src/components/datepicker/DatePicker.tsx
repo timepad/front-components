@@ -16,7 +16,7 @@ export interface IAnalyticsProps {
     dataBtnWeekend: string;
 }
 
-interface IDataPickerProps {
+interface IDatePickerProps {
     initialToday?: Moment;
     initialStart?: Moment;
     initialEnd?: Moment;
@@ -26,7 +26,7 @@ interface IDataPickerProps {
     analyticProps?: IAnalyticsProps;
 }
 
-export const DatePicker: FC<IDataPickerProps> = ({
+export const DatePicker: FC<IDatePickerProps> = ({
     initialToday,
     initialStart,
     initialEnd,
@@ -251,4 +251,4 @@ export const DatePicker: FC<IDataPickerProps> = ({
     );
 };
 
-export const DateRangePicker: React.FC<IDataPickerProps> = (props) => <DatePicker {...props} dateRange />;
+export const DateRangePicker: React.FC<IDatePickerProps> = (props) => <DatePicker {...props} dateRange />;
