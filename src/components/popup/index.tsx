@@ -263,7 +263,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             if (typeof trigger === 'function') {
                 const Trigger = trigger;
                 return (
-                    <div style={{display: 'inline-block'}} {...triggerProps}>
+                    <div style={{display: 'inline-block', lineHeight: 1}} {...triggerProps}>
                         <Trigger isOpen={isOpen} />
                     </div>
                 );
