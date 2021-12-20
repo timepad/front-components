@@ -44,7 +44,7 @@ export const ControlList: FC<HTMLAttributes<HTMLUListElement>> = observer(({chil
 
     useEffect(() => {
         setHighlighterStyles(getHighlighterStyles());
-    }, [segmentedControlStore.activeControlId]);
+    }, [segmentedControlStore.activeControlId, children]);
 
     return (
         <div className={highlighterBoxClasses} ref={boxRef}>

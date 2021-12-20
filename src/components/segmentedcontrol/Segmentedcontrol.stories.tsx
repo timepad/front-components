@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import {SegmentedControl} from './index';
+import {Button} from '../button';
 
 import 'css/bundle.less';
 
@@ -109,6 +110,7 @@ export const Dark: IStorybookComponent = () => {
 };
 
 export const CustomClick: IStorybookComponent = () => {
+    const [countText, setCountText] = useState('');
     return (
         <>
             <StoryTitle>Custom click Segmented Control</StoryTitle>
@@ -123,11 +125,15 @@ export const CustomClick: IStorybookComponent = () => {
                 }}
             >
                 <SegmentedControl.List>
-                    <SegmentedControl.Control controlId={'first'}>First</SegmentedControl.Control>
-                    <SegmentedControl.Control controlId={'second'}>Second</SegmentedControl.Control>
-                    <SegmentedControl.Control controlId={'third'}>Third</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'first'}>First{countText}</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'second'}>Second{countText}</SegmentedControl.Control>
+                    <SegmentedControl.Control controlId={'third'}>Third{countText}</SegmentedControl.Control>
                 </SegmentedControl.List>
             </SegmentedControl>
+            <div className="lbrick-2"></div>
+            <StoryDescription>This buttons add or remove text to control buttons.</StoryDescription>
+            <Button onClick={() => setCountText(' 123')}>Add count</Button>
+            <Button onClick={() => setCountText('')}>Remove count</Button>
         </>
     );
 };
