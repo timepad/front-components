@@ -152,7 +152,7 @@ export const DatePicker: FC<IDatePickerProps> = ({
             );
         }
         isMounted.current = true;
-    }, [onChange, start, end, today]);
+    }, [start, end, today]);
 
     return (
         <div className="cdatepicker">
