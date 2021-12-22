@@ -17,6 +17,7 @@
     "formik": "^2.2.9",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
+    "moment": "^2.29.1",
     "react-modal": "3.14.3",
     "react-popper": "^2.2.5",
     "react-sortable-hoc": "^2.0.0",
