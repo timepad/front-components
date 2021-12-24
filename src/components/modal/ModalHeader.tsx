@@ -14,7 +14,7 @@ export interface IHeaderComponentProps {
 }
 
 export const Title: React.FC = ({children}) => {
-    return <h3 className={cx('t-lead', component('cmodal', 'title-text')())}>{children}</h3>;
+    return <h3 className={cx('t-lead', component('modal', 'title-text')())}>{children}</h3>;
 };
 
 export const Description: React.FC = ({children}) => {
