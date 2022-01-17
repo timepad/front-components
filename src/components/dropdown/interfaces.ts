@@ -17,6 +17,8 @@ export interface IDropdownProps {
     lockScroll?: boolean;
     on?: IPopupProps['on'];
     disabled?: boolean;
+    offsetX?: number;
+    offsetY?: number;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
