@@ -91,6 +91,7 @@ export function Button(props: IButtonProps): JSX.Element {
 
     const finalClasses = cx(buttonClasses, props.className);
     const labelStyle = props.labelColor && !props.disabled ? {style: {color: `${props.labelColor}`}} : {};
+    const iconColor = props.labelColor && !props.disabled && `${props.labelColor}`;
 
     const buttonProps: {[idx: string]: unknown} = {};
     Object.keys(props).map((key) => {
@@ -119,6 +120,7 @@ export function Button(props: IButtonProps): JSX.Element {
                     {props.icon &&
                         React.cloneElement(props.icon, {
                             className: iconClasses.join(' '),
+                            style: {color: `${iconColor}`},
                         })}
                     {props.label && (
                         <div className="cbtn-label">

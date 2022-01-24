@@ -184,7 +184,7 @@ export const CustomColor: IStorybookComponent = () => {
         <>
             <StoryTitle>Custom text color</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} labelColor="red" />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" labelColor="blue" />
                 <Spacer />
@@ -209,7 +209,7 @@ export const CustomColor: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Custom text color disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled labelColor="red" />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" disabled labelColor="blue" />
                 <Spacer />
