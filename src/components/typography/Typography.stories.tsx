@@ -15,10 +15,18 @@ export const Default: IStorybookComponent = () => {
         <>
             <StoryTitle>Typography</StoryTitle>
             <Typography.Header>Header 32-32</Typography.Header>
+            <Typography.Header responsive>Header responsive 32-32</Typography.Header>
             <Typography.Subheader>Subheader 32–32</Typography.Subheader>
             <Typography.Subheader size={24}>Subheader 24–24</Typography.Subheader>
+            <Typography.Subheader size={24} responsive>
+                Subheader responsive 24–24
+            </Typography.Subheader>
             <Typography.Lead>Lead 32–32</Typography.Lead>
+            <Typography.Lead responsive>Lead responsive 32–32</Typography.Lead>
             <Typography.Lead size={24}>Lead 24–24</Typography.Lead>
+            <Typography.Lead size={24} responsive>
+                Lead responsive 24–24
+            </Typography.Lead>
             <Typography.Body>Body 32–32</Typography.Body>
             <Typography.Body size={24}>Body 24–24</Typography.Body>
             <Typography.Body size={16}>Body 16–16</Typography.Body>
