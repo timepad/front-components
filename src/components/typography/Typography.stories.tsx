@@ -17,7 +17,7 @@ export const Default: IStorybookComponent = () => {
             <span className="t-caption t-caption-16" style={{color: 'white'}}>
                 Typography
             </span>
-            <hr />
+            <hr style={{border: '0', borderTop: '1px solid rgba(128, 128, 128, 0.6)'}} />
             <div className="lbrick-2" />
             <Typography.Header style={{backgroundColor: 'white'}}>Header 32-32</Typography.Header>
             <Brick size={0.5} />
@@ -66,7 +66,7 @@ export const Default: IStorybookComponent = () => {
             <Typography.Small size={8} style={{backgroundColor: 'white'}}>
                 Small 8–8
             </Typography.Small>
-            <hr />
+            <hr style={{border: '0', borderTop: '1px solid rgba(128, 128, 128, 0.6)'}}/>
             <Typography.Multiple text="Body 16-16" caption="Small 16-16" style={{backgroundColor: 'white'}} />
             <Brick size={0.5} />
             <Typography.Multiple text="Body 16-16" caption="Small 16-16" reverse style={{backgroundColor: 'white'}} />
