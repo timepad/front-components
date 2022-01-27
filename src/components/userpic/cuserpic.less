@@ -13,18 +13,30 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
+  box-shadow: inset 0 0 1px transparent;
   border-radius: 50%;
-  background-color: @c-gray-50-fade-35;
-  color: @c-gray-50;
+  background-clip: border-box;
+  background-origin: border-box;
+  background-color: @c-white;
+  color: @c-gray-35;
   font-weight: 900;
   font-size: 15px;
   transition: @duration-blink;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  cursor: default;
 
-  svg {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: @c-gray-50-fade-20;
+  }
+
+  // сделано чтобы повысить специфичность при использовании в дропдауне
+  svg.cuserpic__svg {
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -32,107 +44,95 @@
     transform: translate(-50%, -50%);
 
     path {
-      fill: @c-gray-50;
-    }
-  }
-
-  &.cuserpic--mode_light {
-    background-color: @c-gray-50-fade-20;
-    color: @c-gray-35;
-
-    svg path {
       fill: @c-gray-35;
     }
-
-    &:hover{
-      background-color: @c-gray-75-fade-35;
-      color: @c-gray-75;
-
-      svg path {
-        fill: @c-gray-75;
-      }
-    }
   }
 
-  &.cuserpic--mode_dark {
-    color: @c-gray-75;
-
-    svg path {
-      fill: @c-gray-75;
-    }
-
-    &:hover{
-      background-color: @c-gray-75-fade-35;
-      color: @c-gray-75;
-
-      svg path {
-        fill: @c-gray-75;
-      }
-    }
+  span {
+    z-index: 1;
   }
 
-  &.cuserpic--mode_white {
-    background-color: @c-white;
-    color: @c-gray-35;
+  &--isImg {
+    background-color: transparent;
+  }
+ 
+  &__img {
+    .size(inherit);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-origin: border-box;
+    border-radius: inherit;
+    box-sizing: inherit;
+    border: 1px solid @c-gray-50-fade-20;
+    z-index: 1;
 
-    svg path {
-      fill: @c-gray-35;
+     &::after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      opacity: 0;
+      transition: @duration-blink ease-in-out;
     }
 
-    &:hover{
-      background-color: #c3c3c3;
-      color: @c-gray-75;
+    &:hover::after {
+      background-color: @c-gray-50-fade-20;
+      opacity: 1;
+    }
 
-      svg path {
-        fill: @c-gray-75;
-      }
+    &:active::after {
+      background-color: @c-gray-50-fade-35;
+      opacity: 1;
     }
   }
 
   &.cuserpic--bordered {
-    border-color: @c-gray-50-fade-20;
+    box-shadow: inset 0 0 1px @c-gray-50-fade-20;
+  }
+
+  .cuserpic--bordered  &__img {
+    box-shadow: inset 0 0 1px transparent;
+    box-sizing: inherit;
   }
 
   &.cuserpic--hoverable {
     cursor: pointer;
 
-    &:before {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      top: -9px;
-      left: -9px;
-      height: 48px;
-      width: 48px;
-      background-color: @c-white;
-      box-shadow: @box-shadow;
-      border-radius: 50%;
-      transform: scale(0.5);
-      transform-origin: center;
-      opacity: 0;
-      transition: @duration-blink ease-in-out;
+    &:hover::before {
+      background-color: @c-gray-50-fade-35;
     }
 
-    &:hover:before {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  &:hover {
-    background-color: @c-gray-75-fade-35;
-    color: @c-gray-75;
+    &:hover {  
+      color: @c-gray-75;
 
     svg path {
       fill: @c-gray-75;
+      }
+    }
+
+    &:active {  
+      color: @c-gray-50;
+
+    svg path {
+      fill: @c-gray-50;
+      }
     }
   }
 
   &.cuserpic--square {
     border-radius: 4px;
 
-    &:before {
-      border-radius: 5px;
+    &::before {
+      border-radius: inherit;
+    }
+
+    .cuserpic__img::after {
+      border-radius: inherit;
     }
   }
 
@@ -140,19 +140,8 @@
     .size(24px);
     font-size: 11px;
 
-    &.cuserpic--hoverable:before {
-      top: -7px;
-      left: -7px;
-      height: 36px;
-      width: 36px;
-    }
-
     &.cuserpic--square {
       border-radius: 3px;
-
-      &:before {
-        border-radius: 4px;
-      }
     }
   }
 
@@ -160,19 +149,8 @@
     .size(48px);
     font-size: 22px;
 
-    &.cuserpic--hoverable:before {
-      top: -9px;
-      left: -9px;
-      height: 64px;
-      width: 64px;
-    }
-
     &.cuserpic--square {
       border-radius: 6px;
-
-      &:before {
-        border-radius: 6px;
-      }
     }
   }
 
@@ -180,19 +158,8 @@
     .size(128px);
     font-size: 60px;
 
-    &.cuserpic--hoverable:before {
-      top: -10px;
-      left: -10px;
-      height: 146px;
-      width: 146px;
-    }
-
     &.cuserpic--square {
       border-radius: 8px;
-
-      &:before {
-        border-radius: 12px;
-      }
     }
   }
 
@@ -200,19 +167,8 @@
     .size(160px);
     font-size: 75px;
 
-    &.cuserpic--hoverable:before {
-      top: -11px;
-      left: -11px;
-      height: 180px;
-      width: 180px;
-    }
-
     &.cuserpic--square {
       border-radius: 8px;
-
-      &:before {
-        border-radius: 10px;
-      }
     }
   }
 }

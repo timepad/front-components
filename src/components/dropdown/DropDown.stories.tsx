@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState, MouseEvent} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -18,7 +18,7 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic />;
+const Prefix: React.FC = () => <Pic hoverable />;
 const Suffix: React.FC = () => <AddIcon />;
 
 const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
@@ -42,11 +42,16 @@ const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props
 };
 
 const DropSortable: React.FC = () => {
-    const data = [];
+    const data: number[] = [];
     for (let i = 1; i < 10; i++) {
         data.push(i);
     }
     const [sortedData, setSortedData] = useState<number[]>([]);
+
+    const handleItemClick = (e: MouseEvent<HTMLDivElement>, value: number) => {
+        // eslint-disable-next-line no-console
+        console.log('Clicked value: ', value);
+    };
 
     return (
         <>
@@ -58,7 +63,7 @@ const DropSortable: React.FC = () => {
                 trigger={() => <Button>Выпадающий список</Button>}
             >
                 {data.map((el) => (
-                    <Dropdown.SItem value={el} key={el}>
+                    <Dropdown.SItem value={el} key={el} onClick={handleItemClick}>
                         Перемещаемый элемент {el}
                     </Dropdown.SItem>
                 ))}
@@ -118,6 +123,18 @@ const DropProfile: React.FC = () => {
                 <List.Item href={'#'} as={'a'}>
                     Избранное
                 </List.Item>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <Dropdown trigger={() => <List.Item>Выпадающий список</List.Item>} on="hover">
+                        <List variant="dark" size="lg">
+                            <List.Item href={'#'} as={'a'}>
+                                Мои события
+                            </List.Item>
+                            <List.Item href={'#'} as={'a'}>
+                                Мои подписки
+                            </List.Item>
+                        </List>
+                    </Dropdown>
+                </div>
                 <List.Item as={'button'} type={'button'} label="Выход" />
                 <Dropdown.Button label="Стать организатором" />
             </List>
