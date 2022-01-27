@@ -16,31 +16,31 @@ export const Basic: IStorybookComponent = () => {
         <>
             <StoryTitle>Basic Pic. Modes: light, standart, dark. With border and borderless.</StoryTitle>
             <div className="lflex">
-                <Pic bordered mode="light" />
+                <Pic bordered />
                 <Spacer />
                 <Pic />
                 <Spacer />
-                <Pic bordered mode="dark" />
+                <Pic bordered />
                 <Spacer />
-                <Pic bordered mode="light" label="A" />
+                <Pic bordered label="A" />
                 <Spacer />
                 <Pic label="B" />
                 <Spacer />
-                <Pic bordered mode="dark" label="c" />
+                <Pic bordered label="c" />
                 <Spacer />
 
                 <div style={{background: 'black', padding: '20px'}}>
-                    <Pic bordered mode="white" />
+                    <Pic bordered />
                 </div>
             </div>
             <Brick />
             <StoryTitle>Same basic Pic with click handler or just hover effect.</StoryTitle>
             <div className="lflex">
-                <Pic bordered mode="light" onClick={clickCb} />
+                <Pic bordered onClick={clickCb} />
                 <Spacer />
                 <Pic hoverable />
                 <Spacer />
-                <Pic bordered mode="dark" hoverable />
+                <Pic bordered hoverable />
             </div>
             <Brick />
             <StoryTitle>Same basic Pic with image, first symbol of name.</StoryTitle>
@@ -50,7 +50,18 @@ export const Basic: IStorybookComponent = () => {
                     hoverable
                 />
                 <Spacer />
-                <Pic label="Avatar" mode="light" hoverable />
+                <Pic label="Avatar" hoverable />
+                <Spacer />
+                <div style={{background: 'black', padding: '20px'}}>
+                    <Pic
+                        imgURL="https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg"
+                        hoverable
+                    />
+                </div>
+                <Spacer />
+                <div style={{background: 'black', padding: '20px'}}>
+                    <Pic label="Avatar" hoverable />
+                </div>
                 <Spacer />
             </div>
         </>

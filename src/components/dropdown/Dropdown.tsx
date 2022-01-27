@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {ComponentClass, FC, ReactChild, useCallback, useState} from 'react';
+import {
+    Children,
+    cloneElement,
+    ComponentClass,
+    FC,
+    isValidElement,
+    ReactChild,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 import './index.less';
 import {Popup} from '../popup';
 import cx from 'classnames';
@@ -40,14 +50,21 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
     children = [],
     on = 'click',
 }) => {
-    const [valueNodes, setValueNodes] = useState(
-        React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
+    // region Sortable list state
+    const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
+        return React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
             return {
                 value: child.props.value,
                 children: child.props.children,
             };
-        }),
-    );
+        });
+    };
+
+    const [valueNodes, setValueNodes] = useState(ChildrenToValueNodes(children));
+    useEffect(() => {
+        setValueNodes(ChildrenToValueNodes(children));
+    }, [children]);
+    // endregion
 
     const getValues = useCallback(
         (nodes: ISortableListState[] = valueNodes) => {
@@ -123,33 +140,38 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
             priorityPositions={priorityPositions}
             on={on}
         >
-            <Slist
-                helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
-                useDragHandle
-                hideSortableGhost={false}
-                transitionDuration={0}
-                getHelperDimensions={getDimensions}
-                axis="y"
-                as="ul"
-                size="lg"
-                variant="dark"
-                onSortOver={sortOverHandler}
-                onSortStart={sortStartHandler}
-                onSortEnd={sortEndHandler}
-            >
-                {React.Children.map<ReactChild, ReactChild>(children, (child, index) => {
-                    if (React.isValidElement(child)) {
-                        return React.cloneElement(child, {
-                            key: `drop${index}`,
-                            index,
-                            children: valueNodes[index].children,
-                            prefix: <SortIcon />,
-                            className: 'cdropdown__dropable-item',
-                        });
-                    }
-                    return child;
-                })}
-            </Slist>
+            {valueNodes.length > 0 && Children.count(children) === valueNodes.length ? (
+                <Slist
+                    helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
+                    useDragHandle
+                    hideSortableGhost={false}
+                    transitionDuration={0}
+                    getHelperDimensions={getDimensions}
+                    axis="y"
+                    as="ul"
+                    size="lg"
+                    variant="dark"
+                    onSortOver={sortOverHandler}
+                    onSortStart={sortStartHandler}
+                    onSortEnd={sortEndHandler}
+                >
+                    {Children.map<ReactChild, ReactChild>(children, (child, index) => {
+                        if (isValidElement(child)) {
+                            return cloneElement(child, {
+                                key: `drop${index}`,
+                                index,
+                                children: valueNodes[index].children,
+                                prefix: <SortIcon />,
+                                className: 'cdropdown__dropable-item ' + child.props.className,
+                                onClick: (e: MouseEvent) => {
+                                    child.props.onClick && child.props.onClick(e, valueNodes[index].value);
+                                },
+                            });
+                        }
+                        return child;
+                    })}
+                </Slist>
+            ) : null}
         </Dropdown>
     );
 };
@@ -164,26 +186,33 @@ export const Dropdown: FC<IDropdownProps> & {
     keepInsideParent = true,
     on = 'click',
     modifier,
-    trigger,
-    onClose,
     children,
     priorityPositions = 'right-top',
+    lockScroll = false,
+    ...props
 }) => {
     const [rect, ref] = useClientRect();
     return (
         <Popup
             className="cdropdown"
             nested={nested}
-            open={show}
             on={on}
+            open={show}
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
-            onClose={onClose}
-            trigger={trigger}
-            lockScroll={window.innerHeight <= Number(rect?.height)}
+            lockScroll={lockScroll || window.innerHeight <= Number(rect?.height)}
+            {...props}
         >
             <div className="dropdown-container" ref={ref}>
-                <div className={cx('dropdown-body', modifier)}>{children}</div>
+                <div
+                    className={cx(
+                        'dropdown-body',
+                        {'dropdown-body--scrollable': window.innerHeight <= Number(rect?.height)},
+                        modifier,
+                    )}
+                >
+                    {children}
+                </div>
             </div>
         </Popup>
     );
@@ -192,3 +221,8 @@ export const Dropdown: FC<IDropdownProps> & {
 Dropdown.Button = DropdownButton;
 Dropdown.SList = DropdownSortableList;
 Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as ComponentClass<ISortableItemProps>;
+
+Dropdown.SItem.propTypes = {
+    ...Dropdown.SItem.propTypes,
+    index: () => null,
+};
