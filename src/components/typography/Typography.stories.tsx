@@ -1,5 +1,5 @@
 import React from 'react';
-import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
+import {IStorybookComponent} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import Typography from './Typography';
 
