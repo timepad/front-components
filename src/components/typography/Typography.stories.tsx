@@ -66,7 +66,7 @@ export const Default: IStorybookComponent = () => {
             <Typography.Small size={8} style={{backgroundColor: 'white'}}>
                 Small 8–8
             </Typography.Small>
-            <hr className="cdivider cdivider--thin" />
+            <hr className="cdivider" />
             <Typography.Multiple text="Body 16-16" caption="Small 16-16" style={{backgroundColor: 'white'}} />
             <Brick size={0.5} />
             <Typography.Multiple text="Body 16-16" caption="Small 16-16" reverse style={{backgroundColor: 'white'}} />
