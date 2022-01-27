@@ -10,13 +10,13 @@ interface IRowIconProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
     bottom?: boolean;
 }
 
-const RowIcon: React.FC<IRowIconProps> = (props: IRowIconProps): JSX.Element => {
+const RowIcon: React.FC<IRowIconProps> = ({top, bottom, ...props}: IRowIconProps): JSX.Element => {
     const customClassNames = component(
         'row',
         'icon',
     )({
-        top: props.top,
-        bottom: props.bottom,
+        top: top,
+        bottom: bottom,
     });
     const finalClassNames = cx(customClassNames, props.className);
     // add classnames for any svg as component
