@@ -27,6 +27,10 @@ export const Default: IStorybookComponent = () => {
             <Brick size={0.5} />
             <Typography.Subheader style={{backgroundColor: 'white'}}>Subheader 32–32</Typography.Subheader>
             <Brick size={0.5} />
+            <Typography.Subheader responsive style={{backgroundColor: 'white'}}>
+                Subheader responsive 32–32(24-28)
+            </Typography.Subheader>
+            <Brick size={0.5} />
             <Typography.Subheader size={24} style={{backgroundColor: 'white'}}>
                 Subheader 24–24
             </Typography.Subheader>
