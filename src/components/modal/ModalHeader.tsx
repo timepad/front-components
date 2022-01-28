@@ -5,6 +5,7 @@ import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
+import {Brick} from '../brick';
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
@@ -19,7 +20,7 @@ export const Title: React.FC = ({children}) => {
 export const Description: React.FC = ({children}) => {
     return (
         <Fragment>
-            <div className={layout('brick')()} />
+            <Brick />
             <p className={cx('t-caption', 't-caption--brick', component('form', 'title-desc')())}>{children}</p>
         </Fragment>
     );
@@ -53,7 +54,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <div className={cx(layout('brick')(), layout('brick-1-5')())} />
+                <Brick size={1.5} />
                 {children}
             </div>
             {closeHandler && (
