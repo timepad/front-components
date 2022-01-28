@@ -54,7 +54,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <Brick size={1.5} />
+                <Brick size={1.375} />
                 {children}
             </div>
             {closeHandler && (
