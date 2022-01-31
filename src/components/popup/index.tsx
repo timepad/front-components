@@ -240,7 +240,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 ...tProps,
                 style: {
                     display: 'inline-block',
-                    lineHeight: 1,
+                    lineHeight: 0,
                     ...tProps?.style,
                 },
                 key: 'T',
