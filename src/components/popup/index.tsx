@@ -64,6 +64,7 @@ export interface IPopupProps {
     overlayStyle?: React.CSSProperties;
     className?: string;
     keepTooltipInside?: boolean | string;
+    triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 }
 const noop = () => {
     return;
@@ -96,6 +97,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             mouseLeaveDelay = 100,
             keepTooltipInside = false,
             children,
+            triggerProps: tProps,
         },
         ref,
     ) => {
@@ -235,6 +237,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
             const triggerProps: Record<string, unknown> = {
+                ...tProps,
+                style: {
+                    display: 'inline-block',
+                    lineHeight: 1,
+                    ...tProps?.style,
+                },
                 key: 'T',
                 ref: triggerRef,
                 'aria-describedby': popupId.current,
@@ -263,7 +271,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             if (typeof trigger === 'function') {
                 const Trigger = trigger;
                 return (
-                    <div style={{display: 'inline-block', lineHeight: 1}} {...triggerProps}>
+                    <div {...triggerProps}>
                         <Trigger isOpen={isOpen} />
                     </div>
                 );

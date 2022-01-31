@@ -49,6 +49,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
     trigger,
     children = [],
     on = 'click',
+    ...props
 }) => {
     // region Sortable list state
     const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
@@ -139,6 +140,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
             onClose={closeDropdownHandler}
             priorityPositions={priorityPositions}
             on={on}
+            {...props}
         >
             {valueNodes.length > 0 && Children.count(children) === valueNodes.length ? (
                 <Slist
