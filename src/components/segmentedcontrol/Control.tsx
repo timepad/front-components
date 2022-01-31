@@ -8,7 +8,7 @@ export type ControlId = string;
 
 interface IControlProps extends HTMLAttributes<HTMLLIElement> {
     controlId: ControlId;
-    dataAnalytics?: 'string';
+    dataAnalytics?: string;
 }
 
 export const Control: FC<IControlProps> = observer(({children, className, controlId, dataAnalytics, ...rest}) => {
