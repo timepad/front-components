@@ -8,9 +8,10 @@ export type ControlId = string;
 
 interface IControlProps extends HTMLAttributes<HTMLLIElement> {
     controlId: ControlId;
+    dataAnalytics?: 'string';
 }
 
-export const Control: FC<IControlProps> = observer(({children, className, controlId, ...rest}) => {
+export const Control: FC<IControlProps> = observer(({children, className, controlId, dataAnalytics, ...rest}) => {
     const {segmentedControlStore, onControlClick} = useContext(SegmentedControlContext);
     const liClasses = cx(
         component('segmentedcontrol', 'li')({['is-active']: segmentedControlStore.activeControlId === controlId}),
@@ -27,7 +28,7 @@ export const Control: FC<IControlProps> = observer(({children, className, contro
 
     return (
         <li {...rest} className={liClasses}>
-            <button className={buttonClasses} onClick={() => onControlClick(controlId)}>
+            <button className={buttonClasses} onClick={() => onControlClick(controlId)} data-analytics={dataAnalytics}>
                 {children}
             </button>
         </li>
