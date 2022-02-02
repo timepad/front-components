@@ -71,19 +71,14 @@ export const Default: IStorybookComponent = () => {
 
             <hr className="cdivider" />
             <div style={{backgroundColor: 'black', padding: '16px'}}>
-                <Typography.Multiple body="Body 16-16" small="Small 16-16" style={{backgroundColor: 'white'}} />
-                <Brick size={0.5} />
-                <Typography.Multiple body="Body 16-16" small="Small 16-16" reverse style={{backgroundColor: 'white'}} />
-                <Brick size={0.5} />
-                <Typography.Multiple subheader="Subheader" caption="caption" style={{backgroundColor: 'white'}} />
+                <Typography.Multiple text="Body 16-16" caption="Small 16-16" style={{backgroundColor: 'white'}} />
                 <Brick size={0.5} />
                 <Typography.Multiple
-                    subheader="Subheader responsive"
-                    caption="caption responsive"
+                    text="Body 16-16"
+                    caption="Small 16-16"
+                    reverse
                     style={{backgroundColor: 'white'}}
-                    responsive
                 />
-                <Brick size={0.5} />
             </div>
         </div>
     );
