@@ -5,7 +5,7 @@ import {component} from '../../services/helpers/classHelpers';
 interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     afisha?: boolean;
     text: ReactNode;
-    caption: string;
+    caption: ReactNode;
     reverse?: boolean;
     responsive?: boolean;
 }
