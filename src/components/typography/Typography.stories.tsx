@@ -79,6 +79,21 @@ export const Default: IStorybookComponent = () => {
                     reverse
                     style={{backgroundColor: 'white'}}
                 />
+                <Brick size={0.5} />
+                <Typography.Multiple
+                    text="Subheader 32-32"
+                    caption="Caption 16-16"
+                    afisha
+                    style={{backgroundColor: 'white'}}
+                />
+                <Brick size={0.5} />
+                <Typography.Multiple
+                    text="Subheader responsive 32–32(24-28)"
+                    caption="Caption 16–16"
+                    afisha
+                    responsive
+                    style={{backgroundColor: 'white'}}
+                />
             </div>
         </div>
     );
