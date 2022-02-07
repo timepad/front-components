@@ -32,7 +32,11 @@ export const useRepositionOnResizeWindow = (handler: () => void, active = true):
     }, [handler, active]);
 };
 
-export const useRepositionOnResizeBlock = (handler: () => void, ref: MutableRefObject<any>, active = true): void => {
+export const useRepositionOnResizeBlock = (
+    handler: () => void,
+    ref: MutableRefObject<HTMLElement | null>,
+    active = true,
+): void => {
     const node = ref.current;
 
     useEffect(() => {
