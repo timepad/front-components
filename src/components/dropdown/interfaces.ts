@@ -20,6 +20,7 @@ export interface IDropdownProps {
     offsetX?: number;
     offsetY?: number;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    repositionOnChangeContent?: boolean;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {

@@ -1,4 +1,4 @@
-import {useEffect, RefObject} from 'react';
+import {useEffect, RefObject, MutableRefObject} from 'react';
 
 export const useOnEscape = (handler: (event: KeyboardEvent) => void, active = true): void => {
     useEffect(() => {
@@ -16,7 +16,7 @@ export const useOnEscape = (handler: (event: KeyboardEvent) => void, active = tr
     }, [handler, active]);
 };
 
-export const useRepositionOnResize = (handler: () => void, active = true): void => {
+export const useRepositionOnResizeWindow = (handler: () => void, active = true): void => {
     useEffect(() => {
         if (!active) return;
         const listener = () => {
@@ -31,6 +31,26 @@ export const useRepositionOnResize = (handler: () => void, active = true): void 
         };
     }, [handler, active]);
 };
+
+export const useRepositionOnResizeBlock = (handler: () => void, ref: MutableRefObject<any>, active = true): void => {
+    const node = ref.current;
+
+    useEffect(() => {
+        if (!active || !node) return;
+        const listener = () => {
+            handler();
+        };
+
+        const resizeObserver = new ResizeObserver(listener);
+        resizeObserver.observe(node);
+
+        return () => {
+            if (!active || !node) return;
+            resizeObserver.unobserve(node);
+        };
+    }, [handler, node, active]);
+};
+
 // очередной хук клика за пределами,  но может принимать массив ссылок на объекты
 export const useOnClickOutside = (
     ref: RefObject<HTMLElement> | RefObject<HTMLElement>[],
