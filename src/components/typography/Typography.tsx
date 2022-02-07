@@ -24,6 +24,7 @@ interface ITypographyProps extends React.DetailedHTMLProps<React.HTMLAttributes<
     variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
     size?: 8 | 16 | 24 | 32;
     reverse?: boolean;
+    responsive?: boolean;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
@@ -32,6 +33,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     size,
     className,
     reverse,
+    responsive,
     ...props
 }) => {
     const elementClassNames = cn(
@@ -41,6 +43,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         )({
             [`${size}`]: !!size,
             reverse,
+            responsive,
         }),
         className,
     );
