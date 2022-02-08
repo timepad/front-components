@@ -1,11 +1,7 @@
 import React, {FC} from 'react';
-import Typography from './Typography';
+import Typography, {ITypographyCommonProps} from './Typography';
 
-interface ITypographyHeaderProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    responsive?: boolean;
-}
-
-export const TypographyHeader: FC<ITypographyHeaderProps> = ({children, ...props}) => {
+export const TypographyHeader: FC<ITypographyCommonProps> = ({children, ...props}) => {
     return (
         <Typography {...props} variant="header">
             {children}
