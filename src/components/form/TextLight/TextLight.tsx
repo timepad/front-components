@@ -39,7 +39,7 @@ export const TextLight: FC<IFormTextLightProps> = ({
     });
 
     const style =
-        customIcon || success ? {...props.style, padding: '0 32px 11px 0'} : {...props.style, padding: '0 0 11px 0'};
+        customIcon || success ? {...props.style, padding: '0 32px 12px 0'} : {...props.style, padding: '0 0 12px 0'};
 
     const id = `${fieldName}_id_field`;
 

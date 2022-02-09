@@ -3,7 +3,6 @@
 .caccordion {
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0px 1px 0px rgba(128, 128, 128, 0.2);
 
     --text-size: @fs-caption;
     --text-height: @lh-caption;
@@ -39,7 +38,7 @@
     .caccordion__body {
         display: flex;
         cursor: pointer;
-        height: 54px;
+        min-height: 54px;
 
         .caccordion__text {
             display: flex;
@@ -54,10 +53,9 @@
                 margin-right: auto;
                 font-size: var(--text-size);
                 line-height: var(--text-height);
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
                 max-width: 100%;
+                flex: 1;
+                word-break: break-word;
             }
 
             .caccordion__caption {
@@ -69,6 +67,8 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 max-width: 100%;
+                margin-left: 8px;
+                align-self: center;
             }
         }
 
@@ -79,9 +79,15 @@
         }
     }
 
+    &.caccordion--border {
+        box-shadow: inset 0px 1px 0px rgba(128, 128, 128, 0.2);
+    }
+
     &.caccordion--large .caccordion__text .caccordion__caption  {
         margin-top: 2px;
         margin-bottom: 2px;
+        margin-left: 0;
+        align-self: start;
     }
 
     &.caccordion--large.caccordion--reverse .caccordion__text .caccordion__caption  {
