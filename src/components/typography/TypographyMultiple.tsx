@@ -1,25 +1,17 @@
 import React, {FC, ReactNode} from 'react';
-import Typography from './Typography';
+import Typography, {ITypographyCommonProps} from './Typography';
 import {component} from '../../services/helpers/classHelpers';
 
-interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface ITypographyMultiple extends ITypographyCommonProps {
     afisha?: boolean;
     text: ReactNode;
     caption: ReactNode;
     reverse?: boolean;
-    responsive?: boolean;
 }
 
-export const TypographyMultiple: FC<ITypographyMultiple> = ({
-    afisha,
-    text,
-    caption,
-    reverse = false,
-    responsive,
-    ...props
-}) => {
-    // TODO временно компонент для афиши прячем за флагом - когда дизайнов добавиться - будем думать другое решение
-    const typographyMultipleClassNames = component('typography__multiple')({responsive});
+export const TypographyMultiple: FC<ITypographyMultiple> = ({afisha, text, caption, reverse = false, ...props}) => {
+    // TODO: добавлен флаг afisha, который специально оверайдит стили для афишы
+
     const textClassNames = component('typography__multiple', 'text')({afisha});
     const captionClassNames = component('typography__multiple', 'caption')({afisha});
 
@@ -33,7 +25,7 @@ export const TypographyMultiple: FC<ITypographyMultiple> = ({
     ];
 
     return (
-        <Typography {...props} variant="multiple" reverse={reverse} className={typographyMultipleClassNames}>
+        <Typography {...props} variant="multiple" reverse={reverse}>
             {!reverse ? content.map((component) => component) : content.reverse().map((component) => component)}
         </Typography>
     );
