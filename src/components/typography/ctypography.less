@@ -99,48 +99,56 @@
   }
 
   @media (max-width: @rsp-mobile-max) {
-    &__header {
-      &--responsive {
+    &--responsive {
+      &.ctypography__header {
         font-size: @fs-header-mobile;
         line-height: @lh-header-mobile;
         padding: 18px 0 26px;
-      }    
-    }
-    
-    &__subheader {
-      &--responsive {
+      }
+
+      &.ctypography__subheader {
         font-size: @fs-subheader-mobile;
         line-height: @lh-subheader-mobile;
         padding: 13px 0 19px 0;
       }
-    }
-    
-    &__lead {
-      &--responsive {
+
+      &.ctypography__lead {
         font-size: @fs-lead-mobile;
         line-height: @lh-lead-mobile;
         padding: 14px 0 18px 0;
-      }
 
-      &--24.ctypography__lead--responsive {
-        padding: 6px 0 10px;
-      }
-    }
-
-    &__multiple--responsive {
-      .ctypography__multiple__text {
-        &--afisha {
-          padding: 13px 0 11px 0;
-          font-size: @fs-subheader-mobile;
-          line-height: @lh-subheader-mobile;
+        &--24 {
+          padding: 6px 0 10px;
         }
       }
-  
-      .ctypography__multiple__caption {
+
+      &.ctypography__multiple {
+        .ctypography__multiple__text {
           &--afisha {
-          padding: 0 0 19px 0;
+            padding: 13px 0 11px 0;
+            font-size: @fs-subheader-mobile;
+            line-height: @lh-subheader-mobile;
+          }
+        }
+
+        .ctypography__multiple__caption {
+          &--afisha {
+            padding: 0 0 19px 0;
+          }
         }
       }
     }
+  }
+
+  &--regular {
+    font-weight: normal;
+  }
+
+  &--bold {
+    font-weight: bold;
+  }
+
+  &--black {
+    font-weight: 900;
   }
 }
