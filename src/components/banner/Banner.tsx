@@ -6,6 +6,7 @@ import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {Button, ButtonVariant} from '../button';
+import cx from 'classnames';
 
 type CloseClickHandler = () => void;
 
@@ -32,7 +33,7 @@ export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseCl
     };
 
     return (
-        <Row {...props} className={component('banner')()}>
+        <Row {...props} className={cx(component('banner')(), props?.className)}>
             {icon && <Row.Icon className={component('banner', 'icon')()}>{icon}</Row.Icon>}
             <Row.Body className={component('banner', 'content')()}>{children}</Row.Body>
             {closeable && (
