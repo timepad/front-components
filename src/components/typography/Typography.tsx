@@ -20,17 +20,25 @@ interface ITypographyChildren {
     Multiple: typeof TypographyMultiple;
 }
 
-interface ITypographyProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+type PossibleSizesType = 8 | 16 | 24 | 32;
+
+interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
     variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
-    size?: 8 | 16 | 24 | 32;
     reverse?: boolean;
+}
+
+export interface ITypographyCommonProps<Size = undefined>
+    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     responsive?: boolean;
+    fontWeight?: 'regular' | 'bold' | 'black';
+    size?: Size;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     children,
     variant,
     size,
+    fontWeight,
     className,
     reverse,
     responsive,
@@ -43,12 +51,17 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         )({
             [`${size}`]: !!size,
             reverse,
-            responsive,
         }),
         className,
     );
 
-    const classNames = cn(component('typography')(), elementClassNames);
+    const classNames = cn(
+        component('typography')({
+            [`${fontWeight}`]: !!fontWeight,
+            responsive,
+        }),
+        elementClassNames,
+    );
 
     return (
         <div {...props} className={classNames}>
