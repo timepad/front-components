@@ -4,6 +4,7 @@ import Typography from './Typography';
 interface ITypographySubheaderProps
     extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     size?: 8;
+    responsive?: boolean;
 }
 
 export const TypographySmall: FC<ITypographySubheaderProps> = ({children, size, ...props}) => {

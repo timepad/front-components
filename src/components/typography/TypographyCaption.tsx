@@ -1,7 +1,10 @@
 import React, {FC} from 'react';
 import Typography from './Typography';
 
-type ITypographySubheaderProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+interface ITypographySubheaderProps
+    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+    responsive?: boolean;
+}
 
 export const TypographyCaption: FC<ITypographySubheaderProps> = ({children, ...props}) => {
     return (
