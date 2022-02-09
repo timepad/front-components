@@ -179,6 +179,66 @@ export const Secondary: IStorybookComponent = () => {
     );
 };
 
+export const CustomColor: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Custom text color</StoryTitle>
+            <div className="lflex">
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} labelColor="red" />
+                <Spacer />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" labelColor="blue" />
+                <Spacer />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed labelColor="orange" />
+                <Spacer />
+                <Button
+                    variant={ButtonVariant.secondary}
+                    label="Auto icon secondary"
+                    icon={<AddIcon />}
+                    iconAlignment={ButtonIconAlignment.left}
+                    labelColor="green"
+                />
+                <Spacer />
+                <Button
+                    variant={ButtonVariant.secondary}
+                    label="Auto icon secondary"
+                    icon={<AddIcon />}
+                    iconAlignment={ButtonIconAlignment.right}
+                    labelColor="red"
+                />
+            </div>
+            <div className="lbrick-2" />
+            <StoryTitle>Custom text color disabled</StoryTitle>
+            <div className="lflex">
+                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled labelColor="red" />
+                <Spacer />
+                <Button variant={ButtonVariant.secondary} label="Auto secondary" disabled labelColor="blue" />
+                <Spacer />
+                <Button variant={ButtonVariant.secondary} label="Fixed secondary" fixed disabled labelColor="orange" />
+                <Spacer />
+                <Button
+                    variant={ButtonVariant.secondary}
+                    label="Auto icon secondary"
+                    icon={<AddIcon />}
+                    iconAlignment={ButtonIconAlignment.left}
+                    disabled
+                    labelColor="green"
+                />
+                <Spacer />
+                <Button
+                    variant={ButtonVariant.secondary}
+                    label="Auto icon secondary"
+                    icon={<AddIcon />}
+                    iconAlignment={ButtonIconAlignment.right}
+                    disabled
+                    labelColor="red"
+                />
+            </div>
+        </>
+    );
+};
+
+CustomColor.storyName = 'Custom color';
+
 export const SecondaryLarge: IStorybookComponent = () => {
     return (
         <>

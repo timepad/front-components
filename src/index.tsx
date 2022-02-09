@@ -25,3 +25,5 @@ export * from './components/form/Form';
 export * from './components/segmentedcontrol';
 export * from './components/datepicker';
 export * from './components/accordion';
+export * from './components/typography';
+export * from './components/grid';
