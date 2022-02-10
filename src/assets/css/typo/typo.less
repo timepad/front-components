@@ -1,5 +1,4 @@
 @import "tmono"; // TODO: replace
-
 @import "tmultiline";
 
 // new typo
@@ -35,40 +34,7 @@
   &:extend(.typo-links all);
 }
 
-// /*
-//   Overriding default html styles with typography
-// */
-
-// .toverride:extend(.toverride-code all) {
-//   p:extend(.tbody all) {}
-
-//   ul, ol {
-//    .tpui-mx-tul;
-//   }
-
-//   ol {
-//    .tpui-mx-tol-bullets;
-//   }
-
-//   h1:extend(.theadline all) {}
-
-//   h2:extend(.theader all) {}
-
-//   h3:extend(.tsubheader all) {}
-
-//   img:extend(.timg all) {}
-//   figure:extend(.tfigure all) {}
-
-//   figcaption:extend(.tfigure__caption all) {}
-//   img + figcaption:extend(img + .tfigure__caption all) {}
-
-//   p iframe {
-//     width: 100%;
-//   }
-// }
-
-
-// TODO: NEW
+// NEW
 .typo-links {
   &:extend(.ext-links-decoration all);
 
@@ -79,28 +45,52 @@
   }
 }
 
-.t-color-gray {
-  color: @c-gray-50;
-}
+.t-color {
+  &-white { color: @c-white; }
+  &-white-fade-50 { color: @c-white-fade-50; }
 
-.t-color-rose {
-  color: @c-light-rose;
-}
+  &-black { color: @c-black; }
+  &-black-fade-80 { color: @c-black-fade-80; }
+  &-black-fade-65 { color: @c-black-fade-65; }
+  &-black-fade-50 { color: @c-black-fade-50; }
+  &-black-fade-35 { color: @c-black-fade-35; }
+  &-black-fade-20 { color: @c-black-fade-20; }
+  &-black-opaque-fade-80 { color: @c-black-opaque-fade-80; }
 
-.t-color-white {
-  color: @c-white;
-}
+  &-dark-gray { color: @c-dark-gray; }
+  &-dark-gray-fade-35 { color: @c-dark-gray-fade-35; }
+  &-dark-gray-fade-20 { color: @c-dark-gray-fade-20; }
 
-.t-color-black {
-  color: @c-black;
-}
+  &-primary-blue { color: @c-primary-blue; }
+  &-primary-blue-fade-30 { color: @c-primary-blue-fade-30; }
+  &-primary-blue-80 { color: @c-primary-blue-80; }
 
-.t-color-red {
-  color: @c-red;
-}
+  &-gray-75 { color: @c-gray-75; }
+  &-gray-75-fade-35 { color: @c-gray-75-fade-35; }
+  &-gray-75-fade-20 { color: @c-gray-75-fade-20; }
 
-.t-color-blue {
-  color: @c-primary-blue;
+  &-gray-50 { color: @c-gray-50; }
+  &-gray-50-fade-35 { color: @c-gray-50-fade-35; }
+  &-gray-50-fade-20 { color: @c-gray-50-fade-20; }
+
+  &-gray-35 { color: @c-gray-35; }
+  &-gray-35-fade-35 { color: @c-gray-35-fade-35; }
+  &-gray-35-fade-20 { color: @c-gray-35-fade-20; }
+
+  &-gray-opaque-80 { color: @c-gray-opaque-80; }
+  &-gray-opaque-65 { color: @c-gray-opaque-65; }
+  &-gray-opaque-50 { color: @c-gray-opaque-50; }
+  &-gray-opaque-35 { color: @c-gray-opaque-35; }
+  &-gray-opaque-20 { color: @c-gray-opaque-20; }
+
+  &-yellow { color: @c-yellow; }
+  &-red { color: @c-red; }
+  &-green { color: @c-green; }
+
+  &-light-gray { color: @c-light-gray; }
+  &-light-blue { color: @c-light-blue; }
+  &-light-yellow { color: @c-light-yellow; }
+  &-light-rose { color: @c-light-rose; }
 }
 
 // TODO: для теста темной темы вк

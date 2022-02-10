@@ -27,68 +27,6 @@
 
 @rsp-column-min:    296px;
 
-/* Colors */
-
-/* Primary */
-// @purple:              #643FFF;
-@purple-fade-80:      fade(@c-primary-blue, 80%);
-@purple-fade-30:      fade(@c-primary-blue, 30%);
-@purple-fade-20:      fade(@c-primary-blue, 20%);
-
-@purplelight:         #7060EC;
-
-/* Grays */
-// @graylight:           #F1F0F5;
-
-// @graydark:            #CECDDE;
-@graydark-fade-65:    fade(@c-dark-gray, 65%);
-@graydark-fade-50:    fade(@c-dark-gray, 50%); @graydark-fade: @graydark-fade-50;
-@graydark-fade-35:    fade(@c-dark-gray, 35%);
-@graydark-fade-20:    fade(@c-dark-gray, 20%);
-
-// @black:               #252525;
-@black-fade-80:       fade(@c-black, 80%);
-@black-opaque-fade-80:mix(@c-black, @c-white, 80%);
-@black-fade-65:       fade(@c-black, 65%);
-@black-fade-50:       fade(@c-black, 50%);    @black-fade: @black-fade-50;
-@black-fade-35:       fade(@c-black, 35%);
-@black-fade-20:       fade(@c-black, 20%);
-
-// @white:               #FFF;
-@white-fade-80:       fade(@c-white, 80%);
-@white-fade-65:       fade(@c-white, 65%);
-@white-fade-50:       fade(@c-white, 50%);    @white-fade: @white-fade-50;
-@white-fade-35:       fade(@c-white, 35%);
-@white-fade-20:       fade(@c-white, 20%);
-
-/* Opaque */
-@gray-opaque-80:      #D3D3D3;
-@gray-opaque-65:      #B2B2B2;
-@gray-opaque-50:      #929292;
-@gray-opaque-35:      #717171;
-@gray-opaque-20:      #505050;
-
-@graydark-opaque-35:  #eeeef3;
-
-// @purple-opaque-80:    #8365FF;
-
-/* Not quite really opaque :) */
-@gray-opaque-50-fade-50: fade(@gray-opaque-50, 50%);
-@gray-opaque-50-fade-35: fade(@gray-opaque-50, 35%);
-
-/* Accent */
-// @rose:                #FFC7F9;
-// @red:                 #F54614;
-// @yellow:              #FFC340;
-// @yellowlight:         #FFF2D9;
-// @green:               #00BD55;
-
-/* Dev */
-
-@bluelight:           #288EFF;
-@bluelight-fade-80:   fade(@bluelight, 80%);
-@codemirror:          mix(@c-light-gray, @c-white, 50%);
-
 /* Typography style vars */
 
 @font-face {
@@ -284,28 +222,30 @@
 
 //////////////////////
 // TODO: NEW
-
-@gray-opaque-50-fade-20: fade(@gray-opaque-50, 20%);
-
 //
 // Переменные из новой дизайн-библиотеки Timepad
 //
 
 // Цвета
 
-// brand
+@c-white: #FFFFFF;
+@c-white-fade-50:       fade(@c-white, 50%);
+
+@c-black: #252525;
+@c-black-fade-80:       fade(@c-black, 80%);
+@c-black-fade-65:       fade(@c-black, 65%);
+@c-black-fade-50:       fade(@c-black, 50%);
+@c-black-fade-35:       fade(@c-black, 35%);
+@c-black-fade-20:       fade(@c-black, 20%);
+@c-black-opaque-fade-80:mix(@c-black, @c-white, 80%);
+
 @c-dark-gray: #CECDDE;
 @c-dark-gray-fade-35: fade(@c-dark-gray, 35%);
 @c-dark-gray-fade-20: fade(@c-dark-gray, 20%);
 
-@c-light-gray: #F1F0F5;
-
 @c-primary-blue: #643FFF;
+@c-primary-blue-fade-30: fade(@c-primary-blue, 30%);
 @c-primary-blue-80: #8365FF;
-@c-light-blue: #38697F;
-
-// mono
-@c-black: #252525;
 
 @c-gray-75: #5D5D5D;
 @c-gray-75-fade-35: fade(@c-gray-75, 35%);
@@ -319,14 +259,22 @@
 @c-gray-35-fade-35: fade(@c-gray-35, 35%);
 @c-gray-35-fade-20: fade(@c-gray-35, 20%);
 
-@c-white: #FFFFFF;
+@c-gray-opaque-80:      #D3D3D3;
+@c-gray-opaque-65:      #B2B2B2;
+@c-gray-opaque-50:      #929292;
+@c-gray-opaque-35:      #717171;
+@c-gray-opaque-20:      #505050;
 
 // accent
-@c-light-yellow: #FFF2D9;
-@c-light-rose: #FFEBFD;
 @c-yellow: #FFC340;
 @c-red: #F54614;
 @c-green: #00BD55;
+
+// light accent
+@c-light-gray: #F1F0F5;
+@c-light-blue: #38697F;
+@c-light-yellow: #FFF2D9;
+@c-light-rose: #FFEBFD;
 
 // Тени
 @sh-shadow: 0px 6px 14px rgba(0, 0, 0, 0.06), 0px 16px 28px rgba(0, 0, 0, 0.07);
