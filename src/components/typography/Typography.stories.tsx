@@ -16,6 +16,15 @@ export const Default: IStorybookComponent = () => {
         <div>
             <StoryTitle>Typography</StoryTitle>
             <div style={{backgroundColor: 'black', padding: '16px'}}>
+                <Typography.Header style={{backgroundColor: 'white'}} fontWeight="black">
+                    Font Weight: black
+                </Typography.Header>
+                <Typography.Header style={{backgroundColor: 'white'}} fontWeight="bold">
+                    Font Weight: bold
+                </Typography.Header>
+                <Typography.Header style={{backgroundColor: 'white'}} fontWeight="regular">
+                    Font Weight: regular
+                </Typography.Header>
                 <Typography.Header style={{backgroundColor: 'white'}}>Header 32-32</Typography.Header>
                 <Brick size={0.5} />
                 <Typography.Header style={{backgroundColor: 'white'}} responsive>
