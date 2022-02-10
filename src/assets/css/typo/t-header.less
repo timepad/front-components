@@ -1,12 +1,9 @@
 /**
- m - margin, p - padding
  Examples:
- .t-header             // D fs+lh
- .t-header--brick      // D fs+lh+m
-
- .t-header-32          // D+M fs+lh+p
- .t-header-32--desktop // D fs+lh+p
- .t-header-32--mobile  // M fs+lh+p
+ .t-header
+ .t-header--black - font-weight: 900
+ .t-header--bold - font-weight: bold
+ .t-header--regular - - font-weight: normal
  */
 
  .t-header-fs-lh-desktop() {
@@ -31,5 +28,6 @@
    @media (max-width: @rsp-mobile-max) {
      .t-header-fs-lh-mobile;
    }
+
    .typo-modificators;
  }
