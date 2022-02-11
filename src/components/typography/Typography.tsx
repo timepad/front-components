@@ -61,7 +61,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         component('typography')({
             [`${fontWeight}`]: !!fontWeight,
             responsive,
-            noPadding,
+            ['no-padding']: noPadding,
         }),
         elementClassNames,
     );
