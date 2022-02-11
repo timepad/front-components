@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactHTML} from 'react';
 import {TypographyHeader} from './TypographyHeader';
 import {TypographySubheader} from './TypographySubheader';
 import {TypographyLead} from './TypographyLead';
@@ -34,6 +34,7 @@ export interface ITypographyCommonProps<Size = undefined>
     noWrap?: boolean;
     fontWeight?: 'regular' | 'bold' | 'black';
     size?: Size;
+    as?: keyof ReactHTML;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
@@ -46,6 +47,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     responsive,
     noPadding,
     noWrap,
+    as = 'div',
     ...props
 }) => {
     const elementClassNames = cn(
@@ -69,11 +71,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         elementClassNames,
     );
 
-    return (
-        <div {...props} className={classNames}>
-            {children}
-        </div>
-    );
+    return React.createElement(as, {className: classNames, ...props}, children);
 };
 
 Typography.Header = TypographyHeader;
