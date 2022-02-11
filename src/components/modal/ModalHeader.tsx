@@ -14,7 +14,7 @@ export interface IHeaderComponentProps {
 }
 
 export const Title: React.FC = ({children}) => {
-    return <h3 className={cx('t-lead', 't-lead--brick', component('form', 'title-text')())}>{children}</h3>;
+    return <h3 className={cx('t-lead', component('modal', 'title-text')())}>{children}</h3>;
 };
 
 export const Description: React.FC = ({children}) => {
@@ -28,7 +28,7 @@ export const Description: React.FC = ({children}) => {
 
 export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandler, titleIsTransparent, children}) => {
     const titleClass = component(
-        'form',
+        'modal',
         'title',
     )({
         'back-btn': !!backHandler && !closeHandler,
@@ -54,8 +54,9 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <Brick size={1.375} />
+                <Brick size={0.75} />
                 {children}
+                <Brick size={1} />
             </div>
             {closeHandler && (
                 <Button
