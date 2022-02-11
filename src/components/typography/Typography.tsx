@@ -30,6 +30,7 @@ interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
 export interface ITypographyCommonProps<Size = undefined>
     extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     responsive?: boolean;
+    noPadding?: boolean;
     fontWeight?: 'regular' | 'bold' | 'black';
     size?: Size;
 }
@@ -42,6 +43,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     className,
     reverse,
     responsive,
+    noPadding,
     ...props
 }) => {
     const elementClassNames = cn(
@@ -59,6 +61,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         component('typography')({
             [`${fontWeight}`]: !!fontWeight,
             responsive,
+            noPadding,
         }),
         elementClassNames,
     );
