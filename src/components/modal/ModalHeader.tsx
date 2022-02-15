@@ -6,6 +6,7 @@ import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
 import {Typography} from '../typography';
+import {Brick} from '../brick';
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
@@ -34,7 +35,7 @@ export const Description: React.FC = ({children}) => {
 
 export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandler, titleIsTransparent, children}) => {
     const titleClass = component(
-        'form',
+        'modal',
         'title',
     )({
         'back-btn': !!backHandler && !closeHandler,
@@ -60,8 +61,9 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <div className={cx(layout('brick')(), layout('brick-1-5')())} />
+                <Brick size={0.75} />
                 {children}
+                <Brick size={1} />
             </div>
             {closeHandler && (
                 <Button
