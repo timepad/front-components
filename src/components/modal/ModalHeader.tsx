@@ -25,7 +25,9 @@ export const Description: React.FC = ({children}) => {
     return (
         <Fragment>
             <div className={layout('brick')()} />
-            <p className={cx('t-caption', 't-caption--brick', component('form', 'title-desc')())}>{children}</p>
+            <Typography.Lead noPadding className={component('form', 'title-desc')()}>
+                {children}
+            </Typography.Lead>
         </Fragment>
     );
 };
