@@ -25,16 +25,16 @@ export const Description: React.FC = ({children}) => {
     return (
         <Fragment>
             <div className={layout('brick')()} />
-            <Typography.Lead noPadding className={component('form', 'title-desc')()}>
+            <Typography.Caption noPadding className={component('form', 'title-desc')()}>
                 {children}
-            </Typography.Lead>
+            </Typography.Caption>
         </Fragment>
     );
 };
 
 export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandler, titleIsTransparent, children}) => {
     const titleClass = component(
-        'modal',
+        'form',
         'title',
     )({
         'back-btn': !!backHandler && !closeHandler,
@@ -60,7 +60,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <Brick size={0.75} />
+                <Brick size={1} />
                 {children}
                 <Brick size={1} />
             </div>
