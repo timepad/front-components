@@ -5,7 +5,7 @@ import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
-import {Typography} from 'index';
+import {Typography} from '../typography';
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
