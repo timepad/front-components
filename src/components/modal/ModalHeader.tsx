@@ -5,6 +5,7 @@ import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
+import {Typography} from 'index';
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
@@ -13,7 +14,11 @@ export interface IHeaderComponentProps {
 }
 
 export const Title: React.FC = ({children}) => {
-    return <h3 className={cx('t-lead', 't-lead--brick', component('form', 'title-text')())}>{children}</h3>;
+    return (
+        <Typography.Lead noPadding responsive className={component('form', 'title-text')()}>
+            {children}
+        </Typography.Lead>
+    );
 };
 
 export const Description: React.FC = ({children}) => {
