@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Fragment} from 'react';
-import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
