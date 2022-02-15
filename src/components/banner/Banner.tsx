@@ -17,7 +17,7 @@ interface IBannerProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTML
     onCloseClick?: CloseClickHandler;
 }
 
-export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseClick, icon, ...props}) => {
+export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseClick, icon, className, ...props}) => {
     const [show, setShow] = useState(true);
     if (!show) {
         return null;
@@ -33,7 +33,7 @@ export const Banner: FC<IBannerProps> = ({children, closeable = false, onCloseCl
     };
 
     return (
-        <Row {...props} className={cx(component('banner')(), props?.className)}>
+        <Row className={cx(component('banner')(), className)} {...props}>
             {icon && <Row.Icon className={component('banner', 'icon')()}>{icon}</Row.Icon>}
             <Row.Body className={component('banner', 'content')()}>{children}</Row.Body>
             {closeable && (
