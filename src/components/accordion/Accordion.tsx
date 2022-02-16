@@ -57,7 +57,7 @@ export const Accordion: FC<IProps> = ({
                 {secondIcon && <div className={component(baseClassName, 'icon')()}>{secondIcon}</div>}
                 <div className={component(baseClassName, 'icon')()}>{icon}</div>
             </div>
-            <div className={component(baseClassName, 'content')()}>{children}</div>
+            {open && <div className={component(baseClassName, 'content')()}>{children}</div>}
         </div>
     );
 };
