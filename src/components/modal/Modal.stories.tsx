@@ -52,10 +52,23 @@ export const Closable: React.FC = () => {
     );
 };
 
-export const WithBackButto: React.FC = () => {
+export const WithBackButton: React.FC = () => {
     return (
         <Modal isOpen={true}>
             <Modal.Header backHandler={action('back-button-click')}>
+                <Modal.Title>Модальное окно</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Child />
+            </Modal.Body>
+        </Modal>
+    );
+};
+
+export const WithBackAndCloseButton: React.FC = () => {
+    return (
+        <Modal isOpen={true} onClose={action('close-button-click')}>
+            <Modal.Header backHandler={action('back-button-click')} closeHandler={action('close-button-click')}>
                 <Modal.Title>Модальное окно</Modal.Title>
             </Modal.Header>
             <Modal.Body>
