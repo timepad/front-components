@@ -7,12 +7,12 @@ import {styles} from './styles';
 
 import './index.less';
 
-const getRootPopup = () => {
-    let PopupRoot = document.getElementById('popup-root');
+const getRootPopup = (popupId: string) => {
+    let PopupRoot = document.getElementById(popupId);
 
     if (PopupRoot === null) {
         PopupRoot = document.createElement('div');
-        PopupRoot.setAttribute('id', 'popup-root');
+        PopupRoot.setAttribute('id', popupId);
         document.body.appendChild(PopupRoot);
     }
 
@@ -64,6 +64,7 @@ export interface IPopupProps {
     overlayStyle?: React.CSSProperties;
     className?: string;
     keepTooltipInside?: boolean | string;
+    customPopupId?: string;
 }
 const noop = () => {
     return;
@@ -95,6 +96,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             mouseEnterDelay = 100,
             mouseLeaveDelay = 100,
             keepTooltipInside = false,
+            customPopupId,
             children,
         },
         ref,
@@ -104,6 +106,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const contentRef = useRef<HTMLElement>(null);
         const focusedElBeforeOpen = useRef<Element | null>(null);
         const popupId = useRef<string>(`popup-${++dropdownIdCounter}`);
+        const currentPopupId = customPopupId ? customPopupId : 'popup-root';
 
         const isModal = modal ? true : !trigger;
         const timeOut = useRef(0);
@@ -344,7 +347,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         return (
             <>
                 {renderTrigger()}
-                {isOpen && ReactDOM.createPortal(content, getRootPopup())}
+                {isOpen && ReactDOM.createPortal(content, getRootPopup(currentPopupId))}
             </>
         );
     },
