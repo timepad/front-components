@@ -1,43 +1,26 @@
 /**
  Examples:
- .t-subheader             // D+M fs+lh
- .t-subheader--brick      // D+M fs+lh+m
-
- .t-subheader-24          // D+M fs+lh+p
- .t-subheader-24--desktop // D fs+lh+p
- .t-subheader-24--mobile  // M fs+lh+p
-
- .t-subheader-32          // D+M fs+lh+p
- .t-subheader-32--desktop // D fs+lh+p
- .t-subheader-32--mobile  // M fs+lh+p
+ .t-subheader
+ .t-subheader-24
+ .t-subheader--black - font-weight: 900
+ .t-subheader--bold - font-weight: bold
+ .t-subheader--regular - - font-weight: normal
  */
 
-@fs-subheader-desktop: (35px);
-@lh-subheader-desktop: (39px);
-
-@fs-subheader-mobile: (24px);
-@lh-subheader-mobile: (28px);
-
 .t-subheader-fs-lh-desktop() {
-  font-size: @fs-subheader-desktop;
-  line-height: @lh-subheader-desktop;
+  font-size: @fs-subheader;
+  line-height: @lh-subheader;
+  padding: 16px 0 25px 0;
 }
 
 .t-subheader-fs-lh-mobile() {
   font-size: @fs-subheader-mobile;
   line-height: @lh-subheader-mobile;
+  padding: 13px 0 19px 0;
 }
 
 .t-subheader {
   font-weight: 900;
-
-  &--normal {
-    font-weight: normal;
-  }
-
-  &--bold {
-    font-weight: bold;
-  }
 
   @media (min-width: @rsp-desktop-min) {
     .t-subheader-fs-lh-desktop;
@@ -47,59 +30,9 @@
     .t-subheader-fs-lh-mobile;
   }
 
-  &--brick {
-    display: block;
-
-    @media (min-width: @rsp-desktop-min) {
-      margin: -16px 0 -5px;
-    }
-
-    @media (max-width: @rsp-mobile-max) {
-      margin: -11px 0 -4px;
-    }
-  }
-
-  &-32 {
-    &,
-    &--desktop {
-      display: block;
-
-      @media (min-width: @rsp-desktop-min) {
-        padding: 17px 0 26px;
-        .t-subheader-fs-lh-desktop;
-      }
-    }
-
-    &,
-    &--mobile {
-      display: block;
-
-      @media (max-width: @rsp-mobile-max) {
-        padding: 21px 0 28px;
-        .t-subheader-fs-lh-mobile;
-      }
-    }
-  }
-
   &-24 {
-    &,
-    &--desktop {
-      display: block;
-
-      @media (min-width: @rsp-desktop-min) {
-        padding: 9px 0 18px;
-        .t-subheader-fs-lh-desktop;
-      }
-    }
-
-    &,
-    &--mobile {
-      display: block;
-
-      @media (max-width: @rsp-mobile-max) {
-        padding: 13px 0 19px;
-        .t-subheader-fs-lh-mobile;
-      }
-    }
+    padding: 8px 0 17px 0;
   }
+
+  .typo-modificators;
 }

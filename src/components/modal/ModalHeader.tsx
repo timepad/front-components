@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {Fragment} from 'react';
-import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
+import {Typography} from '../typography';
 import {Brick} from '../brick';
 
 export interface IHeaderComponentProps {
@@ -14,21 +14,27 @@ export interface IHeaderComponentProps {
 }
 
 export const Title: React.FC = ({children}) => {
-    return <h3 className={cx('t-lead', component('modal', 'title-text')())}>{children}</h3>;
+    return (
+        <Typography.Lead noPadding responsive className={component('form', 'title-text')()}>
+            {children}
+        </Typography.Lead>
+    );
 };
 
 export const Description: React.FC = ({children}) => {
     return (
         <Fragment>
             <Brick />
-            <p className={cx('t-caption', 't-caption--brick', component('form', 'title-desc')())}>{children}</p>
+            <Typography.Caption noPadding className={component('form', 'title-desc')()}>
+                {children}
+            </Typography.Caption>
         </Fragment>
     );
 };
 
 export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandler, titleIsTransparent, children}) => {
     const titleClass = component(
-        'modal',
+        'form',
         'title',
     )({
         'back-btn': !!backHandler && !closeHandler,
@@ -54,7 +60,7 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <Brick size={0.75} />
+                <Brick size={1} />
                 {children}
                 <Brick size={1} />
             </div>
