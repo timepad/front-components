@@ -106,6 +106,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const contentRef = useRef<HTMLElement>(null);
         const focusedElBeforeOpen = useRef<Element | null>(null);
         const popupId = useRef<string>(`popup-${++dropdownIdCounter}`);
+        // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте
         const currentPopupId = customPopupId ? customPopupId : 'popup-root';
 
         const isModal = modal ? true : !trigger;

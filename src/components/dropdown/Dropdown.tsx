@@ -189,6 +189,7 @@ export const Dropdown: FC<IDropdownProps> & {
     children,
     priorityPositions = 'right-top',
     lockScroll = false,
+    // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     customPopupId,
     ...props
 }) => {
