@@ -7,7 +7,7 @@ import {styles} from './styles';
 
 import './index.less';
 
-const getRootPopup = (popupId: string) => {
+const getRootPopup = (popupId = 'popup-root') => {
     let PopupRoot = document.getElementById(popupId);
 
     if (PopupRoot === null) {
@@ -64,7 +64,7 @@ export interface IPopupProps {
     overlayStyle?: React.CSSProperties;
     className?: string;
     keepTooltipInside?: boolean | string;
-    customPopupId?: string;
+    customPopupRoot?: string;
 }
 const noop = () => {
     return;
@@ -96,7 +96,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             mouseEnterDelay = 100,
             mouseLeaveDelay = 100,
             keepTooltipInside = false,
-            customPopupId,
+            customPopupRoot,
             children,
         },
         ref,
@@ -106,8 +106,6 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const contentRef = useRef<HTMLElement>(null);
         const focusedElBeforeOpen = useRef<Element | null>(null);
         const popupId = useRef<string>(`popup-${++dropdownIdCounter}`);
-        // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте
-        const currentPopupId = customPopupId ? customPopupId : 'popup-root';
 
         const isModal = modal ? true : !trigger;
         const timeOut = useRef(0);
@@ -348,7 +346,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         return (
             <>
                 {renderTrigger()}
-                {isOpen && ReactDOM.createPortal(content, getRootPopup(currentPopupId))}
+                {isOpen && ReactDOM.createPortal(content, getRootPopup(customPopupRoot))}
             </>
         );
     },

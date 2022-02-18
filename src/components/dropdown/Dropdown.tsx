@@ -190,7 +190,7 @@ export const Dropdown: FC<IDropdownProps> & {
     priorityPositions = 'right-top',
     lockScroll = false,
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
-    customPopupId,
+    customPopupRoot,
     ...props
 }) => {
     const [rect, ref] = useClientRect();
@@ -203,7 +203,7 @@ export const Dropdown: FC<IDropdownProps> & {
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
             lockScroll={lockScroll || window.innerHeight <= Number(rect?.height)}
-            customPopupId={customPopupId}
+            customPopupRoot={customPopupRoot}
             {...props}
         >
             <div className="dropdown-container" ref={ref}>
