@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import {uniqueId} from '../../../services/helpers/uniqueId';
+import cn from 'classnames';
 import {Row} from '../../row';
 import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
 import {IFormRadioProps} from './Radio.types';
@@ -13,31 +14,37 @@ export const Radio: FC<IFormRadioProps> = (props) => {
         checked = false,
         disabled = false,
         small = false,
-        id = uniqueId(),
+        id = uniqueId() + '_field_radio',
         error = '',
         text = '',
         caption = '',
         name = '',
         onChange = noop,
+        className,
     } = props;
 
-    const wrapperClasses = component('form__radio')({error: !!error, disabled: disabled});
+    const wrapperClasses = cn(component('form__radio')({error: !!error, disabled: disabled}), className);
     const radioClasses = component('form__radio', 'icon')({checked: checked});
-    const idx = id + '_field_radio';
+    const bodyClassNames = component(
+        'form__radio',
+        'body',
+    )({
+        small,
+    });
 
     return (
-        <Row ffFont small={small} disabled={disabled} className={wrapperClasses}>
-            <label htmlFor={idx}>
+        <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>
+            <label htmlFor={id}>
                 <Row.Icon top={!!caption}>
                     <label>
-                        <input type="radio" id={idx} checked={checked} onChange={onChange} name={name} {...props} />
+                        <input type="radio" id={id} checked={checked} onChange={onChange} name={name} {...props} />
                         <span className={radioClasses}>
                             <BulletSvg />
                         </span>
                     </label>
                 </Row.Icon>
-                <Row.Body>
-                    {props.text && <Row.Text id={idx}>{text}</Row.Text>}
+                <Row.Body className={bodyClassNames}>
+                    {props.text && <Row.Text id={id}>{text}</Row.Text>}
                     {props.caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
             </label>

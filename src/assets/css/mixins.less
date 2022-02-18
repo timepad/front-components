@@ -311,7 +311,7 @@
     }
 
     &.link--disabled {
-      color: @gray-opaque-50;
+      color: @c-gray-opaque-50;
       cursor: default;
     }
   }
@@ -324,7 +324,7 @@
     }
 
     &.link--disabled {
-      color: @gray-opaque-50;
+      color: @c-gray-opaque-50;
       cursor: default;
     }
   });
@@ -396,4 +396,26 @@
   }
 
   .on-hover(@content);
+}
+
+.typo-modificators {
+  &--regular {
+    font-weight: normal;
+  }
+
+  &--bold {
+    font-weight: bold;
+  }
+
+  &--black {
+    font-weight: 900;
+  }
+
+  &--no-padding {
+    padding: 0;
+  }
+
+  &--no-wrap {
+    white-space: nowrap;
+  }
 }
