@@ -1,22 +1,38 @@
 .ctoken {
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 5px 16px;
-    font-size: @fs-caption-mobile;
-    line-height: @lh-caption;
-    border-radius: @br-rounded;
-    background: @c-dark-gray-fade-20;
-    color: @c-primary-blue;
+    
 
-    &:not(&--disabled):hover {
-        background: @c-dark-gray-fade-35;
-    }
-    &:not(&--disabled):active {
-        color: @c-primary-blue-80;
-    }
+    
 
     &--disabled {
         color: @c-gray-35;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: row;
+        align-self: self-start;
+    }
+
+    &__creator {
+        align-self: self-start;
+    }
+
+    &__item {
+        display: flex;
+        padding: 5px 16px;
+        font-size: @fs-caption-mobile;
+        line-height: @lh-caption;
+        border-radius: @br-rounded;
+        background: @c-dark-gray-fade-20;
+        color: @c-primary-blue;
+        &:not(&--disabled):hover {
+            background: @c-dark-gray-fade-35;
+        }
+        &:not(&--disabled):active {
+            color: @c-primary-blue-80;
+        }
     }
 }

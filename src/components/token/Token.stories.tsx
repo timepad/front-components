@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+/* eslint-disable prettier/prettier */
+import React, {useState, useCallback} from 'react';
 import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import {Token} from './index';
@@ -26,11 +27,21 @@ const themes = {
 };
 
 export const Default: IStorybookComponent = () => {
+    const [values, setValues] = useState(['444', '555']);
+
+    const handleTokenValuesChange = (newTokenValues: string[]) => {
+        console.log('tokenValues before', values, 'newTokenValues', newTokenValues);
+        setValues(newTokenValues);
+    };
+
     return (
         <>
             <StoryTitle>Default Segmented Control</StoryTitle>
-            <Token>123</Token>
-            <Token disabled>123</Token>
+            <Token
+                values={values}
+                creatorValues={['123', '321', '333']}
+                onTokenValuesChange={handleTokenValuesChange}
+            />
         </>
     );
 };
