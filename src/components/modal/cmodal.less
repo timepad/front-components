@@ -38,7 +38,7 @@
   }
   @media (min-width: @rsp-desktop-min) {
     position: fixed;
-    background-color: @black-fade-80;
+    background-color: @c-black-fade-80;
     height: 100vh;
   }
 
@@ -203,7 +203,11 @@
   padding-left: 32px;
 
   &.cmodal__title--back-btn {
-    padding-left: 65px;
+    padding-left: 64px;
+  }
+
+  &.cmodal__title--dual-btns {
+    padding-left: 64px;
   }
 
   @media (min-width: @rsp-desktop-min) {
@@ -404,7 +408,7 @@
 
 .cmodal-wrapper--page {
   min-height: 100vh;
-  background-color: @black-opaque-fade-80;
+  background-color: @c-black-opaque-fade-80;
 }
 
 .cmodal-scrollbar-measure {
@@ -446,7 +450,7 @@
     bottom: 0;
 
     z-index: @z-index-dropdowns;
-    background-color: @black-fade-80;
+    background-color: @c-black-fade-80;
   }
 
   @media (max-width: @rsp-mobile-max) {
@@ -508,7 +512,7 @@
 
   &__title {
     padding-right: 62px;
-    padding-bottom: 23px;
+    padding-bottom: 0!important;
 
     &--without-btns {
       padding-right: 32px;
@@ -524,11 +528,7 @@
   &__title-text {
     position: relative;
     top: 1px;
-    font-weight: bold;
-
-    @media (max-width: @rsp-mobile-max) {
-      margin-top: -11px;
-    }
+    margin-top: -11px;
   }
 
   &__title-desc {
@@ -551,8 +551,8 @@
       position: absolute;
       width: 32px;
       height: 32px;
-      top: 14px;
-      right: 16px;
+      top: 8px;
+      right: 18px;
       cursor: pointer;
 
       & > svg.aicon * {
@@ -569,7 +569,7 @@
       position: absolute;
       width: 32px;
       height: 32px;
-      top: 14px;
+      top: 8px;
       left: 18px;
       transform: rotate(90deg) translateY(2px);
       cursor: pointer;
