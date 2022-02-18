@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, {FC, useState, useEffect, useCallback} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
@@ -56,7 +55,7 @@ export const Token: FC<IProps> = ({
     }, [values]);
 
     return (
-        <div className={containerClassNames} role="presentation" {...props} onClick={handleSetActiveToken} onBlur={() => console.log('blur')}>
+        <div className={containerClassNames} role="presentation" {...props} onClick={handleSetActiveToken}>
             <div className={component(baseClassName, 'list')()}>
                 {internalTokenValues &&
                     internalTokenValues.map((item, idx) => {

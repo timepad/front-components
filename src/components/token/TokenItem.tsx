@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../button';
@@ -14,7 +13,7 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
 export const TokenItem: FC<IProps> = ({readonly, onDelete, tokenValue, ...props}): JSX.Element => {
     const baseClassName = 'token';
     return (
-        <div role="presentation" className={component(baseClassName, 'item')()}>
+        <div className={component(baseClassName, 'item')()}>
             <div className={component(baseClassName, 'title')()} {...props}>
                 {tokenValue}
             </div>

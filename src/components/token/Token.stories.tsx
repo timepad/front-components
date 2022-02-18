@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useCallback} from 'react';
 import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
