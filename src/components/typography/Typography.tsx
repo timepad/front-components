@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactHTML} from 'react';
 import {TypographyHeader} from './TypographyHeader';
 import {TypographySubheader} from './TypographySubheader';
 import {TypographyLead} from './TypographyLead';
@@ -20,18 +20,34 @@ interface ITypographyChildren {
     Multiple: typeof TypographyMultiple;
 }
 
-interface ITypographyProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+type PossibleSizesType = 8 | 16 | 24 | 32;
+
+interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
     variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
-    size?: 8 | 16 | 24 | 32;
     reverse?: boolean;
+}
+
+export interface ITypographyCommonProps<Size = undefined>
+    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+    responsive?: boolean;
+    noPadding?: boolean;
+    noWrap?: boolean;
+    fontWeight?: 'regular' | 'bold' | 'black';
+    size?: Size;
+    as?: keyof ReactHTML;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     children,
     variant,
     size,
+    fontWeight,
     className,
     reverse,
+    responsive,
+    noPadding,
+    noWrap,
+    as = 'div',
     ...props
 }) => {
     const elementClassNames = cn(
@@ -45,13 +61,17 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         className,
     );
 
-    const classNames = cn(component('typography')(), elementClassNames);
-
-    return (
-        <div {...props} className={classNames}>
-            {children}
-        </div>
+    const classNames = cn(
+        component('typography')({
+            [`${fontWeight}`]: !!fontWeight,
+            responsive,
+            ['no-padding']: noPadding,
+            ['no-wrap']: noWrap,
+        }),
+        elementClassNames,
     );
+
+    return React.createElement(as, {className: classNames, ...props}, children);
 };
 
 Typography.Header = TypographyHeader;
