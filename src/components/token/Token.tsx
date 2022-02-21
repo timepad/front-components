@@ -55,7 +55,15 @@ export const Token: FC<IProps> = ({
     }, [values]);
 
     return (
-        <div className={containerClassNames} role="presentation" {...props} onClick={handleSetActiveToken}>
+        <div
+            className={containerClassNames}
+            role="presentation"
+            tabIndex={0}
+            {...props}
+            onClick={handleSetActiveToken}
+            onFocus={() => console.log('focus')}
+            onBlur={() => console.log('focus')}
+        >
             <div className={component(baseClassName, 'list')()}>
                 {internalTokenValues &&
                     internalTokenValues.map((item, idx) => {
