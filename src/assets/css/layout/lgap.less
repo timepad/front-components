@@ -29,17 +29,20 @@ broken usage:
   clear: both;
   float: none;
   width: 16px;
+  min-width: 16px;
   margin: 0;
   padding: 0;
 
   @media (max-width: @rsp-mobile-max) {
     &--mobile {
       width: 16px;
+      min-width: 16px;
     }
   }
   @media (min-width: @rsp-desktop-min) {
     &--desktop {
       width: 16px;
+      min-width: 16px;
     }
   }
 
@@ -48,30 +51,36 @@ broken usage:
     &-@{width-step},
     &-@{width-step}-0 {
       width: unit(@width-step * 16, px);
+      min-width: unit(@width-step * 16, px);
 
       @media (max-width: @rsp-mobile-max) {
         &--mobile {
           width: unit(@width-step * 16, px);
+          min-width: unit(@width-step * 16, px);
         }
       }
       @media (min-width: @rsp-desktop-min) {
         &--desktop {
           width: unit(@width-step * 16, px);
+          min-width: unit(@width-step * 16, px);
         }
       }
     }
 
     &-@{width-step}-5 {
       width: unit((@width-step + 0.5) * 16, px);
+      min-width: unit((@width-step + 0.5) * 16, px);
 
       @media (max-width: @rsp-mobile-max) {
         &--mobile {
           width: unit((@width-step + 0.5) * 16, px);
+          min-width: unit((@width-step + 0.5) * 16, px);
         }
       }
       @media (min-width: @rsp-desktop-min) {
         &--desktop {
           width: unit((@width-step + 0.5) * 16, px);
+          min-width: unit((@width-step + 0.5) * 16, px);
         }
       }
     }
@@ -85,11 +94,13 @@ broken usage:
     @media (max-width: @rsp-mobile-max) {
       &--mobile {
         width: 8px;
+        min-width: 8px;
       }
     }
     @media (min-width: @rsp-desktop-min) {
       &--desktop {
         width: 8px;
+        min-width: 8px;
       }
     }
   }
