@@ -1,16 +1,19 @@
-import React, {FC} from 'react';
-import Typography from './Typography';
+import React, {FC, ReactNode} from 'react';
+import Typography, {ITypographyCommonProps} from './Typography';
 import {component} from '../../services/helpers/classHelpers';
 
-interface ITypographyMultiple extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    text: string;
-    caption: string;
+interface ITypographyMultiple extends ITypographyCommonProps {
+    afisha?: boolean;
+    text: ReactNode;
+    caption: ReactNode;
     reverse?: boolean;
 }
 
-export const TypographyMultiple: FC<ITypographyMultiple> = ({text, caption, reverse = false, ...props}) => {
-    const textClassNames = component('typography__multiple', 'text')();
-    const captionClassNames = component('typography__multiple', 'caption')();
+export const TypographyMultiple: FC<ITypographyMultiple> = ({afisha, text, caption, reverse = false, ...props}) => {
+    // TODO: добавлен флаг afisha, который специально оверайдит стили для афишы
+
+    const textClassNames = component('typography__multiple', 'text')({afisha});
+    const captionClassNames = component('typography__multiple', 'caption')({afisha});
 
     const content = [
         <div key="key_text" className={textClassNames}>
