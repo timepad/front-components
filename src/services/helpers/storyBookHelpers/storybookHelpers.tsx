@@ -17,7 +17,7 @@ export const StoryTitle: FC = ({children}) => {
 export const StoryDescription: FC = ({children}) => {
     return (
         <>
-            <span className="t-small t-small--brick">{children}</span>
+            <span className="t-small">{children}</span>
             <div className="lbrick-2" />
         </>
     );

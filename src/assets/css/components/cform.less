@@ -75,7 +75,7 @@
       &::placeholder {
         opacity: 1 !important;
 
-        color: @black-fade-35 !important;
+        color: @c-black-fade-35 !important;
       }
     }
   }
@@ -108,7 +108,7 @@
       font-size: 13px;
       line-height: 19px;
 
-      color: @black-fade;
+      color: @c-black-fade-50;
     }
   }
 
@@ -122,7 +122,7 @@
   &__field {
 
     &--disabled {
-      color: @gray-opaque-50;
+      color: @c-gray-opaque-50;
       cursor: default;
 
       .cform__input {
@@ -319,7 +319,7 @@
       &:focus {
         & ~ label {
           color: @c-gray-50;
-          transform: translateY(-2px);
+          transform: translateY(-4px);
           .t-small;
         }
       }
@@ -660,8 +660,9 @@
   }
 
   &__title {
-    padding-right: 62px;
-    padding-bottom: 23px;
+    padding-right: 64px;
+    display: flex;
+    align-items: center;
 
     &--without-btns {
       padding-right: 32px;
@@ -744,7 +745,7 @@
 .cform__description {
   font-size: @fs-small;
   line-height: @lh-small;
-  color: @black-fade;
+  color: @c-black-fade-50;
   margin: 10px 0 11px 0;
 }
 
@@ -771,7 +772,7 @@
   transform: translateY(-3px) scale(13/15);
   transform-origin: left bottom;
 
-  color: @black-fade-65;
+  color: @c-black-fade-65;
 
   &--slim {
 
@@ -858,7 +859,7 @@
     cursor: text;
     transform: translateY(23px);
 
-    color: @gray-opaque-20;
+    color: @c-gray-opaque-20;
     font-size: @fs-caption;
     line-height: @lh-caption;
   }
@@ -873,7 +874,7 @@
   input:focus ~ label,
   textarea:focus ~ label {
     .cform__label;
-    color: @gray-opaque-50;
+    color: @c-gray-opaque-50;
     font-size: @fs-caption;
     line-height: @lh-caption;
   }
@@ -911,7 +912,7 @@
         }
 
         .on-hover({
-          background: @black-fade-20;
+          background: @c-black-fade-20;
 
           svg {
             fill: @c-black;
@@ -969,7 +970,7 @@
 
       &--btn svg {
         .on-hover({
-          background-color: @black-fade-20;
+          background-color: @c-black-fade-20;
 
           svg {
             fill: @c-black;
