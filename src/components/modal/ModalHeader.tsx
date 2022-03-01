@@ -60,9 +60,9 @@ export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandl
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
-                <Brick size={1} />
+                <Brick size={1.2} />
                 {children}
-                <Brick size={1} />
+                <Brick size={1.2} />
             </div>
             {closeHandler && (
                 <Button

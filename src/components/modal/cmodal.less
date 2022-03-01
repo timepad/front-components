@@ -457,6 +457,7 @@
     width: 100%;
   }
 
+
   .cform {
     &__window {
       width: 448px;
@@ -484,9 +485,9 @@
       border-radius: 8px 8px 0 0;
       background-color: @c-light-gray;
 
-    &--bg-transparent {
-      background-color: transparent;
-    }
+      &--bg-transparent {
+        background-color: transparent;
+      }
 
       &--back-btn {
         padding: 0 32px 0 62px;
@@ -510,8 +511,8 @@
     }
 
     &__title {
-      padding-right: 62px;
-      padding-bottom: 0!important;
+      padding-right: 64px;
+      padding-bottom: 0 !important;
 
       &--without-btns {
         padding-right: 32px;
@@ -524,11 +525,11 @@
       }
     }
 
-  &__title-text {
-    position: relative;
-    top: 1px;
-    margin-top: -11px;
-  }
+    &__title-text {
+      position: relative;
+      top: 1px;
+      margin-top: -11px;
+    }
 
     &__title-desc {
       margin-top: -8px;
@@ -545,14 +546,13 @@
       }
     }
 
-  &__icon {
-    &--close {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      top: 8px;
-      right: 18px;
-      cursor: pointer;
+    &__icon {
+      &--close {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        right: 16px;
+        cursor: pointer;
 
         & > svg.aicon * {
           fill: @c-black;
@@ -564,14 +564,13 @@
         }
       }
 
-    &--back {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      top: 8px;
-      left: 18px;
-      transform: rotate(90deg) translateY(2px);
-      cursor: pointer;
+      &--back {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        left: 16px;
+        transform: rotate(90deg) translateY(2px);
+        cursor: pointer;
 
         & > svg.aicon * {
           fill: @c-black;
@@ -585,4 +584,3 @@
     }
   }
 }
-
