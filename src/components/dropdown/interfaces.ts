@@ -19,6 +19,7 @@ export interface IDropdownProps {
     disabled?: boolean;
     offsetX?: number;
     offsetY?: number;
+    customPopupRoot?: string;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
