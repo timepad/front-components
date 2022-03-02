@@ -7,12 +7,12 @@ import {styles} from './styles';
 
 import './index.less';
 
-const getRootPopup = () => {
-    let PopupRoot = document.getElementById('popup-root');
+const getRootPopup = (popupId = 'popup-root') => {
+    let PopupRoot = document.getElementById(popupId);
 
     if (PopupRoot === null) {
         PopupRoot = document.createElement('div');
-        PopupRoot.setAttribute('id', 'popup-root');
+        PopupRoot.setAttribute('id', popupId);
         document.body.appendChild(PopupRoot);
     }
 
@@ -66,6 +66,7 @@ export interface IPopupProps {
     className?: string;
     keepTooltipInside?: boolean | string;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    customPopupRoot?: string;
 }
 const noop = () => {
     return;
@@ -98,6 +99,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             mouseEnterDelay = 100,
             mouseLeaveDelay = 100,
             keepTooltipInside = false,
+            customPopupRoot,
             children,
             triggerProps: tProps,
         },
@@ -355,7 +357,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         return (
             <>
                 {renderTrigger()}
-                {isOpen && ReactDOM.createPortal(content, getRootPopup())}
+                {isOpen && ReactDOM.createPortal(content, getRootPopup(customPopupRoot))}
             </>
         );
     },
