@@ -12,6 +12,7 @@ import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
+import {Brick, Form, Typography} from 'index';
 
 export default {
     title: 'DropDown',
@@ -302,5 +303,44 @@ const RecursiveEditableDropdown: FC<{text?: string}> = () => {
                 </List.Item>
             </List>
         </Dropdown>
+    );
+};
+
+export const RepositionOnChangeContent: FC = () => {
+    const [str, setStr] = useState('Some text');
+    return (
+        <div
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+            }}
+        >
+            <Dropdown
+                trigger={() => <Button label={'Пересчитывает положение при изменении контента'} />}
+                priorityPositions={'bottom-center'}
+                repositionOnChangeContent={true}
+                onClose={() => setStr('Some text')}
+            >
+                <div className="mtheme--darkpic" style={{padding: '8px', background: '#252525', color: '#ffffff'}}>
+                    <Typography.Body size={16}>{str}</Typography.Body>
+                    <Brick />
+                    <Form.Text value={str} onChange={(e) => setStr(e.target.value)} />
+                </div>
+            </Dropdown>
+            <Brick size={10} />
+            <Dropdown
+                trigger={() => <Button label={'Находится там, где был открыт изначально'} />}
+                priorityPositions={'bottom-center'}
+                repositionOnChangeContent={false}
+                onClose={() => setStr('Some text')}
+            >
+                <div className="mtheme--darkpic" style={{padding: '8px', background: '#252525', color: '#ffffff'}}>
+                    <Typography.Body size={16}>{str}</Typography.Body>
+                    <Brick />
+                    <Form.Text value={str} onChange={(e) => setStr(e.target.value)} />
+                </div>
+            </Dropdown>
+        </div>
     );
 };

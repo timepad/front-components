@@ -8,6 +8,7 @@ import {
     ReactChild,
     useCallback,
     useEffect,
+    useMemo,
     useState,
 } from 'react';
 import './index.less';
@@ -49,6 +50,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
     trigger,
     children = [],
     on = 'click',
+    ...props
 }) => {
     // region Sortable list state
     const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
@@ -139,6 +141,7 @@ const DropdownSortableList: FC<IDropdownSortableListProps> = ({
             onClose={closeDropdownHandler}
             priorityPositions={priorityPositions}
             on={on}
+            {...props}
         >
             {valueNodes.length > 0 && Children.count(children) === valueNodes.length ? (
                 <Slist
@@ -194,28 +197,22 @@ export const Dropdown: FC<IDropdownProps> & {
     ...props
 }) => {
     const [rect, ref] = useClientRect();
+    const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
+
     return (
         <Popup
-            className="cdropdown"
+            className={cx({'cdropdown__scrollable-container': isScrollable})}
             nested={nested}
             on={on}
             open={show}
             position={priorityPositions}
             keepTooltipInside={keepInsideParent}
-            lockScroll={lockScroll || window.innerHeight <= Number(rect?.height)}
+            lockScroll={lockScroll || isScrollable}
             customPopupRoot={customPopupRoot}
             {...props}
         >
-            <div className="dropdown-container" ref={ref}>
-                <div
-                    className={cx(
-                        'dropdown-body',
-                        {'dropdown-body--scrollable': window.innerHeight <= Number(rect?.height)},
-                        modifier,
-                    )}
-                >
-                    {children}
-                </div>
+            <div ref={ref} className={cx('dropdown-body', modifier)} style={isScrollable ? {margin: '15px 0'} : {}}>
+                {children}
             </div>
         </Popup>
     );

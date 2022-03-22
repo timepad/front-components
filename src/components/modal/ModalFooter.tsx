@@ -1,12 +1,16 @@
 import * as React from 'react';
 import {Fragment} from 'react';
-import cx from 'classnames';
-import {component, layout} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
+import {Brick, IBrickProps} from '../brick/Brick';
 
-export const Footer: React.FC = ({children}) => {
+export interface IModalFooterProps {
+    brickProps?: IBrickProps;
+}
+
+export const Footer: React.FC<IModalFooterProps> = ({children, brickProps}) => {
     return (
         <Fragment>
-            <div className={cx(layout('brick')(), layout('brick-2')())} />
+            <Brick size={2} {...brickProps} />
             <div className={component('form', 'footer')()}>{children}</div>
         </Fragment>
     );
