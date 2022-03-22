@@ -24,7 +24,7 @@ export const Title: React.FC = ({children}) => {
 export const Description: React.FC = ({children}) => {
     return (
         <Fragment>
-            <div className={layout('brick')()} />
+            <Brick />
             <Typography.Caption noPadding className={component('form', 'title-desc')()}>
                 {children}
             </Typography.Caption>
