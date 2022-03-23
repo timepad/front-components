@@ -1,11 +1,15 @@
 import * as React from 'react';
-import cx from 'classnames';
-import {layout} from '../../services/helpers/classHelpers';
+import {Brick} from '../brick';
+import {IBrickProps} from '../brick/Brick';
 
-export const Body: React.FC = ({children}) => {
+export interface IModalBodyProps {
+    brickProps?: IBrickProps;
+}
+
+export const Body: React.FC<IModalBodyProps> = ({children, brickProps}) => {
     return (
         <div>
-            <div className={cx(layout('brick')(), layout('brick-0-5')())} />
+            <Brick size={0.5} {...brickProps} />
             {children}
         </div>
     );

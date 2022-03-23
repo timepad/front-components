@@ -19,7 +19,7 @@ export default {
     component: DatePicker,
 } as Meta;
 
-const initialDate = moment('2030-02-14');
+const initialDate = moment('2020-03-24');
 
 const Wrapper: FC = ({children}) => (
     <div className="dropdown-body" style={{width: 'fit-content'}}>

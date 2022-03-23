@@ -1,17 +1,8 @@
-.cdropdown {
-
-}
-
-.dropdown-container {
-  overflow-y: scroll;
-  overflow-x: auto;
-  max-height: 100vh;
-  position: relative;
-  padding: 0 30px 30px;
-  margin: 0 -30px -30px;
-  * {
-    z-index: @z-index-dropdowns;
-  }
+.cdropdown__scrollable-container-content {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0 50px;
+  margin: 0 -50px;
 
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -24,10 +15,6 @@
   box-shadow: @sh-shadow;
   border-radius: 8px;
   overflow: hidden;
-
-  &--scrollable {
-    margin: 15px 0;
-  }
 }
 
 .cdropdown__button {

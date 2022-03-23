@@ -456,129 +456,130 @@
   @media (max-width: @rsp-mobile-max) {
     width: 100%;
   }
-}
 
-.cform {
-  &__window {
-    width: 448px;
 
-    border-radius: 8px;
-    background-color: @c-white;
-    overflow: hidden;
+  .cform {
+    &__window {
+      width: 448px;
 
-    @media (max-width: @rsp-mobile-max) {
-      width: 100%;
-      max-width: 343px;
-      margin: auto;
+      border-radius: 8px;
+      background-color: @c-white;
+      overflow: hidden;
+
+      @media (max-width: @rsp-mobile-max) {
+        width: 100%;
+        max-width: 343px;
+        margin: auto;
+      }
+
+      &--payment {
+        padding: 24px 32px 0;
+        // border-radius: 8px;
+        // background-color: @c-light-yellow;
+      }
     }
 
-    &--payment {
-      padding: 24px 32px 0;
-      // border-radius: 8px;
-      // background-color: @c-light-yellow;
-    }
-  }
+    &__title {
+      position: relative;
+      padding: 0 56px 0 32px;
+      border-radius: 8px 8px 0 0;
+      background-color: @c-light-gray;
 
-  &__title {
-    position: relative;
-    padding: 0 56px 0 32px;
-    border-radius: 8px 8px 0 0;
-    background-color: @c-light-gray;
-
-    &--bg-transparent {
-      background-color: transparent;
-    }
-
-    &--back-btn {
-      padding: 0 32px 0 62px;
-    }
-
-    &--dual-btns {
-      padding: 0 64px;
-    }
-
-    @media (max-width: @rsp-mobile-max) {
-      padding-left: 16px;
+      &--bg-transparent {
+        background-color: transparent;
+      }
 
       &--back-btn {
-        padding: 0 16px 0 56px;
+        padding: 0 32px 0 62px;
       }
 
       &--dual-btns {
-        padding: 0 56px;
+        padding: 0 64px;
+      }
+
+      @media (max-width: @rsp-mobile-max) {
+        padding-left: 16px;
+
+        &--back-btn {
+          padding: 0 16px 0 56px;
+        }
+
+        &--dual-btns {
+          padding: 0 56px;
+        }
       }
     }
-  }
 
-  &__title {
-    padding-right: 64px;
-    padding-bottom: 0!important;
+    &__title {
+      padding-right: 64px;
+      padding-bottom: 0 !important;
 
-    &--without-btns {
-      padding-right: 32px;
-    }
-
-    @media (max-width: @rsp-mobile-max) {
       &--without-btns {
-        padding-right: 16px;
-      }
-    }
-  }
-
-  &__title-text {
-    position: relative;
-    top: 1px;
-    margin-top: -11px;
-  }
-
-  &__title-desc {
-    margin-top: -8px;
-    font-size: 13px;
-    line-height: 19px;
-    padding-bottom: 1px;
-  }
-
-  &__footer {
-    margin: 0 8px;
-
-    button {
-      margin-bottom: 8px;
-    }
-  }
-
-  &__icon {
-    &--close {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      right: 16px;
-      cursor: pointer;
-
-      & > svg.aicon * {
-        fill: @c-black;
+        padding-right: 32px;
       }
 
       @media (max-width: @rsp-mobile-max) {
-        top: 12px;
-        right: 12px;
+        &--without-btns {
+          padding-right: 16px;
+        }
       }
     }
 
-    &--back {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      left: 16px;
-      transform: rotate(90deg) translateY(2px);
-      cursor: pointer;
+    &__title-text {
+      position: relative;
+      top: 1px;
+      margin-top: -11px;
+    }
 
-      & > svg.aicon * {
-        fill: @c-black;
+    &__title-desc {
+      margin-top: -8px;
+      font-size: 13px;
+      line-height: 19px;
+      padding-bottom: 1px;
+    }
+
+    &__footer {
+      margin: 0 8px;
+
+      button {
+        margin-bottom: 8px;
+      }
+    }
+
+    &__icon {
+      &--close {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        right: 16px;
+        cursor: pointer;
+
+        & > svg.aicon * {
+          fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+          top: 12px;
+          right: 12px;
+        }
       }
 
-      @media (max-width: @rsp-mobile-max) {
-        top: 12px;
-        left: 12px;
+      &--back {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        left: 16px;
+        transform: rotate(90deg) translateY(2px);
+        cursor: pointer;
+
+        & > svg.aicon * {
+          fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+          top: 12px;
+          left: 12px;
+        }
       }
     }
   }

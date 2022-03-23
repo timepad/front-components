@@ -4,8 +4,8 @@ import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
 import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
-import {Footer} from './ModalFooter';
-import {Body} from './ModalBody';
+import {Footer, IModalFooterProps} from './ModalFooter';
+import {Body, IModalBodyProps} from './ModalBody';
 import './index.less';
 
 const useClickOutside = (
@@ -57,8 +57,8 @@ export interface IModalProps {
 
 export const Modal: React.FC<IModalProps> & {
     Header: React.FC<IHeaderComponentProps>;
-    Body: React.FC;
-    Footer: React.FC;
+    Body: React.FC<IModalBodyProps>;
+    Footer: React.FC<IModalFooterProps>;
     Title: React.FC;
     Description: React.FC;
 } = (props) => {
