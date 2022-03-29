@@ -14,7 +14,7 @@ export const TokenCreator: FC<IProps> = ({values, handleAddToken, ...props}): JS
     const baseClassName = 'token';
     return (
         <div className={component(baseClassName, 'creator')()}>
-            <Dropdown {...props} trigger={() => <Button variant={ButtonVariant.stroke} icon={<AddIcon />} />}>
+            <Dropdown {...props} trigger={() => <Button variant={ButtonVariant.stroke} icon={<AddIcon />}  />}>
                 <List variant="dark" size="lg">
                     {values &&
                         values.map((item, index) => {

@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect, useCallback} from 'react';
+import React, {FC, useState, useEffect, useCallback, useRef} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import {TokenItem} from './TokenItem';
@@ -21,6 +21,7 @@ export const Token: FC<IProps> = ({
     ...props
 }): JSX.Element => {
     const [internalTokenValues, setInternalTokenValues] = useState<string[]>([]);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const baseClassName = 'token';
 
     const containerClassNames = cx(
@@ -34,6 +35,7 @@ export const Token: FC<IProps> = ({
         (value: string) => {
             const newTokenValues = [...internalTokenValues, value];
             onTokenValuesChange(newTokenValues);
+            containerRef.current?.focus();
         },
         [internalTokenValues, onTokenValuesChange],
     );
@@ -42,6 +44,7 @@ export const Token: FC<IProps> = ({
         const newTokenValues = [...internalTokenValues];
         newTokenValues.splice(idx, 1);
         onTokenValuesChange(newTokenValues);
+        containerRef.current?.focus();
     };
 
     const handleSetActiveToken = () => {
@@ -54,6 +57,8 @@ export const Token: FC<IProps> = ({
         setInternalTokenValues(values);
     }, [values]);
 
+    console.log(containerRef);
+
     return (
         <div
             className={containerClassNames}
@@ -63,6 +68,7 @@ export const Token: FC<IProps> = ({
             onClick={handleSetActiveToken}
             onFocus={() => console.log('focus')}
             onBlur={() => console.log('focus')}
+            ref={containerRef}
         >
             <div className={component(baseClassName, 'list')()}>
                 {internalTokenValues &&
