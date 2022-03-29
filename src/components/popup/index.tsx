@@ -1,18 +1,18 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
-import {useOnClickOutside, useOnEscape, useRepositionOnResize} from './hooks';
+import {useOnClickOutside, useOnEscape, useRepositionOnResizeBlock, useRepositionOnResizeWindow} from './hooks';
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
 import './index.less';
 
-const getRootPopup = () => {
-    let PopupRoot = document.getElementById('popup-root');
+const getRootPopup = (popupId = 'popup-root') => {
+    let PopupRoot = document.getElementById(popupId);
 
     if (PopupRoot === null) {
         PopupRoot = document.createElement('div');
-        PopupRoot.setAttribute('id', 'popup-root');
+        PopupRoot.setAttribute('id', popupId);
         document.body.appendChild(PopupRoot);
     }
 
@@ -56,6 +56,7 @@ export interface IPopupProps {
     closeOnDocumentClick?: boolean;
     closeOnEscape?: boolean;
     repositionOnResize?: boolean;
+    repositionOnChangeContent?: boolean;
     mouseEnterDelay?: number;
     mouseLeaveDelay?: number;
     onOpen?: (event?: React.SyntheticEvent) => void;
@@ -64,6 +65,8 @@ export interface IPopupProps {
     overlayStyle?: React.CSSProperties;
     className?: string;
     keepTooltipInside?: boolean | string;
+    triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    customPopupRoot?: string;
 }
 const noop = () => {
     return;
@@ -82,6 +85,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             nested = false,
             closeOnDocumentClick = true,
             repositionOnResize = true,
+            repositionOnChangeContent = true,
             closeOnEscape = true,
             on = ['click'],
             contentStyle = {},
@@ -95,7 +99,9 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             mouseEnterDelay = 100,
             mouseLeaveDelay = 100,
             keepTooltipInside = false,
+            customPopupRoot,
             children,
+            triggerProps: tProps,
         },
         ref,
     ) => {
@@ -226,7 +232,8 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         }));
 
         useOnEscape(closePopup, closeOnEscape);
-        useRepositionOnResize(setPosition, repositionOnResize);
+        useRepositionOnResizeWindow(setPosition, repositionOnResize);
+        useRepositionOnResizeBlock(setPosition, contentRef, repositionOnChangeContent);
         useOnClickOutside(
             !!trigger ? [contentRef, triggerRef] : [contentRef],
             closePopup,
@@ -235,6 +242,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
             const triggerProps: Record<string, unknown> = {
+                ...tProps,
+                style: {
+                    display: 'inline-block',
+                    lineHeight: 0,
+                    ...tProps?.style,
+                },
                 key: 'T',
                 ref: triggerRef,
                 'aria-describedby': popupId.current,
@@ -263,7 +276,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             if (typeof trigger === 'function') {
                 const Trigger = trigger;
                 return (
-                    <div style={{display: 'inline-block', lineHeight: 1}} {...triggerProps}>
+                    <div {...triggerProps}>
                         <Trigger isOpen={isOpen} />
                     </div>
                 );
@@ -344,7 +357,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         return (
             <>
                 {renderTrigger()}
-                {isOpen && ReactDOM.createPortal(content, getRootPopup())}
+                {isOpen && ReactDOM.createPortal(content, getRootPopup(customPopupRoot))}
             </>
         );
     },

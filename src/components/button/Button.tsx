@@ -120,7 +120,10 @@ export function Button(props: IButtonProps): JSX.Element {
                     {props.icon &&
                         React.cloneElement(props.icon, {
                             className: iconClasses.join(' '),
-                            style: {color: `${iconColor}`},
+                            style: {
+                                color: `${iconColor}`,
+                                ...(!!props.icon.props.style && props.icon.props.style),
+                            },
                         })}
                     {props.label && (
                         <div className="cbtn-label">
