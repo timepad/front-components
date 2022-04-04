@@ -22,7 +22,7 @@ interface ITypographyChildren {
 
 type PossibleSizesType = 8 | 16 | 24 | 32;
 
-interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
+export interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
     variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
     reverse?: boolean;
 }
