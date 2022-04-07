@@ -35,6 +35,7 @@ export interface ITypographyCommonProps<Size = undefined>
     fontWeight?: 'regular' | 'bold' | 'black';
     size?: Size;
     as?: keyof ReactHTML;
+    innerRef?: React.LegacyRef<HTMLDivElement>;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
@@ -48,6 +49,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     noPadding,
     noWrap,
     as = 'div',
+    innerRef,
     ...props
 }) => {
     const elementClassNames = cn(
@@ -70,8 +72,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         }),
         elementClassNames,
     );
-
-    return React.createElement(as, {className: classNames, ...props}, children);
+    return React.createElement(as, {className: classNames, ref: innerRef, ...props}, children);
 };
 
 Typography.Header = TypographyHeader;

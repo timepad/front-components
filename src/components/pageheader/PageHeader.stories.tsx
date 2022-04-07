@@ -3,7 +3,8 @@ import {PageHeader} from './index';
 import {IStorybookComponent} from '../../services/helpers/storyBookHelpers';
 import React from 'react';
 import {IPageHeaderProps} from './PageHeader';
-import {Button, ButtonVariant} from 'index';
+import {Brick, Button, ButtonVariant} from 'index';
+import Typography from '../typography/Typography';
 
 export default {
     title: 'Page Header',
@@ -33,6 +34,40 @@ const HeaderVariansWithBack: IPageHeaderProps[] = [
     {label: Label, caption: Caption, onBackClick},
 ];
 
+const HeaderVariansLongContent: IPageHeaderProps[] = [
+    {
+        label: Label,
+        children: [
+            SecondaryButton,
+            MainButton,
+            SecondaryButton,
+            MainButton,
+            SecondaryButton,
+            MainButton,
+            SecondaryButton,
+        ],
+    },
+    {
+        label: 'A veryveryveryveryveryveryveryvery looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong label',
+        caption: Caption,
+    },
+    {
+        label: 'A very looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong label',
+        caption: Caption,
+        children: [SecondaryButton, MainButton],
+    },
+    {
+        label: (
+            <Typography variant="header" fontWeight="bold" className="dsadas">
+                A veryveryveryveryveryveryveryvery
+                looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong label
+            </Typography>
+        ),
+        caption: Caption,
+        children: [SecondaryButton, MainButton],
+    },
+];
+
 export const WithoutBackButton: IStorybookComponent = () => {
     return (
         <>
@@ -48,6 +83,19 @@ export const WithBackButton: IStorybookComponent = () => {
         <>
             {HeaderVariansWithBack.map((el, index) => (
                 <PageHeader key={index} {...el} />
+            ))}
+        </>
+    );
+};
+
+export const TooLongContent: IStorybookComponent = () => {
+    return (
+        <>
+            {HeaderVariansLongContent.map((el, index) => (
+                <>
+                    <PageHeader key={index} {...el} />
+                    <Brick size={2} />
+                </>
             ))}
         </>
     );
