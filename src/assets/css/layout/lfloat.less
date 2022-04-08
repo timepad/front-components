@@ -32,8 +32,14 @@ usage:
     margin-right: calc(-1 * (100vw - @large-width - @scrollbar-compensation) / 2);
   }
 
-  @media (min-width: @rsp-desktop-large-min) {
+  @media (min-width: @rsp-desktop-large-min) and (max-width: @rsp-desktop-max) {
     grid-column: span 3;
+    margin-left: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
+    margin-right: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
+  }
+
+  @media (min-width: @rsp-desktop-max) {
+    grid-column: span 4;
     margin-left: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
     margin-right: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
   }

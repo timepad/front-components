@@ -19,6 +19,12 @@
   @media (min-width: @rsp-desktop-large-min) {
     width: @xlarge-width;
   }
+  @media (min-width: @rsp-desktop-max) and (max-width: @rsp-desktop-large-max){
+    width: calc(100vw - 160px);
+  }
+  @media (min-width: @rsp-desktop-large-max) {
+    width: @desktop-content-max-width;
+  }
   margin: 0 auto;
 }
 
