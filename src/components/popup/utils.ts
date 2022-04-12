@@ -16,8 +16,10 @@ export const POSITION_TYPES: PopupPosition[] = [
 ];
 
 type PositionModifiers = {
-    top: number;
-    left: number;
+    top?: number;
+    left?: number;
+    right?: number;
+    bottom?: number;
     transform: string;
 };
 
@@ -35,43 +37,49 @@ const getModifiersForPosition = (
     let top = CenterTop - height / 2;
     let left = CenterLeft - width / 2;
     let transform = '';
-    switch (args[0]) {
-        case 'top':
-            top -= height / 2 + triggerBounding.height / 2 + margin;
-            transform = `rotate(180deg)  translateX(50%)`;
-            break;
-        case 'bottom':
-            top += height / 2 + triggerBounding.height / 2 + margin;
-            transform = `rotate(0deg) translateY(-100%) translateX(-50%)`;
-            break;
-        case 'left':
-            left -= width / 2 + triggerBounding.width / 2 + margin;
-            transform = ` rotate(90deg)  translateY(50%) translateX(-25%)`;
-            break;
-        case 'right':
-            left += width / 2 + triggerBounding.width / 2 + margin;
-            transform = `rotate(-90deg)  translateY(-150%) translateX(25%)`;
-            break;
-        default:
-    }
-    switch (args[1]) {
-        case 'top':
-            top = triggerBounding.top;
-            break;
-        case 'bottom':
-            top = triggerBounding.top - height + triggerBounding.height;
-            break;
-        case 'left':
-            left = triggerBounding.left;
-            break;
-        case 'right':
-            left = triggerBounding.left - width + triggerBounding.width;
-            break;
-        default:
+
+    if (args[0] === 'corner') {
+        return {[args[1]]: 0, [args[2]]: 0, transform};
+    } else {
+        switch (args[0]) {
+            case 'top':
+                top -= height / 2 + triggerBounding.height / 2 + margin;
+                transform = `rotate(180deg)  translateX(50%)`;
+                break;
+            case 'bottom':
+                top += height / 2 + triggerBounding.height / 2 + margin;
+                transform = `rotate(0deg) translateY(-100%) translateX(-50%)`;
+                break;
+            case 'left':
+                left -= width / 2 + triggerBounding.width / 2 + margin;
+                transform = ` rotate(90deg)  translateY(50%) translateX(-25%)`;
+                break;
+            case 'right':
+                left += width / 2 + triggerBounding.width / 2 + margin;
+                transform = `rotate(-90deg)  translateY(-150%) translateX(25%)`;
+                break;
+            default:
+        }
+        switch (args[1]) {
+            case 'top':
+                top = triggerBounding.top;
+                break;
+            case 'bottom':
+                top = triggerBounding.top - height + triggerBounding.height;
+                break;
+            case 'left':
+                left = triggerBounding.left;
+                break;
+            case 'right':
+                left = triggerBounding.left - width + triggerBounding.width;
+                break;
+            default:
+        }
+
+        top = args[0] === 'top' ? top - offsetY : top + offsetY;
+        left = args[0] === 'left' ? left - offsetX : left + offsetX;
     }
 
-    top = args[0] === 'top' ? top - offsetY : top + offsetY;
-    left = args[0] === 'left' ? left - offsetX : left + offsetX;
     return {top, left, transform};
 };
 
@@ -129,11 +137,18 @@ export const calculateModifiers = (
         });
 
         const contentBox = {
-            top: modifiers.top,
-            left: modifiers.left,
+            top: modifiers?.top || 0,
+            left: modifiers?.left || 0,
+            right: modifiers?.right,
+            bottom: modifiers?.bottom,
             width: ContentBounding.width,
             height: ContentBounding.height,
         };
+
+        if (positions[i].split('-')[0] === 'corner') {
+            isPositionFind = true;
+            break;
+        }
 
         if (
             contentBox.top <= wrapperBox.top ||
@@ -146,13 +161,14 @@ export const calculateModifiers = (
             isPositionFind = true;
             break;
         }
-        if (!isPositionFind) {
-            modifiers = getModifiersForPosition(triggerBounding, ContentBounding, positions[0], {
-                offsetX,
-                offsetY,
-            });
-            modifiers.top = 0;
-        }
+    }
+
+    if (!isPositionFind) {
+        modifiers = getModifiersForPosition(triggerBounding, ContentBounding, positions[0], {
+            offsetX,
+            offsetY,
+        });
+        modifiers.top = 0;
     }
     return modifiers;
 };

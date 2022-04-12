@@ -12,7 +12,7 @@ import AddIcon from 'svg/24/icon-plus-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
-import {Brick, Form, Typography} from 'index';
+import {Brick, Form, Row, Typography} from 'index';
 
 export default {
     title: 'DropDown',
@@ -26,17 +26,24 @@ const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props
     return (
         <>
             <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
-                <List size={'lg'} variant={'dark'}>
-                    <List.Item as={'button'} type={'button'}>
-                        Primary text
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Primary text
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Primary text
-                    </List.Item>
-                </List>
+                <div className="mtheme--darkpic-bg mtheme--darkpic corg-menu__dropdown">
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 1</Row.Text>
+                            <Row.Caption>Secondary text</Row.Caption>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 2</Row.Text>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 3</Row.Text>
+                        </Row.Body>
+                    </Row>
+                </div>
             </Dropdown>
         </>
     );
@@ -165,7 +172,7 @@ export const Default: IStorybookComponent = () => {
 };
 
 export const VariousPositions: IStorybookComponent = () => {
-    const allPositions: IDropdownProps['priorityPositions'][] = [
+    const topBottomPositions: IDropdownProps['priorityPositions'][] = [
         'top-left',
         'top-center',
         'top-right',
@@ -173,7 +180,7 @@ export const VariousPositions: IStorybookComponent = () => {
         'bottom-center',
         'bottom-right',
     ];
-    const bottomTopPos: IDropdownProps['priorityPositions'][] = [
+    const leftRightPositions: IDropdownProps['priorityPositions'][] = [
         'right-top',
         'right-center',
         'right-bottom',
@@ -181,13 +188,19 @@ export const VariousPositions: IStorybookComponent = () => {
         'left-center',
         'left-bottom',
     ];
+    const cornerPositions: IDropdownProps['priorityPositions'][] = [
+        'corner-top-left',
+        'corner-bottom-left',
+        'corner-bottom-right',
+        'corner-top-right',
+    ];
     return (
         <>
             <StoryTitle>Various positions</StoryTitle>
             <StoryDescription>Открывает дропдаун относительно контейнера кнопки</StoryDescription>
             <div style={{marginTop: '40px'}}>
                 <div className="horizontal-grid">
-                    {bottomTopPos.map((pos) => (
+                    {leftRightPositions.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
                             key={pos as string}
@@ -197,7 +210,7 @@ export const VariousPositions: IStorybookComponent = () => {
                     ))}
                 </div>
                 <div className="vertical-grid">
-                    {allPositions.map((pos) => (
+                    {topBottomPositions.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
                             key={pos as string}
@@ -208,6 +221,16 @@ export const VariousPositions: IStorybookComponent = () => {
                 </div>
                 <div style={{margin: '0 auto', display: 'table'}}>
                     <DropBtn priorityPositions="center-center" label="center-center" />
+                </div>
+                <div className="horizontal-grid">
+                    {cornerPositions.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
                 </div>
             </div>
         </>
