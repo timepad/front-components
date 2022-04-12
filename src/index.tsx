@@ -1,3 +1,4 @@
+export * from './services/hooks';
 export * from './components/button';
 export * from './components/counter';
 export * from './components/label';
