@@ -58,14 +58,11 @@ export const Dropdown: FC<IDropdownProps> & {
             mobile: {
                 popupProps: {
                     ...props,
+                    className: cx('cdropdown__moblie-container'),
                     lockScroll: true,
                     position: 'corner-bottom-left',
                 },
-                children: (
-                    <div className={modifier} style={{width: '100vw'}}>
-                        {children}
-                    </div>
-                ),
+                children: <div className={cx('dropdown-body--mobile', modifier)}>{children}</div>,
             },
         };
         return isMoblie ? content.mobile : content.desktop;
@@ -85,4 +82,13 @@ Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as Co
 Dropdown.SItem.propTypes = {
     ...Dropdown.SItem.propTypes,
     index: () => null,
+};
+
+interface IFooterHeaderProps extends HTMLDivElement {
+    desktop: boolean;
+    moblie: boolean;
+}
+
+export const DropdownFooter: FC<IFooterHeaderProps> = ({}) => {
+    return <div></div>;
 };

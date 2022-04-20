@@ -143,9 +143,17 @@ const DropProfile: React.FC = () => {
                             hoverable
                         />
                     </Row.Icon>
-                    <Row.Body>
-                        <Row.Text>Алексей</Row.Text>
-                        <Row.Caption>+7 (985) 000 11 22</Row.Caption>
+                    <Row.Body style={{padding: '9px 0'}}>
+                        <Row.Text>
+                            <Typography variant="caption" fontWeight="bold" noPadding>
+                                Алексей
+                            </Typography>
+                        </Row.Text>
+                        <Row.Caption>
+                            <Typography variant="small" noPadding>
+                                +7 (985) 000 11 22
+                            </Typography>
+                        </Row.Caption>
                     </Row.Body>
                     <Row.Icon>
                         <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
