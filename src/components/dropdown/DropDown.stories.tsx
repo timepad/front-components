@@ -1,4 +1,4 @@
-import React, {FC, useState, MouseEvent} from 'react';
+import React, {FC, useState, MouseEvent, useMemo, ReactElement} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -7,26 +7,24 @@ import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/
 import 'css/bundle.less';
 import './storybook/demo.less';
 import {List} from '../list';
-import {Button, IButtonProps} from '../button';
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {Button, ButtonVariant, IButtonProps} from '../button';
+import IconEdit from 'assets/svg/24/icon-edit-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
-import {Brick, Form, Row, Typography} from 'index';
+import {Brick, Form, Row, Typography, useMobileWidthCheck} from 'index';
+import {Divider} from '../list/Divider';
 
 export default {
     title: 'DropDown',
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic hoverable />;
-const Suffix: React.FC = () => <AddIcon />;
-
 const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
     return (
         <>
             <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
-                <div className="mtheme--darkpic-bg mtheme--darkpic corg-menu__dropdown">
+                <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                     <Row hoverable>
                         <Row.Body>
                             <Row.Text>Primary text 1</Row.Text>
@@ -111,41 +109,70 @@ const DropCustomBodyImperative: React.FC = () => {
 };
 
 const DropProfile: React.FC = () => {
+    const isMoblie = useMobileWidthCheck();
+    const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
+    const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
+        () => [
+            {
+                title: 'Организаторам',
+                icon: <IconEdit />,
+            },
+            {
+                title: 'Стать организатором',
+                icon: <IconEdit />,
+            },
+        ],
+        [],
+    );
     return (
-        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-            <List variant="dark" size="lg">
-                <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
-                    <div className="lflex lflex--y-axis">
-                        <div className="lflex lflex--y-axis profile--name">
-                            <span className="profile--main">Алексей</span>
-                            <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
-                        </div>
-                    </div>
-                </List.Group>
-                <List.Item href={'#'} as={'a'}>
-                    Мои события
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Мои подписки
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Избранное
-                </List.Item>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <Dropdown trigger={() => <List.Item>Выпадающий список</List.Item>} on="hover">
-                        <List variant="dark" size="lg">
-                            <List.Item href={'#'} as={'a'}>
-                                Мои события
-                            </List.Item>
-                            <List.Item href={'#'} as={'a'}>
-                                Мои подписки
-                            </List.Item>
-                        </List>
-                    </Dropdown>
-                </div>
-                <List.Item as={'button'} type={'button'} label="Выход" />
-                <Dropdown.Button label="Стать организатором" />
-            </List>
+        <Dropdown
+            trigger={() => (
+                <Pic
+                    imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                    label="test_userpic"
+                    hoverable
+                />
+            )}
+        >
+            <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
+                <Row hoverable>
+                    <Row.Icon>
+                        <Pic
+                            imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                            label="test_userpic"
+                            hoverable
+                        />
+                    </Row.Icon>
+                    <Row.Body>
+                        <Row.Text>Алексей</Row.Text>
+                        <Row.Caption>+7 (985) 000 11 22</Row.Caption>
+                    </Row.Body>
+                    <Row.Icon>
+                        <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
+                    </Row.Icon>
+                </Row>
+                {ProfileListData.map((el) => (
+                    <Row key={el} hoverable>
+                        <Row.Body>
+                            <Row.Text>{el}</Row.Text>
+                        </Row.Body>
+                    </Row>
+                ))}
+                {isMoblie && (
+                    <>
+                        <Divider />
+                        {OrgListData.map((el) => (
+                            <Row key={el.title} hoverable>
+                                <Row.Body>
+                                    <Row.Text>{el.title}</Row.Text>
+                                </Row.Body>
+                                <Row.Icon>{el.icon}</Row.Icon>
+                            </Row>
+                        ))}
+                    </>
+                )}
+                {!isMoblie && <Dropdown.Button label="Стать организатором" />}
+            </div>
         </Dropdown>
     );
 };
