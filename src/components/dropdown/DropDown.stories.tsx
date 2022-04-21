@@ -134,7 +134,7 @@ const DropProfile: React.FC = () => {
                 />
             )}
         >
-            <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
+            <Dropdown.Header mobile desktop>
                 <Row hoverable>
                     <Row.Icon>
                         <Pic
@@ -159,6 +159,8 @@ const DropProfile: React.FC = () => {
                         <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
                     </Row.Icon>
                 </Row>
+            </Dropdown.Header>
+            <div className="mtheme--darkpic-bg mtheme--darkpic">
                 {ProfileListData.map((el) => (
                     <Row key={el} hoverable>
                         <Row.Body>
@@ -188,11 +190,28 @@ const DropProfile: React.FC = () => {
 const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
     return (
         <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
-            <List variant="dark" size="lg">
+            <Dropdown.Header mobile>
+                <Row hoverable>
+                    <Row.Body style={{padding: '9px 0'}}>
+                        <Row.Text>
+                            <Typography variant="body" fontWeight="bold" noPadding>
+                                Длинный скролл для мобилки
+                            </Typography>
+                        </Row.Text>
+                    </Row.Body>
+                </Row>
+            </Dropdown.Header>
+            <div className="mtheme--darkpic-bg mtheme--darkpic">
                 {cities.map((item, index) => {
-                    return <List.Item key={index}>{item}</List.Item>;
+                    return (
+                        <Row key={index} hoverable>
+                            <Row.Body>
+                                <Row.Text>{item}</Row.Text>
+                            </Row.Body>
+                        </Row>
+                    );
                 })}
-            </List>
+            </div>
         </Dropdown>
     );
 };

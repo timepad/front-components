@@ -1,16 +1,16 @@
 import * as React from 'react';
-import {ComponentClass, FC, ReactElement, useMemo} from 'react';
+import {ComponentClass, FC, ReactElement, useMemo, useRef} from 'react';
 import './index.less';
-import {IPopupProps, Popup} from '../popup';
+import {IPopupActions, IPopupProps, Popup} from '../popup';
 import cx from 'classnames';
-import {IButtonProps} from '../button';
+import {Button, ButtonVariant, IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
 import {SortableElement} from 'react-sortable-hoc';
 import {List} from '../list';
-import {useClientRect} from '../../services/hooks';
+import {useClientRect, useMobileWidthCheck} from '../../services/hooks';
 import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
-import {useMobileWidthCheck} from '../../services/hooks';
+import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 
 interface IResponsvieContent {
     children: ReactElement;
@@ -21,6 +21,8 @@ export const Dropdown: FC<IDropdownProps> & {
     Button: FC<IButtonProps>;
     SList: FC<IDropdownSortableListProps>;
     SItem: ComponentClass<ISortableItemProps>;
+    Header: FC<IFooterHeaderProps>;
+    Footer: FC<IFooterHeaderProps>;
 } = ({
     show,
     keepInsideParent = true,
@@ -32,44 +34,81 @@ export const Dropdown: FC<IDropdownProps> & {
     // customPopupRoot,
     ...props
 }) => {
+    const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
     const isMoblie = useMobileWidthCheck();
+    const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
-    const responsiveContent = useMemo<IResponsvieContent>(() => {
-        const content: Record<'desktop' | 'mobile', IResponsvieContent> = {
-            desktop: {
-                popupProps: {
-                    position: priorityPositions,
-                    className: cx({'cdropdown__scrollable-container': isScrollable}),
-                    lockScroll: lockScroll || isScrollable,
-                    ...props,
-                },
-                children: (
-                    <div
-                        ref={ref}
-                        className={cx('dropdown-body', modifier)}
-                        style={isScrollable ? {margin: '15px 0'} : {}}
-                    >
-                        {children}
-                    </div>
-                ),
+    let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
+    let footer: ReactElement<IFooterHeaderProps, typeof DropdownFooter> | undefined = (
+        <DropdownFooter mobile>
+            <Button
+                large
+                variant={ButtonVariant.transparent}
+                className="ccancel-button__mobile"
+                onClick={() => popupRef.current?.close()}
+            >
+                Отменить
+            </Button>
+        </DropdownFooter>
+    );
+
+    const otherChildren: React.ReactNode[] = [];
+
+    React.Children.forEach(children, (child) => {
+        let isAdded = false;
+        const isElement = typeof child === 'object' && !!child && 'type' in child;
+
+        if (isElement && child.type === DropdownHeader) {
+            header = child as ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
+            isAdded = true;
+        }
+        if (isElement && child.type === DropdownFooter) {
+            footer = child as ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
+            isAdded = true;
+        }
+        if (!isAdded) {
+            otherChildren.push(child as ReactElement);
+        }
+    });
+
+    const content: Record<'desktop' | 'mobile', IResponsvieContent> = {
+        desktop: {
+            popupProps: {
+                position: priorityPositions,
+                className: cx({'cdropdown__scrollable-container': isScrollable}),
+                lockScroll: lockScroll || isScrollable,
+                ...props,
             },
-            mobile: {
-                popupProps: {
-                    ...props,
-                    className: cx('cdropdown__moblie-container'),
-                    lockScroll: true,
-                    position: 'corner-bottom-left',
-                },
-                children: <div className={cx('dropdown-body--mobile', modifier)}>{children}</div>,
+            children: (
+                <div ref={ref} className={cx('dropdown-body', modifier)} style={isScrollable ? {margin: '15px 0'} : {}}>
+                    {header?.props.desktop && header}
+                    <div>{otherChildren}</div>
+                    {footer?.props.desktop && footer}
+                </div>
+            ),
+        },
+        mobile: {
+            popupProps: {
+                ...props,
+                className: cx('cdropdown__moblie-container'),
+                lockScroll: true,
+                position: 'corner-bottom-left',
             },
-        };
-        return isMoblie ? content.mobile : content.desktop;
-    }, [priorityPositions, isScrollable, lockScroll, props, ref, modifier, children, isMoblie]);
+            children: (
+                <div className={cx('dropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
+                    {header?.props.mobile && header}
+                    <div className="dropdown-body--mobile-content">{otherChildren}</div>
+                    {footer?.props.mobile && footer}
+                </div>
+            ),
+        },
+    };
+
+    const responsiveContent = isMoblie ? content.mobile : content.desktop;
 
     return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...responsiveContent.popupProps}>
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...responsiveContent.popupProps} ref={popupRef}>
             {responsiveContent.children}
         </Popup>
     );
@@ -78,17 +117,10 @@ export const Dropdown: FC<IDropdownProps> & {
 Dropdown.Button = DropdownButton;
 Dropdown.SList = DropdownSortableList;
 Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as ComponentClass<ISortableItemProps>;
+Dropdown.Header = DropdownHeader;
+Dropdown.Footer = DropdownFooter;
 
 Dropdown.SItem.propTypes = {
     ...Dropdown.SItem.propTypes,
     index: () => null,
-};
-
-interface IFooterHeaderProps extends HTMLDivElement {
-    desktop: boolean;
-    moblie: boolean;
-}
-
-export const DropdownFooter: FC<IFooterHeaderProps> = ({}) => {
-    return <div></div>;
 };

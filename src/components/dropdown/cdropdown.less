@@ -1,9 +1,4 @@
-.cdropdown__scrollable-container-content {
-  height: 100vh;
-  overflow-y: auto;
-  padding: 0 50px;
-  margin: 0 -50px;
-
+.hidden-scroll() {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar {
@@ -11,8 +6,20 @@
   }
 }
 
-.cdropdown__moblie-container {
+.cdropdown__scrollable-container-content {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0 50px;
+  margin: 0 -50px;
 
+  .hidden-scroll();
+}
+
+.cdropdown__moblie-container-content {
+  .ccancel-button__mobile {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .cdropdown__moblie-container-overlay {
@@ -26,9 +33,17 @@
 }
 
 .dropdown-body--mobile {
+  max-height: calc(100vh - 16px);
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
+  &-content {
+    .hidden-scroll();
+    overflow-y: auto;
+  }
 }
 
 .cdropdown__button {
