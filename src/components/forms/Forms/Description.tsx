@@ -16,7 +16,7 @@ const Description: React.FC<ITitleProps> = ({children, className, error, commonE
             'description',
         )({
             error: error,
-            'commone-error': commonError,
+            'common-error': commonError,
         }),
         className,
     );

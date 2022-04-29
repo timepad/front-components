@@ -6,6 +6,7 @@ import {component} from '../../../services/helpers/classHelpers';
 export interface ITitleProps
     extends PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> {}
 
+// Абсолютно бесполезный компонент
 const SubTitle: React.FC<ITitleProps> = ({children, className, ...props}) => {
     const formClassName = cx(component('form', 'subtitle')(), className);
     return (
