@@ -1,4 +1,4 @@
-import {Checkbox} from 'components/form/Checkbox/Checkbox';
+import {Checkbox} from './Checkbox';
 import {CheckboxField} from './CheckboxField';
 
 export {CheckboxField, Checkbox};
