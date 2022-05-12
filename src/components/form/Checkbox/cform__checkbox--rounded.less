@@ -1,6 +1,6 @@
 @import "../../../assets/css/bundle.less";
 
-.cradiobutton {
+.cform__checkbox--rounded {
   --background-color: initial;
   --border-color: @c-dark-gray;
   --icon-color: initial;
@@ -15,31 +15,6 @@
   @media(max-width: @rsp-mobile-max) {
     width: 40px;
     height: 40px;
-  }
-
-  &--labeled {
-    --icon-color: @c-primary-blue;
-    width: unset;
-
-    label {
-      position: unset !important;
-      top: unset !important;
-      right: unset !important;
-      bottom: unset !important;
-      left: unset !important;
-      height: 100%;
-      padding: 0 16px;
-      border-radius: 4px !important;
-    }
-
-    input:not(:disabled) {
-      + label {
-        .on-hover(active-fallback; {
-          --background-color: @c-dark-gray-fade-35;
-          box-shadow: none !important;
-        });
-      }
-    }
   }
 
   input {
@@ -123,17 +98,6 @@
     --icon-color: @c-black;
     --border-color: @c-gray-50-fade-35;
 
-    &--labeled {
-      input:not(:disabled):not(:checked) {
-        + label {
-          .on-hover(active-fallback; {
-            --background-color: @c-gray-50-fade-35;
-            box-shadow: none !important;
-          });
-        }
-      }
-    }
-
     input:checked:disabled + label {
       --background-color: @c-gray-50-fade-20;
     }
@@ -143,21 +107,10 @@
     --icon-color: @c-white;
     --border-color: @c-gray-50-fade-35;
 
-    &--labeled {
-
-      input:not(:disabled):not(:checked) + label {
-        .on-hover(active-fallback; {
-          --background-color: @c-gray-50-fade-35;
-          box-shadow: none !important;
-        });
-      }
-    }
-
     input:disabled + label {
       --icon-color: @c-gray-75;
       --border-color: @c-gray-50-fade-35;
     }
-
 
     input:checked:disabled + label {
       --icon-color: @c-gray-75;
