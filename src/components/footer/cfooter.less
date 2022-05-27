@@ -1,0 +1,32 @@
+.cfooter {
+  background: @c-light-gray;
+  //position: fixed;
+  //bottom: 0;
+  //left: 0;
+  //width: 100%;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    height: 32px;
+  }
+
+  &__link {
+    color: @c-primary-blue;
+    text-decoration: none;
+
+    &--inverse {
+      color: @c-black;
+      text-decoration: none;
+
+      &:hover {
+        color: @c-primary-blue;
+      }
+    }
+  }
+
+  .caption-override {
+    padding: 0;
+  }
+}
+
