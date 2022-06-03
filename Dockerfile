@@ -6,7 +6,7 @@ WORKDIR /front-components
 
 COPY . .
 
-#install fonts
+#install fonts 
 RUN REPO=$(cat package.json| grep front-shared | awk '{print $2}' | sed 's/,//g' | sed 's/"//g') && \
     echo $REPO && \
     npm install git+$REPO && \
