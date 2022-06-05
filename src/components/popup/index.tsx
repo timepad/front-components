@@ -1,7 +1,13 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
-import {useOnClickOutside, useOnEscape, useRepositionOnResizeBlock, useRepositionOnResizeWindow} from './hooks';
+import {
+    useOnAnyScrollEventTriggerEnterOrLeave,
+    useOnClickOutside,
+    useOnEscape,
+    useRepositionOnResizeBlock,
+    useRepositionOnResizeWindow,
+} from './hooks';
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
@@ -197,8 +203,16 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         }, [open, disabled]);
 
         const onMouseEnter = (event?: React.SyntheticEvent) => {
-            clearTimeout(timeOut.current);
-            timeOut.current = Number(setTimeout(() => openPopup(event), mouseEnterDelay));
+            if (mouseEnterDelay > 0) {
+                clearTimeout(timeOut.current);
+                timeOut.current = Number(
+                    setTimeout(() => {
+                        openPopup(event);
+                    }, mouseEnterDelay),
+                );
+            } else {
+                openPopup(event);
+            }
         };
 
         const onContextMenu = (event?: React.SyntheticEvent) => {
@@ -207,8 +221,16 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         };
 
         const onMouseLeave = (event?: React.SyntheticEvent) => {
-            clearTimeout(timeOut.current);
-            timeOut.current = Number(setTimeout(() => closePopup(event), mouseLeaveDelay));
+            if (mouseLeaveDelay > 0) {
+                clearTimeout(timeOut.current);
+                timeOut.current = Number(
+                    setTimeout(() => {
+                        closePopup(event);
+                    }, mouseLeaveDelay),
+                );
+            } else {
+                closePopup(event);
+            }
         };
 
         const focusContentOnOpen = () => {
@@ -239,6 +261,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             closePopup,
             closeOnDocumentClick && !nested,
         );
+        useOnAnyScrollEventTriggerEnterOrLeave(triggerRef, onMouseEnter, onMouseLeave, isOpen, on);
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
             const triggerProps: Record<string, unknown> = {
