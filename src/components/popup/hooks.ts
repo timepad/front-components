@@ -1,4 +1,4 @@
-import React, {useEffect, RefObject, MutableRefObject, useCallback, useRef} from 'react';
+import React, {useEffect, RefObject, MutableRefObject, useRef} from 'react';
 import {Event} from './index';
 
 export const useOnEscape = (handler: (event: KeyboardEvent) => void, active = true): void => {
@@ -101,18 +101,17 @@ export const useOnAnyScrollEventTriggerEnterOrLeave = (
 ) => {
     const mouseRef = useRef({mouseX: 0, mouseY: 0});
 
-    const update = useCallback(() => {
-        const hoverTarget = document.elementFromPoint(mouseRef.current.mouseX, mouseRef.current.mouseY);
-        const isOverDropdownTarget = hoverTarget && hoverTarget.closest('div[aria-describedby]') === ref.current;
-        if (isOverDropdownTarget && !isOpen) {
-            onEnter();
-        }
-        if (!isOverDropdownTarget && isOpen) {
-            onLeave();
-        }
-    }, [ref, isOpen, onLeave, onEnter, mouseRef]);
-
     useEffect(() => {
+        const update = () => {
+            const hoverTarget = document.elementFromPoint(mouseRef.current.mouseX, mouseRef.current.mouseY);
+            const isOverDropdownTarget = hoverTarget && hoverTarget.closest('div[aria-describedby]') === ref.current;
+            if (isOverDropdownTarget && !isOpen) {
+                window.requestAnimationFrame(() => onEnter());
+            }
+            if (!isOverDropdownTarget && isOpen) {
+                window.requestAnimationFrame(() => onLeave());
+            }
+        };
         const saveMousePosition = (event: MouseEvent) => {
             mouseRef.current.mouseX = event.clientX;
             mouseRef.current.mouseY = event.clientY;
@@ -129,5 +128,5 @@ export const useOnAnyScrollEventTriggerEnterOrLeave = (
             window.removeEventListener('scroll', update, true);
             document.removeEventListener('mousemove', saveMousePosition);
         };
-    }, [on, ref, onEnter, onLeave, isOpen, update]);
+    }, [on, ref, onEnter, onLeave, isOpen]);
 };
