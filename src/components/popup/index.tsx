@@ -1,13 +1,7 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-    useOnAnyScrollEventTriggerEnterOrLeave,
-    useOnClickOutside,
-    useOnEscape,
-    useRepositionOnResizeBlock,
-    useRepositionOnResizeWindow,
-} from './hooks';
+import {useOnClickOutside, useOnEscape, useRepositionOnResizeBlock, useRepositionOnResizeWindow} from './hooks';
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
@@ -245,7 +239,6 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             closePopup,
             closeOnDocumentClick && !nested,
         );
-        useOnAnyScrollEventTriggerEnterOrLeave(triggerRef, onMouseEnter, onMouseLeave, isOpen, on);
         const renderTrigger = () => {
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
             const triggerProps: Record<string, unknown> = {
