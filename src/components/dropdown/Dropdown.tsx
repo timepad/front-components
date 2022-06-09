@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ComponentClass, FC, ReactElement, useMemo, useRef} from 'react';
 import './index.less';
-import {IPopupActions, IPopupProps, Popup} from '../popup';
+import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
 import cx from 'classnames';
 import {Button, ButtonVariant, IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
@@ -11,11 +11,6 @@ import {useClientRect, useMobileWidthCheck} from '../../services/hooks';
 import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
-
-interface IResponsvieContent {
-    children: ReactElement;
-    popupProps: IPopupProps;
-}
 
 export const Dropdown: FC<IDropdownProps> & {
     Button: FC<IButtonProps>;
@@ -36,81 +31,94 @@ export const Dropdown: FC<IDropdownProps> & {
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const isMoblie = useMobileWidthCheck();
+    const isMobile = useMobileWidthCheck();
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
-    let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
-    let footer: ReactElement<IFooterHeaderProps, typeof DropdownFooter> | undefined = (
-        <DropdownFooter mobile>
-            <Button
-                large
-                variant={ButtonVariant.transparent}
-                className="ccancel-button__mobile"
-                onClick={() => popupRef.current?.close()}
-            >
-                Отменить
-            </Button>
-        </DropdownFooter>
-    );
+    const [header, footer, otherChildren] = useMemo(() => {
+        const otherChildren: React.ReactNode[] = [];
+        let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
+        let footer: ReactElement<IFooterHeaderProps, typeof DropdownFooter> | undefined;
 
-    const otherChildren: React.ReactNode[] = [];
+        React.Children.forEach(children, (child) => {
+            const isElement = typeof child === 'object' && !!child && 'type' in child;
 
-    React.Children.forEach(children, (child) => {
-        let isAdded = false;
-        const isElement = typeof child === 'object' && !!child && 'type' in child;
+            if (isElement && child.type === DropdownHeader) {
+                if (header) {
+                    throw Error('Может быть только один Header');
+                }
+                header = child as ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
+            } else if (isElement && child.type === DropdownFooter) {
+                if (footer) {
+                    throw Error('Может быть только один Footer');
+                }
+                footer = child as ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
+            } else {
+                otherChildren.push(child as ReactElement);
+            }
+        });
+        return [header, footer, otherChildren];
+    }, [children]);
 
-        if (isElement && child.type === DropdownHeader) {
-            header = child as ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
-            isAdded = true;
-        }
-        if (isElement && child.type === DropdownFooter) {
-            footer = child as ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
-            isAdded = true;
-        }
-        if (!isAdded) {
-            otherChildren.push(child as ReactElement);
-        }
-    });
-
-    const content: Record<'desktop' | 'mobile', IResponsvieContent> = {
-        desktop: {
-            popupProps: {
-                position: priorityPositions,
-                className: cx({'cdropdown__scrollable-container': isScrollable}),
-                lockScroll: lockScroll || isScrollable,
-                ...props,
-            },
-            children: (
-                <div ref={ref} className={cx('dropdown-body', modifier)} style={isScrollable ? {margin: '15px 0'} : {}}>
+    const innerContent = useMemo<ReactElement>(() => {
+        if (isMobile) {
+            return (
+                <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
+                    {header?.props.mobile && header}
+                    <div className="сdropdown-body--mobile-content">{otherChildren}</div>
+                    {footer?.props.mobile ? footer : <DefaultFooter onCancel={() => popupRef.current?.close()} />}
+                </div>
+            );
+        } else {
+            return (
+                <div
+                    ref={ref}
+                    className={cx('сdropdown-body', modifier)}
+                    style={isScrollable ? {margin: '15px 0'} : {}}
+                >
                     {header?.props.desktop && header}
                     <div>{otherChildren}</div>
                     {footer?.props.desktop && footer}
                 </div>
-            ),
-        },
-        mobile: {
-            popupProps: {
-                ...props,
-                className: cx('cdropdown__moblie-container'),
-                lockScroll: true,
-                position: 'corner-bottom-left',
-            },
-            children: (
-                <div className={cx('dropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
-                    {header?.props.mobile && header}
-                    <div className="dropdown-body--mobile-content">{otherChildren}</div>
-                    {footer?.props.mobile && footer}
-                </div>
-            ),
-        },
-    };
+            );
+        }
+    }, [footer, header, isMobile, isScrollable, modifier, otherChildren, ref]);
 
-    const responsiveContent = isMoblie ? content.mobile : content.desktop;
+    const popupProps = useMemo<IPopupProps>(() => {
+        if (isMobile) {
+            return {
+                ...props,
+                className: cx('cdropdown__mobile-container'),
+                lockScroll: true,
+                position: 'corner-bottom-left' as PopupPosition,
+            };
+        } else {
+            return {
+                position: priorityPositions,
+                className: cx({'cdropdown__scrollable-container': isScrollable}),
+                lockScroll: lockScroll || isScrollable,
+                ...props,
+            };
+        }
+    }, [isMobile, isScrollable, lockScroll, priorityPositions, props]);
 
     return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...responsiveContent.popupProps} ref={popupRef}>
-            {responsiveContent.children}
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
+            {innerContent}
         </Popup>
+    );
+};
+
+interface IDefaultFooterProps {
+    onCancel?: () => void;
+}
+
+const DefaultFooter: FC<IDefaultFooterProps> = ({onCancel}) => {
+    return (
+        <DropdownFooter mobile>
+            <Button large variant={ButtonVariant.transparent} className="ccancel-button__mobile" onClick={onCancel}>
+                Отменить
+            </Button>
+        </DropdownFooter>
     );
 };
 

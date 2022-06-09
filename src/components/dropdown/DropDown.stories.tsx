@@ -109,7 +109,7 @@ const DropCustomBodyImperative: React.FC = () => {
 };
 
 const DropProfile: React.FC = () => {
-    const isMoblie = useMobileWidthCheck();
+    const isMobile = useMobileWidthCheck();
     const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
     const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
         () => [
@@ -168,7 +168,7 @@ const DropProfile: React.FC = () => {
                         </Row.Body>
                     </Row>
                 ))}
-                {isMoblie && (
+                {isMobile && (
                     <>
                         <Divider />
                         {OrgListData.map((el) => (
@@ -181,7 +181,7 @@ const DropProfile: React.FC = () => {
                         ))}
                     </>
                 )}
-                {!isMoblie && <Dropdown.Button label="Стать организатором" />}
+                {!isMobile && <Dropdown.Button label="Стать организатором" />}
             </div>
         </Dropdown>
     );

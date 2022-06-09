@@ -1,4 +1,4 @@
-.hidden-scroll() {
+.hidden-scroll-bar() {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar {
@@ -12,27 +12,27 @@
   padding: 0 50px;
   margin: 0 -50px;
 
-  .hidden-scroll();
+  .hidden-scroll-bar();
 }
 
-.cdropdown__moblie-container-content {
+.cdropdown__mobile-container-content {
   .ccancel-button__mobile {
     width: 100%;
     justify-content: center;
   }
 }
 
-.cdropdown__moblie-container-overlay {
+.cdropdown__mobile-container-overlay {
   background: @c-black-fade-35;
 }
 
-.dropdown-body {
+.сdropdown-body {
   box-shadow: @sh-shadow;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.dropdown-body--mobile {
+.сdropdown-body--mobile {
   max-height: calc(100vh - 16px);
   margin-top: 16px;
   display: flex;
@@ -41,7 +41,7 @@
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   &-content {
-    .hidden-scroll();
+    .hidden-scroll-bar();
     overflow-y: auto;
   }
 }

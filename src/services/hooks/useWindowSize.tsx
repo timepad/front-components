@@ -16,7 +16,6 @@ const getSize = () => [document.documentElement.clientWidth, document.documentEl
 export const useWindowSize = (options: IDebouncedWindowSizeOptions = emptyObj): readonly [number, number] => {
     const {wait, leading, initialWidth = 0, initialHeight = 0} = options;
     const [size, setDebouncedSize] = useDebounce<readonly [number, number]>(
-        /* istanbul ignore next */
         typeof document === 'undefined' ? [initialWidth, initialHeight] : getSize,
         wait,
         leading,
