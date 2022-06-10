@@ -7,7 +7,7 @@ import {Button, ButtonVariant, IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
 import {SortableElement} from 'react-sortable-hoc';
 import {List} from '../list';
-import {useClientRect, useMobileWidthCheck} from '../../services/hooks';
+import {useClientRect, useMedia} from '../../services/hooks';
 import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
@@ -31,7 +31,7 @@ export const Dropdown: FC<IDropdownProps> & {
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const isMobile = useMobileWidthCheck();
+    const isMobile = useMedia().isMobileMax;
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
     const [header, footer, otherChildren] = useMemo(() => {

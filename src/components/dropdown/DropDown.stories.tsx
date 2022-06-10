@@ -12,7 +12,7 @@ import IconEdit from 'assets/svg/24/icon-edit-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
-import {Brick, Form, Row, Typography, useMobileWidthCheck} from 'index';
+import {Brick, Form, Row, Typography, useMedia} from 'index';
 import {Divider} from '../list/Divider';
 
 export default {
@@ -109,7 +109,7 @@ const DropCustomBodyImperative: React.FC = () => {
 };
 
 const DropProfile: React.FC = () => {
-    const isMobile = useMobileWidthCheck();
+    const isMobile = useMedia().isMobileMax;
     const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
     const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
         () => [
@@ -191,7 +191,7 @@ const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
     return (
         <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
             <Dropdown.Header mobile>
-                <Row hoverable>
+                <Row>
                     <Row.Body style={{padding: '9px 0'}}>
                         <Row.Text>
                             <Typography variant="body" fontWeight="bold" noPadding>
