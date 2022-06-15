@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {IStorybookComponent, StoryTitle, StoryDescription} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import {Token} from './index';
+import {Brick} from 'index';
 
 import 'css/bundle.less';
 
@@ -35,12 +36,28 @@ export const Default: IStorybookComponent = () => {
 
     return (
         <>
-            <StoryTitle>Default Segmented Control</StoryTitle>
-            <Token
-                values={values}
-                creatorValues={['123', '321', '333']}
-                onTokenValuesChange={handleTokenValuesChange}
-            />
+            <StoryTitle>Default Token</StoryTitle>
+            <Token value={'Token value'} />
+            <Brick />
+            <StoryTitle>Default Token</StoryTitle>
+            <Token value={'Token value'} onDelete={() => console.log('delete')} />
+            <Brick />
+            <StoryTitle>Disabled Token</StoryTitle>
+            <Token value={'Token value'} disabled />
+            <Brick />
+            <StoryTitle>Token in table</StoryTitle>
+            <table>
+                <tr>
+                    <td>Ячейка</td>
+                    <td>Ячейка</td>
+                    <td>Ячейка</td>
+                    <td>Ячейка</td>
+                    <td width="100px">
+                        <Token value={'123'} />
+                    </td>
+                    <td>Ячейка</td>
+                </tr>
+            </table>
         </>
     );
 };

@@ -1,4 +1,21 @@
 .ctoken {
+    display: inline-flex;
+    padding: 5px 16px;
+    font-size: @fs-caption-mobile;
+    line-height: @lh-caption;
+    border-radius: @br-rounded;
+    background: @c-dark-gray-fade-20;
+    color: @c-primary-blue;
+    cursor: pointer;
+    &:not(&--disabled):hover {
+        background: @c-dark-gray-fade-35;
+    }
+    &:not(&--disabled):active {
+        color: @c-primary-blue-80;
+    }
+}
+
+.ctoken__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,9 +25,24 @@
     &:focus-within {
         border: 1px solid #643FFF;
         box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.06), 0px 16px 28px rgba(0, 0, 0, 0.07);
+        background-color: #fff;
+    }
+
+    &:focus-within &__button {
+        display: flex;
+    }
+
+    &:focus-within &__creator {
+        display: flex;
+    }
+
+    &__creator {
+        display: none;
     }
     
-
+    &__button {
+        display: none;
+    }
     
 
     &--disabled {
@@ -26,20 +58,8 @@
     &__creator {
         align-self: self-start;
     }
+}
 
-    &__item {
-        display: flex;
-        padding: 5px 16px;
-        font-size: @fs-caption-mobile;
-        line-height: @lh-caption;
-        border-radius: @br-rounded;
-        background: @c-dark-gray-fade-20;
-        color: @c-primary-blue;
-        &:not(&--disabled):hover {
-            background: @c-dark-gray-fade-35;
-        }
-        &:not(&--disabled):active {
-            color: @c-primary-blue-80;
-        }
-    }
+&__wrapper {
+    position: relative;
 }

@@ -14,7 +14,11 @@ export const TokenCreator: FC<IProps> = ({values, handleAddToken, ...props}): JS
     const baseClassName = 'token';
     return (
         <div className={component(baseClassName, 'creator')()}>
-            <Dropdown {...props} trigger={() => <Button variant={ButtonVariant.stroke} icon={<AddIcon />}  />}>
+            <Dropdown
+                {...props}
+                trigger={() => <Button variant={ButtonVariant.stroke} icon={<AddIcon />} />}
+                customPopupRoot="tokenCreator"
+            >
                 <List variant="dark" size="lg">
                     {values &&
                         values.map((item, index) => {
@@ -26,6 +30,7 @@ export const TokenCreator: FC<IProps> = ({values, handleAddToken, ...props}): JS
                         })}
                 </List>
             </Dropdown>
+            <div id="tokenCreator"></div>
         </div>
     );
 };
