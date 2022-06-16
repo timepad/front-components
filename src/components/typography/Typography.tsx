@@ -22,7 +22,7 @@ interface ITypographyChildren {
 
 type PossibleSizesType = 8 | 16 | 24 | 32;
 
-interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
+export interface ITypographyProps extends ITypographyCommonProps<PossibleSizesType> {
     variant: 'header' | 'subheader' | 'lead' | 'body' | 'small' | 'caption' | 'multiple';
     reverse?: boolean;
 }
@@ -35,6 +35,7 @@ export interface ITypographyCommonProps<Size = undefined>
     fontWeight?: 'regular' | 'bold' | 'black';
     size?: Size;
     as?: keyof ReactHTML;
+    innerRef?: React.LegacyRef<HTMLDivElement>;
 }
 
 const Typography: FC<ITypographyProps> & ITypographyChildren = ({
@@ -48,6 +49,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
     noPadding,
     noWrap,
     as = 'div',
+    innerRef,
     ...props
 }) => {
     const elementClassNames = cn(
@@ -70,8 +72,7 @@ const Typography: FC<ITypographyProps> & ITypographyChildren = ({
         }),
         elementClassNames,
     );
-
-    return React.createElement(as, {className: classNames, ...props}, children);
+    return React.createElement(as, {className: classNames, ref: innerRef, ...props}, children);
 };
 
 Typography.Header = TypographyHeader;
