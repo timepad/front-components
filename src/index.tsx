@@ -24,3 +24,4 @@ export * from './components/datepicker';
 export * from './components/accordion';
 export * from './components/typography';
 export * from './components/grid';
+export * from './components/pageheader';
