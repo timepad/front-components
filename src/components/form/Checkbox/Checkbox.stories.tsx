@@ -44,6 +44,12 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             <Form.Checkbox name="empty" text="Empty" disabled />
                             <Form.Checkbox name="checked" text="Checked" checked disabled />
                             <Form.Checkbox name="indeterminate" text="Indeterminate" indeterminate disabled />
+                            <Form.Checkbox name="empty" text="Empty" rounded />
+                            <Form.Checkbox name="checked" text="Checked" checked rounded />
+                            <Form.Checkbox name="indeterminate" text="Indeterminate" indeterminate rounded />
+                            <Form.Checkbox name="empty" text="Empty" disabled rounded />
+                            <Form.Checkbox name="checked" text="Checked" checked disabled rounded />
+                            <Form.Checkbox name="indeterminate" text="Indeterminate" indeterminate disabled rounded />
                             <Form.Checkbox name="empty" text="Empty" caption="Secondary text" />
                             <Form.Checkbox name="checked" text="Checked" caption="Secondary text" checked />
                             <Form.Checkbox
