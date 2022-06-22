@@ -1,4 +1,4 @@
-import {Checkbox} from './Checkbox';
 import {CheckboxField} from './CheckboxField';
+import {Checkbox} from './Checkbox';
 
-export {Checkbox, CheckboxField};
+export {CheckboxField, Checkbox};
