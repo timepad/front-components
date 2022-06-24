@@ -42,7 +42,10 @@ export const useRepositionOnResizeBlock = (
     useEffect(() => {
         if (!active || !node) return;
         const listener = () => {
-            handler();
+            // Need to handle error of not renderend content.
+            try {
+                handler();
+            } catch {}
         };
 
         const resizeObserver = new ResizeObserver(listener);
