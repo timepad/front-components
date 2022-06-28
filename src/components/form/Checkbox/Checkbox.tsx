@@ -7,11 +7,11 @@ import {ICheckboxProps} from './Checkbox.types';
 import {Row} from '../../row';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {noop} from '../Textarea/utils';
-
 import './index.less';
 
 export const Checkbox: FC<ICheckboxProps> = (props) => {
     const {
+        rounded = false,
         checked = false,
         indeterminate = false,
         disabled = false,
@@ -29,6 +29,7 @@ export const Checkbox: FC<ICheckboxProps> = (props) => {
         'icon',
     )({
         checked: checked || indeterminate,
+        rounded: rounded,
     });
     const bodyClassNames = component(
         'form__checkbox',
