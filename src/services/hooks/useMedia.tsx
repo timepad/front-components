@@ -23,7 +23,7 @@ export const useMedia = (): MediaObject => {
         let timeout: number;
         return () => {
             clearTimeout(timeout);
-            timeout = setTimeout(func, ms);
+            timeout = setTimeout(func, ms) as number;
         };
     }
     useEvent(win, 'resize', debounce(checkMediaQueries, 300));
