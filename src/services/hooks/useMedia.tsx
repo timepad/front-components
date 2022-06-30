@@ -23,7 +23,8 @@ export const useMedia = (): MediaObject => {
         let timeout: number;
         return () => {
             clearTimeout(timeout);
-            timeout = setTimeout(func, ms) as number;
+            // Такое приведение типов необходимо, поскольку есть проблема с @types/node в otp. Проще обнулить тип на этом этапе.
+            timeout = setTimeout(func, ms) as unknown as number;
         };
     }
     useEvent(win, 'resize', debounce(checkMediaQueries, 300));
