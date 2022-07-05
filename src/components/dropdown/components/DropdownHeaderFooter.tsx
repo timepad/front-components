@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FC} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-import {Divider} from '../../list/Divider';
+import {Divider} from '../../divider';
 
 export interface IFooterHeaderProps
     extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

@@ -13,7 +13,7 @@ import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
 import {Brick, Form, Row, Typography, useMedia} from 'index';
-import {Divider} from '../list/Divider';
+import {Divider} from '../divider';
 
 export default {
     title: 'DropDown',

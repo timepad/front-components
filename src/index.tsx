@@ -26,3 +26,4 @@ export * from './components/accordion';
 export * from './components/typography';
 export * from './components/grid';
 export * from './components/pageheader';
+export * from './components/divider';
