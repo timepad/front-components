@@ -6,14 +6,14 @@ const win = typeof window === 'undefined' ? null : window;
 const emptyObj = {};
 
 export const useMedia = (): MediaObject => {
-    const [media, setMedia] = useState<MediaObject | Record<string, never>>(emptyObj);
+    const [media, setMedia] = useState<MediaObject | typeof emptyObj>(emptyObj);
     const checkMediaQueries = () => {
-        const media = Object.entries(Media) as [keyof typeof Media, string][];
-        media.forEach(([mediaKey, mediaQuery]) => {
-            setMedia({
-                ...media,
+        const mediaMatrix = Object.entries(Media) as [keyof typeof Media, string][];
+        mediaMatrix.forEach(([mediaKey, mediaQuery]) => {
+            setMedia((prevState) => ({
+                ...prevState,
                 [mediaKey]: window.matchMedia(mediaQuery).matches,
-            });
+            }));
         });
     };
     if (media === emptyObj) {

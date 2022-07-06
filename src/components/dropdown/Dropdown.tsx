@@ -31,7 +31,7 @@ export const Dropdown: FC<IDropdownProps> & {
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const isMobile = useMedia().isMobilePortraitMax;
+    const {isMobilePortraitMax} = useMedia();
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
     const [header, footer, otherChildren] = useMemo(() => {
@@ -60,7 +60,7 @@ export const Dropdown: FC<IDropdownProps> & {
     }, [children]);
 
     const innerContent = useMemo<ReactElement>(() => {
-        if (isMobile) {
+        if (isMobilePortraitMax) {
             return (
                 <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}
@@ -81,10 +81,10 @@ export const Dropdown: FC<IDropdownProps> & {
                 </div>
             );
         }
-    }, [footer, header, isMobile, isScrollable, modifier, otherChildren, ref]);
+    }, [footer, header, isMobilePortraitMax, isScrollable, modifier, otherChildren, ref]);
 
     const popupProps = useMemo<IPopupProps>(() => {
-        if (isMobile) {
+        if (isMobilePortraitMax) {
             return {
                 ...props,
                 className: cx('cdropdown__mobile-container'),
@@ -99,7 +99,7 @@ export const Dropdown: FC<IDropdownProps> & {
                 ...props,
             };
         }
-    }, [isMobile, isScrollable, lockScroll, priorityPositions, props]);
+    }, [isMobilePortraitMax, isScrollable, lockScroll, priorityPositions, props]);
 
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
