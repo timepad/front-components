@@ -8,5 +8,7 @@ export const CheckboxField: FC<ICheckboxProps & FieldHookConfig<boolean>> = (pro
     const [field, meta, helpers] = useField({name, validate, type, multiple, value});
     const tmpChecked = Array.isArray(field.value) ? field.value.includes(props.value) : props.checked || field.value;
 
-    return <Checkbox {...field} {...meta} {...helpers} {...props} checked={props.checked || tmpChecked} />;
+    return (
+        <Checkbox rounded={false} {...field} {...meta} {...helpers} {...props} checked={props.checked || tmpChecked} />
+    );
 };
