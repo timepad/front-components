@@ -109,7 +109,7 @@ const DropCustomBodyImperative: React.FC = () => {
 };
 
 const DropProfile: React.FC = () => {
-    const isMobile = useMedia().isMobileMax;
+    const isMobile = useMedia().isMobilePortraitMax;
     const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
     const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
         () => [

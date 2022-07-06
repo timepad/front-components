@@ -31,7 +31,7 @@ export const Dropdown: FC<IDropdownProps> & {
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const isMobile = useMedia().isMobileMax;
+    const isMobile = useMedia().isMobilePortraitMax;
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
     const [header, footer, otherChildren] = useMemo(() => {
