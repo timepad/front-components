@@ -13,6 +13,7 @@ export interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<
     disabled?: boolean;
     hoverable?: boolean;
     activable?: boolean;
+    selectable?: boolean;
     small?: boolean;
     ffFont?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
@@ -27,6 +28,7 @@ const Row: React.FC<IRowProps> & {
     className = '',
     hoverable = false,
     activable = false,
+    selectable = false,
     small = false,
     ffFont = false,
     disabled = false,
@@ -38,6 +40,7 @@ const Row: React.FC<IRowProps> & {
             hoverable: hoverable,
             activable: activable,
             small: small,
+            selectable,
             ff: ffFont,
             'ff-system': !ffFont,
             disabled: disabled,
