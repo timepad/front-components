@@ -13,9 +13,9 @@ interface IFooterLinksProps {
 }
 
 export const FooterLinks: React.FC<IFooterLinksProps> = ({links}) => (
-    <Grid>
+    <Grid rowGap={16}>
         {links.map((item, index) => (
-            <Grid.Col desktop={3} mobile={1} key={index}>
+            <Grid.Col desktop={3} tablet={3} mobile={1} key={index}>
                 <Typography.Caption fontWeight="bold">{item.title}</Typography.Caption>
                 {item.items.map((link, index) => (
                     <Typography.Caption key={index}>
