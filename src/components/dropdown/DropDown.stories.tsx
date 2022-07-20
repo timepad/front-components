@@ -1,4 +1,4 @@
-import React, {FC, useState, MouseEvent} from 'react';
+import React, {FC, useState, MouseEvent, useMemo, ReactElement} from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
@@ -7,36 +7,41 @@ import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/
 import 'css/bundle.less';
 import './storybook/demo.less';
 import {List} from '../list';
-import {Button, IButtonProps} from '../button';
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {Button, ButtonVariant, IButtonProps} from '../button';
+import IconEdit from 'assets/svg/24/icon-edit-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
-import {Brick, Form, Typography} from 'index';
+import {Brick, Form, Row, Typography, useMedia} from 'index';
+import {Divider} from '../divider';
 
 export default {
     title: 'DropDown',
     component: Dropdown,
 } as Meta;
 
-const Prefix: React.FC = () => <Pic hoverable />;
-const Suffix: React.FC = () => <AddIcon />;
-
 const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
     return (
         <>
             <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
-                <List size={'lg'} variant={'dark'}>
-                    <List.Item as={'button'} type={'button'}>
-                        Primary text
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Primary text
-                    </List.Item>
-                    <List.Item href={'#'} as={'a'}>
-                        Primary text
-                    </List.Item>
-                </List>
+                <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 1</Row.Text>
+                            <Row.Caption>Secondary text</Row.Caption>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 2</Row.Text>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 3</Row.Text>
+                        </Row.Body>
+                    </Row>
+                </div>
             </Dropdown>
         </>
     );
@@ -104,41 +109,80 @@ const DropCustomBodyImperative: React.FC = () => {
 };
 
 const DropProfile: React.FC = () => {
+    const {isMobilePortraitMax} = useMedia();
+    const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
+    const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
+        () => [
+            {
+                title: 'Организаторам',
+                icon: <IconEdit />,
+            },
+            {
+                title: 'Стать организатором',
+                icon: <IconEdit />,
+            },
+        ],
+        [],
+    );
     return (
-        <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-            <List variant="dark" size="lg">
-                <List.Group header={true} as="button" type="button" prefix={Prefix} suffix={Suffix}>
-                    <div className="lflex lflex--y-axis">
-                        <div className="lflex lflex--y-axis profile--name">
-                            <span className="profile--main">Алексей</span>
-                            <span className="t-small t-color-gray">+7 (985) 000 11 22</span>
-                        </div>
-                    </div>
-                </List.Group>
-                <List.Item href={'#'} as={'a'}>
-                    Мои события
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Мои подписки
-                </List.Item>
-                <List.Item href={'#'} as={'a'}>
-                    Избранное
-                </List.Item>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <Dropdown trigger={() => <List.Item>Выпадающий список</List.Item>} on="hover">
-                        <List variant="dark" size="lg">
-                            <List.Item href={'#'} as={'a'}>
-                                Мои события
-                            </List.Item>
-                            <List.Item href={'#'} as={'a'}>
-                                Мои подписки
-                            </List.Item>
-                        </List>
-                    </Dropdown>
-                </div>
-                <List.Item as={'button'} type={'button'} label="Выход" />
-                <Dropdown.Button label="Стать организатором" />
-            </List>
+        <Dropdown
+            trigger={() => (
+                <Pic
+                    imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                    label="test_userpic"
+                    hoverable
+                />
+            )}
+        >
+            <Dropdown.Header mobile desktop>
+                <Row hoverable>
+                    <Row.Icon>
+                        <Pic
+                            imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                            label="test_userpic"
+                            hoverable
+                        />
+                    </Row.Icon>
+                    <Row.Body style={{padding: '9px 0'}}>
+                        <Row.Text>
+                            <Typography variant="caption" fontWeight="bold" noPadding>
+                                Алексей
+                            </Typography>
+                        </Row.Text>
+                        <Row.Caption>
+                            <Typography variant="small" noPadding>
+                                +7 (985) 000 11 22
+                            </Typography>
+                        </Row.Caption>
+                    </Row.Body>
+                    <Row.Icon>
+                        <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
+                    </Row.Icon>
+                </Row>
+            </Dropdown.Header>
+            <div className="mtheme--darkpic-bg mtheme--darkpic">
+                {ProfileListData.map((el) => (
+                    <Row key={el} hoverable>
+                        <Row.Body>
+                            <Row.Text>{el}</Row.Text>
+                        </Row.Body>
+                    </Row>
+                ))}
+                {isMobilePortraitMax && (
+                    <>
+                        <Divider />
+                        {OrgListData.map((el) => (
+                            <Row key={el.title} hoverable>
+                                <Row.Body>
+                                    <Row.Text>{el.title}</Row.Text>
+                                </Row.Body>
+                                <Row.Icon>{el.icon}</Row.Icon>
+                            </Row>
+                        ))}
+                    </>
+                )}
+                {!isMobilePortraitMax && <Dropdown.Button label="Стать организатором" />}
+            </div>
         </Dropdown>
     );
 };
@@ -146,11 +190,28 @@ const DropProfile: React.FC = () => {
 const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
     return (
         <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
-            <List variant="dark" size="lg">
+            <Dropdown.Header mobile>
+                <Row>
+                    <Row.Body style={{padding: '9px 0'}}>
+                        <Row.Text>
+                            <Typography variant="body" fontWeight="bold" noPadding>
+                                Длинный скролл для мобилки
+                            </Typography>
+                        </Row.Text>
+                    </Row.Body>
+                </Row>
+            </Dropdown.Header>
+            <div className="mtheme--darkpic-bg mtheme--darkpic">
                 {cities.map((item, index) => {
-                    return <List.Item key={index}>{item}</List.Item>;
+                    return (
+                        <Row key={index} hoverable>
+                            <Row.Body>
+                                <Row.Text>{item}</Row.Text>
+                            </Row.Body>
+                        </Row>
+                    );
                 })}
-            </List>
+            </div>
         </Dropdown>
     );
 };
@@ -165,7 +226,7 @@ export const Default: IStorybookComponent = () => {
 };
 
 export const VariousPositions: IStorybookComponent = () => {
-    const allPositions: IDropdownProps['priorityPositions'][] = [
+    const topBottomPositions: IDropdownProps['priorityPositions'][] = [
         'top-left',
         'top-center',
         'top-right',
@@ -173,7 +234,7 @@ export const VariousPositions: IStorybookComponent = () => {
         'bottom-center',
         'bottom-right',
     ];
-    const bottomTopPos: IDropdownProps['priorityPositions'][] = [
+    const leftRightPositions: IDropdownProps['priorityPositions'][] = [
         'right-top',
         'right-center',
         'right-bottom',
@@ -181,13 +242,19 @@ export const VariousPositions: IStorybookComponent = () => {
         'left-center',
         'left-bottom',
     ];
+    const cornerPositions: IDropdownProps['priorityPositions'][] = [
+        'corner-top-left',
+        'corner-bottom-left',
+        'corner-bottom-right',
+        'corner-top-right',
+    ];
     return (
         <>
             <StoryTitle>Various positions</StoryTitle>
             <StoryDescription>Открывает дропдаун относительно контейнера кнопки</StoryDescription>
             <div style={{marginTop: '40px'}}>
                 <div className="horizontal-grid">
-                    {bottomTopPos.map((pos) => (
+                    {leftRightPositions.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
                             key={pos as string}
@@ -197,7 +264,7 @@ export const VariousPositions: IStorybookComponent = () => {
                     ))}
                 </div>
                 <div className="vertical-grid">
-                    {allPositions.map((pos) => (
+                    {topBottomPositions.map((pos) => (
                         <DropBtn
                             style={{width: '100%', justifyContent: 'center'}}
                             key={pos as string}
@@ -208,6 +275,16 @@ export const VariousPositions: IStorybookComponent = () => {
                 </div>
                 <div style={{margin: '0 auto', display: 'table'}}>
                     <DropBtn priorityPositions="center-center" label="center-center" />
+                </div>
+                <div className="horizontal-grid">
+                    {cornerPositions.map((pos) => (
+                        <DropBtn
+                            style={{width: '100%', justifyContent: 'center'}}
+                            key={pos as string}
+                            priorityPositions={pos}
+                            label={pos as string}
+                        />
+                    ))}
                 </div>
             </div>
         </>

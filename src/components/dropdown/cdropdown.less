@@ -4,17 +4,38 @@
   padding: 0 50px;
   margin: 0 -50px;
 
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
+  .hidden-scroll();
+}
+
+.cdropdown__mobile-container-content {
+  .ccancel-button__mobile {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-.dropdown-body {
+.cdropdown__mobile-container-overlay {
+  background: @c-black-fade-35;
+}
+
+.сdropdown-body {
   box-shadow: @sh-shadow;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.сdropdown-body--mobile {
+  max-height: calc(100vh - 16px);
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  &-content {
+    .hidden-scroll();
+    overflow-y: auto;
+  }
 }
 
 .cdropdown__button {
@@ -60,3 +81,6 @@
   border-bottom: transparent 2px solid;
 }
 
+.mtheme--darkpic-bg {
+  background-color: @c-black;
+}

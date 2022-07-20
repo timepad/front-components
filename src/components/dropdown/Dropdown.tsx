@@ -1,226 +1,132 @@
 import * as React from 'react';
-import {
-    Children,
-    cloneElement,
-    ComponentClass,
-    FC,
-    isValidElement,
-    ReactChild,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
+import {ComponentClass, FC, ReactElement, useMemo, useRef} from 'react';
 import './index.less';
-import {Popup} from '../popup';
+import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
 import cx from 'classnames';
 import {Button, ButtonVariant, IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
-import {SortableContainer, SortableElement, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
+import {SortableElement} from 'react-sortable-hoc';
 import {List} from '../list';
-import DragIcon from '../../assets/svg/16/icon-dragable-16.svg';
-import {arrayMoveImmutable} from '../../services/helpers/moveArray';
-import {component} from '../../services/helpers/classHelpers';
-import {useClientRect} from '../../services/hooks/useClientRect';
-
-const DropdownButton: FC<IButtonProps> = ({children, variant = ButtonVariant.secondary, ...buttonProps}) => {
-    return (
-        <div className={cx('cdropdown__button', {'mtheme--darkpic': variant === ButtonVariant.secondary})}>
-            <Button variant={variant} {...buttonProps}>
-                {children}
-            </Button>
-        </div>
-    );
-};
-
-interface ISortableListState {
-    value: any;
-    children: ReactChild;
-}
-
-const Slist = SortableContainer(List);
-const SortIcon = SortableHandle(() => <DragIcon className="cdropdown__dragicon" />);
-const DropdownSortableList: FC<IDropdownSortableListProps> = ({
-    show,
-    modifier,
-    onClose,
-    onSort,
-    nested = false,
-    priorityPositions,
-    trigger,
-    children = [],
-    on = 'click',
-    ...props
-}) => {
-    // region Sortable list state
-    const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
-        return React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
-            return {
-                value: child.props.value,
-                children: child.props.children,
-            };
-        });
-    };
-
-    const [valueNodes, setValueNodes] = useState(ChildrenToValueNodes(children));
-    useEffect(() => {
-        setValueNodes(ChildrenToValueNodes(children));
-    }, [children]);
-    // endregion
-
-    const getValues = useCallback(
-        (nodes: ISortableListState[] = valueNodes) => {
-            return nodes.map((node) => node.value);
-        },
-        [valueNodes],
-    );
-
-    const closeDropdownHandler = useCallback(() => {
-        onClose && onClose(getValues());
-    }, [getValues, onClose]);
-
-    // region Animation
-    const sortEndHandler = useCallback(
-        (sort: SortEnd) => {
-            document.body.style.cursor = '';
-            const newArray = arrayMoveImmutable(valueNodes, sort.oldIndex, sort.newIndex);
-
-            setValueNodes(newArray);
-            onSort && onSort(getValues(newArray));
-
-            sort.nodes.forEach((el: any) => {
-                el.node.classList.toggle('cdropdown__droptotop', false);
-                el.node.classList.toggle('cdropdown__droptobottom', false);
-            });
-        },
-        [valueNodes, onSort, getValues],
-    );
-
-    const sortStartHandler = useCallback(() => {
-        document.body.style.cursor = 'grabbing';
-    }, []);
-
-    const sortOverHandler = useCallback(
-        (sort: SortOver) => {
-            // В библиотеке неверно указан тип. В sort.nodes вместо HTMLElemet[] лежит объект.
-            // По этому здесь any.
-
-            const nextNodeObj = sort.nodes[sort.newIndex] as any;
-            const prevNodeObj = sort.nodes[sort.oldIndex] as any;
-
-            const top = component('dropdown', 'droptotop');
-            const bottom = component('dropdown', 'droptobottom');
-
-            prevNodeObj.node.classList.toggle(top(), false);
-            prevNodeObj.node.classList.toggle(bottom(), false);
-
-            const classes =
-                sort.index < sort.newIndex
-                    ? bottom({rounded: sort.newIndex === valueNodes.length - 1}).split(' ')
-                    : top({rounded: sort.newIndex === 0}).split(' ');
-
-            classes.forEach((cls) => nextNodeObj.node.classList.toggle(cls, sort.newIndex !== sort.index));
-        },
-        [valueNodes.length],
-    );
-
-    const getDimensions = useCallback((sort: SortStart) => {
-        return {
-            height: 0,
-            width: sort.node.getBoundingClientRect().width,
-        };
-    }, []);
-    // endregion
-
-    return (
-        <Dropdown
-            nested={nested}
-            show={show}
-            trigger={trigger}
-            modifier={modifier}
-            onClose={closeDropdownHandler}
-            priorityPositions={priorityPositions}
-            on={on}
-            {...props}
-        >
-            {valueNodes.length > 0 && Children.count(children) === valueNodes.length ? (
-                <Slist
-                    helperClass="clist clist--variant_transparent clist--size_lg cdropdown__dragging-row"
-                    useDragHandle
-                    hideSortableGhost={false}
-                    transitionDuration={0}
-                    getHelperDimensions={getDimensions}
-                    axis="y"
-                    as="ul"
-                    size="lg"
-                    variant="dark"
-                    onSortOver={sortOverHandler}
-                    onSortStart={sortStartHandler}
-                    onSortEnd={sortEndHandler}
-                >
-                    {Children.map<ReactChild, ReactChild>(children, (child, index) => {
-                        if (isValidElement(child)) {
-                            return cloneElement(child, {
-                                key: `drop${index}`,
-                                index,
-                                children: valueNodes[index].children,
-                                prefix: <SortIcon />,
-                                className: 'cdropdown__dropable-item ' + child.props.className,
-                                onClick: (e: MouseEvent) => {
-                                    child.props.onClick && child.props.onClick(e, valueNodes[index].value);
-                                },
-                            });
-                        }
-                        return child;
-                    })}
-                </Slist>
-            ) : null}
-        </Dropdown>
-    );
-};
+import {useClientRect, useMedia} from '../../services/hooks';
+import {DropdownSortableList} from './components/DropdownSortableList';
+import {DropdownButton} from './components/DropdownButton';
+import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 
 export const Dropdown: FC<IDropdownProps> & {
     Button: FC<IButtonProps>;
     SList: FC<IDropdownSortableListProps>;
     SItem: ComponentClass<ISortableItemProps>;
+    Header: FC<IFooterHeaderProps>;
+    Footer: FC<IFooterHeaderProps>;
 } = ({
     show,
-    nested = false,
     keepInsideParent = true,
-    on = 'click',
     modifier,
     children,
     priorityPositions = 'right-top',
     lockScroll = false,
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
-    customPopupRoot,
+    // customPopupRoot,
     ...props
 }) => {
+    const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
+    const {isMobilePortraitMax} = useMedia();
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
+    const [header, footer, otherChildren] = useMemo(() => {
+        const otherChildren: React.ReactNode[] = [];
+        let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
+        let footer: ReactElement<IFooterHeaderProps, typeof DropdownFooter> | undefined;
+
+        React.Children.forEach(children, (child) => {
+            const isElement = typeof child === 'object' && !!child && 'type' in child;
+
+            if (isElement && child.type === DropdownHeader) {
+                if (header) {
+                    throw Error('Может быть только один Header');
+                }
+                header = child as ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
+            } else if (isElement && child.type === DropdownFooter) {
+                if (footer) {
+                    throw Error('Может быть только один Footer');
+                }
+                footer = child as ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
+            } else {
+                otherChildren.push(child as ReactElement);
+            }
+        });
+        return [header, footer, otherChildren];
+    }, [children]);
+
+    const innerContent = useMemo<ReactElement>(() => {
+        if (isMobilePortraitMax) {
+            return (
+                <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
+                    {header?.props.mobile && header}
+                    <div className="сdropdown-body--mobile-content">{otherChildren}</div>
+                    {footer?.props.mobile ? footer : <DefaultFooter onCancel={() => popupRef.current?.close()} />}
+                </div>
+            );
+        } else {
+            return (
+                <div
+                    ref={ref}
+                    className={cx('сdropdown-body', modifier)}
+                    style={isScrollable ? {margin: '15px 0'} : {}}
+                >
+                    {header?.props.desktop && header}
+                    <div>{otherChildren}</div>
+                    {footer?.props.desktop && footer}
+                </div>
+            );
+        }
+    }, [footer, header, isMobilePortraitMax, isScrollable, modifier, otherChildren, ref]);
+
+    const popupProps = useMemo<IPopupProps>(() => {
+        if (isMobilePortraitMax) {
+            return {
+                ...props,
+                className: cx('cdropdown__mobile-container'),
+                lockScroll: true,
+                position: 'corner-bottom-left' as PopupPosition,
+            };
+        } else {
+            return {
+                position: priorityPositions,
+                className: cx({'cdropdown__scrollable-container': isScrollable}),
+                lockScroll: lockScroll || isScrollable,
+                ...props,
+            };
+        }
+    }, [isMobilePortraitMax, isScrollable, lockScroll, priorityPositions, props]);
+
     return (
-        <Popup
-            className={cx({'cdropdown__scrollable-container': isScrollable})}
-            nested={nested}
-            on={on}
-            open={show}
-            position={priorityPositions}
-            keepTooltipInside={keepInsideParent}
-            lockScroll={lockScroll || isScrollable}
-            customPopupRoot={customPopupRoot}
-            {...props}
-        >
-            <div ref={ref} className={cx('dropdown-body', modifier)} style={isScrollable ? {margin: '15px 0'} : {}}>
-                {children}
-            </div>
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
+            {innerContent}
         </Popup>
+    );
+};
+
+interface IDefaultFooterProps {
+    onCancel?: () => void;
+}
+
+const DefaultFooter: FC<IDefaultFooterProps> = ({onCancel}) => {
+    return (
+        <DropdownFooter mobile>
+            <Button large variant={ButtonVariant.transparent} className="ccancel-button__mobile" onClick={onCancel}>
+                Отменить
+            </Button>
+        </DropdownFooter>
     );
 };
 
 Dropdown.Button = DropdownButton;
 Dropdown.SList = DropdownSortableList;
 Dropdown.SItem = SortableElement<Omit<ISortableItem, 'prefix'>>(List.Item) as ComponentClass<ISortableItemProps>;
+Dropdown.Header = DropdownHeader;
+Dropdown.Footer = DropdownFooter;
 
 Dropdown.SItem.propTypes = {
     ...Dropdown.SItem.propTypes,
