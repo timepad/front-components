@@ -33,7 +33,11 @@ export type PopupPosition =
     | 'left-top'
     | 'left-center'
     | 'left-bottom'
-    | 'center-center';
+    | 'center-center'
+    | 'corner-top-left'
+    | 'corner-top-right'
+    | 'corner-bottom-left'
+    | 'corner-bottom-right';
 
 export interface IPopupActions {
     open: () => void;
@@ -142,8 +146,13 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 },
                 keepTooltipInside,
             );
-            contentRef.current.style.top = `${modifiers.top + window.scrollY}px`;
-            contentRef.current.style.left = `${modifiers.left + window.scrollX}px`;
+
+            contentRef.current.style.top = modifiers.top !== undefined ? `${modifiers.top + window.scrollY}px` : '';
+            contentRef.current.style.bottom =
+                modifiers.bottom !== undefined ? `${modifiers.bottom - window.scrollY}px` : '';
+            contentRef.current.style.left = modifiers.left !== undefined ? `${modifiers.left + window.scrollX}px` : '';
+            contentRef.current.style.right =
+                modifiers.right !== undefined ? `${modifiers.right - window.scrollX}px` : '';
         }, [isModal, isOpen, keepTooltipInside, offsetX, offsetY, position]);
 
         useLayoutEffect(() => {

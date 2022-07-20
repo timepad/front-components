@@ -211,14 +211,12 @@ export const DatePicker: FC<IDatePickerProps> = ({
                     <div className="cdatepicker__shortcuts">
                         <Button
                             label="Сегодня"
-                            fixed
                             variant={selectedToday ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(today)}
                             data-analytics={analytic?.todayBtn}
                         />
                         <Button
                             label="Завтра"
-                            fixed
                             variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
                             onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
                             data-analytics={analytic?.tomorrowBtn}
@@ -226,7 +224,6 @@ export const DatePicker: FC<IDatePickerProps> = ({
                         {dateRange && (
                             <Button
                                 label="В выходные"
-                                fixed
                                 variant={selectedWeekend ? Button.variant.primary : Button.variant.stroke}
                                 onClick={() => {
                                     const saturday = moment(today).isoWeekday(6);

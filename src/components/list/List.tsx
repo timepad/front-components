@@ -2,7 +2,7 @@ import * as React from 'react';
 import cx from 'classnames';
 import {Item} from './Item';
 import {Group} from './Group';
-import {Divider} from './Divider';
+import {Divider} from '../divider';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
