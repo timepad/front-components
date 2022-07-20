@@ -1,7 +1,8 @@
 .cdatepicker {
   display: flex;
   flex-direction: column;
-  width: 328px;
+  min-width: 328px;
+  width: 100%;
   background: @c-white;
   color: @c-black;
   font-family: @ff;
@@ -197,12 +198,12 @@
   }
 
   &__shortcuts {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 8px;
+    display: flex;
+    column-gap: 8px;
     padding: 0 16px;
     box-sizing: border-box;
     overflow-x: auto;
+    .hidden-scroll();
   }
 }
 
