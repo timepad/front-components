@@ -7,9 +7,10 @@ import {CaptionGroup} from './CaptionGroup';
 import {Button, ButtonVariant} from '../button';
 import TelegramIcon from '../../assets/svg/32/icon-telegram.svg';
 import VKIcon from '../../assets/svg/32/icon-vk.svg';
+import {IMiscLinksProps} from './Footer';
 
-export const FooterSocials: React.FC = () => (
-    <Grid>
+export const FooterSocials: React.FC<IMiscLinksProps> = ({links}) => (
+    <Grid rowGap={32}>
         <Grid.Col desktop={6}>
             <CaptionGroup
                 text="Cкачайте Timepad Check-in для организаторов"
@@ -21,9 +22,13 @@ export const FooterSocials: React.FC = () => (
                 }
             />
             <div className="lflex">
-                <AppstoreIcon />
+                <a href={links.apple} target="_blank" rel="noreferrer">
+                    <AppstoreIcon />
+                </a>
                 <Gap size={0.5} />
-                <GooglePlayIcon />
+                <a href={links.google} target="_blank" rel="noreferrer">
+                    <GooglePlayIcon />
+                </a>
             </div>
         </Grid.Col>
         <Grid.Col desktop={6}>
@@ -37,11 +42,11 @@ export const FooterSocials: React.FC = () => (
                 }
             />
             <div className="lflex">
-                <a href="#" target="_blank">
+                <a href={links.vk} target="_blank" rel="noreferrer">
                     <Button variant={ButtonVariant.secondary} icon={<VKIcon />} large />
                 </a>
                 <Gap size={0.5} />
-                <a href="#" target="_blank">
+                <a href={links.telegram} target="_blank" rel="noreferrer">
                     <Button variant={ButtonVariant.secondary} icon={<TelegramIcon />} large />
                 </a>
             </div>

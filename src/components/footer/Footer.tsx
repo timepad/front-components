@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 import './index.less';
 import {component} from '../../services/helpers/classHelpers';
 import {Brick} from '../brick';
@@ -6,50 +6,45 @@ import {Divider} from '../list/Divider';
 import {FooterLogo} from './FooterLogo';
 import {FooterSocials} from './FooterSocials';
 import {FooterCopyright} from './FooterCopyright';
-import {FooterLinks, IFooterLinksItem} from './FooterLinks';
+import {FooterLinks} from './FooterLinks';
+import {observer} from 'mobx-react';
+import {FooterStore, MiscLinks} from './FooterStore';
+import {FeedbackModal} from './Feedback/FeedbackModal';
 
-const defaultLinks: Array<IFooterLinksItem> = [
-    {
-        title: 'Афиша событий',
-        items: ['Найти событие', 'Рекомендуемое', 'Подписки'],
-    },
-    {
-        title: 'Организаторам',
-        items: ['Создать событие', 'Возможности', 'Тарифы', 'Реклама'],
-    },
-    {
-        title: 'Timepad',
-        items: ['О нас', 'Блог', 'Вакансии', 'Контакты', 'Документы'],
-    },
-    {
-        title: 'Помощь',
-        items: ['Задать вопрос', 'База знаний', 'Разработчикам'],
-    },
-];
-
-interface IFooterProps {
-    links?: Array<IFooterLinksItem>;
+export interface IMiscLinksProps {
+    links: MiscLinks;
 }
 
-export const Footer: React.FC<IFooterProps> = ({links = defaultLinks}) => {
+export const Footer: React.FC = observer(() => {
+    const store = useMemo(() => new FooterStore(), []);
+    useEffect(() => {
+        store.fetchFooterData();
+    }, []);
     return (
-        <div className={component('footer')()}>
-            <div className="lpage">
-                <Brick size={2} />
-                <FooterLogo />
-                <Brick size={1.5} />
-                <Divider />
-                <Brick size={1.5} />
-                <FooterLinks links={links} />
-                <Brick />
-                <Divider />
-                <Brick />
-                <FooterSocials />
-                <Brick size={1.5} />
-                <Brick />
-                <FooterCopyright />
-                <Brick />
+        <>
+            <div className={component('footer')()}>
+                <div className="lpage">
+                    <Brick size={2} />
+                    <FooterLogo />
+                    <Brick size={1.5} />
+                    <Divider />
+                    <Brick size={1.5} />
+                    <FooterLinks links={store.inlineLinks} />
+                    <Brick />
+                    <Divider />
+                    <Brick />
+                    <FooterSocials links={store.miscLinks} />
+                    <Brick size={1.5} />
+                    <Brick />
+                    <FooterCopyright links={store.miscLinks} />
+                    <Brick />
+                </div>
             </div>
-        </div>
+            <FeedbackModal
+                feedbackStore={store.feedback}
+                isOpen={store.modals.isFeedbackModalOpen}
+                onClose={store.modals.toggleModal}
+            />
+        </>
     );
-};
+});

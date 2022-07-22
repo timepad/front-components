@@ -4,6 +4,7 @@ import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
 import {IFormTextLightProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
+import MaskedInput from 'react-input-mask';
 
 import './index.less';
 
@@ -47,26 +48,7 @@ export const TextLight: FC<IFormTextLightProps> = ({
     return (
         <>
             <div className={inputClasses}>
-                {props.multiline ? (
-                    <Textarea
-                        name={fieldName}
-                        id={id}
-                        disabled={disabled}
-                        style={style}
-                        {...props}
-                        onChange={props.onChange}
-                    />
-                ) : (
-                    <input
-                        name={fieldName}
-                        id={id}
-                        disabled={disabled}
-                        ref={(props as any).inputRef}
-                        style={style}
-                        {...(props as any)}
-                        onChange={props.onChange}
-                    />
-                )}
+                <Input fieldName={fieldName} id={id} disabled={disabled} style={style} {...props} />
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
                     {customIcon ? customIcon : success && <CheckSvg className={iconClasses} />}
@@ -75,4 +57,14 @@ export const TextLight: FC<IFormTextLightProps> = ({
             {!!caption && <div className={captionClasses}>{caption}</div>}
         </>
     );
+};
+
+const Input: FC<IFormTextLightProps & {fieldName: string}> = ({fieldName, ...props}) => {
+    if (props.multiline) {
+        return <Textarea name={fieldName} {...props} />;
+    }
+    if (!props.multiline && props.type === 'phone') {
+        return <MaskedInput mask="+7 (999) 999 99 99" maskPlaceholder={null} name={fieldName} {...props} />;
+    }
+    return <input name={fieldName} ref={(props as any).inputRef} {...(props as any)} />;
 };
