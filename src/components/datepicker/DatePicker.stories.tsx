@@ -22,7 +22,7 @@ export default {
 const initialDate = moment('2020-03-24');
 
 const Wrapper: FC = ({children}) => (
-    <div className="dropdown-body" style={{width: 'fit-content'}}>
+    <div className="сdropdown-body" style={{width: 'fit-content'}}>
         {children}
     </div>
 );

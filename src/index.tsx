@@ -1,9 +1,10 @@
+export * from './services/helpers/classHelpers';
+export * from './services/hooks';
 export * from './components/button';
 export * from './components/counter';
 export * from './components/label';
 export * from './components/tabs';
 export * from './components/userpic';
-export * from './services/helpers/classHelpers';
 export * from './components/modal';
 export * from './components/logo';
 export * from './components/dropdown';
@@ -25,4 +26,5 @@ export * from './components/accordion';
 export * from './components/typography';
 export * from './components/grid';
 export * from './components/pageheader';
+export * from './components/divider';
 export * from './components/footer';
