@@ -1,10 +1,12 @@
-import React, {FC, Fragment} from 'react';
-import {observer, Observer} from 'mobx-react';
+import React, {FC, Fragment, useEffect, useState} from 'react';
+import {observer} from 'mobx-react';
 import {Formik, Form as FormikForm} from 'formik';
 import * as Yup from 'yup';
+import 'yup-phone-lite';
 import {FeedbackForm, FormValues} from './FeedbackForm';
-import {Typography, IModalProps, Modal, Form, Button} from 'index';
+import {Typography, IModalProps, Modal, Form, SubmitButton, Brick} from 'index';
 import {FeedbackStore} from './FeedbackStore';
+import {FormikHelpers} from 'formik/dist/types';
 
 export enum FeedbackFields {
     role = 'role',
@@ -21,6 +23,11 @@ interface IFeedbackModalProps extends IModalProps {
 }
 
 export const FeedbackModal: FC<IFeedbackModalProps> = observer(({isOpen, onClose, feedbackStore: store}) => {
+    const [isLoading, setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(store.sendingForm);
+    }, [store.sendingForm]);
+
     const initialValues: FormValues<FeedbackFields> = {
         // TODO: типизировать role
         role: 'Участник',
@@ -38,34 +45,46 @@ export const FeedbackModal: FC<IFeedbackModalProps> = observer(({isOpen, onClose
             .min(2, 'Слишком короткое имя')
             .matches(/^[A-ZА-ЯёЁ -]+$/i, {
                 message: 'Имя содержит недопустимые символы',
-            }),
-        email: Yup.string().email('Неверный email'),
+            })
+            .required('Это обязательное поле'),
+        email: Yup.string().email('Неверный email').required('Это обязательное поле'),
         // TODO: Сделать нормальную регулярку
-        phone: Yup.string().matches(/\d.*\d{3}.*\d{3}.*\d{2}.*\d{2}/, {message: 'Это обязательное поле'}),
+        phone: Yup.string().phone('RU', 'Неверный формат номера').required('Это обязательное поле'),
         subject: Yup.string().required('Это обязательное поле'),
         message: Yup.string().required('Это обязательное поле'),
     });
 
-    const handleSubmit = (values: FormValues<FeedbackFields>) =>
-        store.sendFeedback({
-            ['fb_user_role']: values.role,
-            ['fb_fromname']: values.name,
-            ['fb_from']: values.email,
-            ['fb_from_f']: values.phone,
-            ['fb_subject']: values.subject,
-            ['fb_message']: values.message,
-            ['fb_ata']: values.fileUrl,
-        });
-
+    const handleSubmit = async (
+        values: FormValues<FeedbackFields>,
+        {validateForm}: FormikHelpers<FormValues<FeedbackFields>>,
+    ) => {
+        const errors = await validateForm(values);
+        // console.log('errors', errors);
+        // console.log('Object.keys(errors)', Object.keys(errors));
+        if (Object.keys(errors).length === 0) {
+            store.sendFeedback({
+                ['fb_user_role']: values.role,
+                ['fb_fromname']: values.name,
+                ['fb_from']: values.email,
+                ['fb_from_f']: values.phone,
+                ['fb_subject']: values.subject,
+                ['fb_message']: values.message,
+                ['fb_ata']: values.fileUrl,
+            });
+        }
+    };
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <Modal.Header closeHandler={onClose}>
                 <Modal.Title>Есть вопросы?</Modal.Title>
                 <Fragment>
-                    <div className="lbrick" />
+                    <Brick />
                     <Typography.Small responsive noPadding>
                         Напишите нам, и мы обязательно вам ответим. Много интересного уже есть в нашей{' '}
-                        <a href="http://help.timepad.ru/">базе знаний</a>.
+                        <a className="cfooter__link" href="http://help.timepad.ru/">
+                            базе знаний
+                        </a>
+                        .
                     </Typography.Small>
                 </Fragment>
             </Modal.Header>
@@ -73,11 +92,12 @@ export const FeedbackModal: FC<IFeedbackModalProps> = observer(({isOpen, onClose
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    validateOnMount
+                    validateOnChange={false}
+                    validateOnBlur={true}
                     onSubmit={handleSubmit}
                 >
                     {({status, isValid}) => (
-                        <FormikForm className="mform lflex--y-axis lflex">
+                        <FormikForm className="lflex--y-axis lflex" style={{padding: '8px'}}>
                             <Form.Unit>
                                 <FeedbackForm />
                                 {store.response && (
@@ -85,20 +105,19 @@ export const FeedbackModal: FC<IFeedbackModalProps> = observer(({isOpen, onClose
                                         {store.response}
                                     </Typography.Small>
                                 )}
-                            </Form.Unit>
-                            <div className="lbrick" />
-                            <Observer>
-                                {() => (
-                                    // TODO: найти способ иначе бороться с необзервностью
-                                    // TODO: заменить на SubmitButton
-                                    <Button
-                                        type="submit"
-                                        label={'Отправить вопрос'}
-                                        // disabled={!!status || !isValid}
-                                        // loading={store.loading}
-                                    />
+                                {store.error && (
+                                    <Typography variant="small" className="cform__error-block">
+                                        {store.error.toString()}
+                                    </Typography>
                                 )}
-                            </Observer>
+                            </Form.Unit>
+                            <Brick />
+                            <SubmitButton
+                                type="submit"
+                                label={'Отправить вопрос'}
+                                disabled={!!status || !isValid}
+                                loading={isLoading}
+                            />
                         </FormikForm>
                     )}
                 </Formik>

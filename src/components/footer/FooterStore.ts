@@ -94,7 +94,6 @@ class FooterModalStore {
 
     @action.bound
     toggleModal() {
-        console.log('123');
         this.isFeedbackModalOpen = !this.isFeedbackModalOpen;
     }
 }

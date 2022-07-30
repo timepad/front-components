@@ -1,9 +1,7 @@
-import React, {ChangeEvent, useCallback, useState, useRef, Fragment} from 'react';
-import {fileUpload} from 'services/Helpers/UploadHelper';
-import {getFileNameOnUpload} from 'services/Helpers/UploadHelper/UploadHelper';
-
-import IconDelete from '../../../assets/svg/24/icon-delete-24.svg';
+import React, {ChangeEvent, useCallback, useState, useRef, Fragment, FC} from 'react';
+import IconDelete from '../../../../assets/svg/24/icon-delete-24.svg';
 import {Typography, Button} from 'index';
+import {fileUpload, getFileNameOnUpload} from './upload.utils';
 
 export interface IUploadInputProps {
     name?: string;
@@ -12,10 +10,14 @@ export interface IUploadInputProps {
     setStatus?: (status: string) => void;
 }
 
-export const UploadInput = ({name, onChange, setStatus}: IUploadInputProps) => {
-    const inputRef = useRef<HTMLInputElement>();
+export const UploadInput: FC<IUploadInputProps> = ({
+    name = '',
+    onChange = () => undefined,
+    setStatus = () => undefined,
+}) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const [filename, setFilename] = useState(null);
+    const [filename, setFilename] = useState<string | null>(null);
 
     const [filenameWithoutExtension, extension] = (() => {
         const filenameWithoutExtension = filename?.split('.');
@@ -24,9 +26,11 @@ export const UploadInput = ({name, onChange, setStatus}: IUploadInputProps) => {
     })();
 
     const clearInput = () => {
-        inputRef.current.value = null;
-        setFilename(null);
-        onChange(name, '');
+        if (inputRef && inputRef.current) {
+            inputRef.current.value = '';
+            setFilename(null);
+            onChange(name, '');
+        }
     };
 
     const fileChose = useCallback(
@@ -37,16 +41,13 @@ export const UploadInput = ({name, onChange, setStatus}: IUploadInputProps) => {
 
             await fileUpload({
                 e: e as unknown as Event,
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                setProgress: () => {},
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onLoad: () => {},
+                setProgress: () => undefined,
+                onLoad: () => undefined,
                 onUpload: (url: string) => {
-                    setStatus(null);
+                    setStatus('');
                     onChange(name, url);
                 },
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onError: () => {},
+                onError: () => undefined,
             });
         },
         [name, onChange, setStatus],

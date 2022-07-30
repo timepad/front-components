@@ -2,7 +2,7 @@ import {observable, action, computed} from 'mobx';
 import axios from 'axios';
 
 export class FeedbackStore {
-    @observable loading = false;
+    @observable sendingForm = false;
 
     @observable error?: any;
 
@@ -24,7 +24,7 @@ export class FeedbackStore {
 
     @action.bound
     async sendFeedback(request: IFeedbackRequest): Promise<void> {
-        this.loading = true;
+        this.sendingForm = true;
         this.error = null;
 
         try {
@@ -32,7 +32,7 @@ export class FeedbackStore {
         } catch (err: any) {
             this.error = err;
         } finally {
-            this.loading = false;
+            this.sendingForm = false;
         }
     }
 }
