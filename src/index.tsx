@@ -27,4 +27,3 @@ export * from './components/typography';
 export * from './components/grid';
 export * from './components/pageheader';
 export * from './components/divider';
-export * from './components/footer';

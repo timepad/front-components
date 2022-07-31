@@ -216,7 +216,6 @@ interface IValues {
 
 const mailValidationSchema = Yup.object().shape({
     email: Yup.string().email('Некорректная почта').required(),
-    phone: Yup.string().phone('RU', 'Неккортный телефон').required(),
 });
 
 export const FormikExampleWithYup: IStorybookComponent = () => {
