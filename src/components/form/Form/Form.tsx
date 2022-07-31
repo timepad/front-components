@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
 import {Text, TextField} from '../Text';
 import {TextLight, TextLightField} from '../TextLight';
+import {Checkbox, CheckboxField} from '../Checkbox';
 import {Radio, RadioField} from '../Radio';
 import {Unit} from '../Unit';
-import {Checkbox} from '../Checkbox/Checkbox';
-import {CheckboxField} from '../Checkbox/CheckboxField';
 
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
