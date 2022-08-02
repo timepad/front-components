@@ -43,7 +43,6 @@ export const TextLight: FC<IFormTextLightProps> = ({
 
     const id = `${fieldName}_id_field`;
 
-    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <>
             <div className={inputClasses}>
@@ -62,6 +61,7 @@ const Input: FC<IFormTextLightProps & {fieldName: string}> = ({fieldName, ...pro
     if (props.multiline) {
         return <Textarea name={fieldName} {...props} />;
     }
+    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     if (!props.multiline && (props as IFormInputLightProps).type === 'phone') {
         return (
             <MaskedInput
@@ -72,5 +72,15 @@ const Input: FC<IFormTextLightProps & {fieldName: string}> = ({fieldName, ...pro
             />
         );
     }
-    return <input name={fieldName} ref={(props as any).inputRef} {...(props as any)} />;
+    return (
+        <input
+            name={fieldName}
+            ref={(props as any).inputRef}
+            {...(props as any)}
+            touched={(props as any)?.touched.toString()}
+            initialValue={undefined}
+            initialTouched={undefined}
+            initialError={undefined}
+        />
+    );
 };
