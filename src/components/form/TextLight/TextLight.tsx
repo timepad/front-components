@@ -67,13 +67,14 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
     initialValue,
     initialTouched,
     initialError,
+    value = '',
     ...props
 }) => {
     if (multiline) {
-        return <Textarea {...(props as ITextareaProps)} />;
+        return <Textarea value={value} {...(props as ITextareaProps)} />;
     }
     if (!multiline && (props as IFormInputLightProps).type === 'phone') {
-        return <MaskedInput mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
+        return <MaskedInput value={value} mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
     }
-    return <input ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />;
+    return <input value={value} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />;
 };
