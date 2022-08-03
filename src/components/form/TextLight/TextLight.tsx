@@ -6,6 +6,7 @@ import {IFormInputLightProps, IFormTextLightProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
 import MaskedInput from 'react-input-mask';
 import './index.less';
+import {FieldMetaProps} from 'formik/dist/types';
 
 export const TextLight: FC<IFormTextLightProps> = ({
     customIcon = undefined,
@@ -46,7 +47,7 @@ export const TextLight: FC<IFormTextLightProps> = ({
     return (
         <>
             <div className={inputClasses}>
-                <Input fieldName={fieldName} id={id} disabled={disabled} style={style} {...props} />
+                <Input name={fieldName} id={id} disabled={disabled} style={style} {...props} />
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
                     {customIcon ? customIcon : success && <CheckSvg className={iconClasses} />}
@@ -57,30 +58,16 @@ export const TextLight: FC<IFormTextLightProps> = ({
     );
 };
 
-const Input: FC<IFormTextLightProps & {fieldName: string}> = ({fieldName, ...props}) => {
+const Input: FC<IFormTextLightProps> = (props) => {
     if (props.multiline) {
-        return <Textarea name={fieldName} {...props} />;
+        return <Textarea {...props} />;
     }
     // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     if (!props.multiline && (props as IFormInputLightProps).type === 'phone') {
-        return (
-            <MaskedInput
-                mask="+7 (999) 999 99 99"
-                maskPlaceholder={null}
-                name={fieldName}
-                {...(props as IFormInputLightProps)}
-            />
-        );
+        return <MaskedInput mask="+7 (999) 999 99 99" maskPlaceholder={null} {...(props as IFormInputLightProps)} />;
     }
-    return (
-        <input
-            name={fieldName}
-            ref={(props as any).inputRef}
-            {...(props as any)}
-            touched={(props as any)?.touched.toString()}
-            initialValue={undefined}
-            initialTouched={undefined}
-            initialError={undefined}
-        />
-    );
+    // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+    const {touched, initialValue, initialTouched, initialError, ...otherProps} = props as IFormTextLightProps &
+        FieldMetaProps<string>;
+    return <input ref={(props as any).inputRef} {...(otherProps as any)} touched={touched?.toString()} />;
 };
