@@ -7,6 +7,7 @@ import {Textarea} from '../Textarea';
 import MaskedInput from 'react-input-mask';
 import './index.less';
 import {FieldMetaProps} from 'formik/dist/types';
+import {ITextareaProps} from '../Textarea/Textarea';
 
 export const TextLight: FC<IFormTextLightProps> = ({
     customIcon = undefined,
@@ -58,16 +59,21 @@ export const TextLight: FC<IFormTextLightProps> = ({
     );
 };
 
-const Input: FC<IFormTextLightProps> = (props) => {
-    if (props.multiline) {
-        return <Textarea {...props} />;
+// TODO: сверху все типизировано, здесь необходимы as, any и спред пропсов, иначе в otp ничего не билдится и куча варнингов
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
+const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'value'>>> = ({
+    touched,
+    multiline,
+    initialValue,
+    initialTouched,
+    initialError,
+    ...props
+}) => {
+    if (multiline) {
+        return <Textarea {...(props as ITextareaProps)} />;
     }
-    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
-    if (!props.multiline && (props as IFormInputLightProps).type === 'phone') {
-        return <MaskedInput mask="+7 (999) 999 99 99" maskPlaceholder={null} {...(props as IFormInputLightProps)} />;
+    if (!multiline && (props as IFormInputLightProps).type === 'phone') {
+        return <MaskedInput mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
     }
-    // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-    const {touched, initialValue, initialTouched, initialError, ...otherProps} = props as IFormTextLightProps &
-        FieldMetaProps<string>;
-    return <input ref={(props as any).inputRef} {...(otherProps as any)} touched={touched?.toString()} />;
+    return <input ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />;
 };
