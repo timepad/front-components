@@ -70,11 +70,16 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
     value = '',
     ...props
 }) => {
+    const currentValue = useMemo(() => {
+        return value ? value : '';
+    }, [value]);
     if (multiline) {
-        return <Textarea value={value} {...(props as ITextareaProps)} />;
+        return <Textarea value={currentValue} {...(props as ITextareaProps)} />;
     }
     if (!multiline && (props as IFormInputLightProps).type === 'phone') {
-        return <MaskedInput value={value} mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
+        return <MaskedInput value={currentValue} mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
     }
-    return <input value={value} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />;
+    return (
+        <input value={currentValue} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />
+    );
 };
