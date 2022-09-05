@@ -1,7 +1,6 @@
 import React from 'react';
 
 import * as Yup from 'yup';
-import 'yup-phone-lite';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 
