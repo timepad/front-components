@@ -48,6 +48,7 @@ const LoadersContainer: React.FC<ILoadersContainer> = (props) => {
                             <LoaderCase theme={theme} />
                             <LoaderCase theme={theme} />
                             <WithLoaderCase theme={theme} />
+                            <WithLoaderCase theme={theme} />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
