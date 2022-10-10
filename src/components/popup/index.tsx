@@ -34,10 +34,9 @@ export type PopupPosition =
     | 'left-center'
     | 'left-bottom'
     | 'center-center'
-    | 'corner-top-left'
-    | 'corner-top-right'
-    | 'corner-bottom-left'
-    | 'corner-bottom-right';
+    | PopopCornerPosition;
+
+export type PopopCornerPosition = 'corner-top-left' | 'corner-top-right' | 'corner-bottom-left' | 'corner-bottom-right';
 
 export interface IPopupActions {
     open: () => void;
