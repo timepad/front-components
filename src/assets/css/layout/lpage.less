@@ -1,47 +1,47 @@
 @wmin: @grid-width;
 @wmax: @grid-width-large;
-@delta: unit(( @wmax - @wmin ) / (@rsp-desktop-large-min - 1 - @rsp-desktop-min));
+@delta: unit((@wmax - @wmin) / (@rsp-desktop-large-min - 1 - @rsp-desktop-min));
 
 // page width variants
 @small-width: @wmin;
-@medium-width: calc(~"100vw - (100vw - 100%) - @{page-side-padding-mobile} * 2");
-@large-width: ~"calc(@{wmin} + @{delta} * (100vw - @{rsp-desktop-min}))";
+@medium-width: calc(~'100vw - (100vw - 100%) - @{page-side-padding-mobile} * 2');
+@large-width: ~'calc(@{wmin} + @{delta} * (100vw - @{rsp-desktop-min}))';
 @xlarge-width: @wmax;
 
 .lpage {
-  @media (max-width: @rsp-mobile-max) {
-    width: @medium-width;
-    max-width: @mobile-content-max-width;
-  }
-  @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
-    width: @large-width;
-  }
-  @media (min-width: @rsp-desktop-large-min) {
-    width: @xlarge-width;
-  }
-  margin: 0 auto;
+    @media (max-width: @rsp-mobile-max) {
+        width: @medium-width;
+        max-width: @mobile-content-max-width;
+    }
+    @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
+        width: @large-width;
+    }
+    @media (min-width: @rsp-desktop-large-min) {
+        width: @xlarge-width;
+    }
+    margin: 0 auto;
 }
 
 /**
   Блок для восстановления ширины в 100% от контейнера lpage
  */
 .lpage-restore {
-  @media (max-width: @rsp-mobile-max) {
-    margin: 0 -1 * @grid-module-desktop-mobile;
-  }
-  @media (min-width: @rsp-desktop-min) {
-    margin: 0 -1 * @grid-module-desktop;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        margin: 0 -1 * @grid-module-desktop-mobile;
+    }
+    @media (min-width: @rsp-desktop-min) {
+        margin: 0 -1 * @grid-module-desktop;
+    }
 }
 
 .lpage-restore-p-mobile {
-  @media (max-width: @rsp-mobile-max) {
-    margin: 0 -1 * @grid-module-desktop-mobile;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        margin: 0 -1 * @grid-module-desktop-mobile;
+    }
 }
 
 .lpage-restore-p-desktop {
-  @media (min-width: @rsp-desktop-min) {
-    margin: 0 -1 * @grid-module-desktop;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        margin: 0 -1 * @grid-module-desktop;
+    }
 }

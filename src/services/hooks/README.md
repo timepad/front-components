@@ -34,32 +34,30 @@ is always invoked.
 ## Quick Start
 
 ```jsx harmony
-import * as React from 'react'
-import useEvent from '@react-hook/event'
+import * as React from 'react';
+import useEvent from '@react-hook/event';
 
 // Logs an event each time target.current is clicked
 const Component = () => {
-  const target = useRef(null)
-  useEvent(target, 'click', (event) => console.log(event))
-  return <div ref={target} />
-}
+    const target = useRef(null);
+    useEvent(target, 'click', (event) => console.log(event));
+    return <div ref={target} />;
+};
 
 // Logs an event each time the `document` is clicked
 const useLogDocumentClick = () => {
-  useEvent(document, 'click', (event) => console.log(event))
-}
+    useEvent(document, 'click', (event) => console.log(event));
+};
 
 // Logs an event each time the `window` is clicked
 const useLogWindowClick = () => {
-  useEvent(window, 'click', (event) => console.log(event))
-}
+    useEvent(window, 'click', (event) => console.log(event));
+};
 
 // Logs an event each time element#foo` is clicked
 const useLogElementClick = () => {
-  useEvent(document.getElementById('foo'), 'click', (event) =>
-    console.log(event)
-  )
-}
+    useEvent(document.getElementById('foo'), 'click', (event) => console.log(event));
+};
 ```
 
 ## API

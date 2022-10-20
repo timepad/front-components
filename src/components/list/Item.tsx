@@ -15,7 +15,7 @@ export interface IItem {
     active?: boolean;
 }
 
-const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
+const Item: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<HTMLElement, IItem>(
     (
         {
             children,

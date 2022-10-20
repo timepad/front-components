@@ -134,7 +134,7 @@ const CreateRowObjects = (ffFont = false, small = false): ICreateRowProps[] => [
         hoverable: true,
     }),
 ];
-const CreateRow: FC<{row: ICreateRowProps}> = (props) => {
+const CreateRow: FC<React.PropsWithChildren<{row: ICreateRowProps}>> = (props) => {
     const {text, caption, leftIcon, rightIcon, disabled, hoverable, small, ffFont, horizontalPadding, ...otherProps} =
         props.row;
     return (

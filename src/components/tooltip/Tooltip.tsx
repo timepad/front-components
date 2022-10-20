@@ -10,7 +10,13 @@ export interface ITooltipProps {
     isOpen?: boolean;
 }
 
-export const Tooltip: React.FC<ITooltipProps> = ({children, trigger, content, isOpen, placement}) => {
+export const Tooltip: React.FC<React.PropsWithChildren<ITooltipProps>> = ({
+    children,
+    trigger,
+    content,
+    isOpen,
+    placement,
+}) => {
     const tooltipClass = component('tooltip')();
     const {getTooltipProps, setTooltipRef, setTriggerRef, visible} = usePopperTooltip({
         placement,

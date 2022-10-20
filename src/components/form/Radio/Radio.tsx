@@ -9,7 +9,7 @@ import {IFormRadioProps} from './Radio.types';
 import './index.less';
 import {noop} from '../Textarea/utils';
 
-export const Radio: FC<IFormRadioProps> = (props) => {
+export const Radio: FC<React.PropsWithChildren<IFormRadioProps>> = (props) => {
     const {
         checked = false,
         disabled = false,

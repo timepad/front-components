@@ -1,221 +1,219 @@
 .cdatepicker {
-  display: flex;
-  flex-direction: column;
-  min-width: 328px;
-  width: 100%;
-  background: @c-white;
-  color: @c-black;
-  font-family: @ff;
-  user-select: none;
-  z-index: @z-index-dropdowns;
-
-  &__header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-    height: 64px;
-    box-sizing: border-box;
-  }
+    flex-direction: column;
+    min-width: 328px;
+    width: 100%;
+    background: @c-white;
+    color: @c-black;
+    font-family: @ff;
+    user-select: none;
+    z-index: @z-index-dropdowns;
 
-  &__title {
-    font-size: @fs-body;
-    line-height: @lh-body;
-  }
-
-  &__month {
-    text-transform: capitalize;
-  }
-
-  &__year {
-    color: @c-gray-35;
-  }
-
-  &__pager {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 8px;
-    color: @c-primary-blue;
-  }
-
-  &__weekdays {
-    display: grid;
-    grid-auto-flow: column;
-    height: 32px;
-    padding: 0 16px;
-    box-sizing: border-box;
-    box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
-  }
-
-  &__weekday {
-    font-size: @fs-small;
-    line-height: @lh-small;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: @c-gray-50;
-    text-transform: uppercase;
-    min-width: 32px;
-
-    &:nth-last-child(-n+2) {
-      font-weight: bold;
-    }
-  }
-
-  &__body {
-    display: grid;
-    grid-auto-flow: row;
-    grid-gap: 8px;
-    padding: 16px;
-  }
-
-  &__week {
-    display: grid;
-    grid-auto-flow: column;
-    position: relative;
-    height: 32px;
-    box-sizing: border-box;
-
-    &--start {
-      &::before {
-        content: '';
-        display: block;
-        position: absolute;
-        left: -16px;
-        top: 0;
-        width: 16px;
-        height: 100%;
-        background: @c-dark-gray-fade-20;
-      }
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        height: 64px;
+        box-sizing: border-box;
     }
 
-    &--end {
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        right: -16px;
-        top: 0;
-        width: 16px;
-        height: 100%;
-        background: @c-dark-gray-fade-20;
-      }
+    &__title {
+        font-size: @fs-body;
+        line-height: @lh-body;
     }
-  }
 
-  &__day {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: @c-primary-blue;
-    cursor: pointer;
+    &__month {
+        text-transform: capitalize;
+    }
 
-    .on-hover({
+    &__year {
+        color: @c-gray-35;
+    }
+
+    &__pager {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 8px;
+        color: @c-primary-blue;
+    }
+
+    &__weekdays {
+        display: grid;
+        grid-auto-flow: column;
+        height: 32px;
+        padding: 0 16px;
+        box-sizing: border-box;
+        box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
+    }
+
+    &__weekday {
+        font-size: @fs-small;
+        line-height: @lh-small;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @c-gray-50;
+        text-transform: uppercase;
+        min-width: 32px;
+
+        &:nth-last-child(-n + 2) {
+            font-weight: bold;
+        }
+    }
+
+    &__body {
+        display: grid;
+        grid-auto-flow: row;
+        grid-gap: 8px;
+        padding: 16px;
+    }
+
+    &__week {
+        display: grid;
+        grid-auto-flow: column;
+        position: relative;
+        height: 32px;
+        box-sizing: border-box;
+
+        &--start {
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: -16px;
+                top: 0;
+                width: 16px;
+                height: 100%;
+                background: @c-dark-gray-fade-20;
+            }
+        }
+
+        &--end {
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: -16px;
+                top: 0;
+                width: 16px;
+                height: 100%;
+                background: @c-dark-gray-fade-20;
+            }
+        }
+    }
+
+    &__day {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: @c-primary-blue;
+        cursor: pointer;
+
+        .on-hover({
       .cdatepicker__day-cell {
         background: @c-dark-gray-fade-35;
         border-radius: 4px;
       }
     });
 
-    &--inactive {
-      color: @c-gray-35;
-      pointer-events: none;
+        &--inactive {
+            color: @c-gray-35;
+            pointer-events: none;
+        }
+
+        &--edge {
+            .cdatepicker__day-cell {
+                background: @c-dark-gray-fade-35;
+                border-radius: 4px;
+            }
+        }
+
+        &--start {
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 50%; // TODO: проработать этот момент
+                height: 100%;
+                background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+            }
+        }
+
+        &--end {
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+            }
+        }
+
+        &--month {
+            &_start {
+                background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+                pointer-events: none;
+            }
+
+            &_end {
+                background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
+                pointer-events: none;
+            }
+        }
+
+        &--cell {
+            background: @c-dark-gray-fade-20;
+        }
+
+        &--today {
+            .cdatepicker__day-text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: @c-red;
+                color: @c-white;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+            }
+        }
     }
 
-    &--edge {
-      .cdatepicker__day-cell {
-        background: @c-dark-gray-fade-35;
-        border-radius: 4px;
-      }
-    }
-
-    &--start {
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 50%; // TODO: проработать этот момент
-        height: 100%;
-        background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
-      }
-    }
-
-    &--end {
-      &::before {
-        content: '';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
-      }
-    }
-
-
-    &--month {
-      &_start {
-        background: linear-gradient(to right, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
-        pointer-events: none;
-      }
-
-      &_end {
-        background: linear-gradient(to left, fade(@c-dark-gray-fade-20, 0%), @c-dark-gray-fade-20);
-        pointer-events: none;
-      }
-    }
-
-    &--cell {
-      background: @c-dark-gray-fade-20;
-    }
-
-    &--today {
-      .cdatepicker__day-text {
+    &__day-cell {
+        font-size: @fs-caption;
+        line-height: 1em;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: @c-red;
-        color: @c-white;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-      }
+        width: 32px;
+        height: 32px;
     }
-  }
 
-  &__day-cell {
-    font-size: @fs-caption;
-    line-height: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-  }
-
-  &__shortcuts {
-    display: flex;
-    column-gap: 8px;
-    padding: 0 16px;
-    box-sizing: border-box;
-    overflow-x: auto;
-    .hidden-scroll();
-  }
+    &__shortcuts {
+        display: flex;
+        column-gap: 8px;
+        padding: 0 16px;
+        box-sizing: border-box;
+        overflow-x: auto;
+        .hidden-scroll();
+    }
 }
 
-
 .mtheme--darkpic & {
-  .cdatepicker {
-    background: transparent;
-    .cdatepicker__day-text {
-      color: @c-white;
+    .cdatepicker {
+        background: transparent;
+        .cdatepicker__day-text {
+            color: @c-white;
+        }
+        .cdatepicker__month {
+            color: @c-white;
+        }
     }
-    .cdatepicker__month {
-      color: @c-white;
-    }
-  }
 }

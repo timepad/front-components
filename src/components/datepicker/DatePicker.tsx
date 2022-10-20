@@ -26,7 +26,7 @@ interface IDatePickerProps {
     analytic?: IAnalyticsProps;
 }
 
-export const DatePicker: FC<IDatePickerProps> = ({
+export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     initialToday,
     initialStart,
     initialEnd,

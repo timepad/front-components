@@ -7,25 +7,25 @@
  */
 
 .t-caption-fs-lh-desktop() {
-  font-size: @fs-caption;
-  line-height: @lh-caption;
+    font-size: @fs-caption;
+    line-height: @lh-caption;
 }
 
 .t-caption-fs-lh-mobile() {
-  font-size: @fs-caption-mobile;
-  line-height: @lh-caption-mobile;
+    font-size: @fs-caption-mobile;
+    line-height: @lh-caption-mobile;
 }
 
 .t-caption {
-  padding: 7px 0 11px 0;
+    padding: 7px 0 11px 0;
 
-  @media (min-width: @rsp-desktop-min) {
-    .t-caption-fs-lh-desktop;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        .t-caption-fs-lh-desktop;
+    }
 
-  @media (max-width: @rsp-mobile-max) {
-    .t-caption-fs-lh-mobile;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        .t-caption-fs-lh-mobile;
+    }
 
-  .typo-modificators;
+    .typo-modificators;
 }

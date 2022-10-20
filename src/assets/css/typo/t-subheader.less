@@ -8,31 +8,31 @@
  */
 
 .t-subheader-fs-lh-desktop() {
-  font-size: @fs-subheader;
-  line-height: @lh-subheader;
-  padding: 16px 0 25px 0;
+    font-size: @fs-subheader;
+    line-height: @lh-subheader;
+    padding: 16px 0 25px 0;
 }
 
 .t-subheader-fs-lh-mobile() {
-  font-size: @fs-subheader-mobile;
-  line-height: @lh-subheader-mobile;
-  padding: 13px 0 19px 0;
+    font-size: @fs-subheader-mobile;
+    line-height: @lh-subheader-mobile;
+    padding: 13px 0 19px 0;
 }
 
 .t-subheader {
-  font-weight: 900;
+    font-weight: 900;
 
-  @media (min-width: @rsp-desktop-min) {
-    .t-subheader-fs-lh-desktop;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        .t-subheader-fs-lh-desktop;
+    }
 
-  @media (max-width: @rsp-mobile-max) {
-    .t-subheader-fs-lh-mobile;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        .t-subheader-fs-lh-mobile;
+    }
 
-  &-24 {
-    padding: 8px 0 17px 0;
-  }
+    &-24 {
+        padding: 8px 0 17px 0;
+    }
 
-  .typo-modificators;
+    .typo-modificators;
 }

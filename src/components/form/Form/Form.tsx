@@ -8,7 +8,7 @@ import {Unit} from '../Unit';
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
 
-export const Form: FC<IFormProps> & {
+export const Form: FC<React.PropsWithChildren<IFormProps>> & {
     Text: typeof Text;
     TextField: typeof TextField;
     TextLight: typeof TextLight;

@@ -14,7 +14,7 @@ interface IGridProps extends React.HTMLAttributes<HTMLDivElement> {
     size?: DesktopColumnSize;
 }
 
-export const Grid: FC<IGridProps> & IGridChildren = ({children, gap = 16, size, ...props}) => {
+export const Grid: FC<React.PropsWithChildren<IGridProps>> & IGridChildren = ({children, gap = 16, size, ...props}) => {
     const gridSize = getActualGridSize();
 
     const cssProperties = {

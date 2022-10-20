@@ -17,7 +17,7 @@ export interface IList {
     fontFamily?: 'main';
 }
 
-const ListBase: React.FC<IList> = ({
+const ListBase: React.FC<React.PropsWithChildren<IList>> = ({
     children,
     as = 'div',
     className = '',

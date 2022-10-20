@@ -9,7 +9,13 @@ interface ITypographyMultiple extends ITypographyCommonProps {
     reverse?: boolean;
 }
 
-export const TypographyMultiple: FC<ITypographyMultiple> = ({afisha, text, caption, reverse = false, ...props}) => {
+export const TypographyMultiple: FC<React.PropsWithChildren<ITypographyMultiple>> = ({
+    afisha,
+    text,
+    caption,
+    reverse = false,
+    ...props
+}) => {
     // TODO: добавлен флаг afisha, который специально оверайдит стили для афишы
 
     const textClassNames = component('typography__multiple', 'text')({afisha});

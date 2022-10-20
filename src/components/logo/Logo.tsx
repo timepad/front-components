@@ -12,7 +12,7 @@ export interface ILogoProps {
     color?: Colors;
 }
 
-export const Logo: React.FC<ILogoProps> = ({short, action, color}) => {
+export const Logo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, action, color}) => {
     const className = component('logo')({
         expandable: action === 'expandable',
         hoverable: action === 'hoverable',

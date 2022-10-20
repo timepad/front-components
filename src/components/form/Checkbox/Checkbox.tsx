@@ -9,7 +9,7 @@ import {uniqueId} from '../../../services/helpers/uniqueId';
 import {noop} from '../Textarea/utils';
 import './index.less';
 
-export const Checkbox: FC<ICheckboxProps> = (props) => {
+export const Checkbox: FC<React.PropsWithChildren<ICheckboxProps>> = (props) => {
     const {
         rounded = false,
         checked = false,

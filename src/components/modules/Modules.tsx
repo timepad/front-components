@@ -10,7 +10,7 @@ export interface IModulesProps {
     className?: string;
 }
 
-const Modules: React.FC<IModulesProps> = ({end, center, className, children}) => {
+const Modules: React.FC<React.PropsWithChildren<IModulesProps>> = ({end, center, className, children}) => {
     const classNames = cx(
         className,
         layout('modules')({

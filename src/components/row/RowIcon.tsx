@@ -10,7 +10,11 @@ interface IRowIconProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
     bottom?: boolean;
 }
 
-const RowIcon: React.FC<IRowIconProps> = ({top, bottom, ...props}: IRowIconProps): JSX.Element => {
+const RowIcon: React.FC<React.PropsWithChildren<IRowIconProps>> = ({
+    top,
+    bottom,
+    ...props
+}: IRowIconProps): JSX.Element => {
     const customClassNames = component(
         'row',
         'icon',

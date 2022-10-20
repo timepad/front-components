@@ -11,7 +11,13 @@ export interface IGapProps {
 
 const defaultBrickSize = 1;
 
-export const Gap: React.FC<IGapProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => (
+export const Gap: React.FC<React.PropsWithChildren<IGapProps>> = ({
+    size = defaultBrickSize,
+    desktop,
+    mobile,
+    className,
+    children,
+}) => (
     <>
         {!!desktop && (
             <div className={cx(className, 'hidden-mobile')} style={{width: `${desktop * 16}px`}}>

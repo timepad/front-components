@@ -45,7 +45,7 @@ export interface IPopupActions {
     toggle: () => void;
 }
 export interface IPopupProps {
-    trigger: React.FC<{isOpen: boolean}>;
+    trigger: React.FC<React.PropsWithChildren<{isOpen: boolean}>>;
     open?: boolean;
     disabled?: boolean;
     nested?: boolean;

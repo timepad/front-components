@@ -10,9 +10,9 @@ export default {
     component: Modal,
 } as Meta;
 
-const Child: React.FC = () => <div style={{width: '100px', height: '100px'}} />;
+const Child: React.FC<React.PropsWithChildren<unknown>> = () => <div style={{width: '100px', height: '100px'}} />;
 
-export const Basic: React.FC = () => {
+export const Basic: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true}>
             <Modal.Header>
@@ -25,7 +25,7 @@ export const Basic: React.FC = () => {
     );
 };
 
-export const WithDescription: React.FC = () => {
+export const WithDescription: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true}>
             <Modal.Header>
@@ -39,7 +39,7 @@ export const WithDescription: React.FC = () => {
     );
 };
 
-export const Closable: React.FC = () => {
+export const Closable: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true} onClose={action('close-button-click')}>
             <Modal.Header closeHandler={action('close-button-click')}>
@@ -52,7 +52,7 @@ export const Closable: React.FC = () => {
     );
 };
 
-export const WithBackButton: React.FC = () => {
+export const WithBackButton: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true}>
             <Modal.Header backHandler={action('back-button-click')}>
@@ -65,7 +65,7 @@ export const WithBackButton: React.FC = () => {
     );
 };
 
-export const WithBackAndCloseButton: React.FC = () => {
+export const WithBackAndCloseButton: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true} onClose={action('close-button-click')}>
             <Modal.Header backHandler={action('back-button-click')} closeHandler={action('close-button-click')}>
@@ -78,7 +78,7 @@ export const WithBackAndCloseButton: React.FC = () => {
     );
 };
 
-export const WithButtons: React.FC = () => {
+export const WithButtons: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true}>
             <Modal.Header>

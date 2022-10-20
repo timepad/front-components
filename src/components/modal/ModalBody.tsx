@@ -6,7 +6,7 @@ export interface IModalBodyProps {
     brickProps?: IBrickProps;
 }
 
-export const Body: React.FC<IModalBodyProps> = ({children, brickProps}) => {
+export const Body: React.FC<React.PropsWithChildren<IModalBodyProps>> = ({children, brickProps}) => {
     return (
         <div>
             <Brick size={0.5} {...brickProps} />

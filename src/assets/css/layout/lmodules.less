@@ -1,37 +1,38 @@
-.lmodules-wrapper:extend(.tpui-mx-flexbox-grid-wrapper all) {}
+.lmodules-wrapper:extend(.tpui-mx-flexbox-grid-wrapper all) {
+}
 
 .lmodules {
-  margin: -(@grid-gap/2);
-  & > * {
-    box-sizing: border-box;
-    padding: (@grid-gap/2);
-  }
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
+    margin: -(@grid-gap / 2);
+    & > * {
+        box-sizing: border-box;
+        padding: (@grid-gap / 2);
+    }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
 
-  body & &--horisontal {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+    body & &--horisontal {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 
 .lmodules--end {
-  align-items: flex-end;
+    align-items: flex-end;
 }
 
 .lmodules--center {
-  justify-content: center;
+    justify-content: center;
 }
 
 .lmodules__first {
-  order: -1;
+    order: -1;
 }
 
 .lmodules__first-mobile {
-  @media (max-width: @rsp-mobile-max) {
-    order: -1;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        order: -1;
+    }
 }
 
 /*
@@ -51,60 +52,61 @@
 .lmodules__9,
 .lmodules__10,
 .lmodules__11,
-.lmodules__12 {}
+.lmodules__12 {
+}
 
 .modules(@classname: lmodules__; @columns; @current: 1; @force: true) when (@current =< @columns) {
-  @width: percentage(@current/@columns);
+    @width: percentage(@current / @columns);
 
-  .@{classname}@{current} {
-    & when (@force = true) {
-      width: @width !important;
+    .@{classname}@{current} {
+        & when (@force = true) {
+            width: @width !important;
+        }
+        & when not (@force = true) {
+            width: @width;
+        }
     }
-    & when not (@force = true) {
-      width: @width;
+    .@{classname}@{current}--portrait {
+        @media (max-width: @rsp-mobile-portrait-max) {
+            & when (@force = true) {
+                width: @width !important;
+            }
+            & when not (@force = true) {
+                width: @width;
+            }
+        }
     }
-  }
-  .@{classname}@{current}--portrait {
-    @media (max-width: @rsp-mobile-portrait-max) {
-      & when (@force = true) {
-        width: @width !important;
-      }
-      & when not (@force = true) {
-        width: @width;
-      }
+    .@{classname}@{current}--tablet {
+        @media (min-width: @rsp-mobile-portrait-max) and (max-width: @rsp-mobile-max) {
+            & when (@force = true) {
+                width: @width !important;
+            }
+            & when not (@force = true) {
+                width: @width;
+            }
+        }
     }
-  }
-  .@{classname}@{current}--tablet {
-    @media (min-width: @rsp-mobile-portrait-max) and (max-width: @rsp-mobile-max) {
-      & when (@force = true) {
-        width: @width !important;
-      }
-      & when not (@force = true) {
-        width: @width;
-      }
+    .@{classname}@{current}--mobile {
+        @media (max-width: @rsp-mobile-max) {
+            & when (@force = true) {
+                width: @width !important;
+            }
+            & when not (@force = true) {
+                width: @width;
+            }
+        }
     }
-  }
-  .@{classname}@{current}--mobile {
-    @media (max-width: @rsp-mobile-max) {
-      & when (@force = true) {
-        width: @width !important;
-      }
-      & when not (@force = true) {
-        width: @width;
-      }
+    .@{classname}@{current}--desktop {
+        @media (min-width: @rsp-desktop-min) {
+            & when (@force = true) {
+                width: @width !important;
+            }
+            & when not (@force = true) {
+                width: @width;
+            }
+        }
     }
-  }
-  .@{classname}@{current}--desktop {
-    @media (min-width: @rsp-desktop-min) {
-      & when (@force = true) {
-        width: @width !important;
-      }
-      & when not (@force = true) {
-        width: @width;
-      }
-    }
-  }
-  .modules(@classname; @columns; unit(@current + 1); @force);
+    .modules(@classname; @columns; unit(@current + 1); @force);
 }
 
 .modules(lmodules__, 12);
@@ -125,25 +127,23 @@
 .lmodule-absolute-9,
 .lmodule-absolute-10,
 .lmodule-absolute-11,
-.lmodule-absolute-12 {}
+.lmodule-absolute-12 {
+}
 
 //подробнее про дельты https://timepad.local/tpui/css/#deltas
-@width-delta: unit(( @grid-module-desktop-large - @grid-module-desktop ) / (@rsp-desktop-large-min - @rsp-desktop-min));
+@width-delta: unit((@grid-module-desktop-large - @grid-module-desktop) / (@rsp-desktop-large-min - @rsp-desktop-min));
 .modules-absolute(@classname: lmodules__; @columns; @current: 1) when (@current =< @columns) {
+    @prev: @current - 1;
 
-  @prev: @current - 1;
-
-  .@{classname}@{current} {
-
-    @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
-      width: ~"calc((@{grid-module-desktop} + @{width-delta} * (100vw - @{rsp-desktop-min})) * @{current} + @{grid-gap} * @{prev})";
+    .@{classname}@{current} {
+        @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
+            width: ~'calc((@{grid-module-desktop} + @{width-delta} * (100vw - @{rsp-desktop-min})) * @{current} + @{grid-gap} * @{prev})';
+        }
+        @media (min-width: @rsp-desktop-large-min) {
+            width: @grid-module-desktop-large * @current + @grid-gap * @prev;
+        }
     }
-    @media (min-width: @rsp-desktop-large-min) {
-      width: @grid-module-desktop-large * @current + @grid-gap * @prev;
-    }
-
-  }
-  .modules-absolute(@classname; @columns; unit(@current + 1));
+    .modules-absolute(@classname; @columns; unit(@current + 1));
 }
 
 .modules-absolute(lmodule-absolute-, 12);
@@ -160,5 +160,4 @@
 .lmodule-absolute-10,
 .lmodule-absolute-11,
 .lmodule-absolute-12 {
-
 }

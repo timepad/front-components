@@ -15,7 +15,7 @@ interface ISortableListState {
 
 const Slist = SortableContainer(List);
 const SortIcon = SortableHandle(() => <DragIcon className="cdropdown__dragicon" />);
-export const DropdownSortableList: FC<IDropdownSortableListProps> = ({
+export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableListProps>> = ({
     show,
     modifier,
     onClose,

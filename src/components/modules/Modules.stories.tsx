@@ -14,7 +14,9 @@ export default {
     component: Modules,
 } as Meta;
 
-const Child: React.FC = () => <div style={{width: '100%', height: '100px', backgroundColor: 'blue'}} />;
+const Child: React.FC<React.PropsWithChildren<unknown>> = () => (
+    <div style={{width: '100%', height: '100px', backgroundColor: 'blue'}} />
+);
 
 export const Default: IStorybookComponent = () => {
     return (

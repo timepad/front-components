@@ -12,37 +12,37 @@ usage:
 @scrollbar-compensation: 40px;
 
 .lfloat {
-  grid-column: span 1; // base position
-  min-height: 150px;
+    grid-column: span 1; // base position
+    min-height: 150px;
 
-  @media (max-width: @rsp-mobile-portrait-max) {
-    grid-column: span 1;
-  }
-
-  @media (min-width: @rsp-mobile-portrait-max) and (max-width: @rsp-mobile-max) {
-    @scrollbar-compensation: 48px;
-    grid-column: span 2;
-    margin-left: calc(-1 * (100vw - @medium-width - @scrollbar-compensation) / 2);
-    margin-right: calc(-1 * (100vw - @medium-width - @scrollbar-compensation) / 2);
-  }
-
-  @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
-    grid-column: span 3;
-    margin-left: calc(-1 * (100vw - @large-width - @scrollbar-compensation) / 2);
-    margin-right: calc(-1 * (100vw - @large-width - @scrollbar-compensation) / 2);
-  }
-
-  @media (min-width: @rsp-desktop-large-min) {
-    grid-column: span 3;
-    margin-left: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
-    margin-right: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
-  }
-
-  .ifloat-position-generator(@row) when (@row <= 12) {
-    &-@{row} {
-      grid-row: @row / span 1;
+    @media (max-width: @rsp-mobile-portrait-max) {
+        grid-column: span 1;
     }
-    .ifloat-position-generator(@row + 1)
-  }
-  .ifloat-position-generator(1)
+
+    @media (min-width: @rsp-mobile-portrait-max) and (max-width: @rsp-mobile-max) {
+        @scrollbar-compensation: 48px;
+        grid-column: span 2;
+        margin-left: calc(-1 * (100vw - @medium-width - @scrollbar-compensation) / 2);
+        margin-right: calc(-1 * (100vw - @medium-width - @scrollbar-compensation) / 2);
+    }
+
+    @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
+        grid-column: span 3;
+        margin-left: calc(-1 * (100vw - @large-width - @scrollbar-compensation) / 2);
+        margin-right: calc(-1 * (100vw - @large-width - @scrollbar-compensation) / 2);
+    }
+
+    @media (min-width: @rsp-desktop-large-min) {
+        grid-column: span 3;
+        margin-left: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
+        margin-right: calc(-1 * (100vw - @xlarge-width - @scrollbar-compensation) / 2);
+    }
+
+    .ifloat-position-generator(@row) when (@row <= 12) {
+        &-@{row} {
+            grid-row: @row / span 1;
+        }
+        .ifloat-position-generator(@row + 1);
+    }
+    .ifloat-position-generator(1);
 }

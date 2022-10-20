@@ -3,7 +3,11 @@ import Typography, {ITypographyCommonProps} from './Typography';
 
 type PossibleSizesType = 8;
 
-export const TypographySmall: FC<ITypographyCommonProps<PossibleSizesType>> = ({children, size, ...props}) => {
+export const TypographySmall: FC<React.PropsWithChildren<ITypographyCommonProps<PossibleSizesType>>> = ({
+    children,
+    size,
+    ...props
+}) => {
     return (
         <Typography {...props} variant="small" size={size}>
             {children}

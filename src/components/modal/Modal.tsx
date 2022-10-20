@@ -55,12 +55,12 @@ export interface IModalProps {
     onClose?: () => void;
 }
 
-export const Modal: React.FC<IModalProps> & {
-    Header: React.FC<IHeaderComponentProps>;
-    Body: React.FC<IModalBodyProps>;
-    Footer: React.FC<IModalFooterProps>;
-    Title: React.FC;
-    Description: React.FC;
+export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
+    Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>>;
+    Body: React.FC<React.PropsWithChildren<IModalBodyProps>>;
+    Footer: React.FC<React.PropsWithChildren<IModalFooterProps>>;
+    Title: React.FC<React.PropsWithChildren<unknown>>;
+    Description: React.FC<React.PropsWithChildren<unknown>>;
 } = (props) => {
     const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
 

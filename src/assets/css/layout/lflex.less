@@ -1,66 +1,66 @@
 .lflex {
-  display: flex;
+    display: flex;
 
-  &--y-axis {
-    flex-direction: column;
+    &--y-axis {
+        flex-direction: column;
 
-    @media (max-width: @rsp-mobile-max) {
-      &--order-revert--mobile {
-        flex-direction: column-reverse;
-      }
+        @media (max-width: @rsp-mobile-max) {
+            &--order-revert--mobile {
+                flex-direction: column-reverse;
+            }
+        }
     }
-  }
 
-  &--x-axis {
-    flex-direction: row;
+    &--x-axis {
+        flex-direction: row;
 
-    @media (max-width: @rsp-mobile-max) {
-      &--order-revert--mobile {
-        flex-direction: row-reverse;
-      }
+        @media (max-width: @rsp-mobile-max) {
+            &--order-revert--mobile {
+                flex-direction: row-reverse;
+            }
+        }
     }
-  }
 
-  &--spaced-between {
-    justify-content: space-between;
-  }
-
-  &--align-centered {
-    align-items: center;
-  }
-
-  &--align-start {
-    align-items: flex-start;
-  }
-
-  &--align-end {
-    align-items: flex-end;
-  }
-
-  &--justify-centered {
-    justify-content: center;
-  }
-
-  &--justify-end {
-    justify-content: flex-end;
-  }
-
-  &--centered {
-    align-items: center;
-    justify-content: center;
-  }
-
-  &--wrap {
-    flex-wrap: wrap;
-  }
-
-  &--wrap-on-tablet-and-mobile {
-    @media (max-width: @rsp-desktop-min) {
-      flex-wrap: wrap;
+    &--spaced-between {
+        justify-content: space-between;
     }
-  }
 
-  &--fullscreen-height {
-    min-height: 100vh;
-  }
+    &--align-centered {
+        align-items: center;
+    }
+
+    &--align-start {
+        align-items: flex-start;
+    }
+
+    &--align-end {
+        align-items: flex-end;
+    }
+
+    &--justify-centered {
+        justify-content: center;
+    }
+
+    &--justify-end {
+        justify-content: flex-end;
+    }
+
+    &--centered {
+        align-items: center;
+        justify-content: center;
+    }
+
+    &--wrap {
+        flex-wrap: wrap;
+    }
+
+    &--wrap-on-tablet-and-mobile {
+        @media (max-width: @rsp-desktop-min) {
+            flex-wrap: wrap;
+        }
+    }
+
+    &--fullscreen-height {
+        min-height: 100vh;
+    }
 }

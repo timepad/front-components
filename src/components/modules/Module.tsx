@@ -20,7 +20,7 @@ const defaultModuleSize: moduleSize = 12;
 const getModulesClassName = (modifier: string, size: number): string =>
     `${layout('modules', `${size}`)()}--${modifier}`;
 
-export const Module: React.FC<IModuleProps> = ({
+export const Module: React.FC<React.PropsWithChildren<IModuleProps>> = ({
     desktop,
     tablet,
     mobile,

@@ -14,7 +14,11 @@ export interface ILabelProps {
     timer?: boolean;
 }
 
-export const Label: React.FC<ILabelProps> = ({background = LabelColor.default, timer, children}) => (
+export const Label: React.FC<React.PropsWithChildren<ILabelProps>> = ({
+    background = LabelColor.default,
+    timer,
+    children,
+}) => (
     <div
         className={component('label')({
             [background]: true,

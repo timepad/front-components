@@ -6,28 +6,28 @@
  .t-header--regular - - font-weight: normal
  */
 
- .t-header-fs-lh-desktop() {
-   font-size: @fs-header;
-   line-height: @lh-header;
-   padding: 7px 0 25px 0;
- }
-
- .t-header-fs-lh-mobile() {
-   font-size: @fs-header-mobile;
-   line-height: @lh-header-mobile;
-   padding: 18px 0 26px;
+.t-header-fs-lh-desktop() {
+    font-size: @fs-header;
+    line-height: @lh-header;
+    padding: 7px 0 25px 0;
 }
 
- .t-header {
-   font-weight: 900;
+.t-header-fs-lh-mobile() {
+    font-size: @fs-header-mobile;
+    line-height: @lh-header-mobile;
+    padding: 18px 0 26px;
+}
 
-   @media (min-width: @rsp-desktop-min) {
-     .t-header-fs-lh-desktop;
-   }
+.t-header {
+    font-weight: 900;
 
-   @media (max-width: @rsp-mobile-max) {
-     .t-header-fs-lh-mobile;
-   }
+    @media (min-width: @rsp-desktop-min) {
+        .t-header-fs-lh-desktop;
+    }
 
-   .typo-modificators;
- }
+    @media (max-width: @rsp-mobile-max) {
+        .t-header-fs-lh-mobile;
+    }
+
+    .typo-modificators;
+}

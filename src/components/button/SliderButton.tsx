@@ -8,7 +8,11 @@ export interface ISliderButtonProps {
     onChange: MouseEventHandler;
 }
 
-export const SliderButton: React.FC<ISliderButtonProps> = ({value, disabled, onChange}: ISliderButtonProps) => {
+export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>> = ({
+    value,
+    disabled,
+    onChange,
+}: ISliderButtonProps) => {
     const [state, update] = useState(value);
 
     const sliderClasses = component('btn-slider')({on: state, disabled: disabled});

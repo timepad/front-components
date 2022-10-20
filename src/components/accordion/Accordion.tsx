@@ -16,7 +16,7 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
 }
 
-export const Accordion: FC<IProps> = ({
+export const Accordion: FC<React.PropsWithChildren<IProps>> = ({
     text = '',
     caption,
     horizontalPadding = 0,

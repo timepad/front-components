@@ -8,7 +8,7 @@ import SuccessSvg from '../../assets/svg/16/icon-success-16.svg';
 import WarningSvg from '../../assets/svg/24/icon-error-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 
-export const Snackbar: React.FC<ISnackbarProps> = ({text, state, button}) => {
+export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button}) => {
     // Returns the Provider that must wrap the application
     return (
         <div

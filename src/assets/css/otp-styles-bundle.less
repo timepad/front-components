@@ -1,68 +1,68 @@
-@import  "./vars.less";
-@import  "./mixins.less";
+@import './vars.less';
+@import './mixins.less';
 
 // Grid system
-@import "./layout/lbrick";
-@import "./layout/lmodules";
-@import "./layout/lpage";
-@import "./layout/lsquare";
+@import './layout/lbrick';
+@import './layout/lmodules';
+@import './layout/lpage';
+@import './layout/lsquare';
 // TODO: NEW
-@import "./layout/lflex";
-@import "./layout/lflexchild";
-@import "./layout/lgap";
-@import "./layout/lgrid";
-@import "./layout/lfloat";
+@import './layout/lflex';
+@import './layout/lflexchild';
+@import './layout/lgap';
+@import './layout/lgrid';
+@import './layout/lfloat';
 
 // Typography bundle
-@import "./typo/typo";
+@import './typo/typo';
 
 // Components
 // Сюда импортируем файл стиля компонента БЕЗ включенного bundle.less
-@import "./components/cdivider";
-@import "./components/cicon";
-@import "../../components/button/cbtn";
-@import "../../components/tabs/ctabs";
-@import "../../components/list/clist";
-@import "../../components/userpic/cuserpic";
-@import "../../components/loader/cspinloader";
-@import "../../components/pagination/cpagination";
-@import "../../components/counter/ccounter";
-@import "../../components/label/clabel";
-@import "../../components/datepicker/cdatepicker";
-@import "../../components/row/crow";
-@import "../../components/banner/cbanner";
-@import "../../components/form/Text/ctext";
-@import "../../components/form/TextLight/ctext-light";
-@import "../../components/form/Radio/cform__radio";
-@import "../../components/form/Checkbox/cform__checkbox";
-@import "../../components/form/Unit/cform__unit";
-@import "../../components/form/cform";
-@import "../../components/modal/cmodal";
-@import "../../components/logo/clogo";
-@import "../../components/snackbar/csnackbar";
-@import "../../components/tooltip/ctooltip";
-@import "../../components/dropdown/cdropdown";
-@import "../../components/segmentedcontrol/csegmentedcontrol";
-@import "../../components/suggest/csuggest";
-@import "../../components/accordion/caccordion";
-@import "../../components/typography/ctypography";
-@import "../../components/divider/cdivider";
+@import './components/cdivider';
+@import './components/cicon';
+@import '../../components/button/cbtn';
+@import '../../components/tabs/ctabs';
+@import '../../components/list/clist';
+@import '../../components/userpic/cuserpic';
+@import '../../components/loader/cspinloader';
+@import '../../components/pagination/cpagination';
+@import '../../components/counter/ccounter';
+@import '../../components/label/clabel';
+@import '../../components/datepicker/cdatepicker';
+@import '../../components/row/crow';
+@import '../../components/banner/cbanner';
+@import '../../components/form/Text/ctext';
+@import '../../components/form/TextLight/ctext-light';
+@import '../../components/form/Radio/cform__radio';
+@import '../../components/form/Checkbox/cform__checkbox';
+@import '../../components/form/Unit/cform__unit';
+@import '../../components/form/cform';
+@import '../../components/modal/cmodal';
+@import '../../components/logo/clogo';
+@import '../../components/snackbar/csnackbar';
+@import '../../components/tooltip/ctooltip';
+@import '../../components/dropdown/cdropdown';
+@import '../../components/segmentedcontrol/csegmentedcontrol';
+@import '../../components/suggest/csuggest';
+@import '../../components/accordion/caccordion';
+@import '../../components/typography/ctypography';
+@import '../../components/divider/cdivider';
 
 // Responsive utils
-@import "./responsive.less";
+@import './responsive.less';
 
 // TODO: NEW, найти место получше
 body {
-  font-family: @ff;
-  color: @c-black;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-variant-numeric: proportional-nums;
-  overflow-y: auto;
+    font-family: @ff;
+    color: @c-black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-numeric: proportional-nums;
+    overflow-y: auto;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // TODO: убедиться, что это нормальное решение
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // TODO: убедиться, что это нормальное решение
 }
 
 :focus:not(.focus-visible) {
-  outline: none;
+    outline: none;
 }

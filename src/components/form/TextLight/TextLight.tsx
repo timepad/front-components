@@ -7,7 +7,7 @@ import {Textarea} from '../Textarea';
 
 import './index.less';
 
-export const TextLight: FC<IFormTextLightProps> = ({
+export const TextLight: FC<React.PropsWithChildren<IFormTextLightProps>> = ({
     customIcon = undefined,
     success = false,
     disabled = false,

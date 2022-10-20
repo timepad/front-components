@@ -26,7 +26,8 @@
     &.caccordion--8,
     &.caccordion--16,
     &.caccordion--24,
-    &.caccordion--32 {}
+    &.caccordion--32 {
+    }
     each(@offsets, {
         &--@{value} {
             .caccordion__body {
@@ -34,8 +35,7 @@
             }
         }
     })
-
-    .caccordion__body {
+        .caccordion__body {
         display: flex;
         cursor: pointer;
         min-height: 54px;
@@ -83,14 +83,14 @@
         box-shadow: inset 0px 1px 0px rgba(128, 128, 128, 0.2);
     }
 
-    &.caccordion--large .caccordion__text .caccordion__caption  {
+    &.caccordion--large .caccordion__text .caccordion__caption {
         margin-top: 2px;
         margin-bottom: 2px;
         margin-left: 0;
         align-self: start;
     }
 
-    &.caccordion--large.caccordion--reverse .caccordion__text .caccordion__caption  {
+    &.caccordion--large.caccordion--reverse .caccordion__text .caccordion__caption {
         margin-top: 3px;
         margin-bottom: 1px;
     }

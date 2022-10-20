@@ -2,7 +2,7 @@ import React from 'react';
 import {useSnackbar} from './useSnackbar';
 import {Button} from '../button';
 
-export const SnackbarDemo: React.FC = () => {
+export const SnackbarDemo: React.FC<React.PropsWithChildren<unknown>> = () => {
     const [openSnackbar] = useSnackbar();
 
     return (

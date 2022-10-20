@@ -15,8 +15,12 @@ export default {
     component: List,
 } as Meta;
 
-const Prefix: React.FC = () => <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />;
-const Suffix: React.FC = () => <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />;
+const Prefix: React.FC<React.PropsWithChildren<unknown>> = () => (
+    <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+);
+const Suffix: React.FC<React.PropsWithChildren<unknown>> = () => (
+    <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+);
 
 export const Menu: IStorybookComponent = () => {
     return (

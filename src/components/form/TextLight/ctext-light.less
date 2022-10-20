@@ -1,291 +1,299 @@
 @input-height: (32px);
 
 .on-state-disabled(@color, @boxShadowColor) {
-  &--disabled {
-    &:hover {
-      box-shadow: inherit;
-    }
-
-    input, textarea {
-      color: @color;
-      -webkit-text-fill-color: @color;
-      user-select: none;
-
-      &:focus {
-        color: @color;
-        box-shadow: inset 0px -1px 0px @boxShadowColor;
-
-        & ~ label {
-          color:  @color;
+    &--disabled {
+        &:hover {
+            box-shadow: inherit;
         }
-      }
 
-      &:not(:focus) ~ label {
-        color: @color;
-        -webkit-text-fill-color: @color;
-        user-select: none;
-      }
+        input,
+        textarea {
+            color: @color;
+            -webkit-text-fill-color: @color;
+            user-select: none;
+
+            &:focus {
+                color: @color;
+                box-shadow: inset 0px -1px 0px @boxShadowColor;
+
+                & ~ label {
+                    color: @color;
+                }
+            }
+
+            &:not(:focus) ~ label {
+                color: @color;
+                -webkit-text-fill-color: @color;
+                user-select: none;
+            }
+        }
     }
-  }
 }
 
 .on-state-error() {
-  &--error {
-    input, textarea {
-      box-shadow: inset 0 -1px @c-red;
-      &:focus {
-        box-shadow: inset 0 -2px @c-red;
-      }
+    &--error {
+        input,
+        textarea {
+            box-shadow: inset 0 -1px @c-red;
+            &:focus {
+                box-shadow: inset 0 -2px @c-red;
+            }
 
-      &:focus ~ label,
-      &:not(:focus) ~ label {
-        color: @c-red;
-      }
+            &:focus ~ label,
+            &:not(:focus) ~ label {
+                color: @c-red;
+            }
+        }
     }
-  }
 }
 
 .ctext-light {
-  &__container {
-    position: relative;
-    display: inline-flex;
-    flex-direction: column;
-    padding-top: 32px;
-    width: 100%;
-    max-height: 87px;
-
-    ::placeholder {
-      color: transparent !important;
-      opacity: 0 !important;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    label {
-      position: absolute;
-      left: 0;
-      font-size: 15px;
-      line-height: 19px !important; // TODO: среднее значение, компромисс для ровной анимации
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      max-width: 100%;
-
-      touch-action: manipulation;
-      transform-origin: left bottom;
-
-      transition: transform @duration-blink @ease-in-out 0s,
-      color @duration-blink @ease-in-out 0s,
-      font-size @duration-blink @ease-in-out 0s;
-    }
-
-    .div-for-ta-height-container {
-      position: relative;
-      width: 100%;
-
-      .div-for-ta-height {
-        min-height: @input-height;
-        position: absolute;
+    &__container {
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        padding-top: 32px;
         width: 100%;
-        white-space: pre-wrap;
-        opacity: 0;
-        z-index: -1;
-      }
+        max-height: 87px;
+
+        ::placeholder {
+            color: transparent !important;
+            opacity: 0 !important;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        label {
+            position: absolute;
+            left: 0;
+            font-size: 15px;
+            line-height: 19px !important; // TODO: среднее значение, компромисс для ровной анимации
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 100%;
+
+            touch-action: manipulation;
+            transform-origin: left bottom;
+
+            transition: transform @duration-blink @ease-in-out 0s, color @duration-blink @ease-in-out 0s,
+                font-size @duration-blink @ease-in-out 0s;
+        }
+
+        .div-for-ta-height-container {
+            position: relative;
+            width: 100%;
+
+            .div-for-ta-height {
+                min-height: @input-height;
+                position: absolute;
+                width: 100%;
+                white-space: pre-wrap;
+                opacity: 0;
+                z-index: -1;
+            }
+        }
+
+        &__icon {
+            position: absolute;
+            right: 0;
+            bottom: 8px;
+
+            @media (max-width: @rsp-mobile-max) {
+                right: 4px;
+                bottom: 4px;
+            }
+        }
     }
 
-    &__icon {
-      position: absolute;
-      right: 0;
-      bottom: 8px;
-
-      @media (max-width: @rsp-mobile-max) {
-        right: 4px;
-        bottom: 4px;
-      }
-    }
-  }
-
-  &__caption {
-    line-height: @lh-small;
-    font-size: @fs-small;
-    color: @c-gray-50;
-    padding: 8px 0 13px 0;
-
-    &--error {
-      color: @c-red;
-    }
-
-    &--disabled {
-      color: @c-gray-35;
-    }
-  }
-
-  .mtheme--darkpic & {
     &__caption {
-      color: @c-gray-35;
+        line-height: @lh-small;
+        font-size: @fs-small;
+        color: @c-gray-50;
+        padding: 8px 0 13px 0;
 
-      &--error {
-        color: @c-red;
-      }
-
-      &--disabled {
-        color: @c-gray-75;
-      }
-    }
-  }
-
-  &__input {
-    &:hover {
-      box-shadow: inset 0px -2px 0px @c-dark-gray;
-    }
-
-    label {
-      top: 10px;
-    }
-
-    textarea {
-      resize: none;
-      outline: 0;
-      appearance: none;
-    }
-
-    input, textarea, .div-for-ta-height {
-      .t-caption;
-    }
-
-    input, textarea {
-      height: @input-height;
-      border: medium none;
-      background-color: transparent;
-      margin: 0;
-
-      color: @c-black;
-
-      box-shadow: inset 0 -1px @c-dark-gray;
-      transition: box-shadow @duration-blink @ease-in-out 0s;
-
-      outline: 0;
-      appearance: none;
-
-      &:placeholder-shown {
-        .on-hover({
-          border-bottom-width: 2px;
-        });
-
-        & ~ label {
-          transform: translateY(23px);
-          color: @c-gray-75;
-          cursor: text;
-        }
-      }
-
-      &:not(:placeholder-shown),
-      &:focus {
-        & ~ label {
-          color: @c-gray-50;
-          transform: translateY(-2px);
-          font-size: @fs-small;
-        }
-      }
-
-      &:focus {
-        box-shadow: inset 0 -2px @c-primary-blue;
-
-        & ~ label {
-          color: @c-primary-blue;
+        &--error {
+            color: @c-red;
         }
 
-        & ~ .ctext-light__input__icon {
-          svg * {
-            fill: @c-primary-blue;
-          }
+        &--disabled {
+            color: @c-gray-35;
         }
-      }
-    }
-
-    .on-state-error();
-
-    &--success {
-      input, textarea {
-        box-shadow: inset 0 -1px @c-dark-gray;
-      }
-
-      svg * {
-        fill: @c-dark-gray;
-      }
-    }
-
-    .on-state-disabled(@c-gray-35, @c-dark-gray);
-
-    // THEMES
-    .mtheme--lightpic & {
-      &:hover {
-        box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
-      }
-
-      input, textarea {
-        box-shadow: inset 0 -1px @c-gray-50-fade-35;
-
-        &:placeholder-shown ~ label {
-          color: @c-gray-75;
-        }
-
-        &:focus {
-          box-shadow: inset 0 -2px @c-primary-blue;
-
-          & ~ label {
-            color: @c-primary-blue;
-          }
-        }
-      }
-
-      .on-state-error();
-
-      &--success input textarea {
-        box-shadow: inset 0 -1px @c-green;
-      }
-
-      .on-state-disabled(@c-gray-35, rgba(128, 128, 128, .35));
     }
 
     .mtheme--darkpic & {
-      &:hover {
-        box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
-      }
+        &__caption {
+            color: @c-gray-35;
 
-      input, textarea {
-        color: @c-white;
-        box-shadow: inset 0 -1px @c-gray-50-fade-35;
+            &--error {
+                color: @c-red;
+            }
 
-        &:placeholder-shown ~ label {
-          color: @c-gray-35;
+            &--disabled {
+                color: @c-gray-75;
+            }
         }
-
-        &:focus {
-          box-shadow: inset 0 -2px @c-primary-blue-80;
-
-          & ~ label {
-            color: @c-primary-blue-80;
-          }
-        }
-      }
-
-      .on-state-error();
-
-      &--success {
-        input, textarea {
-          box-shadow: inset 0 -1px @c-gray-50-fade-35;
-        }
-
-        svg * {
-          fill: @c-gray-50-fade-35;
-        }
-      }
-
-      .on-state-disabled(@c-gray-75, rgba(128, 128, 128, .35))
     }
-  }
+
+    &__input {
+        &:hover {
+            box-shadow: inset 0px -2px 0px @c-dark-gray;
+        }
+
+        label {
+            top: 10px;
+        }
+
+        textarea {
+            resize: none;
+            outline: 0;
+            appearance: none;
+        }
+
+        input,
+        textarea,
+        .div-for-ta-height {
+            .t-caption;
+        }
+
+        input,
+        textarea {
+            height: @input-height;
+            border: medium none;
+            background-color: transparent;
+            margin: 0;
+
+            color: @c-black;
+
+            box-shadow: inset 0 -1px @c-dark-gray;
+            transition: box-shadow @duration-blink @ease-in-out 0s;
+
+            outline: 0;
+            appearance: none;
+
+            &:placeholder-shown {
+                .on-hover({
+          border-bottom-width: 2px;
+        });
+
+                & ~ label {
+                    transform: translateY(23px);
+                    color: @c-gray-75;
+                    cursor: text;
+                }
+            }
+
+            &:not(:placeholder-shown),
+            &:focus {
+                & ~ label {
+                    color: @c-gray-50;
+                    transform: translateY(-2px);
+                    font-size: @fs-small;
+                }
+            }
+
+            &:focus {
+                box-shadow: inset 0 -2px @c-primary-blue;
+
+                & ~ label {
+                    color: @c-primary-blue;
+                }
+
+                & ~ .ctext-light__input__icon {
+                    svg * {
+                        fill: @c-primary-blue;
+                    }
+                }
+            }
+        }
+
+        .on-state-error();
+
+        &--success {
+            input,
+            textarea {
+                box-shadow: inset 0 -1px @c-dark-gray;
+            }
+
+            svg * {
+                fill: @c-dark-gray;
+            }
+        }
+
+        .on-state-disabled(@c-gray-35, @c-dark-gray);
+
+        // THEMES
+        .mtheme--lightpic & {
+            &:hover {
+                box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
+            }
+
+            input,
+            textarea {
+                box-shadow: inset 0 -1px @c-gray-50-fade-35;
+
+                &:placeholder-shown ~ label {
+                    color: @c-gray-75;
+                }
+
+                &:focus {
+                    box-shadow: inset 0 -2px @c-primary-blue;
+
+                    & ~ label {
+                        color: @c-primary-blue;
+                    }
+                }
+            }
+
+            .on-state-error();
+
+            &--success input textarea {
+                box-shadow: inset 0 -1px @c-green;
+            }
+
+            .on-state-disabled(@c-gray-35, rgba(128, 128, 128, 0.35));
+        }
+
+        .mtheme--darkpic & {
+            &:hover {
+                box-shadow: inset 0px -2px 0px @c-gray-50-fade-35;
+            }
+
+            input,
+            textarea {
+                color: @c-white;
+                box-shadow: inset 0 -1px @c-gray-50-fade-35;
+
+                &:placeholder-shown ~ label {
+                    color: @c-gray-35;
+                }
+
+                &:focus {
+                    box-shadow: inset 0 -2px @c-primary-blue-80;
+
+                    & ~ label {
+                        color: @c-primary-blue-80;
+                    }
+                }
+            }
+
+            .on-state-error();
+
+            &--success {
+                input,
+                textarea {
+                    box-shadow: inset 0 -1px @c-gray-50-fade-35;
+                }
+
+                svg * {
+                    fill: @c-gray-50-fade-35;
+                }
+            }
+
+            .on-state-disabled(@c-gray-75, rgba(128, 128, 128, 0.35));
+        }
+    }
 }

@@ -20,7 +20,7 @@ export default {
     component: Dropdown,
 } as Meta;
 
-const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props) => {
+const DropBtn: React.FC<React.PropsWithChildren<Omit<IButtonProps & IDropdownProps, 'trigger'>>> = (props) => {
     return (
         <>
             <Dropdown {...props} trigger={() => <Button label={'Выпадающий список'} {...props} />}>
@@ -47,7 +47,7 @@ const DropBtn: React.FC<Omit<IButtonProps & IDropdownProps, 'trigger'>> = (props
     );
 };
 
-const DropSortable: React.FC = () => {
+const DropSortable: React.FC<React.PropsWithChildren<unknown>> = () => {
     const data: number[] = [];
     for (let i = 1; i < 10; i++) {
         data.push(i);
@@ -78,7 +78,7 @@ const DropSortable: React.FC = () => {
     );
 };
 
-const DropCustomBodyImperative: React.FC = () => {
+const DropCustomBodyImperative: React.FC<React.PropsWithChildren<unknown>> = () => {
     const [isDPOpen, setIsDPOpen] = useState(false);
     const handleClose = () => {
         setIsDPOpen(false);
@@ -108,7 +108,7 @@ const DropCustomBodyImperative: React.FC = () => {
     );
 };
 
-const DropProfile: React.FC = () => {
+const DropProfile: React.FC<React.PropsWithChildren<unknown>> = () => {
     const {isMobilePortraitMax} = useMedia();
     const ProfileListData: string[] = useMemo(() => ['Мои покупки', 'Мои подписки', 'Избранное', 'Выйти'], []);
     const OrgListData: Array<{title: string; icon: ReactElement}> = useMemo(
@@ -187,7 +187,7 @@ const DropProfile: React.FC = () => {
     );
 };
 
-const DropLongItemList: React.FC<Omit<IDropdownProps, 'trigger'>> = (props) => {
+const DropLongItemList: React.FC<React.PropsWithChildren<Omit<IDropdownProps, 'trigger'>>> = (props) => {
     return (
         <Dropdown {...props} trigger={() => <Button>Выпадающий список</Button>}>
             <Dropdown.Header mobile>
@@ -354,7 +354,7 @@ export const WithLongItemList: IStorybookComponent = () => {
     );
 };
 
-const RecursiveEditableDropdown: FC<{text?: string}> = () => {
+const RecursiveEditableDropdown: FC<React.PropsWithChildren<{text?: string}>> = () => {
     const [nextBlockText, setNextBlockText] = useState('');
     return (
         <Dropdown
@@ -383,7 +383,7 @@ const RecursiveEditableDropdown: FC<{text?: string}> = () => {
     );
 };
 
-export const RepositionOnChangeContent: FC = () => {
+export const RepositionOnChangeContent: FC<React.PropsWithChildren<unknown>> = () => {
     const [str, setStr] = useState('Some text');
     return (
         <div
