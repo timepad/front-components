@@ -5,10 +5,11 @@ import {Group} from './Group';
 import {Divider} from '../divider';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
+import {ReactNode} from 'react';
 
 export interface IList {
     className?: string;
-    children?: React.ReactChild | React.ReactChild[];
+    children?: ReactNode | ReactNode[];
     as?: keyof JSX.IntrinsicElements;
     full?: boolean;
     variant?: 'white' | 'dark' | 'transparent';

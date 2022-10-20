@@ -1,4 +1,4 @@
-import {Children, cloneElement, FC, isValidElement, ReactChild, useCallback, useEffect, useState} from 'react';
+import {Children, cloneElement, FC, isValidElement, ReactNode, useCallback, useEffect, useState} from 'react';
 import {SortableContainer, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../../list';
 import DragIcon from '../../../assets/svg/16/icon-dragable-16.svg';
@@ -7,13 +7,14 @@ import * as React from 'react';
 import {arrayMoveImmutable} from '../../../services/helpers/moveArray';
 import {component} from '../../../services/helpers/classHelpers';
 import {Dropdown} from '../Dropdown';
+import {IList} from '../../list/List';
 
 interface ISortableListState {
     value: any;
-    children: ReactChild;
+    children: ReactNode;
 }
 
-const Slist = SortableContainer(List);
+const Slist = SortableContainer<React.PropsWithChildren<IList>>(List);
 const SortIcon = SortableHandle(() => <DragIcon className="cdropdown__dragicon" />);
 export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableListProps>> = ({
     show,
@@ -28,13 +29,14 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
     ...props
 }) => {
     // region Sortable list state
-    const ChildrenToValueNodes = (children: ReactChild | ReactChild[]) => {
-        return React.Children.map<ISortableListState, ReactChild>(children, (child: any) => {
+    const ChildrenToValueNodes = (children: ReactNode | ReactNode[]): ISortableListState[] => {
+        const res = React.Children.map<ISortableListState, ReactNode>(children, (child: any) => {
             return {
                 value: child.props.value,
                 children: child.props.children,
             };
         });
+        return res ? res : [];
     };
 
     const [valueNodes, setValueNodes] = useState(ChildrenToValueNodes(children));
@@ -44,7 +46,7 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
     // endregion
 
     const getValues = useCallback(
-        (nodes: ISortableListState[] = valueNodes) => {
+        (nodes: ISortableListState[] = valueNodes || []) => {
             return nodes.map((node) => node.value);
         },
         [valueNodes],
@@ -133,7 +135,7 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
                     onSortStart={sortStartHandler}
                     onSortEnd={sortEndHandler}
                 >
-                    {Children.map<ReactChild, ReactChild>(children, (child, index) => {
+                    {Children.map<ReactNode, ReactNode>(children, (child, index) => {
                         if (isValidElement(child)) {
                             return cloneElement(child, {
                                 key: `drop${index}`,
