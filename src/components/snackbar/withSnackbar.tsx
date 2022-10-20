@@ -11,16 +11,16 @@ export function withSnackbar<P>(
     WrappedComponent: React.ComponentClass<P>,
 ): React.ComponentClass<P & ISnackbarProviderProps> {
     return class WrappedComponentWithSnackbar extends React.Component<P & ISnackbarProviderProps> {
-        static contextType = SnackbarContext;
+        declare context: React.ContextType<typeof SnackbarContext>;
 
         open = (props: ISnackbarProps) => {
             const {openSnackbar} = this.context;
-            openSnackbar(props);
+            openSnackbar && openSnackbar(props);
         };
 
         close = () => {
             const {closeSnackbar} = this.context;
-            closeSnackbar();
+            closeSnackbar && closeSnackbar();
         };
 
         render() {

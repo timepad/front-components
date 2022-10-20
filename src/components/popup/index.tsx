@@ -51,7 +51,12 @@ export interface IPopupProps {
     nested?: boolean;
     defaultOpen?: boolean;
     on?: Event | Event[];
-    children?: React.ReactNode;
+    children?:
+        | React.ReactNode
+        | ((
+              closePopup: (event?: React.SyntheticEvent | KeyboardEvent | TouchEvent | MouseEvent) => void,
+              isOpen: boolean,
+          ) => React.ReactNode);
     position?: PopupPosition | PopupPosition[];
     offsetX?: number;
     offsetY?: number;
