@@ -1,5 +1,5 @@
 import {IPopupProps} from '../popup';
-import {ReactChild, MouseEvent} from 'react';
+import {ReactNode, MouseEvent} from 'react';
 import {IItem} from '../list/Item';
 import {SortableElementProps} from 'react-sortable-hoc';
 
@@ -25,7 +25,7 @@ export interface IDropdownProps {
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
-    children: ReactChild | ReactChild[];
+    children: ReactNode | ReactNode[];
     onClose?: (sortedValues: any[]) => void;
     onSort?: (sortedValues: any[]) => void;
 };

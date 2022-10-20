@@ -15,7 +15,7 @@ export interface IItem {
         | React.ComponentClass<any>
         | React.FC<React.PropsWithChildren<any>>
         | React.ComponentType<React.PropsWithChildren<unknown>>;
-    children?: React.ReactChild | React.ReactChild[];
+    children?: React.ReactNode | React.ReactNode[];
     header?: boolean;
     active?: boolean;
 }

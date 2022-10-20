@@ -9,7 +9,7 @@ export interface IItem {
     as?: keyof JSX.IntrinsicElements;
     prefix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     suffix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    children?: React.ReactChild | React.ReactChild[];
+    children?: React.ReactNode | React.ReactNode[];
     textPosition?: 'start' | 'center' | 'end';
     header?: boolean;
     active?: boolean;
