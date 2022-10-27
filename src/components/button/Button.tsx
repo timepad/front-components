@@ -39,7 +39,6 @@ export interface IButtonProps
     iconAlignment?: ButtonIconAlignment;
     iconAdditionalClasses?: string[];
     labelColor?: string;
-    onClick: () => void;
 }
 
 const extendedModify = (value: boolean | string[] | undefined, className: string) => {
@@ -102,7 +101,7 @@ export function Button({onClick, ...props}: IButtonProps): JSX.Element {
     });
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (onClick) onClick();
+        onClick?.(e);
         e.currentTarget.blur();
     };
 
