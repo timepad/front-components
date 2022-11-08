@@ -38,6 +38,7 @@ export interface IButtonProps
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     iconAlignment?: ButtonIconAlignment;
     iconAdditionalClasses?: string[];
+    labelColor?: string;
 }
 
 const extendedModify = (value: boolean | string[] | undefined, className: string) => {
@@ -89,6 +90,8 @@ export function Button({onClick, ...props}: IButtonProps): JSX.Element {
     });
 
     const finalClasses = cx(buttonClasses, props.className);
+    const labelStyle = props.labelColor && !props.disabled ? {style: {color: `${props.labelColor}`}} : {};
+    const iconColor = props.labelColor && !props.disabled && `${props.labelColor}`;
 
     const buttonProps: {[idx: string]: unknown} = {};
     Object.keys(props).map((key) => {
@@ -123,12 +126,18 @@ export function Button({onClick, ...props}: IButtonProps): JSX.Element {
                 <Fragment>
                     {props.icon &&
                         React.cloneElement(props.icon, {
-                            ...props.icon.props,
                             className: iconClasses.join(' '),
+                            style: {
+                                color: `${iconColor}`,
+                                ...(!!props.icon.props.style && props.icon.props.style),
+                            },
+                            ...props.icon.props,
                         })}
                     {props.label && (
                         <div className="cbtn-label">
-                            <span className={cx({'cbtn-label--hovered': props.hoverLabel})}>{props.label}</span>
+                            <span className={cx({'cbtn-label--hovered': props.hoverLabel})} {...labelStyle}>
+                                {props.label}
+                            </span>
                             {props.hoverLabel && <span className="cbtn-hover-label">{props.hoverLabel}</span>}
                         </div>
                     )}
