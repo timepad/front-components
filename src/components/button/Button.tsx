@@ -63,7 +63,7 @@ const keysToExclude = new Set([
     'iconAlignment',
 ]);
 
-export function Button(props: IButtonProps): JSX.Element {
+export function Button({onClick, ...props}: IButtonProps): JSX.Element {
     const variant = props.variant || 'primary';
 
     const hasIconWithLabel = props.icon && props.label;
@@ -96,6 +96,12 @@ export function Button(props: IButtonProps): JSX.Element {
             buttonProps[key] = (props as {[idx: string]: unknown})[key];
         }
     });
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        onClick?.(e);
+        e.currentTarget.blur();
+    };
+
     // TODO: Откатить добавление ref в button при избавлении от DropdownModal
     return (
         <button
@@ -107,6 +113,7 @@ export function Button(props: IButtonProps): JSX.Element {
                     (props.buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
                 }
             }}
+            onClick={handleClick}
             className={finalClasses}
             {...buttonProps}
         >
