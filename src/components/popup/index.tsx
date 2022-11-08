@@ -169,6 +169,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 resetScroll();
             }
             return () => {
+                resetScroll();
                 clearTimeout(timeOut.current);
             };
         }, [isOpen, handleLockScroll, resetScroll, setPosition]);
