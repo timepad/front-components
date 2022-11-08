@@ -1,12 +1,12 @@
 import React from 'react';
 
 import {Meta} from '@storybook/react/types-6-0';
-import {List} from './index';
+import {List} from './List';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import {Button, ButtonVariant} from '../button';
 import AddIcon from 'svg/24/icon-plus-24.svg';
-import {Theme} from '../utility/Modifiers';
+import {ThemeWrapper} from '../utility/Modifiers';
 
 import 'css/bundle.less';
 
@@ -20,7 +20,7 @@ const Suffix: React.FC = () => <Button variant={ButtonVariant.secondary} icon={<
 
 export const Menu: IStorybookComponent = () => {
     return (
-        <Theme light={true}>
+        <ThemeWrapper light={true}>
             <div style={{maxWidth: '320px'}}>
                 <StoryTitle>Menu active element</StoryTitle>
                 <List full={true} as={'nav'} size="lg">
@@ -177,6 +177,6 @@ export const Menu: IStorybookComponent = () => {
                 </List>
                 <div className="lbrick-2" />
             </div>
-        </Theme>
+        </ThemeWrapper>
     );
 };

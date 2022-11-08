@@ -1,0 +1,49 @@
+@import '../../../../assets/css/bundle.less';
+
+.calcImgSize() {
+  max-height: var(--max-img-height);
+  max-width: var(--max-img-width);
+  height: calc(100% - var(--content-height));
+  width: 100%;
+}
+
+.canchorcardposter {
+  container-type: inline-size;
+  display: block;
+  position: relative;
+  .calcImgSize();
+  &__action-button {
+    z-index: 2;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+  }
+  &__image {
+    display: block;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    &--hidden {
+      opacity: 0;
+      white-space: nowrap;
+    }
+  }
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &--empty {
+    overflow: hidden;
+    background: @c-dark-gray-fade-20;
+  }
+
+  // Использовал здесь функционал еще не добавленный в спецификацию MDN.
+  // Думаю что не страшно, что скейл плейсхолдера не будет поддерживаться старыми браузерами.
+  @container (max-width: 270px) {
+    .canchorcardposter__icon {
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+  }
+}

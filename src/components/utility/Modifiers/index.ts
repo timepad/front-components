@@ -1,2 +1,2 @@
-export {Theme} from './Theme';
-export type {IThemeProps} from './Theme';
+export {ThemeWrapper} from './ThemeWrapper';
+export type {IThemeProps} from './ThemeWrapper';

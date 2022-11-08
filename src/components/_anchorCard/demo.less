@@ -1,0 +1,21 @@
+@import "../../assets/css/vars";
+
+.container {
+  display: flex;
+
+  @media (max-width: @rsp-mobile-max) {
+    flex-direction: column;
+  }
+}
+
+.width-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  &__range {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    padding: 0 150px;
+  }
+}

@@ -1,0 +1,28 @@
+@import '../../../../assets/css/bundle.less';
+
+.canchorcard-content {
+  padding-top: 13px;
+  h2, h3, h4, h5, h6 {
+    font-weight: inherit;
+    margin: 0;
+  }
+  &__title {
+    padding: 0;
+  }
+  @media (max-width: @rsp-mobile-max) {
+    padding-top: 7px;
+  }
+
+  &__anchor {
+    color: inherit;
+    text-decoration: none;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
