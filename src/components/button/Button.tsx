@@ -126,12 +126,12 @@ export function Button({onClick, labelColor, ...props}: IButtonProps): JSX.Eleme
                 <Fragment>
                     {props.icon &&
                         React.cloneElement(props.icon, {
+                            ...props.icon.props,
                             className: iconClasses.join(' '),
                             style: {
                                 color: `${iconColor}`,
                                 ...(!!props.icon.props.style && props.icon.props.style),
                             },
-                            ...props.icon.props,
                         })}
                     {props.label && (
                         <div className="cbtn-label">
