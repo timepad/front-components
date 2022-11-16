@@ -1,10 +1,13 @@
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent} from '../../services/helpers/storyBookHelpers';
-import React, {useState} from 'react';
-import {AnchorCard} from './AnchorCard';
+import React, {FC, useState} from 'react';
+import {AnchorCard} from './';
 import './demo.less';
 import {CollectionCard, ICollectionCardProps} from './TmpCollectionCard/CollectionCard';
 import {Typography} from '../typography';
+import {Button, ButtonVariant, IButtonProps} from '../button';
+import BookmarkIcon from '../../assets/svg/24/icon-bookmark-24.svg';
+import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark_s-24.svg';
 
 export default {
     title: 'AnchorCard',
@@ -69,12 +72,83 @@ export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
     );
 };
 
-export const CollectionCardUsage: IStorybookComponent = () => {
+const FavoriteIconButton: FC<IButtonProps> = (props) => {
+    const [active, setActive] = useState(false);
+    const currentIcon = !active ? <BookmarkIcon /> : <BookmarkStrongIcon />;
     return (
-        <div className="container" key="CollectionCardUsage">
+        <Button
+            onClick={() => setActive(!active)}
+            icon={currentIcon}
+            variant={ButtonVariant.secondary}
+            labelColor="white"
+            className="hoverbtn"
+            {...props}
+        />
+    );
+};
+
+export const AnchorCardBadges: IStorybookComponent = () => {
+    return (
+        <div className="container">
             {collectionCardsData.map((el, index) => (
-                <CollectionCard {...el} key={index} />
+                <AnchorCard key={index}>
+                    <AnchorCard.Poster
+                        src={el.posterSrc}
+                        alt={`Постер к карточке: ${el.title}`}
+                        width={352}
+                        height={198}
+                        className="hoverbtn"
+                    >
+                        <AnchorCard.Poster.Badge>
+                            <FavoriteIconButton />
+                        </AnchorCard.Poster.Badge>
+                    </AnchorCard.Poster>
+                    <AnchorCard.Content>
+                        <AnchorCard.Content.TitleLink href={el.collectionHref}>{el.title}</AnchorCard.Content.TitleLink>
+                        <Typography.Small noPadding>{el.eventsAmount + ' событий'}</Typography.Small>
+                    </AnchorCard.Content>
+                </AnchorCard>
             ))}
         </div>
     );
 };
+
+// region Layouts
+const NineCardsDemo = () => (
+    <>
+        {collectionCardsData.map((el, index) => (
+            <CollectionCard {...el} key={index} />
+        ))}
+        {collectionCardsData.map((el, index) => (
+            <CollectionCard {...el} key={index} />
+        ))}
+        {collectionCardsData.map((el, index) => (
+            <CollectionCard {...el} key={index} />
+        ))}
+    </>
+);
+
+export const CollectionCardFlexContainer: IStorybookComponent = () => {
+    return (
+        <div className="container container--nowrap" key="CollectionCardUsage">
+            <NineCardsDemo />
+        </div>
+    );
+};
+
+export const CollectionCardFlexWrapContainer: IStorybookComponent = () => {
+    return (
+        <div className="container" key="CollectionCardUsage">
+            <NineCardsDemo />
+        </div>
+    );
+};
+
+export const CollectionCardMobileContainer: IStorybookComponent = () => {
+    return (
+        <div className="container container--mobile" key="CollectionCardUsage">
+            <NineCardsDemo />
+        </div>
+    );
+};
+// endregion

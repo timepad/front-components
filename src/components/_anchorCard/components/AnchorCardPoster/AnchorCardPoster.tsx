@@ -1,11 +1,10 @@
 import {Button, ButtonVariant, IButtonProps} from '../../../button';
-import React, {FC, SyntheticEvent, useCallback, useMemo, useState} from 'react';
+import React, {FC, PropsWithChildren, ReactElement, SyntheticEvent, useCallback, useMemo, useState} from 'react';
 import {component} from '../../../../services/helpers/classHelpers';
-import BookmarkIcon from '../../../../assets/svg/24/icon-bookmark-24.svg';
-import BookmarkStrongIcon from '../../../../assets/svg/24/icon-bookmark_s-24.svg';
 import cx from 'classnames';
 import './canchorcardposter.less';
 import {useRandomPlaceholderIcon} from '../../../../services/hooks';
+import {BadgePosition, IBadge, PosterBadge} from './PosterBadge';
 
 interface IPosterActionButtonProps extends IButtonProps {
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
@@ -17,14 +16,14 @@ interface IPosterActionButtonProps extends IButtonProps {
     iconAlignment?: never;
 }
 
-export interface IAnchorcardPosterProps
-    extends React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
-    useActionButton?: boolean;
-    actionButtonProps?: IPosterActionButtonProps;
-}
+export type IAnchorcardPoster = FC<
+    PropsWithChildren<React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>>
+> & {
+    Badge: IBadge;
+};
 
 // Don't use this compoent as is. Instead, use AnchorCard.Poster
-export const AnchorCardPoster: FC<IAnchorcardPosterProps> = ({actionButtonProps, useActionButton, ...props}) => {
+export const AnchorCardPoster: IAnchorcardPoster = ({children, ...props}) => {
     // region No content
     const [isNoContent, setNoContent] = useState(!props.src);
     const PlaceholderIcon = useRandomPlaceholderIcon([]);
@@ -36,7 +35,7 @@ export const AnchorCardPoster: FC<IAnchorcardPosterProps> = ({actionButtonProps,
         () => cx(component('anchorcardposter', 'image')({hidden: isNoContent}), props.className),
         [props.className, isNoContent],
     );
-    const cnIcon = useMemo(() => cx(component('anchorcardposter', 'icon')()), []);
+    const cnPlaceholerIcon = useMemo(() => cx(component('anchorcardposter', 'icon')()), []);
     // endregion
 
     // region Image event handlers
@@ -57,28 +56,115 @@ export const AnchorCardPoster: FC<IAnchorcardPosterProps> = ({actionButtonProps,
     );
     // endregion
 
-    const buttonProps = useMemo<IPosterActionButtonProps>(() => {
-        const {useAlternativeIcon, icon, alternativeIcon, className, ...otherProps} = actionButtonProps || {};
-        const currentIcon = !useAlternativeIcon ? icon || <BookmarkIcon /> : alternativeIcon || <BookmarkStrongIcon />;
+    // region Validate children
+    const BadgesWithPositions = useMemo(() => {
+        const childrenAmount = React.Children.count(children);
+        if (childrenAmount > 4) {
+            throw new Error('You passed too much child components! You can pass only 4 badges.');
+        }
+        if (childrenAmount === 0) {
+            return undefined;
+        }
+        // In object locationPresent, "locations" written in order which they will appear, if position is not set.
+        let notPresentedLocations = [
+            BadgePosition.bottom_right,
+            BadgePosition.bottom_left,
+            BadgePosition.top_left,
+            BadgePosition.top_right,
+        ];
+        const resChildren: ReactElement[] = [];
 
-        return {
-            labelColor: 'white',
-            variant: ButtonVariant.secondary,
-            ...otherProps,
-            icon: currentIcon,
-            className: cx(className, component('anchorcardposter', 'action-button')()),
-        };
-    }, [actionButtonProps]);
+        React.Children.forEach(children, (child) => {
+            const isElement = typeof child === 'object' && !!child && 'type' in child;
+            if (!isElement || child.type !== PosterBadge) {
+                throw new Error(
+                    `You passed child components with wrong type: ${typeof child}! You need to pass AnchorCard.Poster.Badge`,
+                );
+            }
 
-    if (isNoContent || useActionButton) {
+            const badgePos = child.props.position;
+            if (!badgePos) {
+                const newPosition = notPresentedLocations.shift();
+                resChildren.push(React.cloneElement(child, {...child.props, position: newPosition}));
+            } else {
+                notPresentedLocations = notPresentedLocations.filter((el) => el !== badgePos);
+            }
+        });
+
+        return resChildren;
+    }, [children]);
+    // endregion
+
+    if (isNoContent || BadgesWithPositions) {
         return (
             <div className={cnPoster}>
-                {isNoContent && <PlaceholderIcon className={cnIcon} aria-hidden />}
+                {isNoContent && <PlaceholderIcon className={cnPlaceholerIcon} aria-hidden />}
                 <img {...props} className={cnImg} onLoad={imageLoadHandler} onError={imageErrorHandler} />
-                {useActionButton && <Button {...buttonProps} />}
+                {BadgesWithPositions}
             </div>
         );
     } else {
         return <img {...props} className={cnPoster} onLoad={imageLoadHandler} onError={imageErrorHandler} />;
     }
 };
+
+// export const AnchorCardPosterOld: IAnchorcardPoster = ({actionButtonProps, useActionButton, children, ...props}) => {
+//     // region No content
+//     const [isNoContent, setNoContent] = useState(!props.src);
+//     const PlaceholderIcon = useRandomPlaceholderIcon([]);
+//     // endregion
+//
+//     // region Styles
+//     const cnPoster = useMemo(() => component('anchorcardposter')({empty: isNoContent}), [isNoContent]);
+//     const cnImg = useMemo(
+//         () => cx(component('anchorcardposter', 'image')({hidden: isNoContent}), props.className),
+//         [props.className, isNoContent],
+//     );
+//     const cnPlaceholerIcon = useMemo(() => cx(component('anchorcardposter', 'icon')()), []);
+//     // endregion
+//
+//     // region Image event handlers
+//     const imageErrorHandler = useCallback(
+//         (e: SyntheticEvent<HTMLImageElement, Event>) => {
+//             setNoContent(true);
+//             props?.onError && props?.onError(e);
+//         },
+//         [props],
+//     );
+//
+//     const imageLoadHandler = useCallback(
+//         (e: SyntheticEvent<HTMLImageElement, Event>) => {
+//             setNoContent(false);
+//             props?.onLoad && props?.onLoad(e);
+//         },
+//         [props],
+//     );
+//     // endregion
+//
+//     const buttonProps = useMemo<IPosterActionButtonProps>(() => {
+//         const {useAlternativeIcon, icon, alternativeIcon, className, ...otherProps} = actionButtonProps || {};
+//         const currentIcon = !useAlternativeIcon ? icon || <BookmarkIcon /> : alternativeIcon || <BookmarkStrongIcon />;
+//
+//         return {
+//             labelColor: 'white',
+//             variant: ButtonVariant.secondary,
+//             ...otherProps,
+//             icon: currentIcon,
+//             className: cx(className, component('anchorcardposter', 'action-button')()),
+//         };
+//     }, [actionButtonProps]);
+//
+//     if (isNoContent || useActionButton) {
+//         return (
+//             <div className={cnPoster}>
+//                 {isNoContent && <PlaceholderIcon className={cnPlaceholerIcon} aria-hidden />}
+//                 <img {...props} className={cnImg} onLoad={imageLoadHandler} onError={imageErrorHandler} />
+//                 {useActionButton && <Button {...buttonProps} />}
+//             </div>
+//         );
+//     } else {
+//         return <img {...props} className={cnPoster} onLoad={imageLoadHandler} onError={imageErrorHandler} />;
+//     }
+// };
+
+AnchorCardPoster.Badge = PosterBadge;

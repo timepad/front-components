@@ -1,6 +1,6 @@
 import React, {FC, PropsWithChildren, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {component} from '../../services/helpers/classHelpers';
-import {AnchorCardPoster, IAnchorcardPosterProps} from './components/AnchorCardPoster/AnchorCardPoster';
+import {AnchorCardPoster, IAnchorcardPoster} from './components/AnchorCardPoster/AnchorCardPoster';
 import {AnchorCardContent, IAnchorCardContent} from './components/AnchorCardContent/AnchorCardContent';
 import './index.less';
 import cx from 'classnames';
@@ -8,7 +8,7 @@ import cx from 'classnames';
 export const AnchorCard: FC<
     PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>>
 > & {
-    Poster: FC<IAnchorcardPosterProps>;
+    Poster: IAnchorcardPoster;
     Content: IAnchorCardContent;
 } = ({children, ...props}) => {
     const ref = useRef<HTMLDivElement>(null);

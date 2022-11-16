@@ -12,12 +12,6 @@
   display: block;
   position: relative;
   .calcImgSize();
-  &__action-button {
-    z-index: 2;
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-  }
   &__image {
     display: block;
     object-fit: contain;
@@ -37,6 +31,11 @@
   &--empty {
     overflow: hidden;
     background: @c-dark-gray-fade-20;
+  }
+
+  &__badge {
+    z-index: 2;
+    position: absolute;
   }
 
   // Использовал здесь функционал еще не добавленный в спецификацию MDN.

@@ -9,7 +9,7 @@ export interface IThemeProps {
     default: boolean;
 }
 
-export const ThemeWrapper = ({
+export const ThemeContainer = ({
     light,
     dark,
     children,
