@@ -1,13 +1,14 @@
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent} from '../../services/helpers/storyBookHelpers';
-import React, {FC, useState} from 'react';
-import {AnchorCard} from './';
+import React, {CSSProperties, FC, useState} from 'react';
+import {AnchorCard, BadgePosition} from './';
 import './demo.less';
 import {CollectionCard, ICollectionCardProps} from './TmpCollectionCard/CollectionCard';
 import {Typography} from '../typography';
 import {Button, ButtonVariant, IButtonProps} from '../button';
 import BookmarkIcon from '../../assets/svg/24/icon-bookmark-24.svg';
 import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark_s-24.svg';
+import PlayIcon from '../../assets/svg/32/icon-play-video-32.svg';
 
 export default {
     title: 'AnchorCard',
@@ -81,13 +82,58 @@ const FavoriteIconButton: FC<IButtonProps> = (props) => {
             icon={currentIcon}
             variant={ButtonVariant.secondary}
             labelColor="white"
-            className="hoverbtn"
             {...props}
         />
     );
 };
 
+const PlayBadge = (props: {time?: string}) => {
+    const styles: CSSProperties = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        position: 'absolute',
+        height: '17px',
+        fontSize: '13px',
+        background: 'rgba(37, 37, 37, 0.8)',
+        padding: '0px 4px',
+        backdropFilter: 'blur(24px)',
+        borderRadius: '2px',
+        color: '#fff',
+    };
+    return <div style={styles}>{props.time}</div>;
+};
+
 export const AnchorCardBadges: IStorybookComponent = () => {
+    const geBadges = (index: number) => {
+        switch (index) {
+            case 0:
+                return (
+                    <AnchorCard.Poster.Badge>
+                        <FavoriteIconButton />
+                    </AnchorCard.Poster.Badge>
+                );
+            case 1:
+                return (
+                    <AnchorCard.Poster.Badge position={BadgePosition.top_right}>
+                        <PlayIcon />
+                    </AnchorCard.Poster.Badge>
+                );
+            case 2:
+                return [
+                    <AnchorCard.Poster.Badge key={1}>
+                        <FavoriteIconButton />
+                    </AnchorCard.Poster.Badge>,
+                    <AnchorCard.Poster.Badge key={2}>
+                        <PlayIcon />
+                    </AnchorCard.Poster.Badge>,
+                    <AnchorCard.Poster.Badge key={3} margin={8}>
+                        <PlayBadge time="00:50" />
+                    </AnchorCard.Poster.Badge>,
+                ];
+        }
+    };
     return (
         <div className="container">
             {collectionCardsData.map((el, index) => (
@@ -97,11 +143,8 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                         alt={`Постер к карточке: ${el.title}`}
                         width={352}
                         height={198}
-                        className="hoverbtn"
                     >
-                        <AnchorCard.Poster.Badge>
-                            <FavoriteIconButton />
-                        </AnchorCard.Poster.Badge>
+                        {geBadges(index)}
                     </AnchorCard.Poster>
                     <AnchorCard.Content>
                         <AnchorCard.Content.TitleLink href={el.collectionHref}>{el.title}</AnchorCard.Content.TitleLink>
@@ -117,7 +160,17 @@ export const AnchorCardBadges: IStorybookComponent = () => {
 const NineCardsDemo = () => (
     <>
         {collectionCardsData.map((el, index) => (
-            <CollectionCard {...el} key={index} />
+            <AnchorCard key={index}>
+                <AnchorCard.Poster src={el.posterSrc} alt={`Постер к карточке: ${el.title}`} width={352} height={198}>
+                    <AnchorCard.Poster.Badge>
+                        <FavoriteIconButton />
+                    </AnchorCard.Poster.Badge>
+                </AnchorCard.Poster>
+                <AnchorCard.Content>
+                    <AnchorCard.Content.TitleLink href={el.collectionHref}>{el.title}</AnchorCard.Content.TitleLink>
+                    <Typography.Small noPadding>{el.eventsAmount + ' событий'}</Typography.Small>
+                </AnchorCard.Content>
+            </AnchorCard>
         ))}
         {collectionCardsData.map((el, index) => (
             <CollectionCard {...el} key={index} />

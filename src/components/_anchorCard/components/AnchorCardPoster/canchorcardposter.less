@@ -8,9 +8,10 @@
 }
 
 .canchorcardposter {
-  container-type: inline-size;
   display: block;
   position: relative;
+  min-width: 110px;
+  min-height: 62px;
   .calcImgSize();
   &__image {
     display: block;
@@ -19,7 +20,7 @@
     width: 100%;
     &--hidden {
       opacity: 0;
-      white-space: nowrap;
+      font-size: 1px;
     }
   }
   &__icon {
@@ -34,6 +35,7 @@
   }
 
   &__badge {
+    line-height: 0;
     z-index: 2;
     position: absolute;
   }
