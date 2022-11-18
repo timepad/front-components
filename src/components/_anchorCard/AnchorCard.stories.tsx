@@ -87,26 +87,22 @@ const FavoriteIconButton: FC<IButtonProps> = (props) => {
     );
 };
 
-const PlayBadge = (props: {time?: string}) => {
+const Text = (props: {text?: string}) => {
     const styles: CSSProperties = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         cursor: 'pointer',
-        position: 'absolute',
-        height: '17px',
+        lineHeight: '17px',
         fontSize: '13px',
         background: 'rgba(37, 37, 37, 0.8)',
         padding: '0px 4px',
-        backdropFilter: 'blur(24px)',
+        display: 'inline',
         borderRadius: '2px',
         color: '#fff',
     };
-    return <div style={styles}>{props.time}</div>;
+    return <div style={styles}>{props.text}</div>;
 };
 
 export const AnchorCardBadges: IStorybookComponent = () => {
-    const geBadges = (index: number) => {
+    const getBadges = (index: number) => {
         switch (index) {
             case 0:
                 return (
@@ -115,11 +111,20 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                     </AnchorCard.Poster.Badge>
                 );
             case 1:
-                return (
-                    <AnchorCard.Poster.Badge position={BadgePosition.top_right}>
-                        <PlayIcon />
-                    </AnchorCard.Poster.Badge>
-                );
+                return [
+                    <AnchorCard.Poster.Badge key={1}>
+                        <Text text={'Order: 1'} />
+                    </AnchorCard.Poster.Badge>,
+                    <AnchorCard.Poster.Badge key={2}>
+                        <Text text={'Order: 2'} />
+                    </AnchorCard.Poster.Badge>,
+                    <AnchorCard.Poster.Badge key={3}>
+                        <Text text={'Order: 3'} />
+                    </AnchorCard.Poster.Badge>,
+                    <AnchorCard.Poster.Badge key={4}>
+                        <Text text={'Order: 4'} />
+                    </AnchorCard.Poster.Badge>,
+                ];
             case 2:
                 return [
                     <AnchorCard.Poster.Badge key={1}>
@@ -129,7 +134,7 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                         <PlayIcon />
                     </AnchorCard.Poster.Badge>,
                     <AnchorCard.Poster.Badge key={3} margin={8}>
-                        <PlayBadge time="00:50" />
+                        <Text text="00:50" />
                     </AnchorCard.Poster.Badge>,
                 ];
         }
@@ -144,7 +149,7 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                         width={352}
                         height={198}
                     >
-                        {geBadges(index)}
+                        {getBadges(index)}
                     </AnchorCard.Poster>
                     <AnchorCard.Content>
                         <AnchorCard.Content.TitleLink href={el.collectionHref}>{el.title}</AnchorCard.Content.TitleLink>
@@ -152,6 +157,27 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                     </AnchorCard.Content>
                 </AnchorCard>
             ))}
+            <AnchorCard>
+                <AnchorCard.Poster
+                    src={collectionCardsData[2].posterSrc}
+                    alt={`Постер к карточке: ${collectionCardsData[2].title}`}
+                    width={352}
+                    height={198}
+                >
+                    <AnchorCard.Poster.Badge margin={64}>
+                        <Text text="Positon: bottom_right; Margin: 64px" />
+                    </AnchorCard.Poster.Badge>
+                    <AnchorCard.Poster.Badge position={BadgePosition.top_right}>
+                        <Text text="Positon: top_right" />
+                    </AnchorCard.Poster.Badge>
+                </AnchorCard.Poster>
+                <AnchorCard.Content>
+                    <AnchorCard.Content.TitleLink href={collectionCardsData[2].collectionHref}>
+                        {collectionCardsData[2].title}
+                    </AnchorCard.Content.TitleLink>
+                    <Typography.Small noPadding>{collectionCardsData[2].eventsAmount + ' событий'}</Typography.Small>
+                </AnchorCard.Content>
+            </AnchorCard>
         </div>
     );
 };
