@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import React, {FC, PropsWithChildren, useLayoutEffect, useMemo, useRef} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import {AnchorCardPoster, IAnchorcardPoster} from './components/AnchorCardPoster/AnchorCardPoster';
 import {AnchorCardContent, IAnchorCardContent} from './components/AnchorCardContent/AnchorCardContent';
