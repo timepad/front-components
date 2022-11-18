@@ -21,7 +21,7 @@ export const Text: FC<IFormTextProps> = ({disabled = false, error = '', classNam
             {props.multiline ? (
                 <Textarea disabled={disabled} {...props} />
             ) : (
-                <input disabled={disabled} {...(props as any)} />
+                <input disabled={disabled} ref={(props as any).inputRef} {...(props as any)} />
             )}
         </div>
     );
