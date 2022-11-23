@@ -15,6 +15,7 @@ export interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<
     activable?: boolean;
     selectable?: boolean;
     small?: boolean;
+    transparent?: boolean;
     ffFont?: boolean;
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
 }
@@ -32,6 +33,7 @@ const Row: React.FC<IRowProps> & {
     small = false,
     ffFont = false,
     disabled = false,
+    transparent = false,
     horizontalPadding = small ? 8 : 16,
     ...props
 }: IRowProps): JSX.Element => {
@@ -41,6 +43,7 @@ const Row: React.FC<IRowProps> & {
             activable: activable,
             small: small,
             selectable,
+            transparent,
             ff: ffFont,
             'ff-system': !ffFont,
             disabled: disabled,
