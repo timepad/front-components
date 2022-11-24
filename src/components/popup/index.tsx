@@ -1,13 +1,7 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-    useOnClickOutside,
-    useOnEscape,
-    useRepositionOnResizeBlock,
-    useRepositionOnResizeWindow,
-    useRepositionOnScroll,
-} from './hooks';
+import {useOnClickOutside, useOnEscape, useRepositionOnResizeBlock, useRepositionOnResizeWindow} from './hooks';
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
@@ -67,7 +61,7 @@ export interface IPopupProps {
     closeOnEscape?: boolean;
     repositionOnResize?: boolean;
     repositionOnChangeContent?: boolean;
-    repositionOnScroll?: boolean;
+    fixPositionOnScroll?: boolean;
     mouseEnterDelay?: number;
     mouseLeaveDelay?: number;
     onOpen?: (event?: React.SyntheticEvent) => void;
@@ -97,7 +91,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             closeOnDocumentClick = true,
             repositionOnResize = true,
             repositionOnChangeContent = true,
-            repositionOnScroll = false,
+            fixPositionOnScroll = false,
             closeOnEscape = true,
             on = ['click'],
             contentStyle = {},
@@ -256,7 +250,6 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         useOnEscape(closePopup, closeOnEscape);
         useRepositionOnResizeWindow(setPosition, repositionOnResize);
         useRepositionOnResizeBlock(setPosition, contentRef, repositionOnChangeContent);
-        useRepositionOnScroll(setPosition, repositionOnScroll);
         useOnClickOutside(
             !!trigger ? [contentRef, triggerRef] : [contentRef],
             closePopup,
@@ -338,7 +331,13 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderContent = () => {
             // input нужен что бы не было автофокуса по 1ому элементу
             return (
-                <div {...addWarperAction()} key="C" role={isModal ? 'dialog' : 'tooltip'} id={popupId.current}>
+                <div
+                    {...addWarperAction()}
+                    key="C"
+                    role={isModal ? 'dialog' : 'tooltip'}
+                    id={popupId.current}
+                    style={{position: fixPositionOnScroll ? 'fixed' : 'inherit'}}
+                >
                     <input style={{display: 'none'}} />
                     {children && typeof children === 'function' ? children(closePopup, isOpen) : children}
                 </div>
