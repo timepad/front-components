@@ -127,7 +127,7 @@ const DropProfile: React.FC = () => {
     return (
         <div className="floating-profile">
             <Dropdown
-                repositionOnScroll
+                fixPositionOnScroll
                 triggerProps={{className: 'floating-profile__button'}}
                 trigger={() => (
                     <Pic
