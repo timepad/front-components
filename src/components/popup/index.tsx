@@ -336,7 +336,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                     key="C"
                     role={isModal ? 'dialog' : 'tooltip'}
                     id={popupId.current}
-                    style={{position: fixPositionOnScroll ? 'fixed' : 'inherit'}}
+                    style={{position: fixPositionOnScroll ? 'fixed' : 'absolute'}}
                 >
                     <input style={{display: 'none'}} />
                     {children && typeof children === 'function' ? children(closePopup, isOpen) : children}
