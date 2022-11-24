@@ -125,65 +125,69 @@ const DropProfile: React.FC = () => {
         [],
     );
     return (
-        <Dropdown
-            trigger={() => (
-                <Pic
-                    imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
-                    label="test_userpic"
-                    hoverable
-                />
-            )}
-        >
-            <Dropdown.Header mobile desktop>
-                <Row hoverable>
-                    <Row.Icon>
-                        <Pic
-                            imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
-                            label="test_userpic"
-                            hoverable
-                        />
-                    </Row.Icon>
-                    <Row.Body style={{padding: '9px 0'}}>
-                        <Row.Text>
-                            <Typography variant="caption" fontWeight="bold" noPadding>
-                                Алексей
-                            </Typography>
-                        </Row.Text>
-                        <Row.Caption>
-                            <Typography variant="small" noPadding>
-                                +7 (985) 000 11 22
-                            </Typography>
-                        </Row.Caption>
-                    </Row.Body>
-                    <Row.Icon>
-                        <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
-                    </Row.Icon>
-                </Row>
-            </Dropdown.Header>
-            <div className="mtheme--darkpic-bg mtheme--darkpic">
-                {ProfileListData.map((el) => (
-                    <Row key={el} hoverable>
-                        <Row.Body>
-                            <Row.Text>{el}</Row.Text>
-                        </Row.Body>
-                    </Row>
-                ))}
-                {isMobilePortraitMax && (
-                    <>
-                        <Divider />
-                        {OrgListData.map((el) => (
-                            <Row key={el.title} hoverable>
-                                <Row.Body>
-                                    <Row.Text>{el.title}</Row.Text>
-                                </Row.Body>
-                                <Row.Icon>{el.icon}</Row.Icon>
-                            </Row>
-                        ))}
-                    </>
+        <div className="floating-profile">
+            <Dropdown
+                repositionOnScroll
+                triggerProps={{className: 'floating-profile__button'}}
+                trigger={() => (
+                    <Pic
+                        imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                        label="test_userpic"
+                        hoverable
+                    />
                 )}
-                {!isMobilePortraitMax && <Dropdown.Button label="Стать организатором" />}
-            </div>
-        </Dropdown>
+            >
+                <Dropdown.Header mobile desktop>
+                    <Row hoverable>
+                        <Row.Icon>
+                            <Pic
+                                imgURL={'https://afisha.timepad.ru/static/images/main/eventcard.png'}
+                                label="test_userpic"
+                                hoverable
+                            />
+                        </Row.Icon>
+                        <Row.Body style={{padding: '9px 0'}}>
+                            <Row.Text>
+                                <Typography variant="caption" fontWeight="bold" noPadding>
+                                    Алексей
+                                </Typography>
+                            </Row.Text>
+                            <Row.Caption>
+                                <Typography variant="small" noPadding>
+                                    +7 (985) 000 11 22
+                                </Typography>
+                            </Row.Caption>
+                        </Row.Body>
+                        <Row.Icon>
+                            <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
+                        </Row.Icon>
+                    </Row>
+                </Dropdown.Header>
+                <div className="mtheme--darkpic-bg mtheme--darkpic">
+                    {ProfileListData.map((el) => (
+                        <Row key={el} hoverable>
+                            <Row.Body>
+                                <Row.Text>{el}</Row.Text>
+                            </Row.Body>
+                        </Row>
+                    ))}
+                    {isMobilePortraitMax && (
+                        <>
+                            <Divider />
+                            {OrgListData.map((el) => (
+                                <Row key={el.title} hoverable>
+                                    <Row.Body>
+                                        <Row.Text>{el.title}</Row.Text>
+                                    </Row.Body>
+                                    <Row.Icon>{el.icon}</Row.Icon>
+                                </Row>
+                            ))}
+                        </>
+                    )}
+                    {!isMobilePortraitMax && <Dropdown.Button label="Стать организатором" />}
+                </div>
+            </Dropdown>
+        </div>
     );
 };
 
@@ -315,9 +319,7 @@ export const ProfileDrop: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Profile Drop</StoryTitle>
-            <div style={{marginTop: '130px'}}>
-                <DropProfile />
-            </div>
+            <DropProfile />
         </>
     );
 };

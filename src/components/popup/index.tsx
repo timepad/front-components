@@ -1,7 +1,13 @@
 import React, {useState, useRef, useEffect, useImperativeHandle, useLayoutEffect, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 
-import {useOnClickOutside, useOnEscape, useRepositionOnResizeBlock, useRepositionOnResizeWindow} from './hooks';
+import {
+    useOnClickOutside,
+    useOnEscape,
+    useRepositionOnResizeBlock,
+    useRepositionOnResizeWindow,
+    useRepositionOnScroll,
+} from './hooks';
 import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
@@ -61,6 +67,7 @@ export interface IPopupProps {
     closeOnEscape?: boolean;
     repositionOnResize?: boolean;
     repositionOnChangeContent?: boolean;
+    repositionOnScroll?: boolean;
     mouseEnterDelay?: number;
     mouseLeaveDelay?: number;
     onOpen?: (event?: React.SyntheticEvent) => void;
@@ -90,6 +97,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             closeOnDocumentClick = true,
             repositionOnResize = true,
             repositionOnChangeContent = true,
+            repositionOnScroll = false,
             closeOnEscape = true,
             on = ['click'],
             contentStyle = {},
@@ -157,7 +165,9 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
         useLayoutEffect(() => {
             if (isOpen) {
-                if (triggerRef.current) triggerRef.current.className = 'popup-hovered-trigger';
+                if (triggerRef.current) {
+                    triggerRef.current.classList.add('popup-hovered-trigger');
+                }
                 focusedElBeforeOpen.current = document.activeElement;
                 setPosition();
                 if (contentRef.current) {
@@ -165,7 +175,9 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 }
                 handleLockScroll();
             } else {
-                if (triggerRef.current) triggerRef.current.className = '';
+                if (triggerRef.current) {
+                    triggerRef.current.classList.remove('popup-hovered-trigger');
+                }
                 resetScroll();
             }
             return () => {
@@ -244,6 +256,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         useOnEscape(closePopup, closeOnEscape);
         useRepositionOnResizeWindow(setPosition, repositionOnResize);
         useRepositionOnResizeBlock(setPosition, contentRef, repositionOnChangeContent);
+        useRepositionOnScroll(setPosition, repositionOnScroll);
         useOnClickOutside(
             !!trigger ? [contentRef, triggerRef] : [contentRef],
             closePopup,

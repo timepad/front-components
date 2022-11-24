@@ -1,4 +1,4 @@
-import {useEffect, RefObject, MutableRefObject} from 'react';
+import {useEffect, RefObject, MutableRefObject, useLayoutEffect} from 'react';
 
 export const useOnEscape = (handler: (event: KeyboardEvent) => void, active = true): void => {
     useEffect(() => {
@@ -56,6 +56,17 @@ export const useRepositionOnResizeBlock = (
             resizeObserver.unobserve(node);
         };
     }, [handler, node, active]);
+};
+
+export const useRepositionOnScroll = (handler: () => void, active = false): void => {
+    useLayoutEffect(() => {
+        if (!active) return;
+        window.addEventListener('scroll', handler);
+        return () => {
+            if (!active) return;
+            window.removeEventListener('scroll', handler);
+        };
+    }, [active, handler]);
 };
 
 // очередной хук клика за пределами,  но может принимать массив ссылок на объекты
