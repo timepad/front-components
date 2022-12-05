@@ -9,6 +9,8 @@ import {Button, ButtonVariant, IButtonProps} from '../button';
 import BookmarkIcon from '../../assets/svg/24/icon-bookmark-24.svg';
 import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark_s-24.svg';
 import PlayIcon from '../../assets/svg/32/icon-play-video-32.svg';
+import {Brick} from '../brick';
+import {TextLight} from '../form/TextLight';
 
 export default {
     title: 'AnchorCard',
@@ -39,13 +41,14 @@ const collectionCardsData: ICollectionCardProps[] = [
 
 export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
     const [width, setWidth] = useState(352);
+    const [url, setUrl] = useState(collectionCardsData[0].posterSrc);
     return (
         <div className="width-container">
             <div style={{width: width + 'px'}} key="AnchorCardNoContainer">
                 {collectionCardsData.map((el, index) => (
                     <AnchorCard key={index}>
                         <AnchorCard.Poster
-                            src={el.posterSrc}
+                            src={index === 0 ? url : el.posterSrc}
                             alt={`Постер к карточке: ${el.title}`}
                             width={352}
                             height={198}
@@ -68,6 +71,20 @@ export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
                     value={width}
                     onChange={(e) => setWidth(Number(e.target.value))}
                 />
+                <Brick size={5} />
+
+                <Typography.Body noPadding>Print img url here</Typography.Body>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        // @ts-ignore
+                        setUrl(e.target.url.value);
+                    }}
+                >
+                    <TextLight id="url" name="url" />
+                    <Brick />
+                    <Button type="submit">Load</Button>
+                </form>
             </div>
         </div>
     );

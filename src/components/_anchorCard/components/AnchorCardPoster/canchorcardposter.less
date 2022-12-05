@@ -8,14 +8,17 @@
 }
 
 .canchorcardposter {
+  overflow: hidden;
   display: block;
+  object-fit: cover;
   position: relative;
   min-width: 110px;
   min-height: 62px;
+  aspect-ratio: 16 / 9;
   .calcImgSize();
   &__image {
+    aspect-ratio: 16 / 9;
     display: block;
-    object-fit: contain;
     height: 100%;
     width: 100%;
     &--hidden {
@@ -40,6 +43,9 @@
     position: absolute;
   }
 
+  img {
+    object-fit: cover;
+  }
   // Использовал здесь функционал еще не добавленный в спецификацию MDN.
   // Думаю что не страшно, что скейл плейсхолдера не будет поддерживаться старыми браузерами.
   @container (max-width: 270px) {
