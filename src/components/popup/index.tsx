@@ -359,7 +359,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderContent = () => {
             const style = {
                 position: fixPositionOnScroll ? 'fixed' : 'absolute',
-                zIndex: fixPositionOnScroll ? '999' : undefined,
+                zIndex: '999',
             };
 
             // input нужен что бы не было автофокуса по 1ому элементу
