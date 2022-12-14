@@ -40,6 +40,7 @@
 
 .ctext {
     display: flex;
+    width: inherit;
 
     input,
     textarea {
@@ -56,9 +57,10 @@
         background: var(--bg-color) !important;
         color: var(--text-color) !important;
 
-        border-radius: @br-rounded;
-        box-sizing: border-box;
-        border: 2px solid transparent;
+      border-radius: @br-rounded;
+      box-sizing: border-box;
+      border: 2px solid transparent;
+      outline: none;
 
         &:hover {
             --text-color: @c-gray-50;

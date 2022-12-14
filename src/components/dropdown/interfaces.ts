@@ -21,6 +21,7 @@ export interface IDropdownProps {
     offsetY?: number;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
     repositionOnChangeContent?: boolean;
+    fixPositionOnScroll?: boolean;
     customPopupRoot?: string;
 }
 

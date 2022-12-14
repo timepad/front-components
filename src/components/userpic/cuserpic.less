@@ -35,13 +35,14 @@
         background-color: @c-gray-50-fade-20;
     }
 
-    // сделано чтобы повысить специфичность при использовании в дропдауне
+  // сделано чтобы повысить специфичность при использовании в дропдауне
+    & span,
     svg.cuserpic__svg {
-        position: absolute;
-        z-index: 1;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
         path {
             fill: @c-gray-35;

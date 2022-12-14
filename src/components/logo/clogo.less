@@ -67,9 +67,15 @@
         }
     }
 
+
     &&--hoverable {
         &:before {
-            transition: @duration-blink ease-in-out;
+            transform: none;
+            top: -9px;
+            left: -9px;
+            transition: opacity @duration-blink ease-in-out;
+            height: 32px;
+            width: 32px;
         }
 
         &:hover {

@@ -66,6 +66,7 @@ export interface IPopupProps {
     closeOnEscape?: boolean;
     repositionOnResize?: boolean;
     repositionOnChangeContent?: boolean;
+    fixPositionOnScroll?: boolean;
     mouseEnterDelay?: number;
     mouseLeaveDelay?: number;
     onOpen?: (event?: React.SyntheticEvent) => void;
@@ -95,6 +96,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             closeOnDocumentClick = true,
             repositionOnResize = true,
             repositionOnChangeContent = true,
+            fixPositionOnScroll = false,
             closeOnEscape = true,
             on = ['click'],
             contentStyle = {},
@@ -152,17 +154,47 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 keepTooltipInside,
             );
 
-            contentRef.current.style.top = modifiers.top !== undefined ? `${modifiers.top + window.scrollY}px` : '';
-            contentRef.current.style.bottom =
-                modifiers.bottom !== undefined ? `${modifiers.bottom - window.scrollY}px` : '';
-            contentRef.current.style.left = modifiers.left !== undefined ? `${modifiers.left + window.scrollX}px` : '';
-            contentRef.current.style.right =
-                modifiers.right !== undefined ? `${modifiers.right - window.scrollX}px` : '';
-        }, [isModal, isOpen, keepTooltipInside, offsetX, offsetY, position]);
+            const positions: Record<'top' | 'bottom' | 'left' | 'right', Record<string, string>> = {
+                top: {
+                    operator: '+',
+                    axis: 'Y',
+                },
+                bottom: {
+                    operator: '-',
+                    axis: 'Y',
+                },
+                left: {
+                    operator: '+',
+                    axis: 'X',
+                },
+                right: {
+                    operator: '-',
+                    axis: 'X',
+                },
+            };
+            (Object.entries(positions) as ['top' | 'bottom' | 'left' | 'right', Record<string, string>][]).forEach(
+                ([position, info]) => {
+                    if (!contentRef.current) {
+                        return;
+                    }
+
+                    if (modifiers[position] === undefined) {
+                        contentRef.current.style[position] = '';
+                    } else if (fixPositionOnScroll) {
+                        contentRef.current.style[position] = modifiers[position] + 'px';
+                    } else {
+                        contentRef.current.style[position] =
+                            (modifiers[position] || 0) + window[`scroll${info.axis as 'X' | 'Y'}`] + 'px';
+                    }
+                },
+            );
+        }, [isModal, isOpen, keepTooltipInside, offsetX, offsetY, position, fixPositionOnScroll]);
 
         useLayoutEffect(() => {
             if (isOpen) {
-                if (triggerRef.current) triggerRef.current.className = 'popup-hovered-trigger';
+                if (triggerRef.current) {
+                    triggerRef.current.classList.add('popup-hovered-trigger');
+                }
                 focusedElBeforeOpen.current = document.activeElement;
                 setPosition();
                 if (contentRef.current) {
@@ -170,10 +202,13 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 }
                 handleLockScroll();
             } else {
-                if (triggerRef.current) triggerRef.current.className = '';
+                if (triggerRef.current) {
+                    triggerRef.current.classList.remove('popup-hovered-trigger');
+                }
                 resetScroll();
             }
             return () => {
+                resetScroll();
                 clearTimeout(timeOut.current);
             };
         }, [isOpen, handleLockScroll, resetScroll, setPosition]);
@@ -327,9 +362,20 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         };
 
         const renderContent = () => {
+            const style = {
+                position: fixPositionOnScroll ? 'fixed' : 'absolute',
+                zIndex: '999',
+            };
+
             // input нужен что бы не было автофокуса по 1ому элементу
             return (
-                <div {...addWarperAction()} key="C" role={isModal ? 'dialog' : 'tooltip'} id={popupId.current}>
+                <div
+                    {...addWarperAction()}
+                    key="C"
+                    role={isModal ? 'dialog' : 'tooltip'}
+                    id={popupId.current}
+                    style={style}
+                >
                     <input style={{display: 'none'}} />
                     {children && typeof children === 'function' ? children(closePopup, isOpen) : children}
                 </div>
