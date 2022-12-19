@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useRef, useEffect, MutableRefObject} from 'react';
+import {useRef, useEffect, MutableRefObject, ComponentType} from 'react';
 import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
@@ -7,6 +7,8 @@ import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
 import {Footer, IModalFooterProps} from './ModalFooter';
 import {Body, IModalBodyProps} from './ModalBody';
 import './index.less';
+
+const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
 
 const useClickOutside = (
     ref: MutableRefObject<HTMLElement | null>,
@@ -90,7 +92,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     }, []);
 
     return (
-        <ReactModal
+        <ModalSafeForReact18
             className={cx(component('portal')(), className)}
             overlayClassName={cx(component('portal', 'overlay')(), overlayClassName)}
             isOpen={isOpen}
@@ -109,7 +111,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
                 ) : (
                     <div ref={wrapperRef}>{children}</div>
                 ))}
-        </ReactModal>
+        </ModalSafeForReact18>
     );
 };
 
