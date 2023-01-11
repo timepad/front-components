@@ -25,15 +25,19 @@ export const Dropdown: FC<IDropdownProps> & {
     children,
     priorityPositions = 'right-top',
     lockScroll = false,
+    customMobileBreakpoint,
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     // customPopupRoot,
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const {isMobilePortraitMax} = useMedia();
+    const {isMobilePortraitMax, customMobileBreakpoint} = useMedia<{customMobileBreakpoint: number}>(
+        customMobileBreakpoint ? {customMobileBreakpoint: customMobileBreakpoint} : undefined,
+    );
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
+    // region Render content
     const [header, footer, otherChildren] = useMemo(() => {
         const otherChildren: React.ReactNode[] = [];
         let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
@@ -82,9 +86,10 @@ export const Dropdown: FC<IDropdownProps> & {
             );
         }
     }, [footer, header, isMobilePortraitMax, isScrollable, modifier, otherChildren, ref]);
+    // endregion
 
     const popupProps = useMemo<IPopupProps>(() => {
-        if (isMobilePortraitMax) {
+        if (customMobileBreakpoint || isMobilePortraitMax) {
             return {
                 ...props,
                 className: cx('cdropdown__mobile-container'),
