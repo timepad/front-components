@@ -23,7 +23,6 @@ export interface IDropdownProps {
     repositionOnChangeContent?: boolean;
     fixPositionOnScroll?: boolean;
     customPopupRoot?: string;
-    // TODO: переимновать нормально этот пропс
     customMobileBreakpoint?: number;
 }
 
