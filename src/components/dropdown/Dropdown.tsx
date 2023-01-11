@@ -25,19 +25,23 @@ export const Dropdown: FC<IDropdownProps> & {
     children,
     priorityPositions = 'right-top',
     lockScroll = false,
-    customMobileBreakpoint,
+    customMobileBreakpoint: mobileMaxWidth,
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     // customPopupRoot,
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref] = useClientRect();
-    const {isMobilePortraitMax, customMobileBreakpoint} = useMedia<{customMobileBreakpoint: number}>(
-        customMobileBreakpoint ? {customMobileBreakpoint: customMobileBreakpoint} : undefined,
-    );
+    const {isMobilePortraitMax, customMobileBreakpoint} = useMedia<{customMobileBreakpoint: typeof mobileMaxWidth}>({
+        customMobileBreakpoint: mobileMaxWidth,
+    });
+    const isMobile = (function () {
+        if (customMobileBreakpoint !== undefined) return customMobileBreakpoint;
+        else return isMobilePortraitMax;
+    })();
+
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
-    // region Render content
     const [header, footer, otherChildren] = useMemo(() => {
         const otherChildren: React.ReactNode[] = [];
         let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
@@ -63,17 +67,32 @@ export const Dropdown: FC<IDropdownProps> & {
         return [header, footer, otherChildren];
     }, [children]);
 
-    const innerContent = useMemo<ReactElement>(() => {
-        if (isMobilePortraitMax) {
-            return (
+    let popupProps: IPopupProps;
+    if (isMobile) {
+        popupProps = {
+            ...props,
+            className: cx('cdropdown__mobile-container'),
+            lockScroll: true,
+            position: 'corner-bottom-left' as PopupPosition,
+        };
+    } else {
+        popupProps = {
+            position: priorityPositions,
+            className: cx({'cdropdown__scrollable-container': isScrollable}),
+            lockScroll: lockScroll || isScrollable,
+            ...props,
+        };
+    }
+
+    return (
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
+            {isMobile ? (
                 <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}
                     <div className="сdropdown-body--mobile-content">{otherChildren}</div>
                     {footer?.props.mobile ? footer : <DefaultFooter onCancel={() => popupRef.current?.close()} />}
                 </div>
-            );
-        } else {
-            return (
+            ) : (
                 <div
                     ref={ref}
                     className={cx('сdropdown-body', modifier)}
@@ -83,32 +102,7 @@ export const Dropdown: FC<IDropdownProps> & {
                     <div>{otherChildren}</div>
                     {footer?.props.desktop && footer}
                 </div>
-            );
-        }
-    }, [footer, header, isMobilePortraitMax, isScrollable, modifier, otherChildren, ref]);
-    // endregion
-
-    const popupProps = useMemo<IPopupProps>(() => {
-        if (customMobileBreakpoint || isMobilePortraitMax) {
-            return {
-                ...props,
-                className: cx('cdropdown__mobile-container'),
-                lockScroll: true,
-                position: 'corner-bottom-left' as PopupPosition,
-            };
-        } else {
-            return {
-                position: priorityPositions,
-                className: cx({'cdropdown__scrollable-container': isScrollable}),
-                lockScroll: lockScroll || isScrollable,
-                ...props,
-            };
-        }
-    }, [isMobilePortraitMax, isScrollable, lockScroll, priorityPositions, props]);
-
-    return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
-            {innerContent}
+            )}
         </Popup>
     );
 };
