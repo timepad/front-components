@@ -77,8 +77,7 @@ export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        // @ts-ignore
-                        setUrl(e.target.url.value);
+                        setUrl((e.target as never as {url: {value: string}}).url.value);
                     }}
                 >
                     <TextLight id="url" name="url" />
