@@ -23,6 +23,7 @@ export interface IDropdownProps {
     repositionOnChangeContent?: boolean;
     fixPositionOnScroll?: boolean;
     customPopupRoot?: string;
+    customMobileBreakpoint?: number;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {

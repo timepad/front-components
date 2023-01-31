@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {SpinLoader} from './SpinLoader';
-import {Theme} from './theme';
 import {SpinLoaderWrapper} from './SpinLoaderWrapper';
 import {Button} from '../button';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
+import {Theme} from '../../services/helpers/classHelpers';
 
 export default {
     title: 'SpinLoader',

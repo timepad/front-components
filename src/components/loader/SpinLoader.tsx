@@ -1,7 +1,6 @@
 import React from 'react';
-import {Theme} from './theme';
 import './index.less';
-import {component} from '../../services/helpers/classHelpers';
+import {component, Theme} from '../../services/helpers/classHelpers';
 
 export interface ISpinLoaderProps {
     theme?: Theme;
