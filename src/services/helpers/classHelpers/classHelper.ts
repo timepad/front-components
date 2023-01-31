@@ -11,7 +11,7 @@ import {withNaming, Preset} from '@bem-react/classname';
   "cform__input cform__input--error cform__input--input-type_simple",
   где input — элемент, error: true — модификатор, type: 'simple' — значение
 */
-const defaultPreset: Preset = {
+export const defaultPreset: Preset = {
     e: '__',
     m: '--',
     v: '_',
