@@ -9,7 +9,11 @@ export interface IThemeProps {
     default: boolean;
 }
 
-export const Theme = ({light, dark, children}: PropsWithChildren<RequireOnlyOne<IThemeProps>>): React.ReactElement => {
+export const ThemeContainer = ({
+    light,
+    dark,
+    children,
+}: PropsWithChildren<RequireOnlyOne<IThemeProps>>): React.ReactElement => {
     const classes = component('theme')({lightpic: light, darkpic: dark});
     return <div className={classes}>{children}</div>;
 };

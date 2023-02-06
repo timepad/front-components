@@ -1,0 +1,28 @@
+@import "../../assets/css/vars";
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  &--nowrap {
+    flex-wrap: nowrap;
+  }
+  &--mobile {
+    width: 320px;
+    margin: 0 auto;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06), 0 16px 28px rgba(0, 0, 0, 0.07);
+  }
+}
+
+.width-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  &__range {
+    white-space: nowrap;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    padding: 0 150px;
+  }
+}
