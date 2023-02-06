@@ -8,6 +8,11 @@
 }
 
 .cdropdown__mobile-container-content {
+  display: flex;
+  align-items: flex-end;
+  height: 100vh;
+  height: -webkit-fill-available;
+
   .ccancel-button__mobile {
     width: 100%;
     justify-content: center;
@@ -25,18 +30,16 @@
 }
 
 .сdropdown-body--mobile {
-  --maxheight: -webkit-fill-available;
   max-height: calc(100% - 16px);
-  max-height: calc(var(--maxheight) - 16px);
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   width: 100vw;
-  border-radius: 8px 8px 0 0;
   overflow: hidden;
   &-content {
     .hidden-scroll();
     overflow-y: auto;
+    border-radius: 8px 8px 0 0;
   }
 }
 
