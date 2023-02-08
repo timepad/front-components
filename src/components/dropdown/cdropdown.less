@@ -8,6 +8,11 @@
 }
 
 .cdropdown__mobile-container-content {
+  display: flex;
+  align-items: flex-end;
+  height: 100vh;
+  height: -webkit-fill-available;
+
   .ccancel-button__mobile {
     width: 100%;
     justify-content: center;
@@ -25,7 +30,7 @@
 }
 
 .сdropdown-body--mobile {
-  max-height: calc(100vh - 16px);
+  max-height: calc(100% - 16px);
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -35,6 +40,7 @@
   &-content {
     .hidden-scroll();
     overflow-y: auto;
+    border-radius: 8px 8px 0 0;
   }
 }
 
