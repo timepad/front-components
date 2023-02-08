@@ -95,9 +95,9 @@ export const Default: IStorybookComponent = () => {
                     <Typography.Caption>Caption 16-16</Typography.Caption>
                 </Typography.Multiple>
                 <Brick size={0.5} />
-                <Typography.Multiple responsive style={{backgroundColor: 'white'}}>
+                <Typography.Multiple style={{backgroundColor: 'white'}}>
                     <Typography.Subheader responsive>Subheader responsive 32–32(24-28)</Typography.Subheader>
-                    <Typography.Caption>Caption 16-16</Typography.Caption>
+                    <Typography.Caption responsive>Caption 16-16</Typography.Caption>
                 </Typography.Multiple>
             </div>
         </div>
