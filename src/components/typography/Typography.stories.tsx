@@ -80,29 +80,25 @@ export const Default: IStorybookComponent = () => {
 
             <hr className="cdivider" />
             <div style={{backgroundColor: 'black', padding: '16px'}}>
-                <Typography.Multiple text="Body 16-16" caption="Small 16-16" style={{backgroundColor: 'white'}} />
+                <Typography.Multiple style={{backgroundColor: 'white'}}>
+                    <Typography.Body size={16}>Body 16-16</Typography.Body>
+                    <Typography.Small className="t-color-gray-50">Small 16-16</Typography.Small>
+                </Typography.Multiple>
                 <Brick size={0.5} />
-                <Typography.Multiple
-                    text="Body 16-16"
-                    caption="Small 16-16"
-                    reverse
-                    style={{backgroundColor: 'white'}}
-                />
+                <Typography.Multiple style={{backgroundColor: 'white'}}>
+                    <Typography.Small className="t-color-gray-50">Small 16-16</Typography.Small>
+                    <Typography.Body size={16}>Body 16-16</Typography.Body>
+                </Typography.Multiple>
                 <Brick size={0.5} />
-                <Typography.Multiple
-                    text="Subheader 32-32"
-                    caption="Caption 16-16"
-                    afisha
-                    style={{backgroundColor: 'white'}}
-                />
+                <Typography.Multiple style={{backgroundColor: 'white'}}>
+                    <Typography.Subheader>Subheader 32-32</Typography.Subheader>
+                    <Typography.Caption>Caption 16-16</Typography.Caption>
+                </Typography.Multiple>
                 <Brick size={0.5} />
-                <Typography.Multiple
-                    text="Subheader responsive 32–32(24-28)"
-                    caption="Caption 16–16"
-                    afisha
-                    responsive
-                    style={{backgroundColor: 'white'}}
-                />
+                <Typography.Multiple style={{backgroundColor: 'white'}}>
+                    <Typography.Subheader responsive>Subheader responsive 32–32(24-28)</Typography.Subheader>
+                    <Typography.Caption responsive>Caption 16-16</Typography.Caption>
+                </Typography.Multiple>
             </div>
         </div>
     );
