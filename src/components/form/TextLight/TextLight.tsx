@@ -2,10 +2,12 @@ import React, {FC, useMemo} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {IFormTextLightProps} from './TextLight.types';
+import {IFormInputLightProps, IFormTextLightProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
-
+import MaskedInput from 'react-input-mask';
 import './index.less';
+import {FieldMetaProps} from 'formik/dist/types';
+import {ITextareaProps} from '../Textarea/Textarea';
 
 export const TextLight: FC<IFormTextLightProps> = ({
     customIcon = undefined,
@@ -43,30 +45,10 @@ export const TextLight: FC<IFormTextLightProps> = ({
 
     const id = `${fieldName}_id_field`;
 
-    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <>
             <div className={inputClasses}>
-                {props.multiline ? (
-                    <Textarea
-                        name={fieldName}
-                        id={id}
-                        disabled={disabled}
-                        style={style}
-                        {...props}
-                        onChange={props.onChange}
-                    />
-                ) : (
-                    <input
-                        name={fieldName}
-                        id={id}
-                        disabled={disabled}
-                        ref={(props as any).inputRef}
-                        style={style}
-                        {...(props as any)}
-                        onChange={props.onChange}
-                    />
-                )}
+                <Input name={fieldName} id={id} disabled={disabled} style={style} {...props} />
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
                     {customIcon ? customIcon : success && <CheckSvg className={iconClasses} />}
@@ -74,5 +56,30 @@ export const TextLight: FC<IFormTextLightProps> = ({
             </div>
             {!!caption && <div className={captionClasses}>{caption}</div>}
         </>
+    );
+};
+
+// TODO: сверху все типизировано, здесь необходимы as, any и спред пропсов, иначе в otp ничего не билдится и куча варнингов
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
+const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'value'>>> = ({
+    touched,
+    multiline,
+    initialValue,
+    initialTouched,
+    initialError,
+    value = '',
+    ...props
+}) => {
+    const currentValue = useMemo(() => {
+        return value ? value : '';
+    }, [value]);
+    if (multiline) {
+        return <Textarea value={currentValue} {...(props as ITextareaProps)} />;
+    }
+    if (!multiline && (props as IFormInputLightProps).type === 'phone') {
+        return <MaskedInput value={currentValue} mask="+7 (999) 999 99 99" {...(props as IFormInputLightProps)} />;
+    }
+    return (
+        <input value={currentValue} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />
     );
 };

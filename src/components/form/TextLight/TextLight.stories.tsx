@@ -37,6 +37,7 @@ interface IInputData {
     error?: string;
     autoFocus?: boolean;
     caption?: string;
+    type?: HTMLInputElement['type'];
 }
 
 const inputsData: IInputData[] = [
@@ -52,6 +53,17 @@ const inputsData: IInputData[] = [
     // Empty input
     {
         placeholder: 'Empty',
+        value: '',
+        multiline: false,
+        disabled: false,
+        success: false,
+        error: undefined,
+        caption: 'Caption',
+    },
+    // Phone input
+    {
+        placeholder: 'Phone',
+        type: 'phone',
         value: '',
         multiline: false,
         disabled: false,
@@ -112,10 +124,21 @@ const inputsData: IInputData[] = [
 ];
 
 const InputRow = (props: IInputData) => {
-    const {placeholder, value: valueDefault, disabled, success, error, autoFocus, multiline = false, caption} = props;
+    const {
+        placeholder,
+        value: valueDefault,
+        disabled,
+        success,
+        error,
+        autoFocus,
+        multiline = false,
+        caption,
+        type,
+    } = props;
     const [value, setValue] = React.useState(valueDefault);
     return (
         <Form.TextLight
+            type={type}
             placeholder={placeholder}
             value={value}
             disabled={disabled}
@@ -146,8 +169,9 @@ const InputsContainer = (props: IInputsContainerProps) => {
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lfelx-y-axis">
                             {data.map((input, index) => (
-                                <div key={index}>
+                                <div key={input.placeholder + index}>
                                     <InputRow
+                                        type={input.type}
                                         placeholder={input.placeholder}
                                         value={input.value}
                                         disabled={input.disabled}
@@ -175,7 +199,11 @@ export const Simple: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             {Object.keys(themes).map((themeColor, index) => (
-                <InputsContainer data={inputsData} themeColor={themeColor as keyof typeof themes} key={index} />
+                <InputsContainer
+                    data={inputsData}
+                    themeColor={themeColor as keyof typeof themes}
+                    key={themeColor + index}
+                />
             ))}
         </>
     );
@@ -210,6 +238,13 @@ export const FormikExampleWithYup: IStorybookComponent = () => {
                             caption="Какой-то caption"
                             type="text"
                             placeholder="Введите email"
+                        />
+
+                        <Form.TextLightField
+                            name="phone"
+                            caption="Какой-то caption"
+                            type="phone"
+                            placeholder="Введите телефон"
                         />
                     </FormikForm>
                 )}
