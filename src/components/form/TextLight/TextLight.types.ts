@@ -8,13 +8,14 @@ export type IFormTextLightProps = {
 
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onErrorTruncation?: (truncated: boolean) => void;
-} & (
-    | ({
-          multiline?: false;
-          inputRef?: React.MutableRefObject<HTMLInputElement | null>;
-      } & React.InputHTMLAttributes<HTMLInputElement>)
-    | ({
-          multiline: true;
-          textareaRef?: React.Ref<HTMLTextAreaElement>;
-      } & ITextareaProps)
-);
+} & (IFormInputLightProps | IFormTextareaLightProps);
+
+export type IFormInputLightProps = {
+    multiline?: false;
+    inputRef?: React.MutableRefObject<HTMLInputElement | null>;
+} & React.InputHTMLAttributes<HTMLInputElement>;
+
+export type IFormTextareaLightProps = {
+    multiline: true;
+    textareaRef?: React.Ref<HTMLTextAreaElement>;
+} & ITextareaProps;
