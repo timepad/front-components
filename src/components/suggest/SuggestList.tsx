@@ -12,7 +12,7 @@ interface ISuggestListProps {
     cursor: number;
 }
 
-export const Suggestlist: React.FC<ISuggestListProps> = ({
+export const Suggestlist: React.FC<React.PropsWithChildren<ISuggestListProps>> = ({
     visible,
     cursor,
     suggestions,

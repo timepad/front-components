@@ -13,7 +13,7 @@ export interface IHeaderComponentProps {
     closeHandler?: () => void;
 }
 
-export const Title: React.FC = ({children}) => {
+export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
     return (
         <Typography.Lead noPadding responsive className={component('form', 'title-text')()}>
             {children}
@@ -21,7 +21,7 @@ export const Title: React.FC = ({children}) => {
     );
 };
 
-export const Description: React.FC = ({children}) => {
+export const Description: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
     return (
         <Fragment>
             <Brick />
@@ -32,7 +32,12 @@ export const Description: React.FC = ({children}) => {
     );
 };
 
-export const Header: React.FC<IHeaderComponentProps> = ({backHandler, closeHandler, titleIsTransparent, children}) => {
+export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = ({
+    backHandler,
+    closeHandler,
+    titleIsTransparent,
+    children,
+}) => {
     const titleClass = component(
         'form',
         'title',

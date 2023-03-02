@@ -35,7 +35,7 @@ export const PaginationContext = createContext<IPaginationDefaultContext>({
     onChange: defaultChange,
 });
 
-const Pagination: FC<IPagination> & {
+const Pagination: FC<React.PropsWithChildren<IPagination>> & {
     Item: typeof PaginationItem;
     Next: typeof PaginationNext;
     Prev: typeof PaginationPrev;

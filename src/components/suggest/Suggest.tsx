@@ -24,7 +24,7 @@ interface IState {
     cursor: number;
 }
 
-export const Suggest: React.FC<ISuggestProps & IFormTextLightProps> = (props) => {
+export const Suggest: React.FC<React.PropsWithChildren<ISuggestProps & IFormTextLightProps>> = (props) => {
     const {className, value, setInputValue, data} = props;
     const classNames = cx(className, component('suggest')());
     const timeout: React.MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null);

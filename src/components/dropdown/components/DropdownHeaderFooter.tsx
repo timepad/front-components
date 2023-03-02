@@ -10,7 +10,12 @@ export interface IFooterHeaderProps
     mobile?: boolean;
 }
 
-export const DropdownHeader: FC<IFooterHeaderProps> = ({mobile, desktop, children, ...props}) => {
+export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
+    mobile,
+    desktop,
+    children,
+    ...props
+}) => {
     const className = cx(
         'mtheme--darkpic-bg mtheme--darkpic',
         component('dropdown', 'header')({mobile, desktop}),
@@ -24,7 +29,12 @@ export const DropdownHeader: FC<IFooterHeaderProps> = ({mobile, desktop, childre
     );
 };
 
-export const DropdownFooter: FC<IFooterHeaderProps> = ({mobile, desktop, children, ...props}) => {
+export const DropdownFooter: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
+    mobile,
+    desktop,
+    children,
+    ...props
+}) => {
     const className = cx(component('dropdown', 'footer')({mobile, desktop}), props.className);
 
     return (

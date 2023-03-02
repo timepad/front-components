@@ -6,7 +6,12 @@ import {Textarea} from '../Textarea';
 
 import './index.less';
 
-export const Text: FC<IFormTextProps> = ({disabled = false, error = '', className = '', ...props}: IFormTextProps) => {
+export const Text: FC<React.PropsWithChildren<IFormTextProps>> = ({
+    disabled = false,
+    error = '',
+    className = '',
+    ...props
+}: IFormTextProps) => {
     const finalClassNames = cx(
         component('text')({
             disabled,

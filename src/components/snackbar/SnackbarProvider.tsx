@@ -27,7 +27,7 @@ export const snackbarInterval = 150;
 // Context used by the hook useSnackbar() and HoC withSnackbar()
 export const SnackbarContext: React.Context<ContextType> = createContext({});
 
-export const SnackbarProvider: React.FC = ({children}) => {
+export const SnackbarProvider: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
     const [open, setOpen] = useState(false);
     const [timeoutId, setTimeoutId] = useState(-1);
     const [text, setText] = useState('');

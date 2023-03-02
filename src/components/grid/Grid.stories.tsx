@@ -14,8 +14,12 @@ export default {
     component: Grid,
 };
 
-const Child: React.FC = () => <div style={{width: '100%', height: '100px', backgroundColor: 'blue'}} />;
-const ChildRed: React.FC = () => <div style={{width: '100%', height: '100px', backgroundColor: 'red'}} />;
+const Child: React.FC<React.PropsWithChildren<unknown>> = () => (
+    <div style={{width: '100%', height: '100px', backgroundColor: 'blue'}} />
+);
+const ChildRed: React.FC<React.PropsWithChildren<unknown>> = () => (
+    <div style={{width: '100%', height: '100px', backgroundColor: 'red'}} />
+);
 
 export const Default: IStorybookComponent = () => {
     return (

@@ -8,33 +8,33 @@
  */
 
 .t-lead-fs-lh-desktop() {
-  font-size: @fs-lead;
-  line-height: @lh-lead;
-  padding: 20px 0 24px 0;
+    font-size: @fs-lead;
+    line-height: @lh-lead;
+    padding: 20px 0 24px 0;
 }
 
 .t-lead-fs-lh-mobile() {
-  font-size: @fs-lead-mobile;
-  line-height: @lh-lead-mobile;
-  padding: 14px 0 18px 0;
+    font-size: @fs-lead-mobile;
+    line-height: @lh-lead-mobile;
+    padding: 14px 0 18px 0;
 }
 
 .t-lead {
-  @media (min-width: @rsp-desktop-min) {
-    .t-lead-fs-lh-desktop;
-  }
-
-  @media (max-width: @rsp-mobile-max) {
-    .t-lead-fs-lh-mobile;
-  }
-
-  &-24 {
-    padding: 12px 0 16px 0;
+    @media (min-width: @rsp-desktop-min) {
+        .t-lead-fs-lh-desktop;
+    }
 
     @media (max-width: @rsp-mobile-max) {
-      padding: 6px 0 10px;
+        .t-lead-fs-lh-mobile;
     }
-  }
 
-  .typo-modificators;
+    &-24 {
+        padding: 12px 0 16px 0;
+
+        @media (max-width: @rsp-mobile-max) {
+            padding: 6px 0 10px;
+        }
+    }
+
+    .typo-modificators;
 }

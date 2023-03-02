@@ -11,7 +11,13 @@ export interface IBrickProps {
 
 const defaultBrickSize = 1;
 
-export const Brick: React.FC<IBrickProps> = ({size = defaultBrickSize, desktop, mobile, className, children}) => (
+export const Brick: React.FC<React.PropsWithChildren<IBrickProps>> = ({
+    size = defaultBrickSize,
+    desktop,
+    mobile,
+    className,
+    children,
+}) => (
     <>
         {!!desktop && (
             <div className={cx(className, 'hidden-mobile')} style={{height: `${desktop * 16}px`}}>

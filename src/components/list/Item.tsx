@@ -9,13 +9,13 @@ export interface IItem {
     as?: keyof JSX.IntrinsicElements;
     prefix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     suffix?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    children?: React.ReactChild | React.ReactChild[];
+    children?: React.ReactNode | React.ReactNode[];
     textPosition?: 'start' | 'center' | 'end';
     header?: boolean;
     active?: boolean;
 }
 
-const Item: React.FC<IItem | any> = React.forwardRef<HTMLElement, IItem>(
+const Item: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<HTMLElement, IItem>(
     (
         {
             children,

@@ -1,91 +1,91 @@
 .clogo {
-  display: inline-flex;
-
-  svg {
-    fill: @c-black;
-
-    &.gray {
-      fill: @c-gray-50;
-    }
-
-    &.white {
-      fill: @c-white;
-    }
-
-    &.blue {
-      fill: @c-primary-blue;
-    }
-
-    &.purple {
-      fill: @c-primary-blue-80;
-    }
-  }
-
-  &&--expandable, &&--hoverable {
-    position: relative;
-    width: 12px;
-    height: 14px;
-    z-index: 0;
+    display: inline-flex;
 
     svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 12px;
-      transition: @duration-blink ease-in-out;
+        fill: @c-black;
+
+        &.gray {
+            fill: @c-gray-50;
+        }
+
+        &.white {
+            fill: @c-white;
+        }
+
+        &.blue {
+            fill: @c-primary-blue;
+        }
+
+        &.purple {
+            fill: @c-primary-blue-80;
+        }
     }
 
-    &:before {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      top: -17px;
-      left: -18px;
-      height: 48px;
-      width: 48px;
-      background-color: @c-white;
-      box-shadow: @box-shadow;
-      border-radius: 24px;
-      transform: scale(0.5);
-      transform-origin: 24px 24px;
-      opacity: 0;
-      transition: width @duration-blink ease-in-out, transform @duration-blink/2 ease-in-out @duration-blink/2, opacity @duration-blink;
-    }
-
-    &:hover {
-      svg {
-        width: 107px;
-      }
-
-      &:before {
-        opacity: 1;
-        transform: scale(1);
-        width: 143px;
-      }
-    }
-  }
-
-
-  &&--hoverable {
-    &:before {
-      transform: none;
-      top: -9px;
-      left: -9px;
-      transition: opacity @duration-blink ease-in-out;
-      height: 32px;
-      width: 32px;
-    }
-
-    &:hover {
-      svg {
+    &&--expandable,
+    &&--hoverable {
+        position: relative;
         width: 12px;
-        fill: @c-primary-blue;
-      }
+        height: 14px;
+        z-index: 0;
 
-      &:before {
-        width: 32px;
-      }
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 12px;
+            transition: @duration-blink ease-in-out;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: -17px;
+            left: -18px;
+            height: 48px;
+            width: 48px;
+            background-color: @c-white;
+            box-shadow: @box-shadow;
+            border-radius: 24px;
+            transform: scale(0.5);
+            transform-origin: 24px 24px;
+            opacity: 0;
+            transition: width @duration-blink ease-in-out, transform @duration-blink / 2 ease-in-out @duration-blink / 2,
+                opacity @duration-blink;
+        }
+
+        &:hover {
+            svg {
+                width: 107px;
+            }
+
+            &:before {
+                opacity: 1;
+                transform: scale(1);
+                width: 143px;
+            }
+        }
     }
-  }
-}
 
+
+    &&--hoverable {
+        &:before {
+            transform: none;
+            top: -9px;
+            left: -9px;
+            transition: opacity @duration-blink ease-in-out;
+            height: 32px;
+            width: 32px;
+        }
+
+        &:hover {
+            svg {
+                width: 12px;
+            }
+
+            &:before {
+                width: 48px;
+            }
+        }
+    }
+}

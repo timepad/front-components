@@ -10,13 +10,15 @@ export interface ITabContent extends HTMLAttributes<HTMLDivElement> {
     tabId: TabId;
 }
 
-export const TabContent: FC<ITabContent> = observer(({children, tabId, className, ...restProps}) => {
-    const {tabsStore} = useContext(TabsContext);
-    const divClasses = cx(component('tab-bar', 'content')(), className);
+export const TabContent: FC<React.PropsWithChildren<ITabContent>> = observer(
+    ({children, tabId, className, ...restProps}) => {
+        const {tabsStore} = useContext(TabsContext);
+        const divClasses = cx(component('tab-bar', 'content')(), className);
 
-    return tabsStore.activeTabId === tabId ? (
-        <div {...restProps} className={divClasses}>
-            {children}
-        </div>
-    ) : null;
-});
+        return tabsStore.activeTabId === tabId ? (
+            <div {...restProps} className={divClasses}>
+                {children}
+            </div>
+        ) : null;
+    },
+);

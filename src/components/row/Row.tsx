@@ -20,7 +20,7 @@ export interface IRowProps extends React.DetailedHTMLProps<React.HTMLAttributes<
     horizontalPadding?: 0 | 8 | 16 | 24 | 32;
 }
 
-const Row: React.FC<IRowProps> & {
+const Row: React.FC<React.PropsWithChildren<IRowProps>> & {
     Body: typeof RowBody;
     Icon: typeof RowIcon;
     Text: typeof RowText;

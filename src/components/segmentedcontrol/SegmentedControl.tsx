@@ -37,7 +37,7 @@ export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
     onControlClick?: (ControlId: string, setActiveControlId: ControlClickHandler) => void;
 }
 
-export const SegmentedControl: FC<ISegmentedControlProps> & {
+export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps>> & {
     Control: typeof Control;
     List: typeof ControlList;
 } = ({

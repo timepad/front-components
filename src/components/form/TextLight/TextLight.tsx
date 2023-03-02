@@ -9,7 +9,7 @@ import './index.less';
 import {FieldMetaProps} from 'formik/dist/types';
 import {ITextareaProps} from '../Textarea/Textarea';
 
-export const TextLight: FC<IFormTextLightProps> = ({
+export const TextLight: FC<React.PropsWithChildren<IFormTextLightProps>> = ({
     customIcon = undefined,
     success = false,
     disabled = false,

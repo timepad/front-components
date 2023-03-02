@@ -21,7 +21,7 @@ export default {
 
 const initialDate = moment('2020-03-24');
 
-const Wrapper: FC = ({children}) => (
+const Wrapper: FC<React.PropsWithChildren<unknown>> = ({children}) => (
     <div className="сdropdown-body" style={{width: 'fit-content'}}>
         {children}
     </div>

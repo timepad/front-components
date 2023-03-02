@@ -11,7 +11,11 @@ export interface IModuleProps {
 
 const defaultModuleSize: moduleSize = 12;
 
-export const ModuleAbsolute: React.FC<IModuleProps> = ({size = defaultModuleSize, className, children}) => {
+export const ModuleAbsolute: React.FC<React.PropsWithChildren<IModuleProps>> = ({
+    size = defaultModuleSize,
+    className,
+    children,
+}) => {
     const classNames = cx(className, layout(`module-absolute-${size}`)());
 
     return <div className={classNames}>{children}</div>;

@@ -1,255 +1,255 @@
 .tpui-mx-svg-fill(@color) {
-  fill: @color;
+    fill: @color;
 }
 
-.tpui-mx-color(@color) { // TODO: применить где-нибудь
-  color: @color;
-  .aicon svg,
-  svg.aicon
-  {
-    .tpui-mx-svg-fill(@color);
-  }
+.tpui-mx-color(@color) {
+    // TODO: применить где-нибудь
+    color: @color;
+    .aicon svg,
+    svg.aicon {
+        .tpui-mx-svg-fill(@color);
+    }
 }
 
 .tpui-mx-btnwise-small {
-  height: 18px;
-  padding: 0 8px;
-  border-width: 0;
-  border-style: none;
+    height: 18px;
+    padding: 0 8px;
+    border-width: 0;
+    border-style: none;
 }
 
 .tpui-mx-btnwise-small-bordered(@border-width) {
-  height: 18px;
-  box-sizing: border-box;
-  padding: 2px (8px - @border-width) 4px;
+    height: 18px;
+    box-sizing: border-box;
+    padding: 2px (8px - @border-width) 4px;
 
-  border-width: @border-width;
-  border-style: solid;
+    border-width: @border-width;
+    border-style: solid;
 }
 
 .tpui-mx-btnwise {
-  @media(min-width: @rsp-desktop-min) {
-    padding: 5px 16px;
-  }
-  @media(max-width: @rsp-mobile-max) {
-    padding: 9px 16px;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        padding: 5px 16px;
+    }
+    @media (max-width: @rsp-mobile-max) {
+        padding: 9px 16px;
+    }
 
-  border-width: 0;
-  border-style: none;
+    border-width: 0;
+    border-style: none;
 }
 
 .tpui-mx-btnwise-bordered(@border-width) {
-  @media(min-width: @rsp-desktop-min) {
-    padding: (5px - @border-width) (16px - @border-width);
-  }
-  @media(max-width: @rsp-mobile-max) {
-    padding: (9px - @border-width) (15px - @border-width);
-  }
+    @media (min-width: @rsp-desktop-min) {
+        padding: (5px - @border-width) (16px - @border-width);
+    }
+    @media (max-width: @rsp-mobile-max) {
+        padding: (9px - @border-width) (15px - @border-width);
+    }
 
-  border-width: @border-width;
-  border-style: solid;
+    border-width: @border-width;
+    border-style: solid;
 }
 
 .tpui-mx-btnwise-big {
-  padding: 7px 16px 6px;
-  border-width: 0;
-  border-style: none;
+    padding: 7px 16px 6px;
+    border-width: 0;
+    border-style: none;
 }
 .tpui-mx-btnwise-big-bordered(@border-width) {
-  padding: (6px - @border-width) (16px - @border-width) (7px - @border-width);
-  border-width: @border-width;
-  border-style: solid;
+    padding: (6px - @border-width) (16px - @border-width) (7px - @border-width);
+    border-width: @border-width;
+    border-style: solid;
 }
 
 .tpui-mx-btnwise-king {
-  padding: 16px 32px 21px;
-  border-width: 0;
-  border-style: none;
+    padding: 16px 32px 21px;
+    border-width: 0;
+    border-style: none;
 }
 
 .tpui-mx-btnwise-king-bordered(@border-width) {
-  padding: (18px - @border-width) (32px - @border-width) (19px - @border-width);
-  border-width: @border-width;
-  border-style: solid;
+    padding: (18px - @border-width) (32px - @border-width) (19px - @border-width);
+    border-width: @border-width;
+    border-style: solid;
 }
 
 .tpui-mx-type-control {
-  @media(min-width: @rsp-desktop-min) {
-    font-size: @fs-control;
-    line-height: @lh-control;
-  }
-  @media(max-width: @rsp-mobile-max) {
-    font-size: @fs-control-mobile;
-    line-height: @lh-control-mobile;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        font-size: @fs-control;
+        line-height: @lh-control;
+    }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-control-mobile;
+        line-height: @lh-control-mobile;
+    }
 }
 
 .tpui-mx-block-position(@block-height, @line-height) {
-  margin-top: -(@block-height - @line-height)/2;
-  margin-bottom: -(@block-height - @line-height)/2;
+    margin-top: -(@block-height - @line-height)/2;
+    margin-bottom: -(@block-height - @line-height)/2;
 }
 
 .tpui-mx-type-control-small {
-  font-size: @fs-small;
-  line-height: 12px;
+    font-size: @fs-small;
+    line-height: 12px;
 }
 
 .tpui-mx-type-button-small {
-  font-size: @fs-control;
-  line-height: @lh-control;
-  letter-spacing: 0.01px;
+    font-size: @fs-control;
+    line-height: @lh-control;
+    letter-spacing: 0.01px;
 }
 
 .tpui-mx-type-control-big {
-  font-size: @fs-control-big;
-  line-height: @lh-control-big;
+    font-size: @fs-control-big;
+    line-height: @lh-control-big;
 }
 
 .tpui-mx-type-control-king {
-  font-size: @fs-control-big;
-  line-height: @lh-control-big;
+    font-size: @fs-control-big;
+    line-height: @lh-control-big;
 }
 
 .tpui-mx-dropdown {
-  background-color: @c-black;
-  border-radius: @border-radius-container;
-  background-clip: padding-box;
+    background-color: @c-black;
+    border-radius: @border-radius-container;
+    background-clip: padding-box;
 
-  .tpui-mx-color(@c-white);
+    .tpui-mx-color(@c-white);
 }
 
 /* Mixin for flexbox grid-like wrappers, and other vertical margins resets */
 .tpui-mx-flexbox-grid-wrapper {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Typography mixins */
 
 .tpui-mx-fs-lh-body {
-  @media (max-width: @rsp-mobile-max) {
-    font-size: @fs-body-mobile;
-    line-height: @lh-body-mobile;
-  }
-  @media (min-width: @rsp-mobile-max) {
-    font-size: @fs-body;
-    line-height: @lh-body;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-body-mobile;
+        line-height: @lh-body-mobile;
+    }
+    @media (min-width: @rsp-mobile-max) {
+        font-size: @fs-body;
+        line-height: @lh-body;
+    }
 }
 
 .tpui-mx-fs-lh-caption--mobile {
-  font-size: @fs-caption-mobile;
-  line-height: @lh-caption-mobile;
+    font-size: @fs-caption-mobile;
+    line-height: @lh-caption-mobile;
 }
 .tpui-mx-fs-lh-caption--desktop {
-  font-size: @fs-caption;
-  line-height: @lh-caption;
+    font-size: @fs-caption;
+    line-height: @lh-caption;
 }
 
 .tpui-mx-fs-lh-caption {
-  @media (max-width: @rsp-mobile-max) {
-    .tpui-mx-fs-lh-caption--mobile
-  }
-  @media (min-width: @rsp-mobile-max) {
-    .tpui-mx-fs-lh-caption--desktop
-  }
+    @media (max-width: @rsp-mobile-max) {
+        .tpui-mx-fs-lh-caption--mobile;
+    }
+    @media (min-width: @rsp-mobile-max) {
+        .tpui-mx-fs-lh-caption--desktop;
+    }
 }
 
 .tpui-mx-fs-lh-small {
-  @media (max-width: @rsp-mobile-max) {
-    font-size: @fs-small-mobile;
-    line-height: @lh-small-mobile;
-  }
-  @media (min-width: @rsp-desktop-min) {
-    font-size: @fs-small;
-    line-height: @lh-small;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-small-mobile;
+        line-height: @lh-small-mobile;
+    }
+    @media (min-width: @rsp-desktop-min) {
+        font-size: @fs-small;
+        line-height: @lh-small;
+    }
 }
 
 //подробнее про дельты https://timepad.local/tpui/css/#deltas
 // TODO: убрать
-@tsubheader-delta-fs-title: unit(( @fs-subheader-large - @fs-subheader ) / (@rsp-desktop-large-min - @rsp-desktop-min));
-@tsubheader-delta-lh-title: unit(( @lh-subheader-large - @lh-subheader ) / (@rsp-desktop-large-min - @rsp-desktop-min));
-@tsubheader-delta-ut-title: unit(( @ut-subheader-large - @ut-subheader ) / (@rsp-desktop-large-min - @rsp-desktop-min));
-@tsubheader-delta-ub-title: unit(( @ub-subheader-large - @ub-subheader ) / (@rsp-desktop-large-min - @rsp-desktop-min));
+@tsubheader-delta-fs-title: unit((@fs-subheader-large - @fs-subheader) / (@rsp-desktop-large-min - @rsp-desktop-min));
+@tsubheader-delta-lh-title: unit((@lh-subheader-large - @lh-subheader) / (@rsp-desktop-large-min - @rsp-desktop-min));
+@tsubheader-delta-ut-title: unit((@ut-subheader-large - @ut-subheader) / (@rsp-desktop-large-min - @rsp-desktop-min));
+@tsubheader-delta-ub-title: unit((@ub-subheader-large - @ub-subheader) / (@rsp-desktop-large-min - @rsp-desktop-min));
 
 .tpui-mx-fs-lh-subheader {
-  @media (max-width: @rsp-mobile-max) {
-    font-size: @fs-subheader-mobile;
-    line-height: @lh-subheader-mobile;
-  }
-  @media (min-width: @rsp-desktop-min) {
-    /* In @rsp-desktop-large-min size of title is larger  */
-    font-size: @fs-subheader;
-    line-height: @lh-subheader;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-subheader-mobile;
+        line-height: @lh-subheader-mobile;
+    }
+    @media (min-width: @rsp-desktop-min) {
+        /* In @rsp-desktop-large-min size of title is larger  */
+        font-size: @fs-subheader;
+        line-height: @lh-subheader;
+    }
 }
 
 .tpui-mx-fs-lh-lead {
-  @media (max-width: @rsp-mobile-max) {
-    font-size: @fs-lead-mobile;
-    line-height: @lh-lead-mobile;
-  }
-  @media (min-width: @rsp-mobile-max) {
-    font-size: @fs-lead;
-    line-height: @lh-lead;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-lead-mobile;
+        line-height: @lh-lead-mobile;
+    }
+    @media (min-width: @rsp-mobile-max) {
+        font-size: @fs-lead;
+        line-height: @lh-lead;
+    }
 }
 
 .tpui-mx-fs-lh-header {
-  @media (max-width: @rsp-mobile-max) {
-    font-size: @fs-header-mobile;
-    line-height: @lh-header-mobile;
-  }
-  @media (min-width: @rsp-mobile-max) {
-    font-size: @fs-header;
-    line-height: @lh-header;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        font-size: @fs-header-mobile;
+        line-height: @lh-header-mobile;
+    }
+    @media (min-width: @rsp-mobile-max) {
+        font-size: @fs-header;
+        line-height: @lh-header;
+    }
 }
 
 .tpui-mx-fs-lh-headline {
-  font-size: @fs-headline;
-  line-height: @lh-headline;
+    font-size: @fs-headline;
+    line-height: @lh-headline;
 }
 
 .tpui-mx-tol-bullets {
-  list-style-type: none;
+    list-style-type: none;
 
-  & > li {
-    position: relative;
-    counter-increment: customlistcounter;
+    & > li {
+        position: relative;
+        counter-increment: customlistcounter;
 
-    &:before {
-      content: counter(customlistcounter);
-      opacity: .5;
-      position: absolute;
-      left: -32px;
+        &:before {
+            content: counter(customlistcounter);
+            opacity: 0.5;
+            position: absolute;
+            left: -32px;
+        }
     }
-  }
 
-  &:first-child {
-    counter-reset: customlistcounter;
-  }
+    &:first-child {
+        counter-reset: customlistcounter;
+    }
 }
 
 .tpui-mx-tul-bullets {
-  list-style-type: none;
+    list-style-type: none;
 
-  & > li {
-    position: relative;
+    & > li {
+        position: relative;
 
-    &:before {
-      content: '•';
-      opacity: .5;
-      position: absolute;
-      left: -32px;
+        &:before {
+            content: '•';
+            opacity: 0.5;
+            position: absolute;
+            left: -32px;
+        }
     }
-  }
 
-  &:first-child {
-    counter-reset: customlistcounter;
-  }
+    &:first-child {
+        counter-reset: customlistcounter;
+    }
 }
 
 /*
@@ -282,40 +282,39 @@
  */
 
 .tpui-mx-color-base (@color: @c-black) {
-  body & {
-    color: @color;
-  }
-  & svg.aicon,
-  & .aicon svg
-  {
-    .tpui-mx-svg-fill(@color);
-  }
+    body & {
+        color: @color;
+    }
+    & svg.aicon,
+    & .aicon svg {
+        .tpui-mx-svg-fill(@color);
+    }
 }
 
 .func-color (@color: @c-black) {
-  &, .typo-links {
-    .tpui-mx-color-base(@color);
-  }
+    &,
+    .typo-links {
+        .tpui-mx-color-base(@color);
+    }
 }
 
 .tpui-mx-color-links-full-base (@link:@c-primary-blue, @link-hover:@c-black) {
-  &,
-  &:visited,
-  &:active
-  {
-    color: @link;
+    &,
+    &:visited,
+    &:active {
+        color: @link;
 
-    svg.aicon,
-    .aicon svg {
-      .tpui-mx-svg-fill(@link);
-    }
+        svg.aicon,
+        .aicon svg {
+            .tpui-mx-svg-fill(@link);
+        }
 
-    &.link--disabled {
-      color: @c-gray-opaque-50;
-      cursor: default;
+        &.link--disabled {
+            color: @c-gray-opaque-50;
+            cursor: default;
+        }
     }
-  }
-  .on-hover({
+    .on-hover({
     color: @link-hover;
 
     svg.aicon,
@@ -331,27 +330,28 @@
 }
 
 .func-color-links-full (@link:@c-primary-blue, @link-hover:@c-black) {
-  &, .typo-links & {
-    .tpui-mx-color-links-full-base(@link, @link-hover);
-  }
+    &,
+    .typo-links & {
+        .tpui-mx-color-links-full-base(@link, @link-hover);
+    }
 }
 
 .tpui-mx-color-links-base (@link:@c-primary-blue, @link-hover:@c-black) {
-  &,
-  &:visited,
-  &:active
-  {
-    color: @link;
-  }
-  .on-hover({
+    &,
+    &:visited,
+    &:active {
+        color: @link;
+    }
+    .on-hover({
     color: @link-hover;
   });
 }
 
 .func-color-links (@link:@c-primary-blue, @link-hover:@c-black) {
-  &, .typo-links & {
-    .tpui-mx-color-links-base(@link, @link-hover);
-  }
+    &,
+    .typo-links & {
+        .tpui-mx-color-links-base(@link, @link-hover);
+    }
 }
 
 /*
@@ -360,70 +360,71 @@
 
 //убирает серый прямоугольник из нажимаемых штук в сафари
 .ext-no-tap-highlight {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .ext-links-decoration {
-  a {
-    text-decoration: none;
-  }
+    a {
+        text-decoration: none;
+    }
 }
 
 .on-hover (@content) {
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      @content();
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            @content();
+        }
     }
-  }
 }
 
 .on-hover (active-fallback; @content) {
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      @content();
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            @content();
+        }
     }
-  }
-  @media (hover: none) and (pointer: coarse) {
-    &:active {
-      @content();
+    @media (hover: none) and (pointer: coarse) {
+        &:active {
+            @content();
+        }
     }
-  }
 }
 
 .reset-interactions (@content) {
-  &, &:active {
-    @content();
-  }
+    &,
+    &:active {
+        @content();
+    }
 
-  .on-hover(@content);
+    .on-hover(@content);
 }
 
 .hidden-scroll() {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
-  }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .typo-modificators {
-  &--regular {
-    font-weight: normal;
-  }
+    &--regular {
+        font-weight: normal;
+    }
 
-  &--bold {
-    font-weight: bold;
-  }
+    &--bold {
+        font-weight: bold;
+    }
 
-  &--black {
-    font-weight: 900;
-  }
+    &--black {
+        font-weight: 900;
+    }
 
-  &--no-padding {
-    padding: 0;
-  }
+    &--no-padding {
+        padding: 0;
+    }
 
-  &--no-wrap {
-    white-space: nowrap;
-  }
+    &--no-wrap {
+        white-space: nowrap;
+    }
 }

@@ -7,7 +7,7 @@ interface IRowBodyProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
     children: React.ReactNode | React.ReactNode[];
 }
 
-const RowBody: React.FC<IRowBodyProps> = (props): JSX.Element => {
+const RowBody: React.FC<React.PropsWithChildren<IRowBodyProps>> = (props): JSX.Element => {
     const {children, className} = props;
     const classNames = cx(component('row', 'body')(), className);
 

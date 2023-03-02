@@ -11,7 +11,7 @@ interface ITabProps extends HTMLAttributes<HTMLLIElement> {
     tabId: TabId;
 }
 
-export const Tab: FC<ITabProps> = observer(({children, className, tabId, ...rest}) => {
+export const Tab: FC<React.PropsWithChildren<ITabProps>> = observer(({children, className, tabId, ...rest}) => {
     const {tabsStore, handleOnTabClick} = useContext(TabsContext);
     const liClasses = cx(component('tab-bar', 'li')({['is-active']: tabsStore.activeTabId === tabId}), className);
     const buttonClasses = component('tab-bar', 'button')();

@@ -15,7 +15,14 @@ const PossibleSizes: Record<'Desktop' | 'Tablet' | 'Mobile', number> = {
     Mobile: 2,
 };
 
-export const GridCol: FC<IGridColProps> = ({children, desktop = 12, tablet = 6, mobile = 2, offset = 0, ...props}) => {
+export const GridCol: FC<React.PropsWithChildren<IGridColProps>> = ({
+    children,
+    desktop = 12,
+    tablet = 6,
+    mobile = 2,
+    offset = 0,
+    ...props
+}) => {
     const gridSize = getActualGridSize();
 
     const getGridColumn = (value: number) => {

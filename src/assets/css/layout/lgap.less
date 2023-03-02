@@ -25,86 +25,85 @@ broken usage:
 */
 
 .lgap {
-  display: block;
-  clear: both;
-  float: none;
-  width: 16px;
-  min-width: 16px;
-  margin: 0;
-  padding: 0;
-
-  @media (max-width: @rsp-mobile-max) {
-    &--mobile {
-      width: 16px;
-      min-width: 16px;
-    }
-  }
-  @media (min-width: @rsp-desktop-min) {
-    &--desktop {
-      width: 16px;
-      min-width: 16px;
-    }
-  }
-
-  .lbrick-width-variant(@width-step) when (@width-step <= 12) {
-
-    &-@{width-step},
-    &-@{width-step}-0 {
-      width: unit(@width-step * 16, px);
-      min-width: unit(@width-step * 16, px);
-
-      @media (max-width: @rsp-mobile-max) {
-        &--mobile {
-          width: unit(@width-step * 16, px);
-          min-width: unit(@width-step * 16, px);
-        }
-      }
-      @media (min-width: @rsp-desktop-min) {
-        &--desktop {
-          width: unit(@width-step * 16, px);
-          min-width: unit(@width-step * 16, px);
-        }
-      }
-    }
-
-    &-@{width-step}-5 {
-      width: unit((@width-step + 0.5) * 16, px);
-      min-width: unit((@width-step + 0.5) * 16, px);
-
-      @media (max-width: @rsp-mobile-max) {
-        &--mobile {
-          width: unit((@width-step + 0.5) * 16, px);
-          min-width: unit((@width-step + 0.5) * 16, px);
-        }
-      }
-      @media (min-width: @rsp-desktop-min) {
-        &--desktop {
-          width: unit((@width-step + 0.5) * 16, px);
-          min-width: unit((@width-step + 0.5) * 16, px);
-        }
-      }
-    }
-
-    .lbrick-width-variant(@width-step + 1);
-  }
-
-  &-0-5 {
-    width: 8px;
-    min-width: 8px;
+    display: block;
+    clear: both;
+    float: none;
+    width: 16px;
+    min-width: 16px;
+    margin: 0;
+    padding: 0;
 
     @media (max-width: @rsp-mobile-max) {
-      &--mobile {
-        width: 8px;
-        min-width: 8px;
-      }
+        &--mobile {
+            width: 16px;
+            min-width: 16px;
+        }
     }
     @media (min-width: @rsp-desktop-min) {
-      &--desktop {
+        &--desktop {
+            width: 16px;
+            min-width: 16px;
+        }
+    }
+
+    .lbrick-width-variant(@width-step) when (@width-step <= 12) {
+        &-@{width-step},
+        &-@{width-step}-0 {
+            width: unit(@width-step * 16, px);
+            min-width: unit(@width-step * 16, px);
+
+            @media (max-width: @rsp-mobile-max) {
+                &--mobile {
+                    width: unit(@width-step * 16, px);
+                    min-width: unit(@width-step * 16, px);
+                }
+            }
+            @media (min-width: @rsp-desktop-min) {
+                &--desktop {
+                    width: unit(@width-step * 16, px);
+                    min-width: unit(@width-step * 16, px);
+                }
+            }
+        }
+
+        &-@{width-step}-5 {
+            width: unit((@width-step + 0.5) * 16, px);
+            min-width: unit((@width-step + 0.5) * 16, px);
+
+            @media (max-width: @rsp-mobile-max) {
+                &--mobile {
+                    width: unit((@width-step + 0.5) * 16, px);
+                    min-width: unit((@width-step + 0.5) * 16, px);
+                }
+            }
+            @media (min-width: @rsp-desktop-min) {
+                &--desktop {
+                    width: unit((@width-step + 0.5) * 16, px);
+                    min-width: unit((@width-step + 0.5) * 16, px);
+                }
+            }
+        }
+
+        .lbrick-width-variant(@width-step + 1);
+    }
+
+    &-0-5 {
         width: 8px;
         min-width: 8px;
-      }
-    }
-  }
 
-  .lbrick-width-variant(1)
+        @media (max-width: @rsp-mobile-max) {
+            &--mobile {
+                width: 8px;
+                min-width: 8px;
+            }
+        }
+        @media (min-width: @rsp-desktop-min) {
+            &--desktop {
+                width: 8px;
+                min-width: 8px;
+            }
+        }
+    }
+
+    .lbrick-width-variant(1);
 }

@@ -1,15 +1,13 @@
-
 .tmultiline {
-  overflow: hidden;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
 }
 
 .generate-clamp(@countLine) when (@countLine =< 12) {
-  .tmultiline-@{countLine} {
-    -webkit-line-clamp: @countLine;
-  }
-  .generate-clamp(@countLine + 1);
+    .tmultiline-@{countLine} {
+        -webkit-line-clamp: @countLine;
+    }
+    .generate-clamp(@countLine + 1);
 }
 .generate-clamp(1);
-

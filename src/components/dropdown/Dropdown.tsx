@@ -12,12 +12,12 @@ import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 
-export const Dropdown: FC<IDropdownProps> & {
-    Button: FC<IButtonProps>;
-    SList: FC<IDropdownSortableListProps>;
+export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
+    Button: FC<React.PropsWithChildren<IButtonProps>>;
+    SList: FC<React.PropsWithChildren<IDropdownSortableListProps>>;
     SItem: ComponentClass<ISortableItemProps>;
-    Header: FC<IFooterHeaderProps>;
-    Footer: FC<IFooterHeaderProps>;
+    Header: FC<React.PropsWithChildren<IFooterHeaderProps>>;
+    Footer: FC<React.PropsWithChildren<IFooterHeaderProps>>;
 } = ({
     show,
     keepInsideParent = true,
@@ -111,7 +111,7 @@ interface IDefaultFooterProps {
     onCancel?: () => void;
 }
 
-const DefaultFooter: FC<IDefaultFooterProps> = ({onCancel}) => {
+const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel}) => {
     return (
         <DropdownFooter mobile>
             <Button large variant={ButtonVariant.transparent} className="ccancel-button__mobile" onClick={onCancel}>

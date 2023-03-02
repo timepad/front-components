@@ -7,7 +7,7 @@ export interface ICounterProps {
     value?: number | string;
 }
 
-export const Counter: React.FC<ICounterProps> = ({value, children}) => {
+export const Counter: React.FC<React.PropsWithChildren<ICounterProps>> = ({value, children}) => {
     const badgeClasses = cn(
         component('counter__inner')(),
         value == null ? 'empty' : String(value).length === 1 ? 'single' : '',

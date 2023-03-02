@@ -35,7 +35,14 @@ export interface ITabProps extends HTMLAttributes<HTMLDivElement> {
     onTabClick?: (TabId: string, setActiveTabId: (id: string) => void) => void;
 }
 
-const TabsBase: FC<ITabProps> = ({children, defaultTabId, activeTabId, onTabClick, className, ...rest}) => {
+const TabsBase: FC<React.PropsWithChildren<ITabProps>> = ({
+    children,
+    defaultTabId,
+    activeTabId,
+    onTabClick,
+    className,
+    ...rest
+}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const initialTabId = useMemo(() => defaultTabId, []);
     const divClasses = cx(component('tab-bar')(), className);

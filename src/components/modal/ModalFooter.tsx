@@ -7,7 +7,7 @@ export interface IModalFooterProps {
     brickProps?: IBrickProps;
 }
 
-export const Footer: React.FC<IModalFooterProps> = ({children, brickProps}) => {
+export const Footer: React.FC<React.PropsWithChildren<IModalFooterProps>> = ({children, brickProps}) => {
     return (
         <Fragment>
             <Brick size={2} {...brickProps} />

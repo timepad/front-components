@@ -7,14 +7,20 @@ export interface IItem {
     secondaryText?: string;
     label?: string;
     as?: keyof JSX.IntrinsicElements;
-    prefix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
-    suffix?: React.ComponentClass<any> | React.FC<any> | React.ComponentType;
-    children?: React.ReactChild | React.ReactChild[];
+    prefix?:
+        | React.ComponentClass<any>
+        | React.FC<React.PropsWithChildren<any>>
+        | React.ComponentType<React.PropsWithChildren<unknown>>;
+    suffix?:
+        | React.ComponentClass<any>
+        | React.FC<React.PropsWithChildren<any>>
+        | React.ComponentType<React.PropsWithChildren<unknown>>;
+    children?: React.ReactNode | React.ReactNode[];
     header?: boolean;
     active?: boolean;
 }
 
-const Group: React.FC<IItem | any> = React.forwardRef<HTMLDivElement, IItem>(
+const Group: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<HTMLDivElement, IItem>(
     (
         {
             children,

@@ -1,78 +1,79 @@
 .cicon {
-  vertical-align: middle;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    position: relative;
 
-  &--clickable {
-    cursor: pointer;
-  }
-
-  &--animatable {
-    transition: transform @ease-in-out @duration;
-  }
-
-  &--animatable-blink {
-    transition: transform @ease-in-out @duration-blink;
-  }
-
-  &.cicon--accordeon {
-    top: -2px;
-  }
-
-  &.cicon--rotate-90 {
-    transform-origin: center center;
-    transform: rotate(90deg);
-  }
-
-  &.cicon--rotate-180 {
-    transform-origin: center center;
-    transform: rotate(180deg);
-  }
-
-  &.cicon--rotate-270 {
-    transform-origin: center center;
-    transform: rotate(270deg);
-  }
-
-  &.cicon--green use {
-    fill: @c-green;
-  }
-
-  &__auto {
-    height: auto;
-    width: auto;
-  }
-  &.cicon--eventpage-address {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-
-    @media (max-width: @rsp-mobile-max) {
-      top: 3px;
-      left: 3px;
+    &--clickable {
+        cursor: pointer;
     }
-  }
+
+    &--animatable {
+        transition: transform @ease-in-out @duration;
+    }
+
+    &--animatable-blink {
+        transition: transform @ease-in-out @duration-blink;
+    }
+
+    &.cicon--accordeon {
+        top: -2px;
+    }
+
+    &.cicon--rotate-90 {
+        transform-origin: center center;
+        transform: rotate(90deg);
+    }
+
+    &.cicon--rotate-180 {
+        transform-origin: center center;
+        transform: rotate(180deg);
+    }
+
+    &.cicon--rotate-270 {
+        transform-origin: center center;
+        transform: rotate(270deg);
+    }
+
+    &.cicon--green use {
+        fill: @c-green;
+    }
+
+    &__auto {
+        height: auto;
+        width: auto;
+    }
+    &.cicon--eventpage-address {
+        position: absolute;
+        top: 7px;
+        left: 7px;
+
+        @media (max-width: @rsp-mobile-max) {
+            top: 3px;
+            left: 3px;
+        }
+    }
 }
 .cicon.cicon--32-from-16 {
-  vertical-align: middle;
-  display: inline-block;
-  width: 64px;
-  height: 64px;
-  position: relative;
-  margin: -16px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    position: relative;
+    margin: -16px;
 }
 
 //чтбы высота иконки была с высоту символа
 .cicon.cicon--inline.cicon--16 {
-  margin: -8px -4px;
-  position: relative;
-  vertical-align: baseline;
+    margin: -8px -4px;
+    position: relative;
+    vertical-align: baseline;
 }
 
-.cicon.cicon--32 {}
+.cicon.cicon--32 {
+}
 
 .cicon.cicon--header {
-  top: -5px;
+    top: -5px;
 }

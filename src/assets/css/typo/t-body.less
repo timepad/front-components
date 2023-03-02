@@ -9,35 +9,34 @@
  .t-body--regular - - font-weight: normal
  */
 
-
 .t-body-fs-lh-desktop() {
-  font-size: @fs-body;
-  line-height: @lh-body;
+    font-size: @fs-body;
+    line-height: @lh-body;
 }
 
 .t-body-fs-lh-mobile() {
-  font-size: @fs-body-mobile;
-  line-height: @lh-body-mobile;
+    font-size: @fs-body-mobile;
+    line-height: @lh-body-mobile;
 }
 
 .t-body {
-  padding: 21px 0 24px 0;
+    padding: 21px 0 24px 0;
 
-  @media (min-width: @rsp-desktop-min) {
-    .t-body-fs-lh-desktop;
-  }
+    @media (min-width: @rsp-desktop-min) {
+        .t-body-fs-lh-desktop;
+    }
 
-  @media (max-width: @rsp-mobile-max) {
-    .t-body-fs-lh-mobile;
-  }
+    @media (max-width: @rsp-mobile-max) {
+        .t-body-fs-lh-mobile;
+    }
 
-  &-24 {
-    padding: 13px 0 16px 0;
-  }
+    &-24 {
+        padding: 13px 0 16px 0;
+    }
 
-  &-16 {
-    padding: 5px 0 8px 0;
-  }
+    &-16 {
+        padding: 5px 0 8px 0;
+    }
 
-  .typo-modificators;
+    .typo-modificators;
 }

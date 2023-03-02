@@ -38,7 +38,7 @@ export interface ITypographyCommonProps<Size = undefined>
     innerRef?: React.LegacyRef<HTMLDivElement>;
 }
 
-const Typography: FC<ITypographyProps> & ITypographyChildren = ({
+const Typography: FC<React.PropsWithChildren<ITypographyProps>> & ITypographyChildren = ({
     children,
     variant,
     size,

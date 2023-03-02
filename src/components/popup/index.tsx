@@ -45,13 +45,18 @@ export interface IPopupActions {
     toggle: () => void;
 }
 export interface IPopupProps {
-    trigger: React.FC<{isOpen: boolean}>;
+    trigger: React.FC<React.PropsWithChildren<{isOpen: boolean}>>;
     open?: boolean;
     disabled?: boolean;
     nested?: boolean;
     defaultOpen?: boolean;
     on?: Event | Event[];
-    children?: React.ReactNode;
+    children?:
+        | React.ReactNode
+        | ((
+              closePopup: (event?: React.SyntheticEvent | KeyboardEvent | TouchEvent | MouseEvent) => void,
+              isOpen: boolean,
+          ) => React.ReactNode);
     position?: PopupPosition | PopupPosition[];
     offsetX?: number;
     offsetY?: number;

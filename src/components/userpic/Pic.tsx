@@ -29,14 +29,14 @@ interface IUserLabel {
 
 const svgClassName = component('userpic', 'svg')();
 
-const UserImage: FC<IUserImageProps> = ({className, imgURL}) => (
+const UserImage: FC<React.PropsWithChildren<IUserImageProps>> = ({className, imgURL}) => (
     <div className={className} style={{backgroundImage: `url("${imgURL ?? ''}")`}} />
 );
 
-const UserLabel: FC<IUserLabel> = ({label}) =>
+const UserLabel: FC<React.PropsWithChildren<IUserLabel>> = ({label}) =>
     label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon className={svgClassName} />;
 
-export const Pic: React.FC<IProps> = ({
+export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     imgURL,
     label,
     size,

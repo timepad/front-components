@@ -5,10 +5,11 @@ import {Group} from './Group';
 import {Divider} from '../divider';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
+import {ReactNode} from 'react';
 
 export interface IList {
     className?: string;
-    children?: React.ReactChild | React.ReactChild[];
+    children?: ReactNode | ReactNode[];
     as?: keyof JSX.IntrinsicElements;
     full?: boolean;
     variant?: 'white' | 'dark' | 'transparent';
@@ -17,7 +18,7 @@ export interface IList {
     fontFamily?: 'main';
 }
 
-const ListBase: React.FC<IList> = ({
+const ListBase: React.FC<React.PropsWithChildren<IList>> = ({
     children,
     as = 'div',
     className = '',

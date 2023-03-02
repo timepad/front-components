@@ -12,7 +12,7 @@ export interface IPageHeaderProps {
     onBackClick?: () => void;
 }
 
-const PageHeader: FC<IPageHeaderProps> = ({children, label, caption, onBackClick}) => {
+const PageHeader: FC<React.PropsWithChildren<IPageHeaderProps>> = ({children, label, caption, onBackClick}) => {
     const [containerRef, contentRef, buttonsRef, isFitContent] = useHeaderContentWidth();
 
     const isTall: boolean = useMemo(() => {

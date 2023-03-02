@@ -4,7 +4,7 @@ export interface IStorybookComponent extends React.FC {
     storyName?: string;
 }
 
-export const StoryTitle: FC = ({children}) => {
+export const StoryTitle: FC<React.PropsWithChildren<unknown>> = ({children}) => {
     return (
         <>
             <span className="t-caption t-caption-16">{children}</span>
@@ -14,7 +14,7 @@ export const StoryTitle: FC = ({children}) => {
     );
 };
 
-export const StoryDescription: FC = ({children}) => {
+export const StoryDescription: FC<React.PropsWithChildren<unknown>> = ({children}) => {
     return (
         <>
             <span className="t-small">{children}</span>
@@ -26,7 +26,7 @@ export const StoryDescription: FC = ({children}) => {
 interface ISpacerProp extends HTMLAttributes<HTMLDivElement> {
     width?: number;
 }
-export const Spacer: FC<ISpacerProp> = ({width = 32}) => <div style={{width: width}} />;
+export const Spacer: FC<React.PropsWithChildren<ISpacerProp>> = ({width = 32}) => <div style={{width: width}} />;
 
 export const dummy = (): null => {
     return null;

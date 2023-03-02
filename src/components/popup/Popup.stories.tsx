@@ -12,7 +12,7 @@ export default {
     component: Popup,
 } as Meta;
 
-const DropBtn: React.FC = () => {
+const DropBtn: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <>
             <Popup
@@ -39,7 +39,7 @@ const DropBtn: React.FC = () => {
         </>
     );
 };
-const DropBtnLong: React.FC = () => {
+const DropBtnLong: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <>
             <Popup
@@ -60,7 +60,7 @@ const DropBtnLong: React.FC = () => {
         </>
     );
 };
-const DropBtnNested: React.FC = () => {
+const DropBtnNested: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <>
             <Popup
@@ -114,7 +114,7 @@ const DropBtnNested: React.FC = () => {
         </>
     );
 };
-const ModalBtn: React.FC = () => {
+const ModalBtn: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <>
             <Popup trigger={() => <Button>Выпадающий список</Button>} overlayStyle={{background: '#ffffffdf'}} modal>

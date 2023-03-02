@@ -1,163 +1,163 @@
 .ctypography {
-  font-family: @ff;
+    font-family: @ff;
 
-  &__header {
-    padding: 7px 0 25px 0;
-    font-weight: 900;
-    font-size: @fs-header;
-    line-height: @lh-header;
-  }
-
-  &__subheader {
-    padding: 16px 0 25px 0;
-    font-weight: 900;
-    font-size: @fs-subheader;
-    line-height: @lh-subheader;
-
-    &--24 {
-      padding: 8px 0 17px 0;
-    }
-  }
-
-  &__lead {
-    padding: 20px 0 24px 0;
-    font-size: @fs-lead;
-    line-height: @lh-lead;
-
-    &--24 {
-      padding: 12px 0 16px 0;
-    }
-  }
-
-  &__body {
-    padding: 21px 0 24px 0;
-    font-size: @fs-body;
-    line-height: @lh-body;
-
-    &--24 {
-      padding: 13px 0 16px 0;
+    &__header {
+        padding: 7px 0 25px 0;
+        font-weight: 900;
+        font-size: @fs-header;
+        line-height: @lh-header;
     }
 
-    &--16 {
-      padding: 5px 0 8px 0;
-    }
-  }
-
-  &__caption {
-    padding: 7px 0 11px 0;
-    font-size: @fs-caption;
-    line-height: @lh-caption;
-  }
-
-  &__small {
-    padding: 9px 0 12px 0;
-    font-size: @fs-small;
-    line-height: @lh-small;
-
-    &--8 {
-      padding: 1px 0 4px 0;
-    }
-  }
-
-  &__multiple {
-    .ctypography__subheader {
-      padding: 16px 0 10px 0;
-    }
-
-    .ctypography__caption {
-      padding: 0 0 25px;
-    }
-
-    .ctypography__body {
-      padding: 5px 0 2px 0;
-    }
-
-    .ctypography__body + .ctypography__small {
-      padding: 0 0 11px 0;
-    }
-
-    .ctypography__small {
-      padding: 8px 0 1px 0;
-    }
-
-    .ctypography__small + .ctypography__body {
-      padding: 0 0 9px 0;
-    }
-  }
-
-  @media (max-width: @rsp-mobile-max) {
-    &--responsive {
-      &.ctypography__header {
-        font-size: @fs-header-mobile;
-        line-height: @lh-header-mobile;
-        padding: 18px 0 26px;
-      }
-
-      &.ctypography__subheader {
-        font-size: @fs-subheader-mobile;
-        line-height: @lh-subheader-mobile;
-        padding: 13px 0 19px 0;
-      }
-
-      &.ctypography__lead {
-        font-size: @fs-lead-mobile;
-        line-height: @lh-lead-mobile;
-        padding: 14px 0 18px 0;
+    &__subheader {
+        padding: 16px 0 25px 0;
+        font-weight: 900;
+        font-size: @fs-subheader;
+        line-height: @lh-subheader;
 
         &--24 {
-          padding: 6px 0 10px;
+            padding: 8px 0 17px 0;
         }
-      }
+    }
 
-      &.ctypography__small {
-        font-size: @fs-small-mobile;
-        line-height: @lh-small-mobile;
-      }
+    &__lead {
+        padding: 20px 0 24px 0;
+        font-size: @fs-lead;
+        line-height: @lh-lead;
 
-      &.ctypography__caption {
-        font-size: @fs-caption-mobile;
-        line-height: @lh-caption-mobile;
-        padding: 8px 0 12px;
-      }      
+        &--24 {
+            padding: 12px 0 16px 0;
+        }
+    }
 
-      &.ctypography__body {
-        font-size: @fs-body-mobile;
-        line-height: @lh-body-mobile;
+    &__body {
+        padding: 21px 0 24px 0;
+        font-size: @fs-body;
+        line-height: @lh-body;
+
+        &--24 {
+            padding: 13px 0 16px 0;
+        }
 
         &--16 {
-          padding: 6px 0 10px 0;
+            padding: 5px 0 8px 0;
         }
-      }
+    }
+
+    &__caption {
+        padding: 7px 0 11px 0;
+        font-size: @fs-caption;
+        line-height: @lh-caption;
+    }
+
+    &__small {
+        padding: 9px 0 12px 0;
+        font-size: @fs-small;
+        line-height: @lh-small;
+
+        &--8 {
+            padding: 1px 0 4px 0;
+        }
+    }
+
+    &__multiple {
+        .ctypography__subheader {
+            padding: 16px 0 10px 0;
+        }
+
+        .ctypography__caption {
+            padding: 0 0 25px;
+        }
+
+        .ctypography__body {
+            padding: 5px 0 2px 0;
+        }
+
+        .ctypography__body + .ctypography__small {
+            padding: 0 0 11px 0;
+        }
+
+        .ctypography__small {
+            padding: 8px 0 1px 0;
+        }
+
+        .ctypography__small + .ctypography__body {
+            padding: 0 0 9px 0;
+        }
+    }
+
+    @media (max-width: @rsp-mobile-max) {
+        &--responsive {
+            &.ctypography__header {
+                font-size: @fs-header-mobile;
+                line-height: @lh-header-mobile;
+                padding: 18px 0 26px;
+            }
+
+            &.ctypography__subheader {
+                font-size: @fs-subheader-mobile;
+                line-height: @lh-subheader-mobile;
+                padding: 13px 0 19px 0;
+            }
+
+            &.ctypography__lead {
+                font-size: @fs-lead-mobile;
+                line-height: @lh-lead-mobile;
+                padding: 14px 0 18px 0;
+
+                &--24 {
+                    padding: 6px 0 10px;
+                }
+            }
+
+            &.ctypography__small {
+                font-size: @fs-small-mobile;
+                line-height: @lh-small-mobile;
+            }
+
+            &.ctypography__caption {
+                font-size: @fs-caption-mobile;
+                line-height: @lh-caption-mobile;
+                padding: 8px 0 12px;
+            }
+
+            &.ctypography__body {
+                font-size: @fs-body-mobile;
+                line-height: @lh-body-mobile;
+
+            &--16 {
+                padding: 6px 0 10px 0;
+            }
+        }
     }
     &__multiple > &--responsive {
-      &.ctypography__subheader {
-        padding: 13px 0 11px 0;
-      }
-      &.ctypography__caption {
-        padding: 0 0 19px 0;
-        font-size: 15px;
-        line-height: 22px;
-      }
+        &.ctypography__subheader {
+            padding: 13px 0 11px 0;
+        }
+        &.ctypography__caption {
+            padding: 0 0 19px 0;
+            font-size: 15px;
+            line-height: 22px;
+        }
     }
   }
 
-  &--regular {
-    font-weight: normal !important;
-  }
+    &--regular {
+        font-weight: normal !important;
+    }
 
-  &--bold {
-    font-weight: bold !important;
-  }
+    &--bold {
+        font-weight: bold !important;
+    }
 
-  &--black {
-    font-weight: 900 !important;
-  }
+    &--black {
+        font-weight: 900 !important;
+    }
 
-  &--no-padding {
-    padding: 0 !important;
-  }
+    &--no-padding {
+        padding: 0 !important;
+    }
 
-  &--no-wrap {
-    white-space: nowrap !important;
-  }
+    &--no-wrap {
+        white-space: nowrap !important;
+    }
 }

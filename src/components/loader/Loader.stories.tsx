@@ -34,7 +34,7 @@ interface ILoadersContainer {
     theme: Theme;
 }
 
-const LoadersContainer: React.FC<ILoadersContainer> = (props) => {
+const LoadersContainer: React.FC<React.PropsWithChildren<ILoadersContainer>> = (props) => {
     const {theme, themeColor} = props;
     return (
         <div className={themes[themeColor].containerClasses.join(' ')}>
@@ -57,7 +57,7 @@ const LoadersContainer: React.FC<ILoadersContainer> = (props) => {
     );
 };
 
-const LoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
+const LoaderCase: React.FC<React.PropsWithChildren<{theme: Theme}>> = ({theme}) => {
     return (
         <div
             style={{
@@ -75,7 +75,7 @@ const LoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
     );
 };
 
-const WithLoaderCase: React.FC<{theme: Theme}> = ({theme}) => {
+const WithLoaderCase: React.FC<React.PropsWithChildren<{theme: Theme}>> = ({theme}) => {
     const [isLoading, setIsLoading] = useState(true);
     return (
         <div
