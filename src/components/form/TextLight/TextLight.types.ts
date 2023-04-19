@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import {Props as MaskedInputProps} from 'react-input-mask';
 import {ITextareaProps} from '../Textarea/Textarea';
 
 export type IFormTextLightProps = {
@@ -8,7 +9,7 @@ export type IFormTextLightProps = {
 
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     onErrorTruncation?: (truncated: boolean) => void;
-} & (IFormInputLightProps | IFormTextareaLightProps);
+} & (IFormInputLightProps | IFormTextareaLightProps | IFormMaskInputProps);
 
 export type IFormInputLightProps = {
     multiline?: false;
@@ -19,3 +20,7 @@ export type IFormTextareaLightProps = {
     multiline: true;
     textareaRef?: React.Ref<HTMLTextAreaElement>;
 } & ITextareaProps;
+
+export type IFormMaskInputProps = {
+    multiline?: false;
+} & MaskedInputProps;
