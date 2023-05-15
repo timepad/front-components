@@ -8,14 +8,14 @@ interface IProps {
     as?: keyof JSX.IntrinsicElements;
     vertical?: boolean;
     margin?: number | [number, number];
-    styles?: {[key: string]: string | number};
+    style?: React.CSSProperties;
 }
 
-export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = false, margin = 0, styles = {}}) => {
+export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = false, margin = 0, style = {}}) => {
     const Tag = as;
-    const style = {
+    const styles = {
         margin: getMarginPx(margin),
-        ...styles,
+        ...style,
     };
     const rowClass = cx(
         component('list-divider')(),
@@ -24,7 +24,7 @@ export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = fal
         },
         className,
     );
-    return <Tag className={rowClass} style={style} />;
+    return <Tag className={rowClass} style={styles} />;
 };
 
 const getMarginPx = (margin: number | [number, number]) => {
