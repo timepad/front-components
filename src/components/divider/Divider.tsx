@@ -8,18 +8,14 @@ interface IProps {
     as?: keyof JSX.IntrinsicElements;
     vertical?: boolean;
     margin?: number | [number, number];
+    styles?: {[key: string]: string | number};
 }
 
-export const Divider: React.FC<React.PropsWithChildren<IProps>> = ({
-    className,
-    as = 'div',
-    vertical = false,
-    margin = 0,
-    ...props
-}) => {
+export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = false, margin = 0, styles = {}}) => {
     const Tag = as;
-    const styles = {
-        margin: getMargin(margin),
+    const style = {
+        margin: getMarginPx(margin),
+        ...styles,
     };
     const rowClass = cx(
         component('list-divider')(),
@@ -28,15 +24,12 @@ export const Divider: React.FC<React.PropsWithChildren<IProps>> = ({
         },
         className,
     );
-    return <Tag className={rowClass} style={styles} {...props} />;
+    return <Tag className={rowClass} style={style} />;
 };
 
-const getMargin = (margin: number | [number, number]) => {
-    if (!margin) return;
-    if (typeof margin === 'number') {
-        return `${margin}px`;
-    }
+const getMarginPx = (margin: number | [number, number]) => {
     if (Array.isArray(margin)) {
         return margin.reduce((acc, el) => acc + ` ${el}px`, '');
     }
+    return `${margin}px`;
 };
