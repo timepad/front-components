@@ -2,9 +2,21 @@
     &--wrapper {
         background: @c-black;
     }
+    &.vertical {
+        width: 1px;
+        height: initial;
+    }
     display: block;
     padding: 0;
-    margin: 0;
     height: 1px;
     background-color: @c-gray-50-fade-20;
+}
+
+//для текстовых элементов
+span.clist-divider {
+    &.vertical {
+        display: inline-block;
+        min-height: 1em;
+        vertical-align: text-bottom;
+    }
 }

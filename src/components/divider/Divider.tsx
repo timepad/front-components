@@ -6,10 +6,30 @@ import './index.less';
 interface IProps {
     className?: string;
     as?: keyof JSX.IntrinsicElements;
+    vertical?: boolean;
+    margin?: number | [number, number];
+    style?: React.CSSProperties;
 }
 
-export const Divider: React.FC<React.PropsWithChildren<IProps>> = ({className, as = 'div', ...props}) => {
+export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = false, margin = 0, style = {}}) => {
     const Tag = as;
-    const rowClass = cx(component('list-divider')(), className);
-    return <Tag className={rowClass} {...props} />;
+    const styles = {
+        margin: getMarginPx(margin),
+        ...style,
+    };
+    const rowClass = cx(
+        component('list-divider')(),
+        {
+            vertical,
+        },
+        className,
+    );
+    return <Tag className={rowClass} style={styles} />;
+};
+
+const getMarginPx = (margin: number | [number, number]) => {
+    if (Array.isArray(margin)) {
+        return margin.reduce((acc, el) => acc + ` ${el}px`, '');
+    }
+    return `${margin}px`;
 };
