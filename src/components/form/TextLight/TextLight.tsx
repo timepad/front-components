@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
@@ -85,13 +85,18 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
     initialTouched,
     initialError,
     value = '',
+    onChange,
     ...props
 }) => {
-    const currentValue = useMemo(() => {
-        return value ? value : '';
-    }, [value]);
+    const [currentValue, setCurrentValue] = useState(value);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
+        setCurrentValue(event.target.value);
+        onChange && onChange(event);
+    };
+
     if (multiline) {
-        return <Textarea value={currentValue} {...(props as ITextareaProps)} />;
+        return <Textarea value={currentValue} onChange={handleChange} {...(props as ITextareaProps)} />;
     }
     if (!multiline && (props as IFormMaskInputProps).type === 'phone') {
         const {
@@ -100,6 +105,18 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
             maskPlaceholder = null,
             ...restProps
         } = props as IFormMaskInputProps;
+        const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+            event.preventDefault();
+            const pastedData = event.clipboardData.getData('Text').replace(/\D/g, '');
+
+            if (pastedData.startsWith('8')) {
+                const formattedData = '+7' + pastedData.slice(1);
+                setCurrentValue(formattedData);
+            } else {
+                setCurrentValue(pastedData);
+            }
+        };
+
         return (
             <MaskedInput
                 value={currentValue}
@@ -107,11 +124,19 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
                 mask={mask}
                 maskChar={maskChar}
                 maskPlaceholder={maskPlaceholder}
+                onPaste={handlePaste}
+                onChange={handleChange}
                 {...restProps}
             />
         );
     }
     return (
-        <input value={currentValue} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />
+        <input
+            onChange={handleChange}
+            value={currentValue}
+            ref={(props as any).inputRef}
+            {...(props as any)}
+            touched={touched?.toString()}
+        />
     );
 };
