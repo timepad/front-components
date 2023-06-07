@@ -95,6 +95,17 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
         onChange && onChange(event);
     };
 
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const pastedData = event.clipboardData.getData('Text').replace(/\D/g, '');
+        if (pastedData.startsWith('8')) {
+            const formattedData = '+7' + pastedData.slice(1);
+            setCurrentValue(formattedData);
+        } else {
+            setCurrentValue(pastedData);
+        }
+    };
+
     if (multiline) {
         return <Textarea value={currentValue} onChange={handleChange} {...(props as ITextareaProps)} />;
     }
@@ -105,17 +116,6 @@ const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'valu
             maskPlaceholder = null,
             ...restProps
         } = props as IFormMaskInputProps;
-        const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-            event.preventDefault();
-            const pastedData = event.clipboardData.getData('Text').replace(/\D/g, '');
-
-            if (pastedData.startsWith('8')) {
-                const formattedData = '+7' + pastedData.slice(1);
-                setCurrentValue(formattedData);
-            } else {
-                setCurrentValue(pastedData);
-            }
-        };
 
         return (
             <MaskedInput
