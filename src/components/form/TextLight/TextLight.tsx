@@ -1,15 +1,13 @@
-import React, {FC, useMemo} from 'react';
+import React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {IFormMaskInputProps, IFormTextLightProps} from './TextLight.types';
+import {IFormTextLightProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
 import MaskedInput, {BeforeMaskedStateChangeStates} from 'react-input-mask';
 import './index.less';
-import {FieldMetaProps} from 'formik/dist/types';
-import {ITextareaProps} from '../Textarea/Textarea';
 
-export const TextLight: FC<React.PropsWithChildren<IFormTextLightProps>> = ({
+export const TextLight: React.FC<IFormTextLightProps> = ({
     customIcon = undefined,
     success = false,
     disabled = false,
@@ -18,7 +16,7 @@ export const TextLight: FC<React.PropsWithChildren<IFormTextLightProps>> = ({
     name = '',
     ...props
 }: IFormTextLightProps) => {
-    const fieldName: string = useMemo(() => (name ? name.toString() : String(Math.random())), [name]);
+    const fieldName: string = name ? name.toString() : String(Math.random());
     const inputClasses = cx(
         component('text-light', 'container')(),
         component(
@@ -76,42 +74,37 @@ const maskedChange = ({currentState, nextState}: BeforeMaskedStateChangeStates) 
     return {...nextState, value};
 };
 
-// TODO: сверху все типизировано, здесь необходимы as, any и спред пропсов, иначе в otp ничего не билдится и куча варнингов
-/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
-const Input: FC<IFormTextLightProps & Partial<Omit<FieldMetaProps<string>, 'value'>>> = ({
-    touched,
+interface IInputProps extends Omit<IFormTextLightProps, 'error' | 'success' | 'caption' | 'customIcon'> {}
+
+const Input: React.FC<IInputProps> = ({
     multiline,
-    initialValue,
-    initialTouched,
-    initialError,
     value = '',
+    maskPlaceholder = null,
+    maskChar = null,
+    mask = '+7 (999) 999 99 99',
+    beforeMaskedStateChange,
+    inputRef,
+    textareaRef,
+    type = 'text',
+    alwaysShowMask = false,
     ...props
 }) => {
-    const currentValue = useMemo(() => {
-        return value ? value : '';
-    }, [value]);
     if (multiline) {
-        return <Textarea value={currentValue} {...(props as ITextareaProps)} />;
+        return <Textarea value={value} ref={textareaRef} {...props} />;
     }
-    if (!multiline && (props as IFormMaskInputProps).type === 'phone') {
-        const {
-            mask = '+7 (999) 999 99 99',
-            maskChar = null,
-            maskPlaceholder = null,
-            ...restProps
-        } = props as IFormMaskInputProps;
+    if (!multiline && type === 'phone') {
         return (
             <MaskedInput
-                value={currentValue}
-                beforeMaskedStateChange={maskedChange}
+                value={value}
+                beforeMaskedStateChange={beforeMaskedStateChange ? beforeMaskedStateChange : maskedChange}
                 mask={mask}
                 maskChar={maskChar}
                 maskPlaceholder={maskPlaceholder}
-                {...restProps}
+                inputRef={inputRef}
+                alwaysShowMask={alwaysShowMask}
+                {...props}
             />
         );
     }
-    return (
-        <input value={currentValue} ref={(props as any).inputRef} {...(props as any)} touched={touched?.toString()} />
-    );
+    return <input value={value} ref={inputRef} {...props} />;
 };
