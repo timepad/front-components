@@ -24,7 +24,6 @@ interface IMaskProps {
  * Props you need to spread onto your input.
  */
 export interface IInputProps {
-    'data-value'?: string;
     value: string;
     placeholder: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -35,15 +34,14 @@ export interface IInputProps {
 
 export type Mask = Array<string | RegExp>;
 
-export function useMask({value = '', onChange, ...props}: IMaskProps): IInputProps {
-    const mask = useMemo(() => parseMask(props.mask), [props.mask]);
+export function useMask({value = '', onChange, mask, maskPlaceholder}: IMaskProps): IInputProps {
+    const parsedMask = useMemo(() => parseMask(mask), [mask]);
     const placeholder = useMemo(
-        () => getPlaceholderFromMask(mask, props.maskPlaceholder),
-        [mask, props.maskPlaceholder],
+        () => getPlaceholderFromMask(parsedMask, maskPlaceholder),
+        [parsedMask, maskPlaceholder],
     );
-    const maskedValue = getMaskedValue(value, mask, placeholder);
-
-    const lastCursorPosition = getNextCursorPosition(value, mask);
+    const maskedValue = getMaskedValue(value, parsedMask, placeholder);
+    const lastCursorPosition = getNextCursorPosition(value, parsedMask);
     const scheduleAfterRender = useCallbackAfterRender();
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
@@ -52,7 +50,7 @@ export function useMask({value = '', onChange, ...props}: IMaskProps): IInputPro
             inputValue: target.value,
             maskedValue,
             oldValue: value,
-            mask,
+            mask: parsedMask,
             lastCursorPosition,
             inputMode: target.inputMode,
         });
@@ -61,7 +59,7 @@ export function useMask({value = '', onChange, ...props}: IMaskProps): IInputPro
 
         // onChange is asynchronous so update cursor after it re-renders
         scheduleAfterRender(() => {
-            setCursorPositionForElement(target, getNextCursorPosition(newValue, mask));
+            setCursorPositionForElement(target, getNextCursorPosition(newValue, parsedMask));
         });
     }
 
@@ -81,12 +79,11 @@ export function useMask({value = '', onChange, ...props}: IMaskProps): IInputPro
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
-            setCursorPositionForElement(target as HTMLInputElement, getNextCursorPosition(target.value, mask));
+            setCursorPositionForElement(target as HTMLInputElement, getNextCursorPosition(target.value, parsedMask));
         });
     }
 
     return {
-        'data-value': value.length ? value : undefined,
         value: value.length ? maskedValue : '',
         placeholder,
 
