@@ -2,10 +2,11 @@ import React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {IFormTextLightProps} from './TextLight.types';
+import {IFormTextLightProps, IInputProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
 import MaskedInput, {BeforeMaskedStateChangeStates} from 'react-input-mask';
 import './index.less';
+import {uniqueId} from '../../../services/helpers/uniqueId';
 
 export const TextLight: React.FC<IFormTextLightProps> = ({
     customIcon = undefined,
@@ -14,9 +15,9 @@ export const TextLight: React.FC<IFormTextLightProps> = ({
     error = '',
     caption = '',
     name = '',
+    id = uniqueId() + '_field_text_light',
     ...props
 }: IFormTextLightProps) => {
-    const fieldName: string = name ? name.toString() : String(Math.random());
     const inputClasses = cx(
         component('text-light', 'container')(),
         component(
@@ -41,12 +42,10 @@ export const TextLight: React.FC<IFormTextLightProps> = ({
     const style =
         customIcon || success ? {...props.style, padding: '0 32px 12px 0'} : {...props.style, padding: '0 0 12px 0'};
 
-    const id = `${fieldName}_id_field`;
-
     return (
         <>
             <div className={inputClasses}>
-                <Input name={fieldName} id={id} disabled={disabled} style={style} {...props} />
+                <Input name={name} id={id} disabled={disabled} style={style} {...props} />
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
                     {customIcon ? customIcon : success && <CheckSvg className={iconClasses} />}
@@ -74,10 +73,8 @@ const maskedChange = ({currentState, nextState}: BeforeMaskedStateChangeStates) 
     return {...nextState, value};
 };
 
-interface IInputProps extends Omit<IFormTextLightProps, 'error' | 'success' | 'caption' | 'customIcon'> {}
-
 const Input: React.FC<IInputProps> = ({
-    multiline,
+    multiline = false,
     value = '',
     maskPlaceholder = null,
     maskChar = null,
@@ -102,9 +99,10 @@ const Input: React.FC<IInputProps> = ({
                 maskPlaceholder={maskPlaceholder}
                 inputRef={inputRef}
                 alwaysShowMask={alwaysShowMask}
+                type={type}
                 {...props}
             />
         );
     }
-    return <input value={value} ref={inputRef} {...props} />;
+    return <input value={value} type={type} ref={inputRef} {...props} />;
 };
