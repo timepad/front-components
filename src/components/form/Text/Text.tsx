@@ -6,10 +6,13 @@ import {Textarea} from '../Textarea';
 
 import './index.less';
 
-export const Text: FC<React.PropsWithChildren<IFormTextProps>> = ({
+export const Text: FC<Omit<IFormTextProps, 'ref'>> = ({
     disabled = false,
+    textareaRef,
+    inputRef,
     error = '',
     className = '',
+    multiline = false,
     ...props
 }: IFormTextProps) => {
     const finalClassNames = cx(
@@ -20,13 +23,12 @@ export const Text: FC<React.PropsWithChildren<IFormTextProps>> = ({
         className,
     );
 
-    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <div className={finalClassNames}>
-            {props.multiline ? (
-                <Textarea disabled={disabled} {...props} />
+            {multiline ? (
+                <Textarea disabled={disabled} ref={textareaRef} {...props} />
             ) : (
-                <input disabled={disabled} ref={(props as any).inputRef} {...(props as any)} />
+                <input disabled={disabled} ref={inputRef} {...props} />
             )}
         </div>
     );
