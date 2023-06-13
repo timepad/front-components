@@ -1,20 +1,21 @@
 import React, {FC} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-import {IFormTextProps} from './Text.types';
+import {ITextProps} from './Text.types';
 import {Textarea} from '../Textarea';
 
 import './index.less';
+import {ITextareaProps} from '../Textarea/Textarea';
 
-export const Text: FC<Omit<IFormTextProps, 'ref'>> = ({
+export const Text: FC<ITextProps> = ({
     disabled = false,
-    textareaRef,
-    inputRef,
     error = '',
     className = '',
     multiline = false,
+    textareaRef,
+    inputRef,
     ...props
-}: IFormTextProps) => {
+}) => {
     const finalClassNames = cx(
         component('text')({
             disabled,
@@ -26,9 +27,9 @@ export const Text: FC<Omit<IFormTextProps, 'ref'>> = ({
     return (
         <div className={finalClassNames}>
             {multiline ? (
-                <Textarea disabled={disabled} ref={textareaRef} {...props} />
+                <Textarea disabled={disabled} ref={textareaRef} {...(props as ITextareaProps)} />
             ) : (
-                <input disabled={disabled} ref={inputRef} {...props} />
+                <input disabled={disabled} ref={inputRef} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />
             )}
         </div>
     );

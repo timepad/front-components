@@ -2,13 +2,14 @@ import React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {IFormTextLightProps, IInputProps} from './TextLight.types';
+import {ITextLightProps, IPhoneInputProps} from './TextLight.types';
 import {Textarea} from '../Textarea';
 import MaskedInput, {BeforeMaskedStateChangeStates} from 'react-input-mask';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
+import {ITextareaProps} from '../Textarea/Textarea';
 
-export const TextLight: React.FC<IFormTextLightProps> = ({
+export const TextLight: React.FC<ITextLightProps> = ({
     customIcon = undefined,
     success = false,
     disabled = false,
@@ -17,7 +18,7 @@ export const TextLight: React.FC<IFormTextLightProps> = ({
     name = '',
     id = uniqueId() + '_field_text_light',
     ...props
-}: IFormTextLightProps) => {
+}) => {
     const inputClasses = cx(
         component('text-light', 'container')(),
         component(
@@ -73,23 +74,26 @@ const maskedChange = ({currentState, nextState}: BeforeMaskedStateChangeStates) 
     return {...nextState, value};
 };
 
-const Input: React.FC<IInputProps> = ({
+const Input: React.FC<Omit<ITextLightProps, 'error' | 'success' | 'caption' | 'customIcon'>> = ({
     multiline = false,
     value = '',
-    maskPlaceholder = null,
-    maskChar = null,
-    mask = '+7 (999) 999 99 99',
-    beforeMaskedStateChange,
-    inputRef,
     textareaRef,
-    type = 'text',
-    alwaysShowMask = false,
+    inputRef,
     ...props
 }) => {
     if (multiline) {
-        return <Textarea value={value} ref={textareaRef} {...props} />;
+        return <Textarea value={value} ref={textareaRef} {...(props as ITextareaProps)} />;
     }
-    if (!multiline && type === 'phone') {
+    if (!multiline && (props as IPhoneInputProps).type === 'phone') {
+        const {
+            maskPlaceholder = null,
+            maskChar = null,
+            mask = '+7 (999) 999 99 99',
+            beforeMaskedStateChange,
+            inputRef,
+            alwaysShowMask = false,
+            ...rest
+        } = props as IPhoneInputProps;
         return (
             <MaskedInput
                 value={value}
@@ -99,10 +103,9 @@ const Input: React.FC<IInputProps> = ({
                 maskPlaceholder={maskPlaceholder}
                 inputRef={inputRef}
                 alwaysShowMask={alwaysShowMask}
-                type={type}
-                {...props}
+                {...rest}
             />
         );
     }
-    return <input value={value} type={type} ref={inputRef} {...props} />;
+    return <input value={value} ref={inputRef} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />;
 };
