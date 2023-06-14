@@ -1,15 +1,16 @@
 import React, {ReactNode} from 'react';
-import {Props as MaskedInputProps} from 'react-input-mask';
 import {ITextareaProps} from '../Textarea/Textarea';
+import {Mask} from '../../../services/hooks';
 
 export type ITextLightProps = {
     error?: string;
     success?: boolean;
     caption?: ReactNode;
     multiline?: boolean;
+    customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
     inputRef?: React.Ref<HTMLInputElement>;
     textareaRef?: React.Ref<HTMLTextAreaElement>;
-    customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-} & (Partial<MaskedInputProps> | ITextareaProps);
-
-export interface IPhoneInputProps extends Partial<MaskedInputProps> {}
+    mask?: string | Mask;
+    maskPlaceholder?: string;
+    setValue?: (value: string) => void;
+} & (ITextareaProps | React.InputHTMLAttributes<HTMLInputElement>);

@@ -2,12 +2,11 @@ import React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
 import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
-import {ITextLightProps, IPhoneInputProps} from './TextLight.types';
-import {Textarea} from '../Textarea';
-import MaskedInput, {BeforeMaskedStateChangeStates} from 'react-input-mask';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
-import {ITextareaProps} from '../Textarea/Textarea';
+import {ITextLightProps} from './TextLight.types';
+import './index.less';
+import {Input} from './Input';
 
 export const TextLight: React.FC<ITextLightProps> = ({
     customIcon = undefined,
@@ -55,57 +54,4 @@ export const TextLight: React.FC<ITextLightProps> = ({
             {!!caption && <div className={captionClasses}>{caption}</div>}
         </>
     );
-};
-
-const maskedChange = ({currentState, nextState}: BeforeMaskedStateChangeStates) => {
-    let {value} = nextState;
-    const {value: currValue = ''} = currentState || {};
-
-    // обрезка placeholder при наборе и автозаполнении
-    if (/^\d{3}/.test(currValue) && currValue.length <= 10) {
-        value = '+7' + currValue;
-    }
-
-    // для номеров, начинающихся с 8
-    if (currValue.startsWith('8') && currValue.length > 10) {
-        value = '+7' + currValue.slice(1);
-    }
-
-    return {...nextState, value};
-};
-
-const Input: React.FC<Omit<ITextLightProps, 'error' | 'success' | 'caption' | 'customIcon'>> = ({
-    multiline = false,
-    value = '',
-    textareaRef,
-    inputRef,
-    ...props
-}) => {
-    if (multiline) {
-        return <Textarea value={value} ref={textareaRef} {...(props as ITextareaProps)} />;
-    }
-    if (!multiline && (props as IPhoneInputProps).type === 'phone') {
-        const {
-            maskPlaceholder = null,
-            maskChar = null,
-            mask = '+7 (999) 999 99 99',
-            beforeMaskedStateChange,
-            inputRef,
-            alwaysShowMask = false,
-            ...rest
-        } = props as IPhoneInputProps;
-        return (
-            <MaskedInput
-                value={value}
-                beforeMaskedStateChange={beforeMaskedStateChange ? beforeMaskedStateChange : maskedChange}
-                mask={mask}
-                maskChar={maskChar}
-                maskPlaceholder={maskPlaceholder}
-                inputRef={inputRef}
-                alwaysShowMask={alwaysShowMask}
-                {...rest}
-            />
-        );
-    }
-    return <input value={value} ref={inputRef} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />;
 };
