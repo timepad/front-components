@@ -8,7 +8,7 @@ export type IPhoneInputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const PhoneInput = React.forwardRef<HTMLInputElement, IPhoneInputProps>(
-    ({maskPlaceholder = '+7', mask = '+7 (###) ### ## ##', value = '', setValue, type = 'phone', ...props}, ref) => {
+    ({maskPlaceholder = '', mask = '+7 (###) ### ## ##', value = '', setValue, type = 'phone', ...props}, ref) => {
         const inputProps = useMask({
             value: value as string,
             onChange: setValue,

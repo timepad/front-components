@@ -14,7 +14,9 @@ export function getPlaceholderFromMask(mask: Mask, placeholder: string): string 
                 [...mask],
             )
             .join('');
-    } else {
-        return placeholder;
     }
+    return '';
+    // else {
+    //     return placeholder;
+    // }
 }

@@ -39,6 +39,7 @@ interface IInputProps {
 export type Mask = Array<string | RegExp>;
 
 export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMaskProps): IInputProps {
+    const prefix = '+7';
     const [focus, setFocus] = useState(false);
 
     const parsedMask = useMemo(() => parseMask(mask), [mask]);
@@ -56,6 +57,7 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
+        console.log({target: target.value, formattedValueByType, placeholder, maskedValue});
         const newValue = getNewValue({
             inputValue: target.value,
             maskedValue,
@@ -64,8 +66,8 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
             lastCursorPosition,
             inputMode: target.inputMode,
         });
-        const newValueWithPlaceholder = formattedValueByType && isPhoneType ? `${placeholder}${newValue}` : newValue;
-        onChange?.(newValueWithPlaceholder);
+        const newValueWithPrefix = newValue && isPhoneType ? `${prefix}${newValue}` : newValue;
+        onChange?.(newValueWithPrefix);
 
         // onChange is asynchronous so update cursor after it re-renders
         scheduleAfterRender(() => {

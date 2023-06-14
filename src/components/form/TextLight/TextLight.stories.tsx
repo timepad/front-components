@@ -210,11 +210,17 @@ export const Simple: IStorybookComponent = () => {
 };
 
 interface IValues {
-    email: string;
+    phone: string;
+    phone1: string;
 }
 
 const mailValidationSchema = Yup.object().shape({
-    email: Yup.string().email('Некорректная почта').required(),
+    // phone: Yup.string()
+    //     // .length(12, 'Телефон должен быть заполнен')
+    //     .matches(
+    //         // /^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/g,
+    //         'Вы ввели некорректный номер телефона',
+    //     ),
 });
 
 export const FormikExampleWithYup: IStorybookComponent = () => {
@@ -222,30 +228,37 @@ export const FormikExampleWithYup: IStorybookComponent = () => {
         <div>
             <Formik
                 initialValues={{
-                    email: '',
+                    phone: '',
+                    phone1: '',
                 }}
                 validationSchema={mailValidationSchema}
                 onSubmit={(values: IValues) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                    }, 1000);
+                    console.log(values);
                 }}
             >
                 {() => (
                     <FormikForm>
-                        <Form.TextLightField
-                            name="email"
-                            caption="Какой-то caption"
-                            type="text"
-                            placeholder="Введите email"
-                        />
+                        {/*<Form.TextLightField*/}
+                        {/*    name="email"*/}
+                        {/*    caption="Какой-то caption"*/}
+                        {/*    type="text"*/}
+                        {/*    placeholder="Введите email"*/}
+                        {/*/>*/}
 
                         <Form.TextLightField
                             name="phone"
                             caption="Какой-то caption"
                             type="phone"
                             placeholder="Введите телефон"
+                            maskPlaceholder="-"
                         />
+                        <Form.TextLightField
+                            name="phone1"
+                            caption="Какой-то caption"
+                            type="phone"
+                            placeholder="Введите телефон"
+                        />
+                        <button type="submit">click</button>
                     </FormikForm>
                 )}
             </Formik>
