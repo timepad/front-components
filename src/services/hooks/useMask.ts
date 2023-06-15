@@ -20,12 +20,13 @@ interface IMaskProps {
     mask: string | Mask;
     maskPlaceholder: string;
     type?: 'phone' | 'card' | string;
+    prefix: string;
 }
 
 /**
  * Props you need to spread onto your input.
  */
-interface IInputProps {
+interface IMaskInputProps {
     'data-value'?: string;
     value: string;
     placeholder: string;
@@ -38,8 +39,7 @@ interface IInputProps {
 
 export type Mask = Array<string | RegExp>;
 
-export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMaskProps): IInputProps {
-    const prefix = '+7';
+export function useMask({value = '', onChange, mask, maskPlaceholder, type, prefix = ''}: IMaskProps): IMaskInputProps {
     const [focus, setFocus] = useState(false);
 
     const parsedMask = useMemo(() => parseMask(mask), [mask]);
@@ -49,7 +49,7 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
     );
 
     const isPhoneType = type === 'phone';
-    const formattedValueByType = isPhoneType ? getFormattedPhone(value) : value;
+    const formattedValueByType = isPhoneType ? getFormattedPhone(value, prefix) : value;
 
     const maskedValue = getMaskedValue(formattedValueByType, parsedMask, placeholder);
     const lastCursorPosition = getNextCursorPosition(formattedValueByType, parsedMask);
@@ -57,16 +57,16 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
-        console.log({target: target.value, formattedValueByType, placeholder, maskedValue});
         const newValue = getNewValue({
             inputValue: target.value,
             maskedValue,
             oldValue: formattedValueByType,
             mask: parsedMask,
             lastCursorPosition,
-            inputMode: target.inputMode,
+            isPhoneMode: isPhoneType,
+            prefix,
         });
-        const newValueWithPrefix = newValue && isPhoneType ? `${prefix}${newValue}` : newValue;
+        const newValueWithPrefix = newValue && isPhoneType ? `${prefix || '+7'}${newValue}` : newValue;
         onChange?.(newValueWithPrefix);
 
         // onChange is asynchronous so update cursor after it re-renders
@@ -92,7 +92,7 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
-            setCursorPositionForElement(target as HTMLInputElement, getNextCursorPosition(target.value, parsedMask));
+            setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
         });
     }
 
@@ -101,14 +101,17 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type}: IMa
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
-            setCursorPositionForElement(target as HTMLInputElement, getNextCursorPosition(target.value, parsedMask));
+            setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
         });
     }
 
+    const placeholderValue = maskPlaceholder ? placeholder : prefix;
+    const emptyValue = focus && isPhoneType ? placeholderValue : '';
+
     return {
         'data-value': value.length ? value : undefined,
-        value: value.length ? maskedValue : focus && isPhoneType ? placeholder : '',
-        placeholder,
+        value: value.length ? maskedValue : emptyValue,
+        placeholder: placeholderValue,
 
         onChange: handleChange,
         onKeyDown,

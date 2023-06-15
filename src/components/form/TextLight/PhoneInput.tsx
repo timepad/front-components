@@ -8,14 +8,26 @@ export type IPhoneInputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const PhoneInput = React.forwardRef<HTMLInputElement, IPhoneInputProps>(
-    ({maskPlaceholder = '', mask = '+7 (###) ### ## ##', value = '', setValue, type = 'phone', ...props}, ref) => {
+    (
+        {
+            maskPlaceholder = '',
+            mask = '+7 (###) ### ## ##',
+            value = '',
+            setValue,
+            type = 'phone',
+            prefix = '',
+            ...props
+        },
+        ref,
+    ) => {
         const inputProps = useMask({
             value: value as string,
             onChange: setValue,
             mask,
             maskPlaceholder,
             type,
+            prefix,
         });
-        return <input inputMode="tel" autoComplete="tel" ref={ref} {...props} {...inputProps} />;
+        return <input inputMode="tel" ref={ref} {...props} {...inputProps} />;
     },
 );

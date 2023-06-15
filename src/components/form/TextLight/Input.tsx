@@ -12,6 +12,7 @@ export const Input: React.FC<Omit<ITextLightProps, 'error' | 'caption' | 'custom
     setValue,
     mask,
     maskPlaceholder,
+    prefix,
     ...props
 }) => {
     if (multiline) {
@@ -25,6 +26,7 @@ export const Input: React.FC<Omit<ITextLightProps, 'error' | 'caption' | 'custom
                 maskPlaceholder={maskPlaceholder}
                 setValue={setValue}
                 ref={inputRef}
+                prefix={prefix}
                 {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
             />
         );

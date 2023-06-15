@@ -7,7 +7,8 @@ interface IGetNewValueParams {
     maskedValue: string;
     mask: Mask;
     lastCursorPosition: number;
-    inputMode: string;
+    isPhoneMode: boolean;
+    prefix: string;
 }
 
 export function getNewValue({
@@ -16,7 +17,8 @@ export function getNewValue({
     maskedValue,
     mask,
     lastCursorPosition,
-    inputMode,
+    isPhoneMode,
+    prefix,
 }: IGetNewValueParams): string {
     let newValue: string;
 
@@ -27,9 +29,9 @@ export function getNewValue({
     // 9991232233
 
     if (inputValue.length > 1 && oldValue.length === 0) {
-        if (inputMode === 'tel') {
+        if (isPhoneMode) {
             // autocomplete , paste ...
-            newValue = getFormattedPhone(inputValue);
+            newValue = getFormattedPhone(inputValue, prefix);
         } else {
             // удаляем пробелы навсякий случай, чтоб привести к нормальному формату
             newValue = inputValue.replaceAll(' ', '');
