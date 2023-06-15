@@ -20,7 +20,7 @@ interface IMaskProps {
     mask: string | Mask;
     maskPlaceholder: string;
     type?: 'phone' | 'card' | string;
-    prefix: string;
+    prefix?: string;
 }
 
 /**
