@@ -3,6 +3,8 @@ import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {EventCard} from './EventCard';
 import events from './cabinet_event.json';
+import {Brick} from '../brick';
+import BrickStories from '../brick/Brick.stories';
 
 export default {
     title: 'EventCard',
@@ -15,14 +17,7 @@ export const EventCardStory: IStorybookComponent = () => {
         <>
             <StoryTitle>EventCard Story</StoryTitle>
             <EventCard {...(event as any)} />
-        </>
-    );
-};
-
-export const RepitedEventCardStory: IStorybookComponent = () => {
-    return (
-        <>
-            <StoryTitle>EventCard Story</StoryTitle>
+            <Brick size={2} />
             <EventCard {...(repitedEvent as any)} />
         </>
     );

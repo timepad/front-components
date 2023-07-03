@@ -11,8 +11,8 @@ import {
     EventSessionList,
     ActionButtons,
 } from './components';
-import {formatEventDate, formatRepitedEventDate} from './helpers';
 import moment from 'moment';
+import {addThousandsSeparator, formatEventDate, formatRepitedEventDate} from './helpers';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonIconAlignment, ButtonVariant, Divider} from 'index';
 
@@ -26,7 +26,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
     shedules,
     begin,
     end,
-    income,
+    income = 0,
     incomeCurrency = '',
     accessStatus,
     orderCount = 0,
@@ -64,7 +64,11 @@ export const EventCard: React.FC<IEventCardProps> = ({
     //variables
     const isRepitenEvent = !!shedules?.actual?.length || !!shedules?.passed?.length;
     const isStatusDraft = status === 'draft';
-    const eventIncome = isStatusDraft ? '—' : isFree ? 'Событие бесплатное' : `${income} ${incomeCurrency}`;
+    const eventIncome = isStatusDraft
+        ? '—'
+        : isFree
+        ? 'Событие бесплатное'
+        : `${addThousandsSeparator(income)} ${incomeCurrency}`;
     const eventOrderCount = isStatusDraft ? '—' : orderCount;
     const eventTicketCount = isStatusDraft ? '—' : `${soldTicketCount} из ${ticketCount}`;
     const eventSchedual = isRepitenEvent
@@ -73,13 +77,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
 
     const periodList = useMemo(() => {
         if (!shedules) return [];
-        const months = [...shedules?.actual, ...shedules?.passed]
+        const sheduleMonths = schedule === 'Предстоящие' ? shedules?.actual : shedules?.passed;
+        const months = sheduleMonths
             .sort((a, b) => new Date(a.begin).getMonth() - new Date(b.begin).getMonth())
             .map((session) => {
                 return moment(session?.begin).format('MMMM');
             });
         return ['весь период', ...new Set(months)];
-    }, [shedules]);
+    }, [shedules, schedule]);
 
     const filteredSessions = useMemo(() => {
         if (!shedules) return [];

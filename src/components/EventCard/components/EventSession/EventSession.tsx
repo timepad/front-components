@@ -3,7 +3,7 @@ import IconCalendar from '../../../../assets/svg/16/icon-calendar-16.svg';
 import IconArrow from '../../../../assets/svg/24/icon-arrow-right-24.svg';
 
 import {ISchedule, ISession} from '../../types/EventCardModel';
-import {formatRepitedEventDate} from '../../helpers';
+import {addThousandsSeparator, formatRepitedEventDate} from '../../helpers';
 import {component} from '../../../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../../../button';
 import {Typography} from 'components/typography';
@@ -16,7 +16,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
     timeBeforeEvent,
     begin,
     end,
-    income,
+    income = 0,
     incomeCurrency,
     orderCount,
     ticketCount,
@@ -45,7 +45,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                             Доход
                         </Typography.Small>
                         <Typography.Small noPadding>
-                            {income} {incomeCurrency}
+                            {addThousandsSeparator(income)} {incomeCurrency}
                         </Typography.Small>
                     </Typography.Multiple>
                     <Button

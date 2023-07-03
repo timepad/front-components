@@ -1,12 +1,12 @@
 .cevent_card {
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: #fff;
     overflow: hidden;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4), 5px 0 20px rgba(0, 0, 0, 0.2);
     transition: height 0.5s ease-in-out;
     padding-bottom: 8px;
 
     &:hover {
+        outline: 1px solid rgba(128, 128, 128, 0.2);
         .caction_buttons__hidden_buttons {
             opacity: 1;
         }
@@ -63,7 +63,7 @@
 
 .cevent_card_session_block {
     opacity: 0;
-    background-color: #ffffff;
+    background-color: #fff;
     transition: all 0.5s ease-in-out;
 }
 
@@ -87,5 +87,4 @@
     @media (max-width: 600px) {
         padding: 8px 8px 8px 0;
     }
-
 }

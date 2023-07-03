@@ -5,6 +5,7 @@ import IconDislike from '../../../../assets/svg/16/icon-dislike-outline-16.svg';
 import IconLike from '../../../../assets/svg/16/icon-like-outline_16.svg';
 import {Button, ButtonVariant} from '../../../button';
 import {Typography} from 'components/typography';
+import {addThousandsSeparator} from '../../helpers';
 
 interface IEventCardStatProps {
     income: string;
@@ -23,7 +24,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
     currency,
     ticketCount,
     orderRefundCount,
-    orderRefundAmount,
+    orderRefundAmount = 0,
     negativeReviewCount = 0,
     positiveReviewCount = 0,
 }) => {
@@ -78,7 +79,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                             Возвраты
                         </Typography.Small>
                         <Typography.Small noPadding className="cevent_card_stat__value--return">
-                            {orderRefundCount} на {orderRefundAmount} {currency}
+                            {orderRefundCount} на {addThousandsSeparator(orderRefundAmount)} {currency}
                         </Typography.Small>
                     </div>
                     <Button
