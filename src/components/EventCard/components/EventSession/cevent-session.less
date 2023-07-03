@@ -1,0 +1,60 @@
+.cevent_card_sessions_container {
+    display: flex;
+    position: relative;
+    overflow: scroll hidden;
+    width: 100%;
+    white-space: nowrap;
+    padding: 0 0 8px 16px;
+    box-sizing: border-box;
+    margin: 0;
+
+    &::-webkit-scrollbar {
+        height: 0;
+    }
+
+    &__schedule {
+        &--past {
+            color: rgba(128, 128, 128, 1);
+        }
+    }
+
+    &__list {
+        display: flex;
+    }
+}
+
+.cevent_card_session {
+    width: 255px;
+    list-style-type: none;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 4px;
+    padding: 12px 0 16px 16px;
+    margin-right: 8px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+
+    &__date {
+        display: flex;
+        padding-bottom: 10px;
+
+        &:hover {
+            color: rgba(100, 63, 255, 1);
+            cursor: pointer;
+        }
+    }
+
+    &__icon {
+        margin-right: 16px;
+        background-color: rgba(206, 205, 222, 0.2);
+        border-radius: 4px;
+    }
+
+    &--disabled {
+        pointer-events: none;
+        color: rgba(128, 128, 128, 1);
+    }
+
+    @media (max-width: 600px) {
+        padding: 12px 0 10px 16px;
+    }
+}

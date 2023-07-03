@@ -1,0 +1,69 @@
+.cevent_card_stat {
+    flex: 1;
+    box-sizing: border-box;
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: 0 -1px 0 rgba(128, 128, 128, 0.2);
+            color: rgba(100, 63, 255, 1);
+            .cevent_card_stat__button {
+                opacity: 1;
+            }
+            .cevent_card_stat__value--return {
+                color: rgba(100, 63, 255, 1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            box-shadow: 0 -1px 0 rgba(128, 128, 128, 0.2);
+            padding: 8px 0;
+        }
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+
+        @media (max-width: 600px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+    &__data > div {
+        @media (max-width: 600px) {
+            padding: 0 !important;
+        }
+    }
+
+    &__label {
+        width: 64px;
+        margin-right: 16px;
+
+    }
+
+    &__value {
+        &--return {
+            color: rgba(245, 70, 20, 1);
+        }
+    }
+
+    &__reviews {
+        display: flex;
+        align-items: center;
+    }
+
+    &__button {
+        margin-right: 16px;
+        opacity: 0;
+
+        @media (max-width: 600px) {
+            opacity: 1;
+        }
+    }
+}

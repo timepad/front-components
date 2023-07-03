@@ -1,0 +1,83 @@
+.caction_buttons {
+    display: flex;
+
+    &__hidden_buttons {
+        display: flex;
+        opacity: 0;
+
+        @media (max-width: 600px) {
+            opacity: 1;
+        }
+    }
+
+    &__visible_buttons {
+        display: flex;
+    }
+
+    &__hidden_buttons > button,
+    &__visible_buttons > button {
+        margin-right: 8px;
+    }
+
+    &__button {
+        transition: 0.3s;
+        transform: rotate(0deg);
+
+        &--expand {
+            transition: 0.3s;
+            transform: rotate(180deg);
+        }
+
+        &--gray {
+            color: rgba(170, 170, 170, 1);
+
+            @media (max-width: 600px) {
+                color: rgba(100, 63, 255, 1);
+            }
+        }
+
+        &--hidden {
+
+            @media (max-width: 600px) {
+                display: none;
+            }
+        }
+
+        &--black {
+            color: rgba(37, 37, 37, 1);
+
+            @media (max-width: 600px) {
+                color: rgba(100, 63, 255, 1);
+            }
+        }
+    }
+
+    &__dropdown-button {
+        margin-right: 16px;
+    }
+
+    &__divider {
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+
+    &--mobile {
+        display: none;
+
+        @media (max-width: 600px) {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0 8px 16px;
+            box-sizing: border-box;
+
+            .caction_buttons__visible_buttons > button {
+                margin-right: 0;
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
