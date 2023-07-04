@@ -1,39 +1,38 @@
-.cevent_card_sessions_container {
+.cevent_sessions_list {
     display: flex;
     position: relative;
-    overflow: scroll hidden;
+    overflow-x: scroll;
     width: 100%;
     white-space: nowrap;
     padding: 0 0 16px 16px;
     box-sizing: border-box;
-    margin: 0;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
+        background: transparent; /* make scrollbar transparent */
+        -webkit-appearance: none;
+        width: 0;
         height: 0;
     }
 
-    &__schedule {
-        &--past {
-            color: rgba(128, 128, 128, 1);
-        }
-    }
-
-    &__list {
-        display: flex;
-    }
 }
 
-.cevent_card_session {
+.cevent_session {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 255px;
-    list-style-type: none;
-    border: 1px solid rgba(128, 128, 128, 0.2);
-    border-radius: 4px;
-    padding: 12px 0 8px 16px;
     margin-right: 8px;
-    box-sizing: border-box;
-    background-color: #FFF;
 
-    &__date {
+    &__info {
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        border-radius: 4px;
+        padding: 12px 0 8px 16px;
+        box-sizing: border-box;
+        background-color: #FFF;
+    }
+
+    &__schedule {
         display: flex;
         padding-bottom: 10px;
 

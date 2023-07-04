@@ -2,8 +2,6 @@ import React from 'react';
 
 import {EventSession} from './EventSession';
 import {ISchedule, ISession} from '../../types/EventCardModel';
-import {component} from '../../../../services/helpers/classHelpers';
-import {Typography} from 'components/typography';
 import {pluralize} from '../../helpers';
 
 interface IEventSessionListProps {
@@ -11,60 +9,26 @@ interface IEventSessionListProps {
     schedule: ISchedule;
 }
 
-export const EventSessionList: React.FC<IEventSessionListProps> = ({sessions, schedule}) => {
-    const scheduleClassName = component('event_card_sessions_container', 'schedule')({past: schedule === 'Прошедшие'});
+const sessionVariants = ['сеанс', 'сеанса', 'сеансов'];
+const scheduleVariants = ['прошедшиий', 'прошедших', 'прошедших'];
 
+export const EventSessionList: React.FC<IEventSessionListProps> = ({sessions, schedule}) => {
     return (
-        <ul className="cevent_card_sessions_container">
-            {Object.keys(sessions).map((key, index) => {
-                const sessionInMounth = sessions[key]?.length;
-                const pluralizeSession = pluralize(sessionInMounth, ['сеанс', 'сеанса', 'сеансов']);
-                const pluralizeSchedule =
-                    schedule === 'Прошедшие'
-                        ? pluralize(sessionInMounth, ['прошедшиий', 'прошедших', 'прошедших'])
-                        : '';
+        <div className="cevent_sessions_list">
+            {Object.keys(sessions).map((mounth, index) => {
+                const sessionInMounth = sessions[mounth]?.length;
+                const pluralizeSession = pluralize(sessionInMounth, sessionVariants);
+                const pluralizeSchedule = schedule === 'Прошедшие' ? pluralize(sessionInMounth, scheduleVariants) : '';
+                const sessionHeader = `${mounth}, ${sessionInMounth} ${pluralizeSchedule} ${pluralizeSession}`;
                 return (
-                    <div key={index}>
-                        <Typography.Small size={8} className={scheduleClassName}>
-                            {key}, {sessionInMounth} {pluralizeSchedule} {pluralizeSession}
-                        </Typography.Small>
-                        <div className="cevent_card_sessions_container__list">
-                            {sessions[key].map(
-                                (
-                                    {
-                                        begin,
-                                        end,
-                                        incomeCurrency,
-                                        timeBeforeEvent,
-                                        income,
-                                        orderCount,
-                                        ticketCount,
-                                        soldTicketCount,
-                                        isFree,
-                                    },
-                                    index,
-                                ) => {
-                                    return (
-                                        <EventSession
-                                            key={index}
-                                            begin={begin}
-                                            end={end}
-                                            timeBeforeEvent={timeBeforeEvent}
-                                            income={income}
-                                            incomeCurrency={incomeCurrency}
-                                            orderCount={orderCount}
-                                            ticketCount={ticketCount}
-                                            soldTicketCount={soldTicketCount}
-                                            isFree={isFree}
-                                            schedule={schedule}
-                                        />
-                                    );
-                                },
-                            )}
-                        </div>
+                    <div key={index} className="lflex">
+                        {sessions[mounth].map((session, index) => {
+                            const header = index === 0 ? sessionHeader : '';
+                            return <EventSession header={header} key={index} schedule={schedule} {...session} />;
+                        })}
                     </div>
                 );
             })}
-        </ul>
+        </div>
     );
 };
