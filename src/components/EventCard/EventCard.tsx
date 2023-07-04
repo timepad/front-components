@@ -20,6 +20,9 @@ import './index.less';
 
 interface IEventCardProps extends IEventCardModel {}
 
+const wholePeriod = 'весь период';
+const headerHeight = 64;
+
 export const EventCard: React.FC<IEventCardProps> = ({
     status,
     name,
@@ -45,7 +48,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
 }) => {
     //hooks
     const [expanded, setExpanded] = useState(false);
-    const [period, setPeriod] = useState('весь период');
+    const [period, setPeriod] = useState(wholePeriod);
     const [schedule, setSchedule] = useState<ISchedule>('Предстоящие');
     const [[infoHeight, sessionsHeight], setHeights] = useState([0, 0]);
     const infoBlockRef = useRef<HTMLDivElement>(null);
@@ -83,16 +86,16 @@ export const EventCard: React.FC<IEventCardProps> = ({
             .map((session) => {
                 return moment(session?.begin).format('MMMM');
             });
-        return ['весь период', ...new Set(months)];
+        return [wholePeriod, ...new Set(months)];
     }, [shedules, schedule]);
 
     const filteredSessions = useMemo(() => {
         if (!shedules) return [];
         const sessions = schedule === 'Предстоящие' ? shedules?.actual : shedules?.passed;
-        if (period === 'весь период' && schedule === 'Предстоящие') {
+        if (period === wholePeriod && schedule === 'Предстоящие') {
             return shedules?.actual;
         }
-        if (period === 'весь период' && schedule === 'Прошедшие') {
+        if (period === wholePeriod && schedule === 'Прошедшие') {
             return shedules?.passed;
         }
         return sessions.filter(({begin}) => {
@@ -116,10 +119,12 @@ export const EventCard: React.FC<IEventCardProps> = ({
 
     const handleSetExpandedClick = () => setExpanded((value) => !value);
     const handleSetPeriodClick = (period: string) => setPeriod(period);
-    const handleSetScheduleCick = (schedule: ISchedule) => setSchedule(schedule);
+    const handleSetScheduleCick = (schedule: ISchedule) => {
+        setSchedule(schedule);
+        setPeriod(wholePeriod);
+    };
 
     //styles
-    const headerHeight = 64;
     const eventCardStyle = {
         height: expanded ? headerHeight + sessionsHeight : headerHeight + infoHeight,
     };

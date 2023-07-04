@@ -1,12 +1,13 @@
 .cevent_card {
     border-radius: 4px;
+    border: 1px solid rgba(206, 205, 222, 0.20);
     background-color: #fff;
     overflow: hidden;
     transition: height 0.5s ease-in-out;
-    padding-bottom: 8px;
+    //padding-bottom: 8px;
 
     &:hover {
-        outline: 1px solid rgba(128, 128, 128, 0.2);
+        border: 1px solid rgba(128, 128, 128, 0.20);
         .caction_buttons__hidden_buttons {
             opacity: 1;
         }
@@ -40,6 +41,7 @@
 }
 
 .cevent_card_info_block {
+    padding-bottom: 8px;
     box-sizing: border-box;
     transition: all 0.5s ease-in-out;
 
@@ -58,6 +60,10 @@
         @media (max-width: 600px) {
             margin: 8px 0;
         }
+    }
+
+    @media (max-width: 600px) {
+        padding-bottom: 0;
     }
 }
 
