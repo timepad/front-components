@@ -10,9 +10,9 @@ import {Typography} from 'components/typography';
 
 interface IEventSessionProps extends ISession {
     schedule: ISchedule;
-    header?: string;
+    sessionsInMonth?: string;
 }
-
+const buttonColor = 'rgba(128, 128, 128, 0.35)';
 export const EventSession: React.FC<IEventSessionProps> = ({
     timeBeforeEvent,
     begin,
@@ -23,7 +23,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
     ticketCount,
     soldTicketCount,
     schedule,
-    header,
+    sessionsInMonth,
 }) => {
     const sessionClassName = component('event_session')({
         disabled: schedule === 'Прошедшие',
@@ -31,7 +31,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
 
     return (
         <div className={sessionClassName}>
-            {header && <Typography.Small size={8}>{header}</Typography.Small>}
+            {sessionsInMonth && <Typography.Small size={8}>{sessionsInMonth}</Typography.Small>}
             <div className="cevent_session__info">
                 <div className="cevent_session__schedule">
                     <IconCalendar className="cevent_session__icon" />
@@ -56,7 +56,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
                             className="cevent_card_stat__button"
-                            labelColor="rgb(128, 128, 128)"
+                            labelColor={buttonColor}
                         />
                     </div>
                     <div className="cevent_card_stat__row">
@@ -70,7 +70,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
                             className="cevent_card_stat__button"
-                            labelColor="rgb(128, 128, 128)"
+                            labelColor={buttonColor}
                         />
                     </div>
                     <div className="cevent_card_stat__row">
@@ -86,7 +86,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
                             className="cevent_card_stat__button"
-                            labelColor="rgb(128, 128, 128)"
+                            labelColor={buttonColor}
                         />
                     </div>
                 </div>

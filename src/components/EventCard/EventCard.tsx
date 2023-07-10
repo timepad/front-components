@@ -12,7 +12,7 @@ import {
     ActionButtons,
 } from './components';
 import moment from 'moment';
-import {addThousandsSeparator, formatEventDate, formatRepitedEventDate} from './helpers';
+import {addThousandsSeparator, formatEventDate, formatRepitedEventDate, pluralize} from './helpers';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonIconAlignment, ButtonVariant, Divider} from 'index';
 
@@ -22,6 +22,8 @@ interface IEventCardProps extends IEventCardModel {}
 
 const wholePeriod = 'весь период';
 const headerHeight = 64;
+const sessionVariants = ['сеанс', 'сеанса', 'сеансов'];
+const scheduleVariants = ['прошедшиий', 'прошедших', 'прошедших'];
 
 export const EventCard: React.FC<IEventCardProps> = ({
     status,
@@ -103,9 +105,9 @@ export const EventCard: React.FC<IEventCardProps> = ({
         });
     }, [period, schedule, shedules]);
 
-    const sortedSessionsByMounth = useMemo((): {[key: string]: ISession[]} => {
-        if (!filteredSessions.length) return {};
-        return filteredSessions.reduce((acc, el) => {
+    const sessions = useMemo((): Array<ISession & {sessionsInMonth?: string}> => {
+        if (!filteredSessions.length) return [];
+        const sortedSessionsByMounth = filteredSessions.reduce((acc, el) => {
             const month = moment(el.begin).format('MMMM');
             if (month in acc) {
                 acc[month] = [...acc[month], el];
@@ -115,7 +117,19 @@ export const EventCard: React.FC<IEventCardProps> = ({
             }
             return acc;
         }, {} as {[key: string]: ISession[]});
-    }, [filteredSessions]);
+        return Object.keys(sortedSessionsByMounth)
+            .map((mounth) =>
+                sortedSessionsByMounth[mounth].map((session, index) => {
+                    const sessionsCount = sortedSessionsByMounth[mounth]?.length;
+                    const pluralizeSession = pluralize(sessionsCount, sessionVariants);
+                    const pluralizeSchedule =
+                        schedule === 'Прошедшие' ? pluralize(sessionsCount, scheduleVariants) : '';
+                    const sessionsInMonth = `${mounth}, ${sessionsCount} ${pluralizeSchedule} ${pluralizeSession}`;
+                    return index === 0 ? {sessionsInMonth, ...session} : session;
+                }),
+            )
+            .flat(2);
+    }, [filteredSessions, schedule]);
 
     const handleSetExpandedClick = () => setExpanded((value) => !value);
     const handleSetPeriodClick = (period: string) => setPeriod(period);
@@ -214,7 +228,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                         iconAlignment={ButtonIconAlignment.left}
                     />
                 </div>
-                <EventSessionList sessions={sortedSessionsByMounth} schedule={schedule} />
+                <EventSessionList sessions={sessions} schedule={schedule} />
                 <Divider className="cevent_card__mobile_divider" />
                 <ActionButtons
                     status={status}

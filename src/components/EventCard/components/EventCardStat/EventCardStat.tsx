@@ -17,7 +17,7 @@ interface IEventCardStatProps {
     positiveReviewCount?: number;
     negativeReviewCount?: number;
 }
-
+const buttonColor = 'rgba(128, 128, 128, 0.35)';
 export const EventCardStat: React.FC<IEventCardStatProps> = ({
     income,
     orderCount,
@@ -41,7 +41,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                     variant={ButtonVariant.transparent}
                     icon={<IconArrow />}
                     className="cevent_card_stat__button"
-                    labelColor="rgb(128, 128, 128)"
+                    labelColor={buttonColor}
                 />
             </div>
             <div className="cevent_card_stat__row">
@@ -55,7 +55,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                     variant={ButtonVariant.transparent}
                     icon={<IconArrow />}
                     className="cevent_card_stat__button"
-                    labelColor="rgb(128, 128, 128)"
+                    labelColor={buttonColor}
                 />
             </div>
             <div className="cevent_card_stat__row">
@@ -69,7 +69,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                     variant={ButtonVariant.transparent}
                     icon={<IconArrow />}
                     className="cevent_card_stat__button"
-                    labelColor="rgb(128, 128, 128)"
+                    labelColor={buttonColor}
                 />
             </div>
             {(orderRefundCount || orderRefundAmount) && (
@@ -86,7 +86,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                         variant={ButtonVariant.transparent}
                         icon={<IconArrow />}
                         className="cevent_card_stat__button"
-                        labelColor="rgb(128, 128, 128)"
+                        labelColor={buttonColor}
                     />
                 </div>
             )}
@@ -104,7 +104,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                         variant={ButtonVariant.transparent}
                         icon={<IconArrow />}
                         className="cevent_card_stat__button"
-                        labelColor="rgb(128, 128, 128)"
+                        labelColor={buttonColor}
                     />
                 </div>
             )}
