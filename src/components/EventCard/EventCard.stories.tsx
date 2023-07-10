@@ -16,8 +16,8 @@ export const EventCardStory: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>EventCard Story</StoryTitle>
-            <EventCard {...(event as any)} />
-            <Brick size={2} />
+            {/*<EventCard {...(event as any)} />*/}
+            {/*<Brick size={2} />*/}
             <EventCard {...(repitedEvent as any)} />
         </>
     );
