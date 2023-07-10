@@ -1,0 +1,35 @@
+.cсarousel {
+    position: relative;
+
+    &__track {
+        display: flex;
+        overflow: auto hidden;
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+
+        &--vertical {
+            overflow: hidden auto;
+            flex-direction: column;
+        }
+
+        &::-webkit-scrollbar {
+            background: transparent; /* make scrollbar transparent */
+            -webkit-appearance: none;
+            width: 0;
+            height: 0;
+        }
+    }
+
+    &__slide {
+        display: flex;
+        scroll-snap-align: start;
+    }
+
+    &__btn {
+        width: 48px;
+        height: 48px;
+        z-index: 1;
+    }
+}
