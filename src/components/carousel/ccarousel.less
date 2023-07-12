@@ -1,4 +1,4 @@
-.cсarousel {
+.ccarousel {
     position: relative;
 
     &__track {
@@ -27,9 +27,24 @@
         scroll-snap-align: start;
     }
 
-    &__btn {
+    &__slider_btn {
+        position: absolute;
         width: 48px;
         height: 48px;
-        z-index: 1;
+        top: 50%;
+        margin-top: -24px;
+
+        &--prev {
+            left: 1%;
+            transform: rotate(180deg);
+        }
+
+        &--next {
+            right: 1%;
+        }
+
+        @media (max-width: 600px) {
+            display: none;
+        }
     }
 }

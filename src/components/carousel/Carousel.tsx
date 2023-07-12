@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ScrollContainer, {ScrollContainerProps} from 'react-indiana-drag-scroll';
 
 import './ccarousel.less';
+import {SliderBtn} from './SliderBtn';
 import {component} from '../../services/helpers/classHelpers';
 
 interface IContentCoords {
@@ -16,14 +17,14 @@ interface ICarouselProps extends Omit<ScrollContainerProps, 'ref' | 'vertical'> 
 
 export const Carousel: React.FC<ICarouselProps> = ({
     children,
-    nextBtn,
-    prevBtn,
+    nextBtn = <SliderBtn direction="next" />,
+    prevBtn = <SliderBtn direction="prev" />,
     className = '',
     horizontal = true,
     ...props
 }) => {
     //variables
-    const carouselClassName = component('сarousel', 'track')({vertical: !horizontal});
+    const carouselClassName = component('carousel', 'track')({vertical: !horizontal});
     const countSlides = React.Children.toArray(children).filter(Boolean).length;
     //hooks
     const [contentMap, setContentMap] = useState<Array<IContentCoords>>([]);
@@ -155,17 +156,9 @@ export const Carousel: React.FC<ICarouselProps> = ({
                 horizontal={horizontal}
                 {...props}
             >
-                {scrollProgress > 0 && allowScroll && (
-                    <div className="cсarousel__btn" onClick={prev}>
-                        {prevBtn}
-                    </div>
-                )}
+                {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
                 {children}
-                {scrollProgress < 1 && allowScroll && (
-                    <div className="cсarousel__btn" onClick={next}>
-                        {nextBtn}
-                    </div>
-                )}
+                {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
             </ScrollContainer>
         </div>
     );
