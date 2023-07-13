@@ -1,17 +1,21 @@
 import React, {FC} from 'react';
 import cx from 'classnames';
 import {component} from '../../../services/helpers/classHelpers';
-import {IFormTextProps} from './Text.types';
+import {ITextProps} from './Text.types';
 import {Textarea} from '../Textarea';
 
 import './index.less';
+import {ITextareaProps} from '../Textarea/Textarea';
 
-export const Text: FC<React.PropsWithChildren<IFormTextProps>> = ({
+export const Text: FC<ITextProps> = ({
     disabled = false,
     error = '',
     className = '',
+    multiline = false,
+    textareaRef,
+    inputRef,
     ...props
-}: IFormTextProps) => {
+}) => {
     const finalClassNames = cx(
         component('text')({
             disabled,
@@ -20,13 +24,12 @@ export const Text: FC<React.PropsWithChildren<IFormTextProps>> = ({
         className,
     );
 
-    // TODO: сверху все типизировано, здесь необходим any, иначе в otp ничего не билдится
     return (
         <div className={finalClassNames}>
-            {props.multiline ? (
-                <Textarea disabled={disabled} {...props} />
+            {multiline ? (
+                <Textarea disabled={disabled} ref={textareaRef} {...(props as ITextareaProps)} />
             ) : (
-                <input disabled={disabled} ref={(props as any).inputRef} {...(props as any)} />
+                <input disabled={disabled} ref={inputRef} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />
             )}
         </div>
     );
