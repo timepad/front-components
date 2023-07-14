@@ -157,7 +157,7 @@ export const Carousel: React.FC<ICarouselProps> = ({
                 {...props}
             >
                 {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
-                {React.Children.toArray(children).filter(Boolean) /* fix zero children */}
+                {children}
                 {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
             </ScrollContainer>
         </div>
