@@ -10,18 +10,18 @@
 
         &:hover {
             cursor: pointer;
-            box-shadow: 0 -1px 0 rgba(128, 128, 128, 0.2);
-            color: rgba(100, 63, 255, 1);
+            box-shadow: 0 -1px 0 @c-gray-50-fade-20;
+            color: @c-primary-blue;
             .cevent_card_stat__button {
                 opacity: 1;
             }
             .cevent_card_stat__value--return {
-                color: rgba(100, 63, 255, 1);
+                color: @c-primary-blue;
             }
         }
 
         @media (max-width: 600px) {
-            box-shadow: 0 -1px 0 rgba(128, 128, 128, 0.2);
+            box-shadow: 0 -1px 0 @c-gray-50-fade-20;
             padding: 8px 0;
         }
     }
@@ -49,7 +49,7 @@
 
     &__value {
         &--return {
-            color: rgba(245, 70, 20, 1);
+            color: @c-red;
         }
     }
 

@@ -49,7 +49,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
     isFavorite,
 }) => {
     //hooks
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
     const [period, setPeriod] = useState(wholePeriod);
     const [schedule, setSchedule] = useState<ISchedule>('Предстоящие');
     const [[infoHeight, sessionsHeight], setHeights] = useState([0, 0]);

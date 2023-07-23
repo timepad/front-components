@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ScrollContainer, {ScrollContainerProps} from 'react-indiana-drag-scroll';
 
-import './ccarousel.less';
+import './index.less';
 import {SliderBtn} from './SliderBtn';
 import {component} from '../../services/helpers/classHelpers';
 
@@ -11,8 +11,8 @@ interface IContentCoords {
 }
 
 interface ICarouselProps extends Omit<ScrollContainerProps, 'ref' | 'vertical'> {
-    nextBtn?: React.ReactNode;
-    prevBtn?: React.ReactNode;
+    nextBtn?: React.ReactElement;
+    prevBtn?: React.ReactElement;
 }
 
 export const Carousel: React.FC<ICarouselProps> = ({
