@@ -1,26 +1,16 @@
 import React, {ReactNode} from 'react';
-import {Props as MaskedInputProps} from 'react-input-mask';
 import {ITextareaProps} from '../Textarea/Textarea';
+import {Mask} from '../../../services/hooks';
 
-export type IFormTextLightProps = {
+export type ITextLightProps = {
     error?: string;
     success?: boolean;
     caption?: ReactNode;
-
+    multiline?: boolean;
     customIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    onErrorTruncation?: (truncated: boolean) => void;
-} & (IFormInputLightProps | IFormTextareaLightProps | IFormMaskInputProps);
-
-export type IFormInputLightProps = {
-    multiline?: false;
-    inputRef?: React.MutableRefObject<HTMLInputElement | null>;
-} & React.InputHTMLAttributes<HTMLInputElement>;
-
-export type IFormTextareaLightProps = {
-    multiline: true;
+    inputRef?: React.Ref<HTMLInputElement>;
     textareaRef?: React.Ref<HTMLTextAreaElement>;
-} & ITextareaProps;
-
-export type IFormMaskInputProps = {
-    multiline?: false;
-} & MaskedInputProps;
+    mask?: string | Mask;
+    maskPlaceholder?: string;
+    setValue?: (value: string) => void;
+} & (ITextareaProps | React.InputHTMLAttributes<HTMLInputElement>);

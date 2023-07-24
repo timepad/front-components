@@ -1,12 +1,9 @@
 import React from 'react';
 import {ITextareaProps} from '../Textarea/Textarea';
 
-export type IFormTextProps = {
+export type ITextProps = {
     error?: string;
-} & (
-    | ({multiline?: false; inputRef?: React.MutableRefObject<HTMLInputElement | null>} & React.DetailedHTMLProps<
-          React.InputHTMLAttributes<HTMLInputElement>,
-          HTMLInputElement
-      >)
-    | ({multiline: true; textareaRef?: React.Ref<HTMLTextAreaElement>} & ITextareaProps)
-);
+    multiline?: boolean;
+    textareaRef?: React.Ref<HTMLTextAreaElement>;
+    inputRef?: React.Ref<HTMLInputElement>;
+} & (ITextareaProps | React.InputHTMLAttributes<HTMLInputElement>);
