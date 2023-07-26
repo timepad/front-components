@@ -156,10 +156,10 @@ export const Carousel: React.FC<ICarouselProps> = ({
                 horizontal={horizontal}
                 {...props}
             >
-                {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
                 {children}
-                {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
             </ScrollContainer>
+            {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
+            {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
         </div>
     );
 };
