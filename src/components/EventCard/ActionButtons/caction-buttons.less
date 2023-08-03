@@ -1,21 +1,21 @@
-.caction_buttons {
+.caction-buttons {
     display: flex;
 
-    &__hidden_buttons {
+    &__hidden-buttons {
         display: flex;
         opacity: 0;
 
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             opacity: 1;
         }
     }
 
-    &__visible_buttons {
+    &__visible-buttons {
         display: flex;
     }
 
-    &__hidden_buttons > button,
-    &__visible_buttons > button {
+    &__hidden-buttons > button,
+    &__visible-buttons > button {
         margin-right: 8px;
     }
 
@@ -29,25 +29,25 @@
         }
 
         &--gray {
-            color: rgba(170, 170, 170, 1);
+            color: @c-gray-35;
 
-            @media (max-width: 600px) {
-                color: rgba(100, 63, 255, 1);
+            @media (max-width: @mobile-content-max-width) {
+                color: @c-primary-blue;
             }
         }
 
         &--hidden {
 
-            @media (max-width: 600px) {
+            @media (max-width: @mobile-content-max-width) {
                 display: none;
             }
         }
 
         &--black {
-            color: rgba(37, 37, 37, 1);
+            color: @c-black;
 
-            @media (max-width: 600px) {
-                color: rgba(100, 63, 255, 1);
+            @media (max-width: @mobile-content-max-width) {
+                color: @c-primary-blue;
             }
         }
     }
@@ -57,7 +57,7 @@
     }
 
     &__divider {
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             display: none;
         }
     }
@@ -65,19 +65,19 @@
     &--mobile {
         display: none;
 
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             display: flex;
             justify-content: space-between;
             padding: 16px 0 16px 16px;
             box-sizing: border-box;
 
-            .caction_buttons__visible_buttons > button {
+            .caction-buttons__visible-buttons > button {
                 margin-right: 0;
             }
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: @mobile-content-max-width) {
         display: none;
     }
 }

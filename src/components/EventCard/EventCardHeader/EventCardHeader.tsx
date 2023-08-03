@@ -1,31 +1,31 @@
 import React from 'react';
-import IconPlaceholder from '../../../../assets/svg/16/icon-plus-16.svg';
+import IconPlaceholder from '../../../assets/svg/16/icon-plus-16.svg';
 
-import {IEventStatus} from '../../types/EventCardModel';
-import {component} from '../../../../services/helpers/classHelpers';
+import {IEventStatus} from '../types/EventCardModel';
+import {component} from '../../../services/helpers/classHelpers';
 import {Typography} from 'components/typography';
 
 interface IEventCardHeader {
     status: IEventStatus;
     name: string;
-    isRepitenEvent?: boolean;
+    isSessions?: boolean;
 }
 
 export const EventCardHeader: React.FC<React.PropsWithChildren<IEventCardHeader>> = ({
     status,
     name,
-    isRepitenEvent = false,
+    isSessions = false,
     children,
 }) => {
-    const eventStatus = isRepitenEvent ? `${status} / Серия событий` : status;
-    const nameEventClassName = component('event_card_header_title', 'name')({passed: status === 'past'});
+    const eventStatus = isSessions ? `${status} / Серия событий` : status;
+    const nameEventClassName = component('event-card-header', 'name')({passed: status === 'past'});
 
     return (
-        <div className="cevent_card_header">
-            <div className="cevent_card_header__info">
+        <div className="cevent-card-header">
+            <div className="cevent-card-header__container">
                 {/*//TODO временная иконка, потом поменять*/}
-                <IconPlaceholder className="cevent_card_header__icon" />
-                <Typography.Multiple className="cevent_card_header_title">
+                <IconPlaceholder className="cevent-card-header__icon" />
+                <Typography.Multiple className="cevent-card-header__info">
                     <Typography.Small noPadding className="t-color-gray-50">
                         {eventStatus}
                     </Typography.Small>

@@ -1,15 +1,15 @@
 import React from 'react';
-import IconSettings from '../../../../assets/svg/24/icon-settings-24.svg';
-import IconElipses from '../../../../assets/svg/24/icon-elipsis-24.svg';
-import IconDelete from '../../../../assets/svg/24/icon-delete-24.svg';
-import IconCopy from '../../../../assets/svg/16/icon-copy.svg';
-import IconAdmin from '../../../../assets/svg/16/icon-admin-16.svg';
+import IconSettings from '../../../assets/svg/24/icon-settings-24.svg';
+import IconElipses from '../../../assets/svg/24/icon-elipsis-24.svg';
+import IconDelete from '../../../assets/svg/24/icon-delete-24.svg';
+import IconCopy from '../../../assets/svg/16/icon-copy.svg';
+import IconAdmin from '../../../assets/svg/16/icon-admin-16.svg';
 
-import {IEventStatus} from '../../types/EventCardModel';
-import {Dropdown} from '../../../dropdown';
-import {Button, ButtonVariant} from '../../../button';
-import {Row} from '../../../row';
-import {Divider} from '../../../divider';
+import {IEventStatus} from '../types/EventCardModel';
+import {Dropdown} from '../../dropdown';
+import {Button, ButtonVariant} from '../../button';
+import {Row} from '../../row';
+import {Divider} from '../../divider';
 
 interface IActionsDropdownProps {
     status: IEventStatus;
@@ -20,8 +20,8 @@ export const ActionsDropdown: React.FC<IActionsDropdownProps> = ({status}) => {
             trigger={() => (
                 <Button
                     variant={ButtonVariant.transparent}
-                    icon={<IconElipses className="caction_buttons__button--black" />}
-                    className="caction_buttons__dropdown-button"
+                    icon={<IconElipses className="caction-buttons__button--black" />}
+                    className="caction-buttons__dropdown-button"
                 />
             )}
         >

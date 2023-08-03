@@ -13,14 +13,14 @@ export interface ISession {
     orderRefundCurrency?: string;
 }
 
-export interface IShedules {
+export interface ISessions {
     passed: ISession[];
     actual: ISession[];
 }
 
-export type IEventStatus = "draft" | "published" | "past";
+export type IEventStatus = 'draft' | 'published' | 'past';
 
-export type IEventAccessStatus = "public" | "link" | "private";
+export type IEventAccessStatus = 'public' | 'link' | 'private';
 
 export interface IEventCardModel extends ISession {
     id: number;
@@ -33,7 +33,7 @@ export interface IEventCardModel extends ISession {
     isExistDiscount: boolean;
     positiveReviewCount?: number;
     negativeReviewCount?: number;
-    shedules?: IShedules;
+    shedules?: ISessions;
 }
 
-export type ISchedule = "Предстоящие" | "Прошедшие";
+export type ISchedule = 'Предстоящие' | 'Прошедшие';

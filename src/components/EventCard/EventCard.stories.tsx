@@ -4,7 +4,6 @@ import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookH
 import {EventCard} from './EventCard';
 import events from './cabinet_event.json';
 import {Brick} from '../brick';
-import BrickStories from '../brick/Brick.stories';
 
 export default {
     title: 'EventCard',

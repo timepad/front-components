@@ -2,21 +2,19 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import IconCalendar from '../../assets/svg/16/icon-calendar-16.svg';
 
 import {IEventCardModel, ISchedule, ISession} from './types/EventCardModel';
-import {
-    EventCardHeader,
-    EventCardInfo,
-    EventCardStat,
-    PeriodsDropdown,
-    SchedualDropdown,
-    EventSessionList,
-    ActionButtons,
-} from './components';
 import moment from 'moment';
 import {addThousandsSeparator, formatEventDate, formatRepitedEventDate, pluralize} from './helpers';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonIconAlignment, ButtonVariant, Divider} from 'index';
 
 import './index.less';
+import {EventCardHeader} from './EventCardHeader/EventCardHeader';
+import {ActionButtons} from './ActionButtons/ActionButtons';
+import {EventCardInfo} from './EventCardInfo/EventCardInfo';
+import {PeriodsDropdown} from './PeriodsDropdown/PeriodsDropdown';
+import {SchedualDropdown} from './SchedualDropdown/SchedualDropdown';
+import {EventSessionList} from './EventSession/EventSessionList';
+import {EventCardStat} from './EventCardStat/EventCardStat';
 
 interface IEventCardProps extends IEventCardModel {}
 
@@ -57,29 +55,27 @@ export const EventCard: React.FC<IEventCardProps> = ({
     const sessionBlockRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        const updateSize = () => {};
-        setHeights([infoBlockRef.current?.clientHeight as number, sessionBlockRef.current?.clientHeight as number]);
+        const updateSize = () => {
+            setHeights([infoBlockRef.current?.clientHeight as number, sessionBlockRef.current?.clientHeight as number]);
+        };
         updateSize();
 
         window.addEventListener('resize', updateSize);
         return () => window.removeEventListener('resize', updateSize);
     }, []);
 
-    //variables
-    const isRepitenEvent = !!shedules?.actual?.length || !!shedules?.passed?.length;
+    //texts
+    const isSessions = !!shedules?.actual?.length || !!shedules?.passed?.length;
     const isStatusDraft = status === 'draft';
-    const eventIncome = isStatusDraft
-        ? '—'
-        : isFree
-        ? 'Событие бесплатное'
-        : `${addThousandsSeparator(income)} ${incomeCurrency}`;
+    const eventFreeIncome = isFree ? 'Событие бесплатное' : `${addThousandsSeparator(income)} ${incomeCurrency}`;
+    const eventIncome = isStatusDraft ? '—' : eventFreeIncome;
     const eventOrderCount = isStatusDraft ? '—' : orderCount;
     const eventTicketCount = isStatusDraft ? '—' : `${soldTicketCount} из ${ticketCount}`;
-    const eventSchedual = isRepitenEvent
+    const eventSchedual = isSessions
         ? `Ближайший сеанс: ${formatRepitedEventDate(begin, end)}`
         : `${formatEventDate(begin, end)}`;
 
+    //variables
     const periodList = useMemo(() => {
         if (!shedules) return [];
         const sheduleMonths = schedule === 'Предстоящие' ? shedules?.actual : shedules?.passed;
@@ -148,22 +144,22 @@ export const EventCard: React.FC<IEventCardProps> = ({
     const infoBlockStyle = {
         transform: expanded ? `translateY(-${infoHeight}px)` : 'none',
     };
-    const eventCardClass = component('event_card')({expand: expanded});
+    const eventCardClass = component('event-card')({expand: expanded});
 
     return (
         <div className={eventCardClass} style={eventCardStyle}>
-            <EventCardHeader status={status} name={name} isRepitenEvent={isRepitenEvent}>
+            <EventCardHeader status={status} name={name} isSessions={isSessions}>
                 <ActionButtons
                     status={status}
-                    isRepitenEvent={isRepitenEvent}
+                    isSessions={isSessions}
                     isFavorite={isFavorite}
                     isOpen={expanded}
                     onSetOpenClickHandler={handleSetExpandedClick}
-                    className="caction_buttons"
+                    className="caction-buttons"
                 />
             </EventCardHeader>
-            <div className="cevent_card_info_block" style={infoBlockStyle} ref={infoBlockRef}>
-                <div className="cevent_card_info_block__block">
+            <div className="cevent-card-info-block" style={infoBlockStyle} ref={infoBlockRef}>
+                <div className="cevent-card-info-block__block">
                     <EventCardInfo
                         accessStatus={accessStatus}
                         location={place}
@@ -183,36 +179,36 @@ export const EventCard: React.FC<IEventCardProps> = ({
                         negativeReviewCount={negativeReviewCount}
                     />
                 </div>
-                {isRepitenEvent && (
+                {isSessions && (
                     <>
-                        <Divider className="cevent_card__mobile_divider" />
+                        <Divider className="cevent-card__mobile-divider" />
                         <Button
                             onClick={handleSetExpandedClick}
                             variant={ButtonVariant.transparent}
-                            className="cevent_card_info_block__session_button"
+                            className="cevent-card-info-block__session-button"
                         >
                             Показать сеансы события
                         </Button>
                     </>
                 )}
-                <Divider className="cevent_card__mobile_divider" />
+                <Divider className="cevent-card__mobile-divider" />
                 <ActionButtons
                     status={status}
                     isOpen={expanded}
                     isFavorite={isFavorite}
-                    isRepitenEvent={isRepitenEvent}
+                    isSessions={isSessions}
                     onSetOpenClickHandler={handleSetExpandedClick}
-                    className="caction_buttons--mobile"
+                    className="caction-buttons--mobile"
                 />
             </div>
-            <div className="cevent_card_session_block" style={sessionBlockStyle} ref={sessionBlockRef}>
+            <div className="cevent-card-session-block" style={sessionBlockStyle} ref={sessionBlockRef}>
                 <Divider />
-                <div className="cevent_card_filters">
+                <div className="cevent-card-filters">
                     <Button onClick={handleSetExpandedClick} variant={ButtonVariant.transparent}>
                         Скрыть события
                     </Button>
                     <Divider vertical />
-                    <div className="cevent_card_filters__dropdown_container">
+                    <div className="cevent-card-filters__dropdown-container">
                         <PeriodsDropdown
                             periodList={periodList}
                             sessionCount={filteredSessions?.length}
@@ -229,14 +225,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
                     />
                 </div>
                 <EventSessionList sessions={sessions} schedule={schedule} />
-                <Divider className="cevent_card__mobile_divider" />
+                <Divider className="cevent-card__mobile-divider" />
                 <ActionButtons
                     status={status}
                     isOpen={expanded}
                     isFavorite={isFavorite}
-                    isRepitenEvent={isRepitenEvent}
+                    isSessions={isSessions}
                     onSetOpenClickHandler={handleSetExpandedClick}
-                    className="caction_buttons--mobile"
+                    className="caction-buttons--mobile"
                 />
             </div>
         </div>
