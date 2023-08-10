@@ -6,11 +6,13 @@ import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
 import {Typography} from '../typography';
 import {Brick} from '../brick';
+import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
 
-export interface IHeaderComponentProps {
+export interface IHeaderComponentProps<T = unknown> {
     titleIsTransparent?: boolean;
     backHandler?: () => void;
     closeHandler?: () => void;
+    dataAttrs?: Array<IDataAttr<T>>;
 }
 
 export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
@@ -32,12 +34,13 @@ export const Description: React.FC<React.PropsWithChildren<unknown>> = ({childre
     );
 };
 
-export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = ({
+export const Header = <T,>({
     backHandler,
     closeHandler,
     titleIsTransparent,
     children,
-}) => {
+    dataAttrs = [],
+}: React.PropsWithChildren<IHeaderComponentProps<T>>) => {
     const titleClass = component(
         'form',
         'title',
@@ -75,6 +78,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<CloseSvg />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
+                    {...extractDataAttrs<T>('btn-close', dataAttrs)}
                 />
             )}
         </div>

@@ -4,6 +4,7 @@ import {Modal} from './Modal';
 import {Meta} from '@storybook/react/types-6-0';
 import '../../assets/css/bundle.less';
 import {Button} from '../button';
+import {Header} from './ModalHeader';
 
 export default {
     title: 'Modal',
@@ -39,10 +40,20 @@ export const WithDescription: React.FC<React.PropsWithChildren<unknown>> = () =>
     );
 };
 
+enum Attrs {
+    'btn-close',
+    'div-content',
+}
+
+type Type = keyof typeof Attrs;
+
 export const Closable: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
         <Modal isOpen={true} onClose={action('close-button-click')}>
-            <Modal.Header closeHandler={action('close-button-click')}>
+            <Modal.Header<Type>
+                closeHandler={action('close-button-click')}
+                dataAttrs={[{key: 'btn-close', 'data-analytics': 'anal', 'data-qa': 'qa'}]}
+            >
                 <Modal.Title>Модальное окно</Modal.Title>
             </Modal.Header>
             <Modal.Body>

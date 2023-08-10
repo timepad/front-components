@@ -57,13 +57,15 @@ export interface IModalProps {
     onClose?: () => void;
 }
 
-export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
-    Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>>;
-    Body: React.FC<React.PropsWithChildren<IModalBodyProps>>;
-    Footer: React.FC<React.PropsWithChildren<IModalFooterProps>>;
-    Title: React.FC<React.PropsWithChildren<unknown>>;
-    Description: React.FC<React.PropsWithChildren<unknown>>;
-} = (props) => {
+type ModalType<T = unknown> = React.PropsWithChildren<IModalProps> & {
+    Header?: React.PropsWithChildren<IHeaderComponentProps<T>>;
+    Body?: React.PropsWithChildren<IModalBodyProps>;
+    Footer?: React.PropsWithChildren<IModalFooterProps>;
+    Title?: React.PropsWithChildren<unknown>;
+    Description?: React.PropsWithChildren<unknown>;
+};
+
+export const Modal = <T,>(props: ModalType<T>) => {
     const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
