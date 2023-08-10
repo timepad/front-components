@@ -4,9 +4,10 @@ import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
 import {Header, Title, Description} from './ModalHeader';
-import {Footer, IModalFooterProps} from './ModalFooter';
-import {Body, IModalBodyProps} from './ModalBody';
+import {Footer} from './ModalFooter';
+import {Body} from './ModalBody';
 import './index.less';
+import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
 
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
 
@@ -55,18 +56,26 @@ export interface IModalProps {
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onClose?: () => void;
+    attrs?: Omit<IDataAttr<unknown>, 'key'>;
 }
 
-type ModalType = React.PropsWithChildren<IModalProps> & {
-    Header?: typeof Header;
-    Body?: React.PropsWithChildren<IModalBodyProps>;
-    Footer?: React.PropsWithChildren<IModalFooterProps>;
-    Title?: React.PropsWithChildren<unknown>;
-    Description?: React.PropsWithChildren<unknown>;
-};
-
-export const Modal = (props: ModalType) => {
-    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
+export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
+    Header: typeof Header;
+    Body: typeof Body;
+    Footer: typeof Footer;
+    Title: typeof Title;
+    Description: typeof Description;
+} = (props) => {
+    const {
+        children,
+        isClean,
+        className,
+        overlayClassName,
+        isOpen,
+        blockCloseOnOutsideClick,
+        onClose,
+        attrs = {},
+    } = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -93,6 +102,14 @@ export const Modal = (props: ModalType) => {
         };
     }, []);
 
+    //По-другому нет возможности устанавливать data* атрибуты
+    const contentRef = (element: HTMLDivElement) => {
+        Object.keys(attrs).length &&
+            Object.entries(attrs).forEach(([key, value]) => {
+                element.setAttribute(key, value);
+            });
+    };
+
     return (
         <ModalSafeForReact18
             className={cx(component('portal')(), className)}
@@ -100,6 +117,7 @@ export const Modal = (props: ModalType) => {
             isOpen={isOpen}
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
+            contentRef={contentRef}
         >
             {isOpen &&
                 children &&

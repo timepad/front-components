@@ -41,11 +41,10 @@ export const WithDescription: React.FC<React.PropsWithChildren<unknown>> = () =>
 
 export const Closable: React.FC<React.PropsWithChildren<unknown>> = () => {
     return (
-        <Modal isOpen={true} onClose={action('close-button-click')}>
+        <Modal isOpen={true} onClose={action('close-button-click')} attrs={{'data-qa': 'window'}}>
             <Modal.Header
                 closeHandler={action('close-button-click')}
-                // dataAttrs={[{key: 'btn-close', 'data-analytics': 'anal', 'data-qa': 'qa'}]}
-                dataAttrs={[{key: 'btn-close'}, {key: 'div-content'}]}
+                attrs={[{key: 'btn-close', 'data-qa': 'btn-close'}]}
             >
                 <Modal.Title>Модальное окно</Modal.Title>
             </Modal.Header>
