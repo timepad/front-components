@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useRef, useEffect, MutableRefObject, ComponentType} from 'react';
 import cx from 'classnames';
-import {component, layout} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
 import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
 import {Footer, IModalFooterProps} from './ModalFooter';
