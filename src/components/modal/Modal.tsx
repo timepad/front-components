@@ -3,7 +3,7 @@ import {useRef, useEffect, MutableRefObject, ComponentType} from 'react';
 import cx from 'classnames';
 import {component, layout} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
-import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
+import {Header, Title, Description} from './ModalHeader';
 import {Footer, IModalFooterProps} from './ModalFooter';
 import {Body, IModalBodyProps} from './ModalBody';
 import './index.less';
@@ -57,15 +57,15 @@ export interface IModalProps {
     onClose?: () => void;
 }
 
-type ModalType<T = unknown> = React.PropsWithChildren<IModalProps> & {
-    Header?: React.PropsWithChildren<IHeaderComponentProps<T>>;
+type ModalType = React.PropsWithChildren<IModalProps> & {
+    Header?: typeof Header;
     Body?: React.PropsWithChildren<IModalBodyProps>;
     Footer?: React.PropsWithChildren<IModalFooterProps>;
     Title?: React.PropsWithChildren<unknown>;
     Description?: React.PropsWithChildren<unknown>;
 };
 
-export const Modal = <T,>(props: ModalType<T>) => {
+export const Modal = (props: ModalType) => {
     const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
