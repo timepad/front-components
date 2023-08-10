@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {useRef, useEffect, MutableRefObject, ComponentType} from 'react';
 import cx from 'classnames';
-import {component, layout} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
 import {Header, Title, Description} from './ModalHeader';
 import {Footer} from './ModalFooter';
 import {Body} from './ModalBody';
+import {Content} from './ModalContent';
 import './index.less';
-import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
 
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
 
@@ -56,7 +56,7 @@ export interface IModalProps {
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onClose?: () => void;
-    attrs?: Omit<IDataAttr<unknown>, 'key'>;
+    attrs?: Record<string, any>;
 }
 
 export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
@@ -65,6 +65,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Footer: typeof Footer;
     Title: typeof Title;
     Description: typeof Description;
+    Content: typeof Content;
 } = (props) => {
     const {
         children,
@@ -121,16 +122,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
         >
             {isOpen &&
                 children &&
-                (!isClean ? (
-                    <div
-                        className={cx(component('form', 'window')(), layout('flex')({'y-axis': true}))}
-                        ref={wrapperRef}
-                    >
-                        {children}
-                    </div>
-                ) : (
-                    <div ref={wrapperRef}>{children}</div>
-                ))}
+                (!isClean ? <Content ref={wrapperRef}>{children}</Content> : <div ref={wrapperRef}>{children}</div>)}
         </ModalSafeForReact18>
     );
 };
@@ -140,3 +132,4 @@ Modal.Body = Body;
 Modal.Footer = Footer;
 Modal.Title = Title;
 Modal.Description = Description;
+Modal.Content = Content;
