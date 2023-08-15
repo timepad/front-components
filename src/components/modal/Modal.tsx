@@ -107,7 +107,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     const contentRef = (element: HTMLDivElement) => {
         Object.keys(attrs).length &&
             Object.entries(attrs).forEach(([key, value]) => {
-                element.setAttribute(key, value);
+                element?.setAttribute(key, value);
             });
     };
 
