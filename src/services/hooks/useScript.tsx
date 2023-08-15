@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-type ScriptAttributes = Record<string, any> & React.HTMLProps<HTMLScriptElement>;
+type ScriptAttributes = {callback?: () => void} & Record<string, any> & React.HTMLProps<HTMLScriptElement>;
 
 export const useScript = (attrs: ScriptAttributes): [boolean] => {
     const [isLoading, setLoading] = useState(false);
     useEffect(() => {
-        if (!attrs.src) return;
         const script: HTMLScriptElement = document.createElement('script');
         script.async = true;
         script.id = 'script_id';
@@ -29,7 +28,7 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
         return () => {
             document.body.removeChild(script);
         };
-    }, [attrs]);
+    }, [attrs.src, attrs?.callback]);
 
     return [isLoading];
 };
