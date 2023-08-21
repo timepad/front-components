@@ -3,7 +3,7 @@ import IconCalendar from '../../../assets/svg/16/icon-calendar-16.svg';
 import IconArrow from '../../../assets/svg/24/icon-arrow-right-24.svg';
 
 import {ISchedule, ISession} from '../types/EventCardModel';
-import {addThousandsSeparator, formatRepitedEventDate} from '../helpers';
+import {addThousandsSeparator, formatEventDate} from '../helpers';
 import {component} from '../../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../../button';
 import {Typography} from 'components/typography';
@@ -29,23 +29,28 @@ export const EventSession: React.FC<IEventSessionProps> = ({
         disabled: schedule === 'Прошедшие',
     });
 
+    const rowClassName = component('event-card-stat', 'row')();
+    const dataBlockClassName = component('event-card-stat', 'data')();
+    const btnClassName = component('event-card-stat', 'button')();
+    const labelClassName = component('event-card-stat', 'label')();
+
     return (
         <div className={sessionClassName}>
             {sessionsInMonth && <Typography.Small size={8}>{sessionsInMonth}</Typography.Small>}
-            <div className="cevent-session__info">
-                <div className="cevent-session__schedule">
-                    <IconCalendar className="cevent-session__icon" />
+            <div className={component('event-session', 'info')()}>
+                <div className={component('event-session', 'schedule')()}>
+                    <IconCalendar className={component('event-session', 'icon')()} />
                     <Typography.Multiple>
-                        <Typography.Small>{formatRepitedEventDate(begin, end)}</Typography.Small>
-                        <Typography.Small noPadding className="t-color-gray-50">
+                        <Typography.Small>{formatEventDate(begin, end, true)}</Typography.Small>
+                        <Typography.Small noPadding className={`t-color-gray-50 ${labelClassName}`}>
                             {timeBeforeEvent}
                         </Typography.Small>
                     </Typography.Multiple>
                 </div>
                 <div>
-                    <div className="cevent-card-stat__row">
-                        <Typography.Multiple className="cevent-card-stat__data">
-                            <Typography.Small noPadding className="t-color-gray-50 cevent-card-stat__label">
+                    <div className={rowClassName}>
+                        <Typography.Multiple className={dataBlockClassName}>
+                            <Typography.Small noPadding className={`t-color-gray-50 ${labelClassName}`}>
                                 Доход
                             </Typography.Small>
                             <Typography.Small noPadding>
@@ -55,13 +60,13 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                         <Button
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
-                            className="cevent-card-stat__button"
+                            className={btnClassName}
                             labelColor={buttonColor}
                         />
                     </div>
-                    <div className="cevent-card-stat__row">
-                        <Typography.Multiple className="cevent-card-stat__data">
-                            <Typography.Small noPadding className="t-color-gray-50 cevent-card-stat__label">
+                    <div className={rowClassName}>
+                        <Typography.Multiple className={dataBlockClassName}>
+                            <Typography.Small noPadding className={`t-color-gray-50 ${labelClassName}`}>
                                 Заказы
                             </Typography.Small>
                             <Typography.Small noPadding>{orderCount}</Typography.Small>
@@ -69,12 +74,12 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                         <Button
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
-                            className="cevent-card-stat__button"
+                            className={btnClassName}
                             labelColor={buttonColor}
                         />
                     </div>
-                    <div className="cevent-card-stat__row">
-                        <Typography.Multiple className="cevent-card-stat__data">
+                    <div className={rowClassName}>
+                        <Typography.Multiple className={dataBlockClassName}>
                             <Typography.Small noPadding className="t-color-gray-50 cevent-card-stat__label">
                                 Билеты
                             </Typography.Small>
@@ -85,7 +90,7 @@ export const EventSession: React.FC<IEventSessionProps> = ({
                         <Button
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
-                            className="cevent-card-stat__button"
+                            className={btnClassName}
                             labelColor={buttonColor}
                         />
                     </div>

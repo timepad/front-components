@@ -10,6 +10,7 @@ import {Dropdown} from '../../dropdown';
 import {Button, ButtonVariant} from '../../button';
 import {Row} from '../../row';
 import {Divider} from '../../divider';
+import {component} from '../../../services/helpers/classHelpers';
 
 interface IActionsDropdownProps {
     status: IEventStatus;
@@ -20,8 +21,8 @@ export const ActionsDropdown: React.FC<IActionsDropdownProps> = ({status}) => {
             trigger={() => (
                 <Button
                     variant={ButtonVariant.transparent}
-                    icon={<IconElipses className="caction-buttons__button--black" />}
-                    className="caction-buttons__dropdown-button"
+                    icon={<IconElipses className={component('action-buttons', 'button')({black: true})} />}
+                    className={component('action-buttons', 'dropdown-button')()}
                 />
             )}
         >

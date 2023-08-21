@@ -18,18 +18,21 @@ export const EventCardHeader: React.FC<React.PropsWithChildren<IEventCardHeader>
     children,
 }) => {
     const eventStatus = isSessions ? `${status} / Серия событий` : status;
-    const nameEventClassName = component('event-card-header', 'name')({passed: status === 'past'});
 
     return (
         <div className="cevent-card-header">
-            <div className="cevent-card-header__container">
+            <div className={component('event-card-header', 'container')()}>
                 {/*//TODO временная иконка, потом поменять*/}
-                <IconPlaceholder className="cevent-card-header__icon" />
-                <Typography.Multiple className="cevent-card-header__info">
+                <IconPlaceholder className={component('event-card-header', 'icon')()} />
+                <Typography.Multiple className={component('event-card-header', 'info')()}>
                     <Typography.Small noPadding className="t-color-gray-50">
                         {eventStatus}
                     </Typography.Small>
-                    <Typography.Caption className={nameEventClassName} noPadding fontWeight="bold">
+                    <Typography.Caption
+                        className={component('event-card-header', 'name')({passed: status === 'past'})}
+                        noPadding
+                        fontWeight="bold"
+                    >
                         {name}
                     </Typography.Caption>
                 </Typography.Multiple>

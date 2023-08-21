@@ -28,55 +28,48 @@ export const ActionButtons: React.FC<IActionButtonsProps> = ({
     onSetOpenClickHandler,
     className,
 }) => {
-    const expandButtonClassName = component('action-buttons', 'button')({expand: isOpen, hidden: true});
-    const bookmarkButtonClassName = component('action-buttons', 'button')({hidden: !isFavorite});
+    const btnClassName = component('action-buttons', 'button')();
 
     return (
         <div className={className}>
-            <div className="caction-buttons__hidden-buttons">
-                {status === 'draft' && (
-                    <Button className="caction-buttons__button" variant={ButtonVariant.secondary}>
-                        Опубликовать
-                    </Button>
-                )}
-                {status === 'published' && (
-                    <Button className="caction-buttons__button" variant={ButtonVariant.secondary}>
-                        Продвигать
-                    </Button>
-                )}
-                {status === 'past' && (
-                    <Button className="caction-buttons__button" variant={ButtonVariant.secondary}>
-                        Перейти к заказам
-                    </Button>
-                )}
-                <Button className="caction-buttons__button" variant={ButtonVariant.secondary} icon={<IconSettings />} />
-                <Button className="caction-buttons__button" variant={ButtonVariant.secondary} icon={<IconArrowNW />} />
-                <Divider className="caction-buttons__divider" vertical margin={[0, 8]} />
+            <div className={component('action-buttons', 'hidden-buttons')()}>
+                <Button className={btnClassName} variant={ButtonVariant.secondary}>
+                    {btnText[status]}
+                </Button>
+                <Button className={btnClassName} variant={ButtonVariant.secondary} icon={<IconSettings />} />
+                <Button className={btnClassName} variant={ButtonVariant.secondary} icon={<IconArrowNW />} />
+                <Divider className={component('action-buttons', 'divider')()} vertical margin={[0, 8]} />
             </div>
-            <div className="caction-buttons__visible-buttons">
+            <div className={component('action-buttons', 'visible-buttons')()}>
                 {isFavorite ? (
                     <Button
                         variant={ButtonVariant.transparent}
-                        icon={<IconBookmark className="caction-buttons__button--gray" />}
-                        className="caction-buttons__button"
+                        icon={<IconBookmark className={component('action-buttons', 'button')({gray: true})} />}
+                        className={btnClassName}
                     />
                 ) : (
                     <Button
                         variant={ButtonVariant.transparent}
                         icon={<IconBookmarkOutline />}
-                        className={bookmarkButtonClassName}
+                        className={component('action-buttons', 'button')({hidden: !isFavorite})}
                     />
                 )}
                 {isSessions && (
                     <Button
                         variant={ButtonVariant.transparent}
-                        icon={<IconArrow className="caction-buttons__button--black" />}
+                        icon={<IconArrow className={component('action-buttons', 'button')({black: true})} />}
                         onClick={onSetOpenClickHandler}
-                        className={expandButtonClassName}
+                        className={component('action-buttons', 'button')({expand: isOpen, hidden: true})}
                     />
                 )}
                 <ActionsDropdown status={status} />
             </div>
         </div>
     );
+};
+
+const btnText: {[key in IEventStatus]: string} = {
+    draft: 'Опубликовать',
+    published: 'Продвигать',
+    past: 'Перейти к заказам',
 };

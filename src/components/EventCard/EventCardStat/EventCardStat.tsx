@@ -6,6 +6,7 @@ import IconLike from '../../../assets/svg/16/icon-like-outline_16.svg';
 import {Button, ButtonVariant} from '../../button';
 import {Typography} from 'components/typography';
 import {addThousandsSeparator} from '../helpers';
+import {component} from '../../../services/helpers/classHelpers';
 
 interface IEventCardStatProps {
     income: number | string;
@@ -58,8 +59,8 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
         <div className="cevent-card-stat">
             {stat.map(({label, value}, index) => {
                 return (
-                    <div className="cevent-card-stat__row" key={index}>
-                        <div className="cevent-card-stat__data">
+                    <div className={component('event-card-stat', 'row')()} key={index}>
+                        <div className={component('event-card-stat', 'data')()}>
                             <Typography.Small noPadding className="t-color-gray-50 cevent-card-stat__label">
                                 {label}
                             </Typography.Small>
@@ -68,7 +69,7 @@ export const EventCardStat: React.FC<IEventCardStatProps> = ({
                         <Button
                             variant={ButtonVariant.transparent}
                             icon={<IconArrow />}
-                            className="cevent-card-stat__button"
+                            className={component('event-card-stat', 'button')()}
                             labelColor="rgba(128, 128, 128, 0.35)"
                         />
                     </div>

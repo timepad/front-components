@@ -11,6 +11,7 @@ import IconOnline from '../../../assets/svg/24/icon-play-24.svg';
 
 import {IEventAccessStatus} from '../types/EventCardModel';
 import {Typography} from 'components/typography';
+import {component} from '../../../services/helpers/classHelpers';
 
 interface IEventCardInfoProps {
     schedual: string;
@@ -50,7 +51,7 @@ export const EventCardInfo: React.FC<IEventCardInfoProps> = ({
     return (
         <div className="cevent-card-info">
             {info.map(({icon, text}, index) => (
-                <div className="cevent-card-info__row" key={index}>
+                <div className={component('event-card-info', 'row')()} key={index}>
                     {icons[icon as keyof typeof icons]}
                     {text}
                 </div>
@@ -59,13 +60,15 @@ export const EventCardInfo: React.FC<IEventCardInfoProps> = ({
     );
 };
 
+const iconClassName = component('event-card-info', 'icon')();
+
 const icons = {
-    ['public']: <IconPublic className="cevent-card-info__icon" />,
-    ['link']: <IconLink className="cevent-card-info__icon" />,
-    ['private']: <IconPrivate className="cevent-card-info__icon" />,
-    ['calendar']: <IconCalendar className="cevent-card-info__icon" />,
-    ['online']: <IconOnline className="cevent-card-info__icon" />,
-    ['city']: <IconLocation className="cevent-card-info__icon" />,
-    ['discount']: <IconDiscount className="cevent-card-info__icon" />,
-    ['check']: <IconCheckmark className="cevent-card-info__icon" />,
+    ['public']: <IconPublic className={iconClassName} />,
+    ['link']: <IconLink className={iconClassName} />,
+    ['private']: <IconPrivate className={iconClassName} />,
+    ['calendar']: <IconCalendar className={iconClassName} />,
+    ['online']: <IconOnline className={iconClassName} />,
+    ['city']: <IconLocation className={iconClassName} />,
+    ['discount']: <IconDiscount className={iconClassName} />,
+    ['check']: <IconCheckmark className={iconClassName} />,
 };

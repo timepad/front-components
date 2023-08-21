@@ -3,7 +3,7 @@ import IconCalendar from '../../assets/svg/16/icon-calendar-16.svg';
 
 import {IEventCardModel, ISchedule, ISession} from './types/EventCardModel';
 import moment from 'moment';
-import {addThousandsSeparator, formatEventDate, formatRepitedEventDate, pluralize} from './helpers';
+import {addThousandsSeparator, formatEventDate, pluralize} from './helpers';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonIconAlignment, ButtonVariant, Divider} from 'index';
 
@@ -72,7 +72,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
     const eventOrderCount = isStatusDraft ? '—' : orderCount;
     const eventTicketCount = isStatusDraft ? '—' : `${soldTicketCount} из ${ticketCount}`;
     const eventSchedual = isSessions
-        ? `Ближайший сеанс: ${formatRepitedEventDate(begin, end)}`
+        ? `Ближайший сеанс: ${formatEventDate(begin, end, true)}`
         : `${formatEventDate(begin, end)}`;
 
     //variables
@@ -144,10 +144,11 @@ export const EventCard: React.FC<IEventCardProps> = ({
     const infoBlockStyle = {
         transform: expanded ? `translateY(-${infoHeight}px)` : 'none',
     };
-    const eventCardClass = component('event-card')({expand: expanded});
+    const dividerClassName = component('event-card', 'mobile-divider')();
+    const actionsBtnsClassName = component('action-buttons')({mobile: true});
 
     return (
-        <div className={eventCardClass} style={eventCardStyle}>
+        <div className={component('event-card')({expand: expanded})} style={eventCardStyle}>
             <EventCardHeader status={status} name={name} isSessions={isSessions}>
                 <ActionButtons
                     status={status}
@@ -159,7 +160,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                 />
             </EventCardHeader>
             <div className="cevent-card-info-block" style={infoBlockStyle} ref={infoBlockRef}>
-                <div className="cevent-card-info-block__block">
+                <div className={component('event-card-info-block', 'block')()}>
                     <EventCardInfo
                         accessStatus={accessStatus}
                         location={place}
@@ -181,24 +182,24 @@ export const EventCard: React.FC<IEventCardProps> = ({
                 </div>
                 {isSessions && (
                     <>
-                        <Divider className="cevent-card__mobile-divider" />
+                        <Divider className={dividerClassName} />
                         <Button
                             onClick={handleSetExpandedClick}
                             variant={ButtonVariant.transparent}
-                            className="cevent-card-info-block__session-button"
+                            className={component('event-card-info-block', 'session-button')()}
                         >
                             Показать сеансы события
                         </Button>
                     </>
                 )}
-                <Divider className="cevent-card__mobile-divider" />
+                <Divider className={dividerClassName} />
                 <ActionButtons
                     status={status}
                     isOpen={expanded}
                     isFavorite={isFavorite}
                     isSessions={isSessions}
                     onSetOpenClickHandler={handleSetExpandedClick}
-                    className="caction-buttons--mobile"
+                    className={actionsBtnsClassName}
                 />
             </div>
             <div className="cevent-card-session-block" style={sessionBlockStyle} ref={sessionBlockRef}>
@@ -208,7 +209,7 @@ export const EventCard: React.FC<IEventCardProps> = ({
                         Скрыть события
                     </Button>
                     <Divider vertical />
-                    <div className="cevent-card-filters__dropdown-container">
+                    <div className={component('event-card-filters', 'dropdown-container')()}>
                         <PeriodsDropdown
                             periodList={periodList}
                             sessionCount={filteredSessions?.length}
@@ -225,14 +226,14 @@ export const EventCard: React.FC<IEventCardProps> = ({
                     />
                 </div>
                 <EventSessionList sessions={sessions} schedule={schedule} />
-                <Divider className="cevent-card__mobile-divider" />
+                <Divider className={dividerClassName} />
                 <ActionButtons
                     status={status}
                     isOpen={expanded}
                     isFavorite={isFavorite}
                     isSessions={isSessions}
                     onSetOpenClickHandler={handleSetExpandedClick}
-                    className="caction-buttons--mobile"
+                    className={actionsBtnsClassName}
                 />
             </div>
         </div>
