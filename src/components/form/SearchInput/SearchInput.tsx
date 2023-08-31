@@ -90,7 +90,6 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
             <Form.Text
                 inputRef={inputRef}
                 id="search-bar"
-                type="text"
                 name="search"
                 autoComplete="off"
                 enterKeyHint="search"
