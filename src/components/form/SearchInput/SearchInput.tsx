@@ -22,7 +22,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     ...spread
 }) => {
     const [inputWide, setInputWide] = useState(!!value); // показываем ли широкий вариант
-    const [inputFocus, setInputFocus] = useState(false);
+    const [inputFocus, setInputFocus] = useState(!value);
 
     // привязывем фокус к состоянию
     useEffect(() => {
@@ -74,11 +74,17 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         onChange?.(event.target.value);
     };
 
-    const searchStyles = component('searchbar__input')({
+    const searchStyles = component(
+        'search',
+        'input',
+    )({
         wide: inputWide || value.length > 0,
         fullscreen: showBackButton,
     });
-    const resetButtonStyles = component('searchbar__input__close')({
+    const resetButtonStyles = component(
+        'search',
+        'btn-close',
+    )({
         visible: inputFocus && value.length > 0,
         fullfill: value.length > 0,
     });
@@ -89,7 +95,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
 
             <Form.Text
                 inputRef={inputRef}
-                id="search-bar"
+                id="search-input"
                 name="search"
                 autoComplete="off"
                 enterKeyHint="search"

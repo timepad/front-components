@@ -1,4 +1,4 @@
-.csearchbar {
+.csearch {
     @button-width: 60px;
     width: @button-width;
 
@@ -28,20 +28,19 @@
                 width: inherit;
             }
         }
+    }
+    &__btn-close {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
 
-        &__close {
-            opacity: 0;
-            pointer-events: none;
-            position: absolute;
-            right: 0;
-
-            .csearchbar__input:hover &--fullfill, // ховер только для непустых
-      &--visible {
-                opacity: 1;
-                background: none !important;
-                cursor: pointer;
-                pointer-events: auto;
-            }
+        .csearch__input:hover &--fullfill, // ховер только для непустых
+        &--visible {
+            opacity: 1;
+            background: none !important;
+            cursor: pointer;
+            pointer-events: auto;
         }
     }
 }
