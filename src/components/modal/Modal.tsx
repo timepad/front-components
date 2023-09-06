@@ -56,7 +56,6 @@ export interface IModalProps {
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onClose?: () => void;
-    attrs?: Record<string, any>;
 }
 
 export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
@@ -67,16 +66,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Description: typeof Description;
     Content: typeof Content;
 } = (props) => {
-    const {
-        children,
-        isClean,
-        className,
-        overlayClassName,
-        isOpen,
-        blockCloseOnOutsideClick,
-        onClose,
-        attrs = {},
-    } = props;
+    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose, ...rest} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -105,8 +95,8 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
 
     //По-другому нет возможности устанавливать data* атрибуты
     const contentRef = (element: HTMLDivElement) => {
-        Object.keys(attrs).length &&
-            Object.entries(attrs).forEach(([key, value]) => {
+        Object.keys(rest).length &&
+            Object.entries(rest).forEach(([key, value]) => {
                 element?.setAttribute(key, value);
             });
     };
