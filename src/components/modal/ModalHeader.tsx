@@ -6,11 +6,20 @@ import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
 import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
 import {Typography} from '../typography';
 import {Brick} from '../brick';
+import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
+
+enum AttrKeys {
+    'btn-close',
+    'btn-back',
+}
+
+type AttrKeysType = keyof typeof AttrKeys;
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
     backHandler?: () => void;
     closeHandler?: () => void;
+    attrs?: Array<IDataAttr<AttrKeysType>>;
 }
 
 export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
@@ -37,6 +46,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
     closeHandler,
     titleIsTransparent,
     children,
+    attrs,
 }) => {
     const titleClass = component(
         'form',
@@ -62,6 +72,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<BackSvg />}
                     className={component('form', 'icon')({back: true})}
                     onClick={backHandler}
+                    {...extractDataAttrs<AttrKeysType>('btn-back', attrs)}
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
@@ -75,6 +86,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<CloseSvg />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
+                    {...extractDataAttrs<AttrKeysType>('btn-close', attrs)}
                 />
             )}
         </div>
