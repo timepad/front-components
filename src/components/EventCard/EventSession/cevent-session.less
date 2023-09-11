@@ -1,0 +1,55 @@
+.cevent-sessions-list {
+    display: flex;
+    position: relative;
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+    padding: 0 0 16px 16px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+        background: transparent; /* make scrollbar transparent */
+        -webkit-appearance: none;
+        width: 0;
+        height: 0;
+    }
+
+}
+
+.cevent-session {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-right: 8px;
+
+    &__info {
+        width: 255px;
+        border: 1px solid @c-gray-50-fade-20;
+        border-radius: 4px;
+        padding: 12px 0 8px 16px;
+        box-sizing: border-box;
+        background-color: @c-white;
+    }
+
+    &__schedule {
+        display: flex;
+        padding-bottom: 10px;
+
+        &:hover {
+            color: @c-primary-blue;
+            cursor: pointer;
+        }
+    }
+
+    &__icon {
+        margin-right: 16px;
+        background-color: @c-dark-gray-fade-20;
+        border-radius: 4px;
+    }
+
+    &--disabled {
+        pointer-events: none;
+        color: @c-gray-50;
+    }
+}
