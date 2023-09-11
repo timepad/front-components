@@ -9,6 +9,7 @@ export default {
     title: 'EventCard',
     component: EventCard,
 } as Meta;
+
 const event = events.events[0];
 const repitedEvent = events.events[1];
 export const EventCardStory: IStorybookComponent = () => {

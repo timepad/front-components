@@ -5,7 +5,7 @@ import IconBookmark from '../../../assets/svg/24/icon-bookmark_s-24.svg';
 import IconBookmarkOutline from '../../../assets/svg/24/icon-bookmark-24.svg';
 import IconArrow from '../../../assets/svg/24/icon-arrow-24.svg';
 
-import {ActionsDropdown} from '../ActionsDropdown/ActionsDropdown';
+import {ActionsDropdown} from '../ActionsDropdown';
 import {IEventStatus} from '../types/EventCardModel';
 import {component} from '../../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../../button';

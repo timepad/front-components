@@ -8,13 +8,13 @@ import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonIconAlignment, ButtonVariant, Divider} from 'index';
 
 import './index.less';
-import {EventCardHeader} from './EventCardHeader/EventCardHeader';
-import {ActionButtons} from './ActionButtons/ActionButtons';
-import {EventCardInfo} from './EventCardInfo/EventCardInfo';
-import {PeriodsDropdown} from './PeriodsDropdown/PeriodsDropdown';
-import {SchedualDropdown} from './SchedualDropdown/SchedualDropdown';
-import {EventSessionList} from './EventSession/EventSessionList';
-import {EventCardStat} from './EventCardStat/EventCardStat';
+import {EventCardHeader} from './EventCardHeader';
+import {ActionButtons} from './ActionButtons';
+import {EventCardInfo} from './EventCardInfo';
+import {PeriodsDropdown} from './PeriodsDropdown';
+import {SchedualDropdown} from './SchedualDropdown';
+import {EventSessionList} from './EventSession';
+import {EventCardStat} from './EventCardStat';
 
 interface IEventCardProps extends IEventCardModel {}
 

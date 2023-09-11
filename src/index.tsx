@@ -28,3 +28,4 @@ export * from './components/grid';
 export * from './components/pageheader';
 export * from './components/divider';
 export * from './components/_anchorCard';
+export * from './components/carousel';
