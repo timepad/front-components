@@ -45,6 +45,7 @@ export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     className,
     hoverable,
     bordered,
+    ...props
 }: IProps) => {
     const classNames = cx(
         className,
@@ -60,7 +61,7 @@ export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     const imgClassName = component('userpic', 'img')();
 
     return (
-        <div className={classNames} onClick={onClick}>
+        <div className={classNames} onClick={onClick} {...props}>
             {!!imgURL ? <UserImage className={imgClassName} imgURL={imgURL} /> : <UserLabel label={label} />}
         </div>
     );

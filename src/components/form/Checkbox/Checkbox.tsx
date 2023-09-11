@@ -9,20 +9,20 @@ import {uniqueId} from '../../../services/helpers/uniqueId';
 import {noop} from '../Textarea/utils';
 import './index.less';
 
-export const Checkbox: FC<React.PropsWithChildren<ICheckboxProps>> = (props) => {
-    const {
-        rounded = false,
-        checked = false,
-        indeterminate = false,
-        disabled = false,
-        id = uniqueId() + '_field_checkbox',
-        error = '',
-        text = '',
-        caption = '',
-        small = false,
-        onChange = noop,
-        className,
-    } = props;
+export const Checkbox: FC<ICheckboxProps> = ({
+    rounded = false,
+    checked = false,
+    indeterminate = false,
+    disabled = false,
+    id = uniqueId() + '_field_checkbox',
+    error = '',
+    text = '',
+    caption = '',
+    small = false,
+    onChange = noop,
+    className,
+    ...props
+}) => {
     const wrapperClasses = cn(component('form__checkbox')({error: !!error, disabled: disabled}), className);
     const checkboxClasses = component(
         'form__checkbox',
@@ -45,13 +45,13 @@ export const Checkbox: FC<React.PropsWithChildren<ICheckboxProps>> = (props) => 
             <label htmlFor={id}>
                 <Row.Icon top={!!caption}>
                     <label>
-                        <input type="checkbox" id={id} onChange={onChange} {...props} />
+                        <input checked={checked} type="checkbox" id={id} onChange={onChange} {...props} />
                         <span className={checkboxClasses}>{icon}</span>
                     </label>
                 </Row.Icon>
                 <Row.Body className={bodyClassNames}>
-                    {props.text && <Row.Text id={id}>{text}</Row.Text>}
-                    {props.caption && <Row.Caption>{caption}</Row.Caption>}
+                    {text && <Row.Text id={id}>{text}</Row.Text>}
+                    {caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
             </label>
         </Row>

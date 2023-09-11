@@ -1,4 +1,4 @@
-.cevent_card {
+.cevent-card {
     border-radius: 4px;
     border: 1px solid @c-dark-gray-fade-20;
     background-color: @c-white;
@@ -7,10 +7,11 @@
 
     &:hover {
         border: 1px solid @c-gray-50-fade-20;
-        .caction_buttons__hidden_buttons {
+
+        .caction-buttons__hidden-buttons {
             opacity: 1;
         }
-        .caction_buttons__button {
+        .caction-buttons__button {
             &--gray {
                 color: @c-primary-blue;
             }
@@ -21,26 +22,27 @@
         }
     }
 
-    &__mobile_divider {
+    &__mobile-divider {
         display: none;
 
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             display: block;
         }
     }
 
     &--expand {
         border: 1px solid @c-gray-50-fade-20;
-        .cevent_card_info_block {
+
+        .cevent-card-info-block {
             opacity: 0;
         }
-        .cevent_card_session_block {
+        .cevent-card-session-block {
             opacity: 1;
         }
     }
 }
 
-.cevent_card_info_block {
+.cevent-card-info-block {
     padding-bottom: 8px;
     box-sizing: border-box;
     transition: all 0.5s ease-in-out;
@@ -49,48 +51,48 @@
         display: flex;
         padding: 4px 0 0px 16px;
 
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             flex-direction: column;
         }
     }
 
-    &__session_button {
+    &__session-button {
         margin: 8px 0 0 8px;
 
-        @media (max-width: 600px) {
+        @media (max-width: @mobile-content-max-width) {
             margin: 8px 0;
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: @mobile-content-max-width) {
         padding-bottom: 0;
     }
 }
 
-.cevent_card_session_block {
+.cevent-card-session-block {
     opacity: 0;
     background-color: @c-white;
     transition: all 0.5s ease-in-out;
 }
 
-.cevent_card_filters {
+.cevent-card-filters {
     display: flex;
     padding: 8px;
 
-    &__dropdown_container {
+    &__dropdown-container {
         display: flex;
         flex: 1;
     }
 
-    @media (max-width: 725px) {
-        overflow: scroll hidden;
+    @media (max-width: @rsp-mobile-portrait-max) {
+        overflow: auto hidden;
 
         &::-webkit-scrollbar {
             height: 0;
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: @mobile-content-max-width) {
         padding: 8px 8px 8px 0;
     }
 }

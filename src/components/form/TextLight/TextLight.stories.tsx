@@ -211,10 +211,17 @@ export const Simple: IStorybookComponent = () => {
 
 interface IValues {
     email: string;
+    phone: string;
 }
 
 const mailValidationSchema = Yup.object().shape({
     email: Yup.string().email('Некорректная почта').required(),
+    phone: Yup.string()
+        .length(12, 'Телефон должен быть заполнен')
+        .matches(
+            /^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/g,
+            'Вы ввели некорректный номер телефона',
+        ),
 });
 
 export const FormikExampleWithYup: IStorybookComponent = () => {
@@ -223,6 +230,7 @@ export const FormikExampleWithYup: IStorybookComponent = () => {
             <Formik
                 initialValues={{
                     email: '',
+                    phone: '',
                 }}
                 validationSchema={mailValidationSchema}
                 onSubmit={(values: IValues) => {
@@ -245,6 +253,8 @@ export const FormikExampleWithYup: IStorybookComponent = () => {
                             caption="Какой-то caption"
                             type="phone"
                             placeholder="Введите телефон"
+                            autoComplete="on"
+                            prefix="+7"
                         />
                     </FormikForm>
                 )}

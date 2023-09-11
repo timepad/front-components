@@ -1,14 +1,10 @@
-export const pluralize = (value: number, variants: string[]) => {
-    value = value % 100;
-    return value <= 14 && value >= 11
-        ? variants[2]
-        : (value %= 10) < 5
-        ? value > 2
-            ? variants[1]
-            : value === 1
-            ? variants[0]
-            : value === 0
-            ? variants[2]
-            : variants[1] //value === 2
-        : variants[2];
+/**
+ * Plural forms for russian words
+ * @param  {Integer} count quantity for word
+ * @param  {Array} words Array of words. Example: ['депутат', 'депутата', 'депутатов'], ['коментарий', 'коментария', 'комментариев']
+ * @return {String}        Plural form for word
+ */
+export const pluralize = (count: number, words: string[]): string => {
+    const cases = [2, 0, 1, 1, 1, 2];
+    return words[count % 100 > 4 && count % 100 < 20 ? 2 : cases[Math.min(count % 10, 5)]];
 };

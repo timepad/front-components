@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {useRef, useEffect, MutableRefObject, ComponentType} from 'react';
 import cx from 'classnames';
-import {component, layout} from '../../services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 import ReactModal from 'react-modal';
-import {Header, Title, Description, IHeaderComponentProps} from './ModalHeader';
-import {Footer, IModalFooterProps} from './ModalFooter';
-import {Body, IModalBodyProps} from './ModalBody';
+import {Header, Title, Description} from './ModalHeader';
+import {Footer} from './ModalFooter';
+import {Body} from './ModalBody';
+import {Content} from './ModalContent';
 import './index.less';
 
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
@@ -58,13 +59,14 @@ export interface IModalProps {
 }
 
 export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
-    Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>>;
-    Body: React.FC<React.PropsWithChildren<IModalBodyProps>>;
-    Footer: React.FC<React.PropsWithChildren<IModalFooterProps>>;
-    Title: React.FC<React.PropsWithChildren<unknown>>;
-    Description: React.FC<React.PropsWithChildren<unknown>>;
+    Header: typeof Header;
+    Body: typeof Body;
+    Footer: typeof Footer;
+    Title: typeof Title;
+    Description: typeof Description;
+    Content: typeof Content;
 } = (props) => {
-    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose} = props;
+    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose, ...rest} = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -91,6 +93,14 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
         };
     }, []);
 
+    //По-другому нет возможности устанавливать data* атрибуты
+    const contentRef = (element: HTMLDivElement) => {
+        Object.keys(rest).length &&
+            Object.entries(rest).forEach(([key, value]) => {
+                element?.setAttribute(key, value);
+            });
+    };
+
     return (
         <ModalSafeForReact18
             className={cx(component('portal')(), className)}
@@ -98,19 +108,11 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
             isOpen={isOpen}
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
+            contentRef={contentRef}
         >
             {isOpen &&
                 children &&
-                (!isClean ? (
-                    <div
-                        className={cx(component('form', 'window')(), layout('flex')({'y-axis': true}))}
-                        ref={wrapperRef}
-                    >
-                        {children}
-                    </div>
-                ) : (
-                    <div ref={wrapperRef}>{children}</div>
-                ))}
+                (!isClean ? <Content ref={wrapperRef}>{children}</Content> : <div ref={wrapperRef}>{children}</div>)}
         </ModalSafeForReact18>
     );
 };
@@ -120,3 +122,4 @@ Modal.Body = Body;
 Modal.Footer = Footer;
 Modal.Title = Title;
 Modal.Description = Description;
+Modal.Content = Content;

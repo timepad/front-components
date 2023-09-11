@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-type ScriptAttributes = {src: string} & Record<string, any> & React.HTMLProps<HTMLScriptElement>;
+type ScriptAttributes = {callback?: () => void} & Record<string, any> & React.HTMLProps<HTMLScriptElement>;
 
 export const useScript = (attrs: ScriptAttributes): [boolean] => {
     const [isLoading, setLoading] = useState(false);
@@ -9,6 +9,7 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
         script.async = true;
         script.id = 'script_id';
         Object.entries(attrs).forEach(([name, value]) => {
+            if (name === 'callback') return;
             if (name !== 'innerText') {
                 script.setAttribute(name, value);
             } else {
@@ -16,7 +17,10 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
             }
         });
 
-        script.onload = () => setLoading(false);
+        script.onload = () => {
+            attrs?.callback?.();
+            setLoading(false);
+        };
 
         setLoading(true);
         document.body.appendChild(script);
@@ -24,7 +28,7 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
         return () => {
             document.body.removeChild(script);
         };
-    }, [attrs.src]);
+    }, [attrs.src, attrs?.callback]);
 
     return [isLoading];
 };
