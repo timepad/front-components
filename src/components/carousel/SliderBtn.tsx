@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, ButtonVariant} from '../button';
-import IconArrow from '../../assets/svg/24/icon-arrow-right-24.svg';
+import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
 
 import {component} from '../../services/helpers/classHelpers';
 
