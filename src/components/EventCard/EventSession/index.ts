@@ -1,1 +1,0 @@
-export {EventSessionList} from './EventSessionList';
