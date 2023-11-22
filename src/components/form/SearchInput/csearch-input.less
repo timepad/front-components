@@ -1,0 +1,46 @@
+.csearch {
+    @button-width: 60px;
+    width: @button-width;
+
+    &__input {
+        width: @button-width;
+        position: relative;
+        display: flex;
+        transition: all 0.3s;
+
+        &--wide {
+            min-width: max-content;
+            width: 260px;
+        }
+
+        &--fullscreen {
+            position: fixed;
+            left: 0;
+            right: 0;
+            background: #fff;
+            width: calc(100% - 16px);
+            align-items: stretch;
+            justify-content: stretch;
+            top: 0;
+            padding: 8px;
+            z-index: @z-index-fullscreen;
+            > div {
+                width: inherit;
+            }
+        }
+    }
+    &__btn-close {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+
+        .csearch__input:hover &--fullfill, // ховер только для непустых
+        &--visible {
+            opacity: 1;
+            background: none !important;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+    }
+}

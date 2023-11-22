@@ -4,6 +4,7 @@ import {TextLight, TextLightField} from '../TextLight';
 import {Checkbox, CheckboxField} from '../Checkbox';
 import {Radio, RadioField} from '../Radio';
 import {Unit} from '../Unit';
+import {SearchInput} from '../SearchInput';
 
 export interface IFormProps
     extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {}
@@ -18,6 +19,7 @@ export const Form: FC<React.PropsWithChildren<IFormProps>> & {
     Radio: typeof Radio;
     RadioField: typeof RadioField;
     Unit: typeof Unit;
+    SearchInput: typeof SearchInput;
 } = (props) => {
     return <form {...props}>{props.children}</form>;
 };
@@ -31,3 +33,4 @@ Form.CheckboxField = CheckboxField;
 Form.Radio = Radio;
 Form.RadioField = RadioField;
 Form.Unit = Unit;
+Form.SearchInput = SearchInput;

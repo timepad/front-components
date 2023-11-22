@@ -1,0 +1,51 @@
+.ccarousel {
+    position: relative;
+
+    &__track {
+        display: flex;
+        overflow: auto hidden;
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+
+        &--vertical {
+            overflow: hidden auto;
+            flex-direction: column;
+        }
+
+        &::-webkit-scrollbar {
+            background: transparent; /* make scrollbar transparent */
+            -webkit-appearance: none;
+            width: 0;
+            height: 0;
+        }
+    }
+
+    &__slide {
+        display: flex;
+        scroll-snap-align: start;
+    }
+
+    &__slider_btn {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        top: 50%;
+        margin-top: -24px;
+
+        &--prev {
+            left: 1%;
+            transform: rotate(90deg);
+        }
+
+        &--next {
+            right: 1%;
+            transform: rotate(270deg);
+        }
+
+        @media (max-width: @mobile-content-max-width) {
+            display: none;
+        }
+    }
+}
