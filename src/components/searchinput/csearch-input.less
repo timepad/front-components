@@ -10,7 +10,7 @@
 
         &--wide {
             min-width: max-content;
-            width: 260px;
+            width: 100%;
         }
 
         &--fullscreen {
@@ -28,14 +28,24 @@
                 width: inherit;
             }
         }
+
+        input {
+            padding-right: 26px;
+        }
     }
+
     &__btn-close {
+        width: 32px;
+        height: 32px;
         opacity: 0;
         pointer-events: none;
         position: absolute;
         right: 0;
+        top: 50%;
+        margin-top: -16px;
 
-        .csearch__input:hover &--fullfill, // ховер только для непустых
+        // ховер только для непустых
+        .csearch__input:hover &--fullfill,
         &--visible {
             opacity: 1;
             background: none !important;

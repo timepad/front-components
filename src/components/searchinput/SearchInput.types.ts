@@ -1,6 +1,6 @@
-import {MutableRefObject} from 'react';
+import React, {MutableRefObject} from 'react';
 
-export interface ISearchInputProps {
+export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     onEnterPress?: (value?: string) => void;
     onEscPress?: () => void;
     onReset?: () => void;
@@ -8,6 +8,6 @@ export interface ISearchInputProps {
     onFocus?: () => void;
     value: string;
     showBackButton?: boolean;
-    onChange?: (value: string) => void;
     inputRef?: MutableRefObject<HTMLInputElement | null> | null;
-}
+    isWide?: boolean;
+};
