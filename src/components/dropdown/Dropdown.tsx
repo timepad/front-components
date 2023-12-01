@@ -85,7 +85,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     }
 
     return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef} isMobile={isMobile}>
             {isMobile ? (
                 <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}

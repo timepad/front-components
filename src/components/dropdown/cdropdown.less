@@ -24,6 +24,7 @@
 }
 
 .сdropdown-body {
+    position: relative;
     box-shadow: @sh-shadow;
     border-radius: 8px;
     overflow: hidden;
@@ -89,4 +90,19 @@
 
 .mtheme--darkpic-bg {
     background-color: @c-black;
+}
+
+.cdropdown-pseudo {
+  position: relative;
+}
+
+.cdropdown-pseudo::before,
+.cdropdown-pseudo::after {
+    content: "";
+    position: absolute;
+    top: -16px; /* Размер паддинга сверху */
+    left: -16px; /* Размер паддинга слева */
+    right: -16px; /* Размер паддинга справа */
+    bottom: -16px; /* Размер паддинга снизу */
+    z-index: -1;
 }

@@ -77,6 +77,7 @@ export interface IPopupProps {
     keepTooltipInside?: boolean | string;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
     customPopupRoot?: string;
+    isMobile?: boolean;
 }
 const noop = () => {
     return;
@@ -113,6 +114,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             customPopupRoot,
             children,
             triggerProps: tProps,
+            isMobile,
         },
         ref,
     ) => {
@@ -332,6 +334,8 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             }
         };
 
+        const isHoverEvent = Array.isArray(on) ? on.includes('hover') : on === 'hover';
+        const withPseudoElement = !isMobile && isHoverEvent && nested ? 'cdropdown-pseudo' : '';
         const addWarperAction = () => {
             const popupContentStyle = isModal ? styles.popupContent.modal : styles.popupContent.tooltip;
             // тут можно километровый тип добавить или пачку конструкторов, но так короче
@@ -343,7 +347,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                               .map((c) => `${c}-content`)
                               .join(' ')
                         : ''
-                }`,
+                } ${withPseudoElement}`,
                 style: {
                     ...popupContentStyle,
                     ...contentStyle,
