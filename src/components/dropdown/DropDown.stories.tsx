@@ -369,6 +369,7 @@ const RecursiveEditableDropdown: FC<React.PropsWithChildren<{text?: string}>> = 
                     </div>
                 );
             }}
+            on={'hover'}
         >
             <List variant="dark">
                 <List.Item

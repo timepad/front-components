@@ -67,6 +67,8 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         return [header, footer, otherChildren];
     }, [children]);
 
+    const withPseudoElement = props.nested && props?.on?.includes('hover');
+
     let popupProps: IPopupProps;
     if (isMobile) {
         popupProps = {
@@ -78,14 +80,14 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     } else {
         popupProps = {
             position: priorityPositions,
-            className: cx({'cdropdown__scrollable-container': isScrollable}),
+            className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
             lockScroll: lockScroll || isScrollable,
             ...props,
         };
     }
 
     return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef} isMobile={isMobile}>
+        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
             {isMobile ? (
                 <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}
