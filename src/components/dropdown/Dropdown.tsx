@@ -67,7 +67,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         return [header, footer, otherChildren];
     }, [children]);
 
-    const withPseudoElement = props.nested && props?.on?.includes('hover');
+    const withPseudoElement = props?.on?.includes('hover');
 
     let popupProps: IPopupProps;
     if (isMobile) {
