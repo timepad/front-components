@@ -24,6 +24,7 @@
 }
 
 .сdropdown-body {
+    position: relative;
     box-shadow: @sh-shadow;
     border-radius: 8px;
     overflow: hidden;
@@ -89,4 +90,15 @@
 
 .mtheme--darkpic-bg {
     background-color: @c-black;
+}
+
+.popup-content::before {
+  content: "";
+  display: none;
+  position: absolute;
+  inset: -16px;
+}
+
+.popup-content.show-pseudo-content::before {
+  display: block;
 }
