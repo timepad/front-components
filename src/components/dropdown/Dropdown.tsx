@@ -67,6 +67,8 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         return [header, footer, otherChildren];
     }, [children]);
 
+    const withPseudoElement = props?.on?.includes('hover');
+
     let popupProps: IPopupProps;
     if (isMobile) {
         popupProps = {
@@ -78,7 +80,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     } else {
         popupProps = {
             position: priorityPositions,
-            className: cx({'cdropdown__scrollable-container': isScrollable}),
+            className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
             lockScroll: lockScroll || isScrollable,
             ...props,
         };
