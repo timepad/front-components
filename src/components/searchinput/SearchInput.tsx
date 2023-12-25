@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import classNames from 'classnames';
 
 import './index.less';
 import {ISearchInputProps} from './SearchInput.types';
-import {Button} from '../../button';
-import {Form} from '../Form';
-import CloseIcon from '../../../assets/svg/24/icon-close-24.svg';
-import BackIcon from '../../../assets/svg/24/icon-arrow-tale-24.svg';
-import {keyPressHelper} from '../../../services/helpers/keyPressHelper';
-import {component} from '../../../services/helpers/classHelpers';
+import {Button} from '../button';
+import {Text} from '../form/Text';
+import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
+import BackIcon from '../../assets/svg/24/icon-arrow-tale-24.svg';
+import {keyPressHelper} from '../../services/helpers/keyPressHelper';
+import {component} from '../../services/helpers/classHelpers';
 
 export const SearchInput: React.FC<ISearchInputProps> = ({
     value,
@@ -16,10 +17,11 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     onEscPress,
     onReset,
     onFocus,
-    onChange,
     showBackButton,
     inputRef,
-    ...spread
+    isWide = true,
+    className,
+    ...props
 }) => {
     const [inputWide, setInputWide] = useState(!!value); // показываем ли широкий вариант
     const [inputFocus, setInputFocus] = useState(!value);
@@ -70,18 +72,17 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         onReset?.();
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(event.target.value);
-    };
-
-    const searchStyles = component(
-        'search',
-        'input',
-    )({
-        wide: inputWide || value.length > 0,
-        fullscreen: showBackButton,
-    });
-    const resetButtonStyles = component(
+    const searchClassName = classNames(
+        component(
+            'search',
+            'input',
+        )({
+            wide: inputWide || value.length > 0 || isWide,
+            fullscreen: showBackButton,
+        }),
+        className,
+    );
+    const resetBtnClassName = component(
         'search',
         'btn-close',
     )({
@@ -90,27 +91,24 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     });
 
     return (
-        <div className={searchStyles}>
+        <div className={searchClassName}>
             {showBackButton && <Button icon={<BackIcon />} variant={Button.variant.transparent} />}
 
-            <Form.Text
+            <Text
                 inputRef={inputRef}
-                id="search-input"
-                name="search"
                 autoComplete="off"
                 enterKeyHint="search"
                 value={value}
                 onKeyDown={handleKeyDown}
-                onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                {...spread}
+                {...props}
             />
 
             <Button
                 icon={<CloseIcon />}
                 variant={Button.variant.transparent}
-                className={resetButtonStyles}
+                className={resetBtnClassName}
                 onClick={handleInputReset}
             />
         </div>

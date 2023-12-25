@@ -23,9 +23,10 @@ export const Carousel: React.FC<ICarouselProps> = ({
     horizontal = true,
     ...props
 }) => {
-    //variables
+    //variablesa
     const carouselClassName = component('carousel', 'track')({vertical: !horizontal});
-    const countSlides = React.Children.toArray(children).filter(Boolean).length;
+    const slides = React.Children.toArray(children).filter(Boolean); /* fix zero children */
+    const countSlides = slides.length;
     //hooks
     const [contentMap, setContentMap] = useState<Array<IContentCoords>>([]);
     const [sideOffset, setSideOffset] = useState<number>(0);
@@ -147,7 +148,7 @@ export const Carousel: React.FC<ICarouselProps> = ({
     }, [onScrollProgress]);
 
     return (
-        <div className="ccarousel">
+        <div className={component('carousel')()}>
             <ScrollContainer
                 className={`${carouselClassName} ${className}`}
                 ref={trackRef as React.MutableRefObject<ScrollContainer> & React.ReactNode}
@@ -156,7 +157,7 @@ export const Carousel: React.FC<ICarouselProps> = ({
                 horizontal={horizontal}
                 {...props}
             >
-                {children}
+                {slides}
             </ScrollContainer>
             {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
             {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
