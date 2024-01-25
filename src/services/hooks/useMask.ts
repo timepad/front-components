@@ -21,8 +21,8 @@ interface IMaskProps {
     maskPlaceholder: string;
     type?: 'phone' | 'card' | string;
     prefix?: string;
-    onBlur: FocusEventHandler<HTMLInputElement> | undefined;
-    onFocus: FocusEventHandler<HTMLInputElement> | undefined;
+    onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
+    onFocus?: FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 /**
