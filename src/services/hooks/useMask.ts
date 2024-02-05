@@ -110,6 +110,8 @@ export function useMask({
 
     function onBlur(event: FocusEvent<HTMLInputElement>) {
         props?.onBlur?.(event);
+
+        setFocus(false);
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
