@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, useMemo} from 'react';
+import React, {FC, PropsWithChildren, useMemo, ReactHTML} from 'react';
 import {ITypographyCommonProps} from '../../../typography/Typography';
 import cx from 'classnames';
 import {component} from '../../../../services/helpers/classHelpers';
@@ -11,12 +11,13 @@ export type IAnchorTitle = FC<PropsWithChildren<IAnchorCardTitle>>;
 
 interface IAnchorCardTitle
     extends React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
+    as?: keyof ReactHTML;
     typographyProps?: ITypographyCommonProps<PossibleSizesType>;
 }
 
 // TODO: Заменить <a> на <RichLink> после переноса в ntp. Не забыть про типы.
 // Don't use this compoent as is. Instead, use AnchorCard.Content.TitleLink
-export const AnchorTitleLink: IAnchorTitle = ({children, typographyProps, ...props}) => {
+export const AnchorTitleLink: IAnchorTitle = ({children, typographyProps, as="h4", ...props}) => {
     // region Styles
     const cnTypography = useMemo(
         () => cx(component('anchorcard-content', 'title')(), typographyProps?.className),
@@ -26,7 +27,7 @@ export const AnchorTitleLink: IAnchorTitle = ({children, typographyProps, ...pro
     // endregion
 
     return (
-        <Typography.Body as={'h4'} {...typographyProps} className={cnTypography}>
+        <Typography.Body as={as} {...typographyProps} className={cnTypography}>
             <a {...props} className={cnAnchor}>
                 {children}
             </a>
