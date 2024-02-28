@@ -56,6 +56,7 @@ export interface IModalProps {
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onClose?: () => void;
+    parentSelector?: () => HTMLElement;
 }
 
 export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
@@ -66,7 +67,17 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Description: typeof Description;
     Content: typeof Content;
 } = (props) => {
-    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose, ...rest} = props;
+    const {
+        children,
+        isClean,
+        className,
+        overlayClassName,
+        isOpen,
+        blockCloseOnOutsideClick,
+        onClose,
+        parentSelector,
+        ...rest
+    } = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -109,6 +120,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
             contentRef={contentRef}
+            parentSelector={parentSelector}
         >
             {isOpen &&
                 children &&
