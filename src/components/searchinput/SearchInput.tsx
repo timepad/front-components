@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -19,65 +19,34 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     onFocus,
     showBackButton,
     inputRef,
-    isWide = true,
     className,
+    autoFocus,
+    placeholder,
+    onBackButtonClick,
+    isWide = true,
+    id = 'search-input',
+    autoComplete = 'off',
     ...props
 }) => {
-    const [inputWide, setInputWide] = useState(!!value); // показываем ли широкий вариант
-    const [inputFocus, setInputFocus] = useState(!value);
-
-    // привязывем фокус к состоянию
     useEffect(() => {
-        if (inputFocus) {
-            inputRef?.current?.focus();
-            onFocus?.();
+        const input = inputRef?.current;
+        if (input && autoFocus) {
+            input.focus();
+            return () => input.blur();
         }
-        if (!inputFocus) {
-            inputRef?.current?.blur();
-            onBlur?.();
-        }
-    }, [inputFocus, inputRef, onBlur, onFocus]);
-
-    // обрабатываем Enter и Escape
-    const handleEscPress = () => {
-        setInputFocus(false);
-        onEscPress?.();
-    };
-
-    const handleEnterPress = () => {
-        if (value) {
-            setInputFocus(false);
-            onEnterPress?.(value);
-        }
-    };
+    }, [inputRef, autoFocus]);
 
     const handleKeyDown = keyPressHelper([
-        {key: 'Escape', callback: handleEscPress},
-        {key: 'Enter', callback: handleEnterPress},
+        {key: 'Escape', callback: onEscPress},
+        {key: 'Enter', callback: onEnterPress},
     ]);
 
-    // внутренние хендлеры
-    const handleInputFocus = () => {
-        setInputFocus(true);
-        setInputWide(true);
-    };
-
-    const handleInputBlur = () => {
-        if (!value) setInputWide(false);
-        setInputFocus(false);
-    };
-
-    const handleInputReset = () => {
-        setInputFocus(true); // чтобы не терять фокус
-        onReset?.();
-    };
-
-    const searchClassName = classNames(
+    const searchInputClassName = classNames(
         component(
             'search',
             'input',
         )({
-            wide: inputWide || value.length > 0 || isWide,
+            wide: value.length > 0 || isWide,
             fullscreen: showBackButton,
         }),
         className,
@@ -86,22 +55,26 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         'search',
         'btn-close',
     )({
-        visible: inputFocus && value.length > 0,
         fullfill: value.length > 0,
     });
 
     return (
-        <div className={searchClassName}>
-            {showBackButton && <Button icon={<BackIcon />} variant={Button.variant.transparent} />}
+        <label htmlFor={id} className={searchInputClassName}>
+            {showBackButton && (
+                <Button icon={<BackIcon />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
+            )}
 
             <Text
-                inputRef={inputRef}
-                autoComplete="off"
-                enterKeyHint="search"
+                id={id}
                 value={value}
+                enterKeyHint="search"
+                inputRef={inputRef}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 onKeyDown={handleKeyDown}
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
+                placeholder={isWide ? placeholder : ''}
+                autoFocus={autoFocus}
+                autoComplete={autoComplete}
                 {...props}
             />
 
@@ -109,8 +82,8 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
                 icon={<CloseIcon />}
                 variant={Button.variant.transparent}
                 className={resetBtnClassName}
-                onClick={handleInputReset}
+                onClick={onReset}
             />
-        </div>
+        </label>
     );
 };

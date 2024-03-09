@@ -1,13 +1,12 @@
 import React, {MutableRefObject} from 'react';
 
 export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-    onEnterPress?: (value?: string) => void;
+    onEnterPress?: () => void;
     onEscPress?: () => void;
-    onReset?: () => void;
-    onBlur?: () => void;
-    onFocus?: () => void;
+    onReset?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onBackButtonClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     value: string;
     showBackButton?: boolean;
-    inputRef?: MutableRefObject<HTMLInputElement | null> | null;
+    inputRef?: MutableRefObject<HTMLInputElement | null>;
     isWide?: boolean;
 };
