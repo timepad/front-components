@@ -16,7 +16,6 @@ export const DefaltSearchInput: IStorybookComponent = () => {
 
     const handleResetInputClick = () => {
         setValue('');
-        inputRef.current?.focus();
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
