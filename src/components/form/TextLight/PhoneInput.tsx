@@ -16,6 +16,8 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, IPhoneInputProps>(
             setValue,
             type = 'phone',
             prefix = '',
+            onBlur,
+            onFocus,
             ...props
         },
         ref,
@@ -27,6 +29,8 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, IPhoneInputProps>(
             maskPlaceholder,
             type,
             prefix,
+            onBlur,
+            onFocus,
         });
         return <input inputMode="tel" ref={ref} {...props} {...inputProps} />;
     },
