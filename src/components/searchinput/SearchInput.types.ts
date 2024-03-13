@@ -1,8 +1,8 @@
 import React, {MutableRefObject} from 'react';
 
 export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-    onEnterPress?: () => void;
-    onEscPress?: () => void;
+    onEnterPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    onEscPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     onReset?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     onBackButtonClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     value: string;

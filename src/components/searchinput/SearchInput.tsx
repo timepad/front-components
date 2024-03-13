@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -28,18 +28,44 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     autoComplete = 'off',
     ...props
 }) => {
+    const [isFocus, setIsFocus] = useState(false);
+
     useEffect(() => {
         const input = inputRef?.current;
         if (input && autoFocus) {
             input.focus();
-            return () => input.blur();
+            setIsFocus(true);
         }
     }, [inputRef, autoFocus]);
 
+    const handleEscPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        inputRef?.current?.blur();
+        onEscPress?.(event);
+    };
+
+    const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        onEnterPress?.(event);
+    };
+
     const handleKeyDown = keyPressHelper([
-        {key: 'Escape', callback: onEscPress},
-        {key: 'Enter', callback: onEnterPress},
+        {key: 'Escape', callback: handleEscPress},
+        {key: 'Enter', callback: handleEnterPress},
     ]);
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        onBlur?.(event);
+        setIsFocus(false);
+    };
+
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        onFocus?.(event);
+        setIsFocus(true);
+    };
+
+    const handleResetButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        inputRef?.current?.focus();
+        onReset?.(event);
+    };
 
     const searchInputClassName = classNames(
         component(
@@ -55,7 +81,8 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         'search',
         'btn-close',
     )({
-        visible: value.length > 0,
+        visible: isFocus && value.length > 0,
+        fullfill: value.length > 0,
     });
 
     return (
@@ -69,8 +96,8 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
                 value={value}
                 enterKeyHint="search"
                 inputRef={inputRef}
-                onFocus={onFocus}
-                onBlur={onBlur}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
                 onKeyDown={handleKeyDown}
                 placeholder={isWide ? placeholder : ''}
                 autoFocus={autoFocus}
@@ -82,7 +109,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
                 icon={<CloseIcon />}
                 variant={Button.variant.transparent}
                 className={resetBtnClassName}
-                onClick={onReset}
+                onClick={handleResetButtonClick}
             />
         </label>
     );
