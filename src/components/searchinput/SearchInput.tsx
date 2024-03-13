@@ -55,7 +55,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         'search',
         'btn-close',
     )({
-        fullfill: value.length > 0,
+        visible: value.length > 0,
     });
 
     return (
