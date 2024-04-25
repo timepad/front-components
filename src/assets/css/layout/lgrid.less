@@ -24,11 +24,11 @@
     grid-row-gap: 0;
   }
 
-  @media (min-width: @rsp-desktop-min) and (max-width: @rsp-desktop-large-min) {
+  @media (min-width: @rsp-desktop-min) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  @media (min-width: @rsp-desktop-large-min) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  @media (min-width: @rsp-desktop-max) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  } 
 }
