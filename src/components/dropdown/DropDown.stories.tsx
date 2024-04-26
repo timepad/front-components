@@ -1,5 +1,5 @@
 import React, {FC, useState, MouseEvent, useMemo, ReactElement} from 'react';
-
+import {Meta} from '@storybook/react/types-6-0';
 import {Dropdown} from './index';
 import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {List} from '../list';
@@ -17,7 +17,7 @@ import './storybook/demo.less';
 export default {
     title: 'DropDown',
     component: Dropdown,
-};
+} as Meta;
 
 export const Default: IStorybookComponent = () => {
     return (
