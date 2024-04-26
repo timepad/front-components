@@ -1,5 +1,4 @@
 import React, {FC, useState, MouseEvent, useMemo, ReactElement} from 'react';
-import {Meta} from '@storybook/react/types-6-0';
 
 import {Dropdown} from './index';
 import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
@@ -18,34 +17,32 @@ import './storybook/demo.less';
 export default {
     title: 'DropDown',
     component: Dropdown,
-} as Meta;
+};
 
 export const Default: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Default</StoryTitle>
-            <>
-                <Dropdown trigger={() => <Button label={'Выпадающий список'} />}>
-                    <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
-                        <Row hoverable>
-                            <Row.Body>
-                                <Row.Text>Primary text 1</Row.Text>
-                                <Row.Caption>Secondary text</Row.Caption>
-                            </Row.Body>
-                        </Row>
-                        <Row hoverable>
-                            <Row.Body>
-                                <Row.Text>Primary text 2</Row.Text>
-                            </Row.Body>
-                        </Row>
-                        <Row hoverable>
-                            <Row.Body>
-                                <Row.Text>Primary text 3</Row.Text>
-                            </Row.Body>
-                        </Row>
-                    </div>
-                </Dropdown>
-            </>
+            <Dropdown trigger={() => <Button label={'Выпадающий список'} />}>
+                <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 1</Row.Text>
+                            <Row.Caption>Secondary text</Row.Caption>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 2</Row.Text>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 3</Row.Text>
+                        </Row.Body>
+                    </Row>
+                </div>
+            </Dropdown>
         </>
     );
 };
