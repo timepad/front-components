@@ -110,6 +110,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
                 variant={Button.variant.transparent}
                 className={resetBtnClassName}
                 onClick={handleResetButtonClick}
+                tabIndex={-1}
             />
         </label>
     );
