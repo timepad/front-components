@@ -32,6 +32,14 @@ broken usage:
     margin: 0;
     padding: 0;
 
+    &--bordered {
+        border-bottom: 1px solid @c-gray-opaque-50;
+
+        @media (max-width: @rsp-mobile-max) {
+            border-bottom: 0;
+        }
+    }
+
     @media (max-width: @rsp-mobile-max) {
         &--mobile {
             height: 16px;
