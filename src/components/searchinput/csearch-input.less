@@ -34,6 +34,12 @@
             }
         }
 
+        &--with-search-icon {
+            input {
+                padding-left: 48px;
+            }
+        }
+
         input {
             padding-right: 26px;
         }
@@ -55,6 +61,24 @@
             background: none !important;
             cursor: pointer;
             pointer-events: auto;
+        }
+    }
+
+    &__search-icon {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        padding: 0 8px;
+        top: calc(50% - 16px);
+        left: 0;
+        color: @c-gray-50;
+    }
+
+   .mtheme--darkpic & {
+        &__search-icon {
+            &--white {
+                color: @c-white;
+            }
         }
     }
 }

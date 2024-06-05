@@ -10,7 +10,7 @@ export default {
     component: SearchInput,
 } as Meta;
 
-export const DefaltSearchInput: IStorybookComponent = () => {
+export const DefaultSearchInput: IStorybookComponent = () => {
     const [value, setValue] = useState('');
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,6 +34,38 @@ export const DefaltSearchInput: IStorybookComponent = () => {
                     inputRef={inputRef}
                     isWide={true}
                     placeholder={'Поиск'}
+                    withSearchIcon
+                />
+            </div>
+        </>
+    );
+};
+
+export const SearchInputWithSearchIcon: IStorybookComponent = () => {
+    const [value, setValue] = useState('');
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const handleResetInputClick = () => {
+        setValue('');
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(event.currentTarget.value);
+    };
+
+    return (
+        <>
+            <StoryTitle>SearchInput</StoryTitle>
+            <Spacer width={8} />
+            <div style={{width: '300px'}}>
+                <SearchInput
+                    value={value}
+                    onChange={handleInputChange}
+                    onReset={handleResetInputClick}
+                    inputRef={inputRef}
+                    isWide={true}
+                    placeholder={'Поиск'}
+                    withSearchIcon
                 />
             </div>
         </>
