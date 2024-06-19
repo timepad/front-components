@@ -34,7 +34,6 @@ export const DefaultSearchInput: IStorybookComponent = () => {
                     inputRef={inputRef}
                     isWide={true}
                     placeholder={'Поиск'}
-                    withSearchIcon
                 />
             </div>
         </>
@@ -63,7 +62,7 @@ export const SearchInputWithSearchIcon: IStorybookComponent = () => {
                     onChange={handleInputChange}
                     onReset={handleResetInputClick}
                     inputRef={inputRef}
-                    isWide={true}
+                    isWide
                     placeholder={'Поиск'}
                     withSearchIcon
                 />
