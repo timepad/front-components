@@ -45,6 +45,13 @@
         }
     }
 
+    .visible-btn {
+        opacity: 1;
+        background: none !important;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
     &__btn-close {
         width: 32px;
         height: 32px;
@@ -54,13 +61,14 @@
         right: 0;
         top: calc(50% - 16px);
 
-        // ховер только для непустых
-        .csearch__input:hover &--fullfill,
         &--visible {
-            opacity: 1;
-            background: none !important;
-            cursor: pointer;
-            pointer-events: auto;
+            .visible-btn;
+        }
+
+        @media (hover: hover) {
+            .csearch__input:hover &--fullfill {
+                .visible-btn;
+            }
         }
     }
 
@@ -74,7 +82,7 @@
         color: @c-gray-50;
     }
 
-   .mtheme--darkpic & {
+    .mtheme--darkpic & {
         &__search-icon {
             &--white {
                 color: @c-white;
