@@ -369,8 +369,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 zIndex: 999,
             } as React.CSSProperties;
 
+            // пришлось добавить эти свойства из-за того, что инпуты могут быть с автофокусом и страница скролится
+            // если бы я только знал почему это так работает и почему это нужно фиксить так(
             if (isMobile) {
                 style['bottom'] = 0;
+            } else {
+                style['top'] = 0;
             }
 
             // input нужен что бы не было автофокуса по 1ому элементу
