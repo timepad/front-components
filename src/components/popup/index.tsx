@@ -77,6 +77,7 @@ export interface IPopupProps {
     keepTooltipInside?: boolean | string;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
     customPopupRoot?: string;
+    isMobile?: boolean;
 }
 const noop = () => {
     return;
@@ -113,6 +114,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             customPopupRoot,
             children,
             triggerProps: tProps,
+            isMobile,
         },
         ref,
     ) => {
@@ -364,8 +366,12 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderContent = () => {
             const style = {
                 position: fixPositionOnScroll ? 'fixed' : 'absolute',
-                zIndex: '999',
-            };
+                zIndex: 999,
+            } as React.CSSProperties;
+
+            if (isMobile) {
+                style['bottom'] = 0;
+            }
 
             // input нужен что бы не было автофокуса по 1ому элементу
             return (
