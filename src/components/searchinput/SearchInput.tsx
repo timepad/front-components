@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -32,6 +32,8 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
 }) => {
     const [isFocus, setIsFocus] = useState(false);
 
+    const labelRef = useRef<HTMLLabelElement>(null);
+
     useEffect(() => {
         const input = inputRef?.current;
         if (input && autoFocus) {
@@ -56,7 +58,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         // не сбрасываем фокус если нажимаем на кнопку отчистить поле
-        if (event?.currentTarget?.parentNode?.parentNode?.contains(event?.relatedTarget)) return;
+        if (labelRef.current?.contains(event?.relatedTarget)) return;
         onBlur?.(event);
         setIsFocus(false);
     };
@@ -91,7 +93,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     });
 
     return (
-        <label htmlFor={id} className={searchInputClassName}>
+        <label htmlFor={id} className={searchInputClassName} ref={labelRef}>
             {showBackButton && (
                 <Button icon={<BackIcon />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
             )}
