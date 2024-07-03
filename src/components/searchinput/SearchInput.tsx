@@ -58,7 +58,8 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         // не сбрасываем фокус если нажимаем на кнопку отчистить поле
-        if (labelRef.current?.contains(event?.relatedTarget)) return;
+        // as Node потому что в отп падает сборка
+        if (labelRef.current?.contains(event?.relatedTarget as Node)) return;
         onBlur?.(event);
         setIsFocus(false);
     };
