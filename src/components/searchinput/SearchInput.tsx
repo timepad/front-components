@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 
 import './index.less';
@@ -7,6 +7,7 @@ import {Button} from '../button';
 import {Text} from '../form/Text';
 import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
 import BackIcon from '../../assets/svg/24/icon-arrow-tale-24.svg';
+import SearchIcon from '../../assets/svg/24/icon-search-24.svg';
 import {keyPressHelper} from '../../services/helpers/keyPressHelper';
 import {component} from '../../services/helpers/classHelpers';
 
@@ -26,9 +27,12 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     isWide = true,
     id = 'search-input',
     autoComplete = 'off',
+    withSearchIcon = false,
     ...props
 }) => {
     const [isFocus, setIsFocus] = useState(false);
+
+    const labelRef = useRef<HTMLLabelElement>(null);
 
     useEffect(() => {
         const input = inputRef?.current;
@@ -53,6 +57,9 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     ]);
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        // не сбрасываем фокус если нажимаем на кнопку отчистить поле
+        // as Node потому что в отп падает сборка
+        if (labelRef.current?.contains(event?.relatedTarget as Node)) return;
         onBlur?.(event);
         setIsFocus(false);
     };
@@ -74,6 +81,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         )({
             wide: value.length > 0 || isWide,
             fullscreen: showBackButton,
+            ['with-search-icon']: withSearchIcon,
         }),
         className,
     );
@@ -86,10 +94,13 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     });
 
     return (
-        <label htmlFor={id} className={searchInputClassName}>
+        <label htmlFor={id} className={searchInputClassName} ref={labelRef}>
             {showBackButton && (
                 <Button icon={<BackIcon />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
             )}
+
+            {/*white modifier only for mdark-theme*/}
+            {withSearchIcon && <SearchIcon className={component('search', 'search-icon')({white: value.length > 0})} />}
 
             <Text
                 id={id}
