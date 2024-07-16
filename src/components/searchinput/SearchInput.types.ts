@@ -9,4 +9,5 @@ export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     showBackButton?: boolean;
     inputRef?: MutableRefObject<HTMLInputElement | null>;
     isWide?: boolean;
+    withSearchIcon?: boolean;
 };
