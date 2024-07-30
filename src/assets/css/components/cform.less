@@ -48,12 +48,14 @@
     }
 
     &__description--common-error {
+        margin-top: 8px;
         padding: 5px 8px 8px 8px;
         border-radius: @br-rounded;
         background-color: fade(@c-red, 20%);
     }
 
     &__description--sended-mail {
+        margin-top: 8px;
         padding: 5px 8px 8px 8px;
         border-radius: @br-rounded;
         background-color: fade(@c-green, 20%);
@@ -96,6 +98,27 @@
         &--payment {
             padding: 24px 32px 0;
         }
+    }
+
+    &__unit {
+        @media (max-width: @rsp-mobile-max) {
+            padding: 0 8px;
+        }
+        padding: 0 24px;
+
+        .cdescription {
+            font-size: 13px;
+            line-height: 19px;
+
+            color: @c-black;
+        }
+    }
+
+    &__unit--big {
+        @media (max-width: @rsp-mobile-max) {
+            padding: 0 16px;
+        }
+        padding: 0 32px;
     }
 
     &__field {
@@ -676,10 +699,56 @@
     border-bottom-color: @c-green;
 }
 
+.cform__icon {
+    &--close {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        right: 16px;
+        cursor: pointer;
+
+        & > svg.cicon * {
+            fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+            top: 12px;
+            right: 12px;
+        }
+    }
+
+    &--back {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        left: 18px;
+        transform: rotate(90deg) translateY(2px);
+        cursor: pointer;
+
+        & > svg.cicon * {
+            fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+            top: 12px;
+            left: 12px;
+        }
+    }
+}
+
 .cform__radio {
     &&--error b {
         border-color: @c-red;
     }
+}
+
+.cform__field-cols {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 8px;
 }
 
 .cform__description {
