@@ -17,7 +17,7 @@ export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = (
     ...props
 }) => {
     const className = cx(
-        'mtheme--darkpic-bg mtheme--darkpic',
+        'сtheme--darkpic-bg mtheme--darkpic',
         component('dropdown', 'header')({mobile, desktop}),
         props.className,
     );
