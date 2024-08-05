@@ -95,7 +95,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
             {isMobile ? (
-                <div className={cx('сdropdown-body--mobile сtheme--darkpic-bg mtheme--darkpic', modifier)}>
+                <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}
                     <div className="сdropdown-body--mobile-content">{otherChildren}</div>
                     {footer?.props.mobile ? footer : <DefaultFooter onCancel={() => popupRef.current?.close()} />}

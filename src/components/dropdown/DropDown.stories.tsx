@@ -24,7 +24,7 @@ export const Default: IStorybookComponent = () => {
         <>
             <StoryTitle>Default</StoryTitle>
             <Dropdown trigger={() => <Button label={'Выпадающий список'} />}>
-                <div className="ctheme--darkpic-bg mtheme--darkpic ctheme--darkpic-bg">
+                <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                     <Row hoverable>
                         <Row.Body>
                             <Row.Text>Primary text 1</Row.Text>
@@ -84,7 +84,7 @@ export const VariousPositions: IStorybookComponent = () => {
                                 <Button label={pos as string} style={{width: '100%', justifyContent: 'center'}} />
                             )}
                         >
-                            <div className="ctheme--darkpic-bg mtheme--darkpic ctheme--darkpic-bg">
+                            <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                                 <Row hoverable>
                                     <Row.Body>
                                         <Row.Text>Primary text 1</Row.Text>
@@ -114,7 +114,7 @@ export const VariousPositions: IStorybookComponent = () => {
                                 <Button label={pos as string} style={{width: '100%', justifyContent: 'center'}} />
                             )}
                         >
-                            <div className="ctheme--darkpic-bg mtheme--darkpic ctheme--darkpic-bg">
+                            <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                                 <Row hoverable>
                                     <Row.Body>
                                         <Row.Text>Primary text 1</Row.Text>
@@ -137,7 +137,7 @@ export const VariousPositions: IStorybookComponent = () => {
                 </div>
                 <div style={{margin: '0 auto', display: 'table'}}>
                     <Dropdown priorityPositions="center-center" trigger={() => <Button label="center-center" />}>
-                        <div className="ctheme--darkpic-bg mtheme--darkpic ctheme--darkpic-bg">
+                        <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                             <Row hoverable>
                                 <Row.Body>
                                     <Row.Text>Primary text 1</Row.Text>
@@ -166,7 +166,7 @@ export const VariousPositions: IStorybookComponent = () => {
                                 <Button label={pos as string} style={{width: '100%', justifyContent: 'center'}} />
                             )}
                         >
-                            <div className="ctheme--darkpic-bg mtheme--darkpic ctheme--darkpic-bg">
+                            <div className="mtheme--darkpic-bg mtheme--darkpic mtheme--darkpic-bg">
                                 <Row hoverable>
                                     <Row.Body>
                                         <Row.Text>Primary text 1</Row.Text>
@@ -316,7 +316,7 @@ export const ProfileDrop: IStorybookComponent = () => {
                             </Row.Icon>
                         </Row>
                     </Dropdown.Header>
-                    <div className="ctheme--darkpic-bg mtheme--darkpic">
+                    <div className="mtheme--darkpic-bg mtheme--darkpic">
                         {ProfileListData.map((el) => (
                             <Row key={el} hoverable>
                                 <Row.Body>
@@ -415,7 +415,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                             </Row.Body>
                         </Row>
                     </Dropdown.Header>
-                    <div className="ctheme--darkpic-bg mtheme--darkpic">
+                    <div className="mtheme--darkpic-bg mtheme--darkpic">
                         {cities.map((item, index) => {
                             return (
                                 <Row key={index} hoverable>
@@ -439,7 +439,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                             </Row.Body>
                         </Row>
                     </Dropdown.Header>
-                    <div className="ctheme--darkpic-bg mtheme--darkpic">
+                    <div className="mtheme--darkpic-bg mtheme--darkpic">
                         {cities.map((item, index) => {
                             return (
                                 <Row key={index} hoverable>
@@ -465,7 +465,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                             </Row.Body>
                         </Row>
                     </Dropdown.Header>
-                    <div className="ctheme--darkpic-bg mtheme--darkpic">
+                    <div className="mtheme--darkpic-bg mtheme--darkpic">
                         {cities.map((item, index) => {
                             return (
                                 <Row key={index} hoverable>
@@ -489,7 +489,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                             </Row.Body>
                         </Row>
                     </Dropdown.Header>
-                    <div className="ctheme--darkpic-bg mtheme--darkpic">
+                    <div className="mtheme--darkpic-bg mtheme--darkpic">
                         {cities.map((item, index) => {
                             return (
                                 <Row key={index} hoverable>
