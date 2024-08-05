@@ -1,5 +1,6 @@
 import React, {createContext, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
+// TODO:при использовании react-transition-group необходимо добавить в package.json проекта. Нужно это исправить
 import './index.less';
 import {Snackbar} from './Snackbar';
 
