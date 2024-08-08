@@ -113,10 +113,6 @@ export function useMask({
 
         setFocus(false);
         // Work around in chrome to make sure focus sets cursor position
-
-        requestAnimationFrame(() => {
-            setCursorPositionForElement(event.target as HTMLInputElement, lastCursorPosition);
-        });
     }
 
     const placeholderValue = maskPlaceholder ? placeholder : prefix;

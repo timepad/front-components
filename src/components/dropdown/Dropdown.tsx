@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentClass, FC, ReactElement, useMemo, useRef} from 'react';
+import {ComponentClass, FC, ReactElement, useEffect, useMemo, useRef} from 'react';
 import './index.less';
 import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
 import cx from 'classnames';
@@ -31,7 +31,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
-    const [rect, ref] = useClientRect();
+    const [rect, ref, updateRect] = useClientRect();
     const {isMobilePortraitMax, customMobileBreakpoint} = useMedia<{customMobileBreakpoint: typeof mobileMaxWidth}>({
         customMobileBreakpoint: mobileMaxWidth,
     });
@@ -67,6 +67,12 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         return [header, footer, otherChildren];
     }, [children]);
 
+    useEffect(() => {
+        if (isMobile) return;
+        // нужно только для desktop версии
+        updateRect();
+    }, [updateRect, otherChildren, isMobile]);
+
     const withPseudoElement = props?.on?.includes('hover');
 
     let popupProps: IPopupProps;
@@ -87,7 +93,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     }
 
     return (
-        <Popup open={show} keepTooltipInside={keepInsideParent} {...popupProps} ref={popupRef}>
+        <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
             {isMobile ? (
                 <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
                     {header?.props.mobile && header}
