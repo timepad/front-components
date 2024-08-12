@@ -316,7 +316,8 @@
         }
 
         // Button Transparent — Dark Theme
-        html body .mtheme--darkpic & {
+        html body .mtheme--darkpic &, // TODO: Разобраться с mtheme в ОТП
+        html body .ctheme--darkpic & {
             --text-color: @c-white;
 
             .on-hover({
