@@ -48,12 +48,14 @@
     }
 
     &__description--common-error {
+        margin-top: 8px;
         padding: 5px 8px 8px 8px;
         border-radius: @br-rounded;
         background-color: fade(@c-red, 20%);
     }
 
     &__description--sended-mail {
+        margin-top: 8px;
         padding: 5px 8px 8px 8px;
         border-radius: @br-rounded;
         background-color: fade(@c-green, 20%);
@@ -61,6 +63,191 @@
     }
 
     &__input {
+        position: relative;
+        display: flex;
+        flex-flow: column-reverse;
+
+        input,
+        textarea,
+        select {
+            background-color: transparent;
+        }
+
+        input,
+        textarea {
+            touch-action: manipulation;
+        }
+
+        label {
+            // делаем прозрачным для клика
+            pointer-events: none;
+            // свойство не везде поддерживается
+            touch-action: manipulation;
+            transition: transform @duration-blink @ease-in-out 0s, color @duration-blink @ease-in-out 0s;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        label {
+            .cform__label;
+        }
+
+
+        input,
+        textarea {
+            display: block;
+
+            font-size: @fs-caption;
+            line-height: @lh-caption;
+
+            border: 0;
+            box-sizing: border-box;
+
+            -webkit-appearance: none;
+            border-radius: 0;
+
+            padding: 0 0 8px 0;
+            cursor: text;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: 0;
+
+            body & ~ label {
+                color: @c-primary-blue;
+            }
+        }
+
+        input:invalid {
+            box-shadow: none;
+        }
+
+        input:placeholder-shown ~ label,
+        textarea:placeholder-shown ~ label {
+            cursor: text;
+            transform: translateY(23px);
+
+            color: @c-gray-opaque-20;
+            font-size: @fs-caption;
+            line-height: @lh-caption;
+        }
+
+        ::placeholder {
+            color: transparent !important;
+            opacity: 0 !important;
+        }
+
+        input:not(:placeholder-shown) ~ label,
+        textarea:not(:placeholder-shown) ~ label,
+        input:focus ~ label,
+        textarea:focus ~ label {
+            .cform__label;
+            color: @c-gray-opaque-50;
+            font-size: @fs-caption;
+            line-height: @lh-caption;
+        }
+
+        &_with-additional-text {
+            position: relative;
+
+            input,
+            textarea {
+                padding-right: 70px;
+            }
+        }
+
+        &&--with-icon {
+            position: relative;
+        }
+
+        &-icon {
+            position: absolute;
+            right: 0;
+            bottom: 3px;
+
+            &--btn {
+                svg {
+                    cursor: pointer;
+                    border-radius: 50%;
+                    background: fade(@c-black, 0);
+                    transition: background @duration-blink @ease-out 0s;
+
+                    svg {
+                        opacity: 0.8;
+                        color: @c-black;
+                        fill: @c-black;
+                    }
+
+                    .on-hover({
+                        background: @c-black-fade-20;
+
+                        svg {
+                            fill: @c-black;
+                        }
+                    });
+                }
+            }
+
+            &--success svg {
+                fill: @c-green !important;
+            }
+        }
+
+        input,
+        textarea {
+            border-bottom: 1px solid @c-dark-gray;
+            transition: border-bottom-color @duration-blink @ease-out;
+
+            .on-hover({
+                border-bottom-color: @c-dark-gray;
+            });
+
+            &:focus {
+                border-bottom-color: @c-primary-blue;
+            }
+        }
+
+        &&--disabled,
+        &&--readonly {
+            label,
+            input,
+            textarea {
+                color: @c-gray-35 !important;
+                -webkit-text-fill-color: @c-gray-35 !important;
+            }
+
+            input,
+            textarea {
+                border-bottom-color: @c-dark-gray !important;
+            }
+
+            &.cform__input--success {
+                input,
+                textarea {
+                    border-bottom-color: @c-green !important;
+                }
+            }
+
+            .cform__input-icon {
+                svg {
+                    fill: @c-gray-35;
+                }
+
+                &--btn svg {
+                    .on-hover({
+                        background-color: @c-black-fade-20;
+
+                        svg {
+                            fill: @c-black;
+                        }
+                    });
+                }
+            }
+        }
+
         input&--code {
             @media (max-width: @rsp-mobile-max) {
                 font-size: 24px;
@@ -96,6 +283,20 @@
         &--payment {
             padding: 24px 32px 0;
         }
+    }
+
+    &__unit {
+        @media (max-width: @rsp-mobile-max) {
+            padding: 0 8px;
+        }
+        padding: 0 24px;
+    }
+
+    &__unit--big {
+        @media (max-width: @rsp-mobile-max) {
+            padding: 0 16px;
+        }
+        padding: 0 32px;
     }
 
     &__field {
@@ -676,10 +877,56 @@
     border-bottom-color: @c-green;
 }
 
+.cform__icon {
+    &--close {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        right: 16px;
+        cursor: pointer;
+
+        & > svg.cicon * {
+            fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+            top: 12px;
+            right: 12px;
+        }
+    }
+
+    &--back {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        left: 18px;
+        transform: rotate(90deg) translateY(2px);
+        cursor: pointer;
+
+        & > svg.cicon * {
+            fill: @c-black;
+        }
+
+        @media (max-width: @rsp-mobile-max) {
+            top: 12px;
+            left: 12px;
+        }
+    }
+}
+
 .cform__radio {
     &&--error b {
         border-color: @c-red;
     }
+}
+
+.cform__field-cols {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 8px;
 }
 
 .cform__description {
@@ -730,188 +977,4 @@
     }
 }
 
-.cform__input {
-    position: relative;
-    display: flex;
-    flex-flow: column-reverse;
 
-    input,
-    textarea,
-    select {
-        background-color: transparent;
-    }
-
-    input,
-    textarea {
-        touch-action: manipulation;
-    }
-
-    label {
-        // делаем прозрачным для клика
-        pointer-events: none;
-        // свойство не везде поддерживается
-        touch-action: manipulation;
-        transition: transform @duration-blink @ease-in-out 0s, color @duration-blink @ease-in-out 0s;
-    }
-
-    textarea {
-        resize: none;
-    }
-
-    label {
-        .cform__label;
-    }
-
-    input,
-    textarea {
-        display: block;
-
-        font-size: @fs-caption;
-        line-height: @lh-caption;
-
-        border: 0;
-        box-sizing: border-box;
-
-        -webkit-appearance: none;
-        border-radius: 0;
-
-        padding: 0 0 8px 0;
-        cursor: text;
-    }
-
-    input:focus,
-    textarea:focus {
-        outline: 0;
-
-        body & ~ label {
-            color: @c-primary-blue;
-        }
-    }
-
-    input:invalid {
-        box-shadow: none;
-    }
-
-    input:placeholder-shown ~ label,
-    textarea:placeholder-shown ~ label {
-        cursor: text;
-        transform: translateY(23px);
-
-        color: @c-gray-opaque-20;
-        font-size: @fs-caption;
-        line-height: @lh-caption;
-    }
-
-    ::placeholder {
-        color: transparent !important;
-        opacity: 0 !important;
-    }
-
-    input:not(:placeholder-shown) ~ label,
-    textarea:not(:placeholder-shown) ~ label,
-    input:focus ~ label,
-    textarea:focus ~ label {
-        .cform__label;
-        color: @c-gray-opaque-50;
-        font-size: @fs-caption;
-        line-height: @lh-caption;
-    }
-
-    &_with-additional-text {
-        position: relative;
-
-        input,
-        textarea {
-            padding-right: 70px;
-        }
-    }
-
-    &&--with-icon {
-        position: relative;
-    }
-
-    &-icon {
-        position: absolute;
-        right: 0;
-        bottom: 3px;
-
-        &--btn {
-            svg {
-                cursor: pointer;
-                border-radius: 50%;
-                background: fade(@c-black, 0);
-                transition: background @duration-blink @ease-out 0s;
-
-                svg {
-                    opacity: 0.8;
-                    color: @c-black;
-                    fill: @c-black;
-                }
-
-                .on-hover({
-          background: @c-black-fade-20;
-
-          svg {
-            fill: @c-black;
-          }
-        });
-            }
-        }
-
-        &--success svg {
-            fill: @c-green !important;
-        }
-    }
-
-    input,
-    textarea {
-        border-bottom: 1px solid @c-dark-gray;
-        transition: border-bottom-color @duration-blink @ease-out;
-
-        .on-hover({
-      border-bottom-color: @c-dark-gray;
-    });
-
-        &:focus {
-            border-bottom-color: @c-primary-blue;
-        }
-    }
-
-    &&--disabled,
-    &&--readonly {
-        label,
-        input,
-        textarea {
-            color: @c-gray-35 !important;
-            -webkit-text-fill-color: @c-gray-35 !important;
-        }
-
-        input,
-        textarea {
-            border-bottom-color: @c-dark-gray !important;
-        }
-
-        &.cform__input--success {
-            input,
-            textarea {
-                border-bottom-color: @c-green !important;
-            }
-        }
-
-        .cform__input-icon {
-            svg {
-                fill: @c-gray-35;
-            }
-
-            &--btn svg {
-                .on-hover({
-          background-color: @c-black-fade-20;
-
-          svg {
-            fill: @c-black;
-          }
-        });
-            }
-        }
-    }
-}
