@@ -1,15 +1,15 @@
-import {IFile, IUploadcareEnv, IUploadFile} from './UploadInput.types';
+import {IFile, IUploadcareConfig, IUploadFile} from './UploadInput.types';
 
 export class UploadApiService {
-    private env: IUploadcareEnv = {} as IUploadcareEnv;
+    private config: IUploadcareConfig = {} as IUploadcareConfig;
     xhr: XMLHttpRequest | null = null;
     private static instance: UploadApiService | null = null;
 
-    constructor(env: IUploadcareEnv) {
+    constructor(config: IUploadcareConfig) {
         if (UploadApiService.instance && typeof UploadApiService.instance === 'object') {
             return UploadApiService.instance;
         }
-        this.env = env;
+        this.config = config;
         UploadApiService.instance = this;
         return this;
     }
@@ -49,20 +49,20 @@ export class UploadApiService {
                 reject(new Error('Request aborted'));
             };
 
-            formData.append('UPLOADCARE_PUB_KEY', this.env.UPLOADCARE_PUBLIC_KEY);
+            formData.append('UPLOADCARE_PUB_KEY', this.config.UPLOADCARE_PUBLIC_KEY);
             formData.append('UPLOADCARE_STORE', '1');
 
-            this.xhr.open('POST', this.env.STATIC_UPLOAD_URL);
+            this.xhr.open('POST', this.config.STATIC_UPLOAD_URL);
             this.xhr.send(formData);
         });
     }
 
     /** Хелпер для загрузки файлов асинхронно от формы.
      * Предполагается, что будет обёрнут в useCallback и передан в метод addEventListener или, как проп в onChange */
-    uploadFile = async ({e, setProgress, onLoad, onUpload, onError}: IUploadFile): Promise<void> => {
+    uploadFile = async ({event, setProgress, onLoad, onUpload, onError}: IUploadFile): Promise<void> => {
         setProgress(0);
 
-        const target = e.target as HTMLInputElement;
+        const target = event.target;
         const files = target.files;
         if (files?.length) {
             const file = files[0];
@@ -80,7 +80,7 @@ export class UploadApiService {
             try {
                 const result = await this.fetchFile(formData, this.updateProgress(setProgress));
                 if (result) {
-                    const fileUrl = this.env.STATIC_BASE_URL + result.file + '/';
+                    const fileUrl = this.config.STATIC_BASE_URL + result.file + '/';
                     onUpload(fileUrl);
                 }
             } catch (err) {

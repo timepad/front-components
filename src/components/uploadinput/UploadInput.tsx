@@ -1,9 +1,9 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import cx from 'classnames';
 
 import './index.less';
 import {UploadApiService} from './UploadApiService';
-import {IUploadcareEnv, IUploadFile} from './UploadInput.types';
+import {IUploadcareConfig, IUploadFile} from './UploadInput.types';
 import {Brick} from '../brick';
 import {Button} from '../button';
 import {Gap} from '../gap';
@@ -13,7 +13,7 @@ import {component, layout} from '../../services/helpers/classHelpers';
 
 export interface IUploadInputProps {
     name: string;
-    env: IUploadcareEnv;
+    config: IUploadcareConfig;
     label?: string;
     onChange: (name: string, value: string) => void;
     setStatus: (status: string) => void;
@@ -27,7 +27,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     name,
     onChange,
     setStatus,
-    env,
+    config,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onLoad = () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -35,7 +35,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onError = () => {},
 }: IUploadInputProps) => {
-    const uploadApiService = new UploadApiService(env);
+    const uploadApiService = new UploadApiService(config);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const [filename, setFilename] = useState<string | null>(null);
@@ -54,13 +54,13 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
         }
     };
 
-    const handleUploadFileChange = async (e: React.ChangeEvent) => {
-        setFilename(uploadApiService.getFileName(e));
+    const handleUploadInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilename(uploadApiService.getFileName(event));
 
         setStatus?.('loading');
 
         await uploadApiService.uploadFile({
-            e: e as unknown as Event,
+            event,
             setProgress,
             onLoad,
             onUpload: (url: string) => {
@@ -77,7 +77,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
             <input
                 ref={inputRef}
                 type="file"
-                onChange={handleUploadFileChange}
+                onChange={handleUploadInputChange}
                 className={component('upload-input', 'input')()}
             />
             <div className={layout('flex')({'align-centered': true, wrap: true})}>

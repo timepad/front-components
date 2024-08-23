@@ -1,4 +1,4 @@
-export interface IUploadcareEnv {
+export interface IUploadcareConfig {
     UPLOADCARE_PUBLIC_KEY: string;
     STATIC_BASE_URL: string;
     STATIC_UPLOAD_URL: string;
@@ -8,7 +8,7 @@ export interface IFile {
 }
 
 export interface IUploadFile {
-    e: Event;
+    event: React.ChangeEvent;
     setProgress: (value: number) => void;
     onLoad: (e: Event) => void | boolean;
     onUpload: (url: string) => void;
