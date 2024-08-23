@@ -57,8 +57,6 @@ export class UploadApiService {
         });
     }
 
-    /** Хелпер для загрузки файлов асинхронно от формы.
-     * Предполагается, что будет обёрнут в useCallback и передан в метод addEventListener или, как проп в onChange */
     uploadFile = async ({event, setProgress, onLoad, onUpload, onError}: IUploadFile): Promise<void> => {
         setProgress(0);
 
@@ -90,8 +88,8 @@ export class UploadApiService {
         }
     };
 
-    getFileName = (e: React.ChangeEvent): string | null => {
-        const target = e.target as HTMLInputElement;
+    getFileName = (event: React.ChangeEvent<HTMLInputElement>): string | null => {
+        const target = event.target;
 
         const files = target.files;
         if (files?.length) {

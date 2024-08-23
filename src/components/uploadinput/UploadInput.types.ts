@@ -8,7 +8,7 @@ export interface IFile {
 }
 
 export interface IUploadFile {
-    event: React.ChangeEvent;
+    event: React.ChangeEvent<HTMLInputElement>;
     setProgress: (value: number) => void;
     onLoad: (e: Event) => void | boolean;
     onUpload: (url: string) => void;
