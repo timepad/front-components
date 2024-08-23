@@ -35,7 +35,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onError = () => {},
 }: IUploadInputProps) => {
-    const uploadApiService = useMemo(() => new UploadApiService(env), [env]);
+    const uploadApiService = new UploadApiService(env);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const [filename, setFilename] = useState<string | null>(null);

@@ -1,11 +1,17 @@
 import {IFile, IUploadcareEnv, IUploadFile} from './UploadInput.types';
 
 export class UploadApiService {
-    private env: IUploadcareEnv;
+    private env: IUploadcareEnv = {} as IUploadcareEnv;
     xhr: XMLHttpRequest | null = null;
+    private static instance: UploadApiService | null = null;
 
     constructor(env: IUploadcareEnv) {
+        if (UploadApiService.instance && typeof UploadApiService.instance === 'object') {
+            return UploadApiService.instance;
+        }
         this.env = env;
+        UploadApiService.instance = this;
+        return this;
     }
 
     async fetchFile(formData: FormData, onUploadProgressHandler: (event: ProgressEvent) => void): Promise<IFile> {
@@ -47,7 +53,6 @@ export class UploadApiService {
             formData.append('UPLOADCARE_STORE', '1');
 
             this.xhr.open('POST', this.env.STATIC_UPLOAD_URL);
-            this.xhr.setRequestHeader('Content-Type', 'multipart/form-data');
             this.xhr.send(formData);
         });
     }
