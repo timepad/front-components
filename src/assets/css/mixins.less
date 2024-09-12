@@ -5,8 +5,8 @@
 .tpui-mx-color(@color) {
     // TODO: применить где-нибудь
     color: @color;
-    .aicon svg,
-    svg.aicon {
+    .cicon svg,
+    svg.cicon {
         .tpui-mx-svg-fill(@color);
     }
 }
@@ -264,13 +264,13 @@
 //     &:active,
 //     &:visited {
 //       color: @color !important;
-//       svg.aicon * {
+//       svg.cicon * {
 //         fill: @color !important;
 //       }
 //     }
 //     &:hover {
 //       color: @hover !important;
-//       svg.aicon * {
+//       svg.cicon * {
 //         fill: @hover !important;
 //       }
 //     }
@@ -285,8 +285,8 @@
     body & {
         color: @color;
     }
-    & svg.aicon,
-    & .aicon svg {
+    & svg.cicon,
+    & .cicon svg {
         .tpui-mx-svg-fill(@color);
     }
 }
@@ -304,8 +304,8 @@
     &:active {
         color: @link;
 
-        svg.aicon,
-        .aicon svg {
+        svg.cicon,
+        .cicon svg {
             .tpui-mx-svg-fill(@link);
         }
 
@@ -317,8 +317,8 @@
     .on-hover({
     color: @link-hover;
 
-    svg.aicon,
-    .aicon svg {
+    svg.cicon,
+    .cicon svg {
       .tpui-mx-svg-fill(@link-hover);
     }
 
