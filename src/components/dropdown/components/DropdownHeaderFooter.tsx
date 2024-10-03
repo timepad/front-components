@@ -6,21 +6,21 @@ import {Divider} from '../../divider';
 
 export interface IFooterHeaderProps
     extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    desktop?: boolean;
-    mobile?: boolean;
+    element?: boolean;
+    down?: boolean;
+    center?: boolean;
+    auto?: boolean;
 }
 
 export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
-    mobile,
-    desktop,
+    down,
+    element,
+    center,
+    auto,
     children,
     ...props
 }) => {
-    const className = cx(
-        'mtheme--darkpic-bg mtheme--darkpic',
-        component('dropdown', 'header')({mobile, desktop}),
-        props.className,
-    );
+    const className = cx(component('dropdown', 'header')({down, element, center, auto}), props.className);
 
     return (
         <div {...props} className={className}>
@@ -30,16 +30,17 @@ export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = (
 };
 
 export const DropdownFooter: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
-    mobile,
-    desktop,
+    down,
+    element,
+    center,
+    auto,
     children,
     ...props
 }) => {
-    const className = cx(component('dropdown', 'footer')({mobile, desktop}), props.className);
-
+    const className = cx(component('dropdown', 'footer')({down, element, center, auto}), props.className);
     return (
-        <div className="mtheme--darkpic-bg mtheme--darkpic">
-            {mobile && <Divider />}
+        <div>
+            {down && <Divider />}
             <div {...props} className={className}>
                 {children}
             </div>

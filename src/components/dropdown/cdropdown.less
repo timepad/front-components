@@ -23,10 +23,25 @@
     background: @c-black-fade-35;
 }
 
+.cdropdown__tablet-container-content {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  height: -webkit-fill-available;
+
+  .ccancel-button__tablet {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.cdropdown__tablet-container-overlay {
+  background: @c-black-fade-35;
+}
+
 .сdropdown-body {
     position: relative;
     box-shadow: @sh-shadow;
-    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -36,12 +51,20 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
-  border-radius: 8px 8px 0 0;
   overflow: hidden;
   &-content {
     .hidden-scroll();
     overflow-y: auto;
-    border-radius: 8px 8px 0 0;
+  }
+}
+
+.сdropdown-body--tablet {
+  max-height: calc(100% - 16px);
+  overflow: hidden;
+
+  &-content {
+    .hidden-scroll();
+    overflow-y: auto;
   }
 }
 
@@ -88,11 +111,6 @@
     border-bottom: transparent 2px solid;
 }
 
-.mtheme--darkpic-bg, // TODO: Разобраться с mtheme в ОТП
-.ctheme--darkpic-bg {
-    background-color: @c-black;
-}
-
 .popup-content::before {
   content: "";
   display: none;
@@ -102,4 +120,34 @@
 
 .popup-content.show-pseudo-content::before {
   display: block;
+}
+
+.cdropdown__footer, .cdropdown__button {
+  --text-color: @c-black;
+  --bg-color: @c-white;
+
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+.cdropdown__popup {
+  &--radius {
+    border-radius: 4px 4px 4px 4px;
+  }
+}
+
+.mtheme--darkpic &, // TODO: Разобраться с mtheme в ОТП
+.ctheme--darkpic & {
+  --bg-color: @c-black;
+  --text-color: @c-white;
+
+  &.cdropdown__footer, &.cdropdown__button {
+    --bg-color: @c-black;
+    --text-color: @c-white;
+  }
+}
+
+.mtheme--darkpic-bg, // TODO: Разобраться с mtheme в ОТП
+.ctheme--darkpic-bg {
+  background-color: @c-black;
 }

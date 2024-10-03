@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {ComponentClass, FC, ReactElement, useEffect, useMemo, useRef} from 'react';
-import './index.less';
-import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
 import cx from 'classnames';
+import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
 import {Button, ButtonVariant, IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
 import {SortableElement} from 'react-sortable-hoc';
@@ -11,6 +10,10 @@ import {useClientRect, useMedia} from '../../services/hooks';
 import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
+import {CenterPinnedContent, DownPinnedContent, ElementPinnedContent} from './components/pinnedcontent';
+import {WithThemeStyles} from '../../services/hocs';
+import {component} from '../../services/helpers/classHelpers';
+import './index.less';
 
 export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     Button: FC<React.PropsWithChildren<IButtonProps>>;
@@ -28,17 +31,19 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     customMobileBreakpoint: mobileMaxWidth,
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     // customPopupRoot,
+    pinned = 'auto',
+    theme = 'dark',
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref, updateRect] = useClientRect();
-    const {isMobilePortraitMax, customMobileBreakpoint} = useMedia<{customMobileBreakpoint: typeof mobileMaxWidth}>({
+
+    const {isMobilePortraitMax, customMobileBreakpoint, isMobileMax} = useMedia({
         customMobileBreakpoint: mobileMaxWidth,
     });
-    const isMobile = (function () {
-        if (customMobileBreakpoint !== undefined) return customMobileBreakpoint;
-        else return isMobilePortraitMax;
-    })();
+    const isMobile = pinned === 'down' || (pinned === 'auto' && (isMobilePortraitMax || customMobileBreakpoint));
+    const isDesktop = pinned === 'element' || (pinned === 'auto' && !isMobileMax);
+    const isTablet = pinned === 'center';
 
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
@@ -68,61 +73,96 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     }, [children]);
 
     useEffect(() => {
-        if (isMobile) return;
-        // нужно только для desktop версии
-        updateRect();
-    }, [updateRect, otherChildren, isMobile]);
+        if (pinned === 'element') {
+            // нужно только для desktop версии
+            updateRect();
+        }
+    }, [updateRect, otherChildren, pinned]);
 
     const withPseudoElement = props?.on?.includes('hover');
 
+    const commonProps = {
+        modifier,
+        header,
+        footer,
+        otherChildren,
+        ...props,
+    };
+
+    let ContentComponent;
+    let additionalProps = {};
     let popupProps: IPopupProps;
-    if (isMobile) {
-        popupProps = {
-            ...props,
-            className: cx('cdropdown__mobile-container'),
-            lockScroll: true,
-            position: 'corner-bottom-left' as PopupPosition,
-        };
-    } else {
-        popupProps = {
-            position: priorityPositions,
-            className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
-            lockScroll: lockScroll || isScrollable,
-            ...props,
-        };
+
+    switch (true) {
+        case isMobile: {
+            ContentComponent = DownPinnedContent;
+            additionalProps = {
+                popupRef,
+                isMobile,
+            };
+            popupProps = {
+                ...props,
+                className: component('dropdown', 'mobile-container')(),
+                lockScroll: true,
+                position: 'corner-bottom-left' as PopupPosition,
+            };
+            break;
+        }
+        case isDesktop: {
+            ContentComponent = ElementPinnedContent;
+            additionalProps = {
+                isScrollable,
+                priorityPositions,
+                withPseudoElement,
+                lockScroll,
+                ref,
+            };
+            popupProps = {
+                position: priorityPositions,
+                className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
+                lockScroll: lockScroll || isScrollable,
+                ...props,
+            };
+            break;
+        }
+        case pinned === 'center': {
+            ContentComponent = CenterPinnedContent;
+            popupProps = {
+                ...props,
+                className: component('dropdown', 'tablet-container')(),
+                lockScroll: true,
+                position: 'screen-center' as PopupPosition,
+            };
+            break;
+        }
+        default: {
+            return null;
+        }
     }
 
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
-            {isMobile ? (
-                <div className={cx('сdropdown-body--mobile mtheme--darkpic-bg mtheme--darkpic', modifier)}>
-                    {header?.props.mobile && header}
-                    <div className="сdropdown-body--mobile-content">{otherChildren}</div>
-                    {footer?.props.mobile ? footer : <DefaultFooter onCancel={() => popupRef.current?.close()} />}
-                </div>
-            ) : (
-                <div
-                    ref={ref}
-                    className={cx('сdropdown-body', modifier)}
-                    style={isScrollable ? {margin: '15px 0'} : {}}
-                >
-                    {header?.props.desktop && header}
-                    <div>{otherChildren}</div>
-                    {footer?.props.desktop && footer}
-                </div>
-            )}
+            <WithThemeStyles theme={theme} pinned={isDesktop || isTablet}>
+                <ContentComponent {...commonProps} {...additionalProps} />
+            </WithThemeStyles>
         </Popup>
     );
 };
 
 interface IDefaultFooterProps {
     onCancel?: () => void;
+    isMobile?: boolean;
 }
 
-const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel}) => {
+export const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel, isMobile}) => {
     return (
-        <DropdownFooter mobile>
-            <Button large variant={ButtonVariant.transparent} className="ccancel-button__mobile" onClick={onCancel}>
+        <DropdownFooter down>
+            <Button
+                large
+                variant={ButtonVariant.transparent}
+                className={isMobile ? component('cancel-button', 'mobile')() : component('cancel-button', 'tablet')()}
+                onClick={onCancel}
+            >
                 Отменить
             </Button>
         </DropdownFooter>

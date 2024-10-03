@@ -1,7 +1,9 @@
-import {IPopupProps} from '../popup';
-import {ReactNode, MouseEvent} from 'react';
-import {IItem} from '../list/Item';
+import * as React from 'react';
+import {ReactNode, MouseEvent, ReactElement} from 'react';
 import {SortableElementProps} from 'react-sortable-hoc';
+import {IPopupActions, IPopupProps, PopupPosition} from '../popup';
+import {IItem} from '../list/Item';
+import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 
 export interface IDropdownProps {
     trigger: IPopupProps['trigger'];
@@ -24,6 +26,8 @@ export interface IDropdownProps {
     fixPositionOnScroll?: boolean;
     customPopupRoot?: string;
     customMobileBreakpoint?: number;
+    pinned?: 'auto' | 'center' | 'down' | 'element'; //'center' - посередине (планшет), 'down' - нижний край (телефон), 'element' - рядом с элементом (десктоп)
+    theme?: 'light' | 'dark';
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
@@ -38,3 +42,17 @@ export type ISortableItem = IItem & {
     value: any;
     onClick?: (e: MouseEvent<any>, value: any) => void;
 };
+
+export interface IPinnedContentProps extends IPopupProps {
+    modifier?: string;
+    header?: ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
+    footer?: ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
+    otherChildren: React.ReactNode[];
+    popupRef?: React.RefObject<IPopupActions>;
+    isScrollable?: boolean;
+    priorityPositions?: PopupPosition | PopupPosition[];
+    withPseudoElement?: boolean;
+    lockScroll?: boolean;
+    ref?: React.RefCallback<HTMLElement>;
+    isMobile?: boolean;
+}
