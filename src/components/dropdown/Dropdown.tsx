@@ -38,12 +38,12 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     const popupRef = useRef<IPopupActions>(null);
     const [rect, ref, updateRect] = useClientRect();
 
-    const {isMobilePortraitMax, customMobileBreakpoint, isMobileMax} = useMedia({
+    const {isMobilePortraitMax, customMobileBreakpoint, isMobileMax, isTabletMax} = useMedia({
         customMobileBreakpoint: mobileMaxWidth,
     });
     const isMobile = pinned === 'down' || (pinned === 'auto' && (isMobilePortraitMax || customMobileBreakpoint));
     const isDesktop = pinned === 'element' || (pinned === 'auto' && !isMobileMax);
-    const isTablet = pinned === 'center';
+    const isTablet = pinned === 'center' || (pinned === 'auto' && isTabletMax);
 
     const isScrollable = useMemo(() => window.innerHeight <= Number(rect?.height), [rect]);
 
@@ -125,7 +125,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
             };
             break;
         }
-        case pinned === 'center': {
+        case isTablet: {
             ContentComponent = CenterPinnedContent;
             popupProps = {
                 ...props,
@@ -142,7 +142,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
 
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
-            <WithThemeStyles theme={theme} pinned={isDesktop || isTablet}>
+            <WithThemeStyles theme={theme}>
                 <ContentComponent {...commonProps} {...additionalProps} />
             </WithThemeStyles>
         </Popup>

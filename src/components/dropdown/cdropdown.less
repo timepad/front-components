@@ -39,9 +39,10 @@
   background: @c-black-fade-35;
 }
 
-.сdropdown-body {
+.cdropdown-body {
     position: relative;
     box-shadow: @sh-shadow;
+    border-radius: 8px 8px 8px 8px;
     overflow: hidden;
 }
 
@@ -52,6 +53,7 @@
   flex-direction: column;
   width: 100vw;
   overflow: hidden;
+  border-radius: 8px 8px 0 0;
   &-content {
     .hidden-scroll();
     overflow-y: auto;
@@ -61,6 +63,7 @@
 .сdropdown-body--tablet {
   max-height: calc(100% - 16px);
   overflow: hidden;
+  border-radius: 8px 8px 8px 8px;
 
   &-content {
     .hidden-scroll();
@@ -128,12 +131,6 @@
 
   color: var(--text-color);
   background-color: var(--bg-color);
-}
-
-.cdropdown__popup {
-  &--radius {
-    border-radius: 4px 4px 4px 4px;
-  }
 }
 
 .mtheme--darkpic &, // TODO: Разобраться с mtheme в ОТП
