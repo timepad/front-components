@@ -3,17 +3,22 @@ import cx from 'classnames';
 import {component} from '../../../../services/helpers/classHelpers';
 import {IPinnedContentProps} from '../../interfaces';
 
-export const ElementPinnedContent: React.FC<IPinnedContentProps> = ({
+interface IElementPinnedContentProps extends IPinnedContentProps {
+    isScrollable: boolean;
+    elementRef: React.RefCallback<HTMLElement>;
+}
+
+export const ElementPinnedContent: React.FC<IElementPinnedContentProps> = ({
     modifier,
     header,
     footer,
     otherChildren,
     isScrollable,
-    ref,
+    elementRef,
 }) => {
     return (
         <div
-            ref={ref}
+            ref={elementRef}
             className={cx(component('dropdown-body')(), modifier)}
             style={isScrollable ? {margin: '15px 0'} : {}}
         >

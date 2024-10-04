@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ReactNode, MouseEvent, ReactElement} from 'react';
 import {SortableElementProps} from 'react-sortable-hoc';
-import {IPopupActions, IPopupProps, PopupPosition} from '../popup';
+import {IPopupProps} from '../popup';
 import {IItem} from '../list/Item';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 
@@ -43,16 +43,9 @@ export type ISortableItem = IItem & {
     onClick?: (e: MouseEvent<any>, value: any) => void;
 };
 
-export interface IPinnedContentProps extends IPopupProps {
+export interface IPinnedContentProps {
     modifier?: string;
     header?: ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
     footer?: ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
     otherChildren: React.ReactNode[];
-    popupRef?: React.RefObject<IPopupActions>;
-    isScrollable?: boolean;
-    priorityPositions?: PopupPosition | PopupPosition[];
-    withPseudoElement?: boolean;
-    lockScroll?: boolean;
-    ref?: React.RefCallback<HTMLElement>;
-    isMobile?: boolean;
 }

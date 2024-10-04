@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {ComponentClass, FC, ReactElement, useEffect, useMemo, useRef} from 'react';
 import cx from 'classnames';
-import {IPopupActions, IPopupProps, Popup, PopupPosition} from '../popup';
-import {Button, ButtonVariant, IButtonProps} from '../button';
+import {IPopupActions, IPopupProps, Popup} from '../popup';
+import {IButtonProps} from '../button';
 import {IDropdownProps, IDropdownSortableListProps, ISortableItem, ISortableItemProps} from './interfaces';
 import {SortableElement} from 'react-sortable-hoc';
 import {List} from '../list';
@@ -81,91 +81,44 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
 
     const withPseudoElement = props?.on?.includes('hover');
 
-    const commonProps = {
+    const contentCommonProps = {
         modifier,
         header,
         footer,
         otherChildren,
-        ...props,
     };
 
-    let ContentComponent;
-    let additionalProps = {};
-    let popupProps: IPopupProps;
-
-    switch (true) {
-        case isMobile: {
-            ContentComponent = DownPinnedContent;
-            additionalProps = {
-                popupRef,
-                isMobile,
-            };
-            popupProps = {
-                ...props,
-                className: component('dropdown', 'mobile-container')(),
-                lockScroll: true,
-                position: 'corner-bottom-left' as PopupPosition,
-            };
-            break;
-        }
-        case isDesktop: {
-            ContentComponent = ElementPinnedContent;
-            additionalProps = {
-                isScrollable,
-                priorityPositions,
-                withPseudoElement,
-                lockScroll,
-                ref,
-            };
-            popupProps = {
-                position: priorityPositions,
-                className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
-                lockScroll: lockScroll || isScrollable,
-                ...props,
-            };
-            break;
-        }
-        case isTablet: {
-            ContentComponent = CenterPinnedContent;
-            popupProps = {
-                ...props,
-                className: component('dropdown', 'tablet-container')(),
-                lockScroll: true,
-                position: 'screen-center' as PopupPosition,
-            };
-            break;
-        }
-        default: {
-            return null;
-        }
-    }
+    const popupProps: IPopupProps = {
+        ...props,
+        ...(isMobile && {
+            className: component('dropdown', 'mobile-container')(),
+            lockScroll: true,
+            position: 'corner-bottom-left',
+        }),
+        ...(isDesktop && {
+            position: priorityPositions,
+            className: cx({'cdropdown__scrollable-container': isScrollable}, {'show-pseudo': withPseudoElement}),
+            lockScroll: lockScroll || isScrollable,
+        }),
+        ...(isTablet && {
+            className: component('dropdown', 'tablet-container')(),
+            lockScroll: true,
+            position: 'screen-center',
+        }),
+    };
 
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
             <WithThemeStyles theme={theme}>
-                <ContentComponent {...commonProps} {...additionalProps} />
+                {isDesktop ? (
+                    <ElementPinnedContent isScrollable={isScrollable} elementRef={ref} {...contentCommonProps} />
+                ) : isTablet ? (
+                    <CenterPinnedContent {...contentCommonProps} />
+                ) : (
+                    <DownPinnedContent popupRef={popupRef} {...contentCommonProps} />
+                )}
             </WithThemeStyles>
         </Popup>
-    );
-};
-
-interface IDefaultFooterProps {
-    onCancel?: () => void;
-    isMobile?: boolean;
-}
-
-export const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel, isMobile}) => {
-    return (
-        <DropdownFooter down>
-            <Button
-                large
-                variant={ButtonVariant.transparent}
-                className={isMobile ? component('cancel-button', 'mobile')() : component('cancel-button', 'tablet')()}
-                onClick={onCancel}
-            >
-                Отменить
-            </Button>
-        </DropdownFooter>
     );
 };
 
