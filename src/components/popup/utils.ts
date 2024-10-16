@@ -13,6 +13,7 @@ export const POSITION_TYPES: PopupPosition[] = [
     'left-top',
     'left-center',
     'left-bottom',
+    'screen-center',
 ];
 
 type PositionModifiers = {
@@ -40,6 +41,10 @@ const getModifiersForPosition = (
 
     if (args[0] === 'corner') {
         return {[args[1]]: 0, [args[2]]: 0, transform};
+    } else if (args[0] === 'screen' && args[1] === 'center') {
+        top = window.innerHeight / 2 - height / 2;
+        left = window.innerWidth / 2 - width / 2;
+        return {top, left, transform};
     } else {
         switch (args[0]) {
             case 'top':
