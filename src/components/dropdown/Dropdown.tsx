@@ -110,13 +110,13 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     return (
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
             <WithThemeStyles theme={theme}>
-                {isDesktop ? (
-                    <ElementPinnedContent isScrollable={isScrollable} elementRef={ref} {...contentCommonProps} />
-                ) : isTablet ? (
-                    <CenterPinnedContent {...contentCommonProps} />
-                ) : (
-                    <DownPinnedContent popupRef={popupRef} {...contentCommonProps} />
-                )}
+                <>
+                    {isDesktop && (
+                        <ElementPinnedContent isScrollable={isScrollable} elementRef={ref} {...contentCommonProps} />
+                    )}
+                    {isTablet && <CenterPinnedContent {...contentCommonProps} />}
+                    {isMobile && <DownPinnedContent popupRef={popupRef} {...contentCommonProps} />}
+                </>
             </WithThemeStyles>
         </Popup>
     );
