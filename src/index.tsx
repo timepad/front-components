@@ -30,4 +30,3 @@ export * from './components/divider';
 export * from './components/_anchorCard';
 export * from './components/carousel';
 export * from './components/searchinput';
-export * from './services/hocs';

@@ -11,7 +11,6 @@ import {DropdownSortableList} from './components/DropdownSortableList';
 import {DropdownButton} from './components/DropdownButton';
 import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/DropdownHeaderFooter';
 import {CenterPinnedContent, DownPinnedContent, ElementPinnedContent} from './components/pinnedcontent';
-import {WithThemeStyles} from '../../services/hocs';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
