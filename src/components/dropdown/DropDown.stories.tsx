@@ -583,7 +583,7 @@ export const CenterPinnedVariant: IStorybookComponent = () => {
     return (
         <>
             <StoryTitle>Pinned Variant</StoryTitle>
-            <Dropdown theme="light" pinned="center" trigger={() => <Button label={'Выпадающий список'} />}>
+            <Dropdown pinned="center" trigger={() => <Button label={'Выпадающий список'} />}>
                 <Row hoverable>
                     <Row.Body>
                         <Row.Text>Primary text 1</Row.Text>

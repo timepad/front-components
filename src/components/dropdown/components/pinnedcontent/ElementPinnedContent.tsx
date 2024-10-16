@@ -16,10 +16,12 @@ export const ElementPinnedContent: React.FC<IElementPinnedContentProps> = ({
     isScrollable,
     elementRef,
 }) => {
+    const darkThemeClasses = 'mtheme--darkpic-bg mtheme--darkpic';
+
     return (
         <div
             ref={elementRef}
-            className={cx(component('dropdown-body')(), modifier)}
+            className={cx(component('dropdown-body')(), darkThemeClasses, modifier)}
             style={isScrollable ? {margin: '15px 0'} : {}}
         >
             {header?.props.element && header}

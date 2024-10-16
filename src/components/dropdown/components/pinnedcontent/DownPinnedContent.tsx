@@ -15,8 +15,10 @@ export const DownPinnedContent: React.FC<IDownPinnedContentProps> = ({
     otherChildren,
     popupRef,
 }) => {
+    const darkThemeClasses = 'mtheme--darkpic-bg mtheme--darkpic';
+
     return (
-        <div className={cx('сdropdown-body--mobile', modifier)}>
+        <div className={cx('сdropdown-body--mobile', darkThemeClasses, modifier)}>
             {header?.props.down && header}
             <div className="сdropdown-body--mobile-content">{otherChildren}</div>
             {footer?.props.down ? footer : <DefaultFooter isMobile onCancel={() => popupRef?.current?.close()} />}
