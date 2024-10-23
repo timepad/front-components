@@ -9,16 +9,31 @@ interface IProps {
     vertical?: boolean;
     margin?: number | [number, number];
     style?: React.CSSProperties;
+    thickness?: 'thin' | 'thick' | 'line';
+    fullWidthMobile?: boolean;
 }
 
-export const Divider: React.FC<IProps> = ({className, as = 'div', vertical = false, margin = 0, style = {}}) => {
+export const Divider: React.FC<IProps> = ({
+    className,
+    as = 'div',
+    vertical = false,
+    margin = 0,
+    style = {},
+    thickness,
+    fullWidthMobile = false,
+}) => {
     const Tag = as;
     const styles = {
         margin: getMarginPx(margin),
         ...style,
     };
     const rowClass = cx(
-        component('list-divider')(),
+        component('list-divider')({
+            thin: thickness === 'thin',
+            thick: thickness === 'thick',
+            line: thickness === 'line',
+            fullWidthMobile: fullWidthMobile,
+        }),
         {
             vertical,
         },

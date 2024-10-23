@@ -1,11 +1,46 @@
 .clist-divider {
+
     &--wrapper {
         background: @c-black;
     }
+
+    &--thin {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    &--thick {
+        box-sizing: border-box;
+        border-top: 4px solid @c-black;
+        height: 32px;
+        margin: 0;
+        background: transparent;
+
+        @media (max-width: @rsp-mobile-max) {
+            height: 24px;
+        }
+    }
+
+    &--line {
+        box-sizing: border-box;
+        border-top: 4px solid @c-black;
+        height: 4px;
+        margin: 0 0 -4px 0;
+        background: transparent;
+    }
+
     &.vertical {
         width: 1px;
         height: initial;
     }
+
+    @media (max-width: @rsp-mobile-max) {
+        &--full-width-mobile {
+            margin-left: -16px;
+            margin-right: -16px;
+        }
+    }
+
     display: block;
     padding: 0;
     height: 1px;
