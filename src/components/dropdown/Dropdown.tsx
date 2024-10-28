@@ -31,7 +31,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     // customPopupRoot,
     pinned = 'auto',
-    theme = 'dark', // для будущей темы
+    // theme = 'dark', // для будущей темы
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
