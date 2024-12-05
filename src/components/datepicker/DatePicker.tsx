@@ -7,6 +7,8 @@ import moment, {Moment} from 'moment';
 import {Button} from '../button';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
+import {List} from '../list';
+import {Popup} from '../popup';
 
 moment.locale('ru');
 
@@ -24,6 +26,7 @@ interface IDatePickerProps {
     withShortcats?: boolean;
     dateRange?: boolean;
     analytic?: IAnalyticsProps;
+    enablePastDates?: boolean;
 }
 
 export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
@@ -34,6 +37,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     withShortcats,
     dateRange,
     analytic,
+    enablePastDates = false,
 }) => {
     const isMounted = useRef(false);
 
@@ -42,7 +46,10 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     const [now, setNow] = useState<Moment>(initialStart || today);
     const [start, setStart] = useState<Moment | null>(initialStart || null);
     const [end, setEnd] = useState<Moment | null>((dateRange && initialEnd) || initialStart || null);
+    const [selectedMonth, setSelectedMonth] = useState<number>(now.month()); // 0 - January, ..., 11 - December
+
     const weekdays = moment.weekdaysShort(true);
+    const months = moment.months(); // ["January", "February", ..., "December"]
 
     const startOfMonth = moment(now).startOf('month');
     const endOfMonth = moment(now).endOf('month');
@@ -57,6 +64,11 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
 
     const getDaysOfWeek = (week: Moment) => {
         return [...Array.from(Array(7).keys())].map((idx) => moment(week).weekday(idx) as Moment);
+    };
+
+    const onMonthChange = (monthIndex: number) => {
+        setSelectedMonth(monthIndex);
+        setNow(moment(now).month(monthIndex)); // Переключаем `now` на выбранный месяц
     };
 
     const monthData: Array<Array<Moment>> = weeks.map((week) => getDaysOfWeek(week));
@@ -108,7 +120,8 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             'datepicker',
             'day',
         )({
-            inactive: !day.isBetween(today, endOfMonth, 'days', '[]') || !isDayOfCurrentMonth(day),
+            inactive:
+                (!enablePastDates && !day.isBetween(today, endOfMonth, 'days', '[]')) || !isDayOfCurrentMonth(day),
             cell: isBetweenSelected(day) && isDayOfCurrentMonth(day),
             start: !!end && !start?.isSame(end, 'days') && day.isSame(start, 'days') && isDayOfCurrentMonth(day),
             end: !start?.isSame(end, 'days') && day.isSame(end, 'days') && isDayOfCurrentMonth(day),
@@ -159,7 +172,30 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             <div className="cdatepicker__header">
                 <div className="cdatepicker__title">
                     <span>
-                        <span className="cdatepicker__month">{now.format('MMMM')}</span>{' '}
+                        <Popup
+                            trigger={() => <span className="cdatepicker__month">{now.format('MMMM')}</span>}
+                            position="right-center"
+                            on={['click']}
+                            closeOnDocumentClick
+                            mouseLeaveDelay={100}
+                            mouseEnterDelay={0}
+                            contentStyle={{padding: '0px', border: 'none'}}
+                        >
+                            <List size={'lg'} variant={'dark'}>
+                                {months.map((month, index) => {
+                                    return (
+                                        <List.Item
+                                            as={'button'}
+                                            type={'button'}
+                                            onClick={() => onMonthChange(Number(index))}
+                                            key={index + month}
+                                        >
+                                            {month}
+                                        </List.Item>
+                                    );
+                                })}
+                            </List>
+                        </Popup>{' '}
                         <span className="cdatepicker__year">{now.format('YYYY')}</span>
                     </span>
                 </div>
@@ -167,7 +203,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                     <Button
                         variant={Button.variant.transparent}
                         onClick={prevMonth}
-                        disabled={today.isSame(now, 'month')}
+                        disabled={!enablePastDates && today.isSame(now, 'month')}
                         icon={<IconArrow style={{transform: 'rotate(90deg)'}} />}
                     />
                     <Button
