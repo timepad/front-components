@@ -46,10 +46,11 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     const [now, setNow] = useState<Moment>(initialStart || today);
     const [start, setStart] = useState<Moment | null>(initialStart || null);
     const [end, setEnd] = useState<Moment | null>((dateRange && initialEnd) || initialStart || null);
-    const [selectedMonth, setSelectedMonth] = useState<number>(now.month()); // 0 - January, ..., 11 - December
+    const [selectedMonth, setSelectedMonth] = useState<number>(now.month());
+    const [selectView, setSelectView] = useState<string | null>(null);
 
     const weekdays = moment.weekdaysShort(true);
-    const months = moment.months(); // ["January", "February", ..., "December"]
+    const months = moment.months();
 
     const startOfMonth = moment(now).startOf('month');
     const endOfMonth = moment(now).endOf('month');
@@ -68,6 +69,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
 
     const onMonthChange = (monthIndex: number) => {
         setSelectedMonth(monthIndex);
+        setSelectView(null);
         setNow(moment(now).month(monthIndex)); // Переключаем `now` на выбранный месяц
     };
 
@@ -172,30 +174,9 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             <div className="cdatepicker__header">
                 <div className="cdatepicker__title">
                     <span>
-                        <Popup
-                            trigger={() => <span className="cdatepicker__month">{now.format('MMMM')}</span>}
-                            position="right-center"
-                            on={['click']}
-                            closeOnDocumentClick
-                            mouseLeaveDelay={100}
-                            mouseEnterDelay={0}
-                            contentStyle={{padding: '0px', border: 'none'}}
-                        >
-                            <List size={'lg'} variant={'dark'}>
-                                {months.map((month, index) => {
-                                    return (
-                                        <List.Item
-                                            as={'button'}
-                                            type={'button'}
-                                            onClick={() => onMonthChange(Number(index))}
-                                            key={index + month}
-                                        >
-                                            {month}
-                                        </List.Item>
-                                    );
-                                })}
-                            </List>
-                        </Popup>{' '}
+                        <span onClick={() => setSelectView('month')} className="cdatepicker__month">
+                            {now.format('MMMM')}
+                        </span>{' '}
                         <span className="cdatepicker__year">{now.format('YYYY')}</span>
                     </span>
                 </div>
@@ -214,33 +195,52 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                 </div>
             </div>
             <div className="cdatepicker__weekdays">
-                {weekdays.map((weekday) => (
-                    <span key={weekday} className="cdatepicker__weekday">
-                        {weekday}
-                    </span>
-                ))}
+                {!selectView &&
+                    weekdays.map((weekday) => (
+                        <span key={weekday} className="cdatepicker__weekday">
+                            {weekday}
+                        </span>
+                    ))}
             </div>
             <div className="cdatepicker__body">
-                {monthData.map((week, idx) => (
-                    <div key={idx} className={weekClasses(week[0])}>
-                        {week.map((day) => {
+                {selectView === 'month' && (
+                    <div className="cdatepicker__month-selection">
+                        {months.map((month, index) => {
                             return (
-                                <span
-                                    key={day.dayOfYear()}
-                                    // whileTap="tap"
-                                    className={dayClasses(day)}
-                                    onClick={() => dayClicked(day)}
+                                <div
+                                    onClick={() => onMonthChange(index)}
+                                    className="cdatepicker__month-selection--item"
+                                    key={month + index}
                                 >
-                                    <span className="cdatepicker__day-cell">
-                                        <span className="cdatepicker__day-text">
-                                            {isDayOfCurrentMonth(day) && day.date()}
-                                        </span>
+                                    <span className="cdatepicker__month-cell">
+                                        <span className="cdatepicker__month-text">{month}</span>
                                     </span>
-                                </span>
+                                </div>
                             );
                         })}
                     </div>
-                ))}
+                )}
+                {!selectView &&
+                    monthData.map((week, idx) => (
+                        <div key={idx} className={weekClasses(week[0])}>
+                            {week.map((day) => {
+                                return (
+                                    <span
+                                        key={day.dayOfYear()}
+                                        // whileTap="tap"
+                                        className={dayClasses(day)}
+                                        onClick={() => dayClicked(day)}
+                                    >
+                                        <span className="cdatepicker__day-cell">
+                                            <span className="cdatepicker__day-text">
+                                                {isDayOfCurrentMonth(day) && day.date()}
+                                            </span>
+                                        </span>
+                                    </span>
+                                );
+                            })}
+                        </div>
+                    ))}
             </div>
             {withShortcats && (
                 <>
