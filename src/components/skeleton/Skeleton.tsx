@@ -39,7 +39,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     });
 
     useEffect(() => {
-        if (childRef?.current) {
+        if (childRef?.current && withPaddings) {
             const firstChild = childRef.current.querySelector('.skeletonChildren')?.firstElementChild;
 
             if (firstChild) {
