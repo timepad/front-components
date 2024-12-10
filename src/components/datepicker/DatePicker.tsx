@@ -9,6 +9,7 @@ import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {List} from '../list';
 import {Popup} from '../popup';
+import classNames from 'classnames';
 
 moment.locale('ru');
 
@@ -46,7 +47,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     const [now, setNow] = useState<Moment>(initialStart || today);
     const [start, setStart] = useState<Moment | null>(initialStart || null);
     const [end, setEnd] = useState<Moment | null>((dateRange && initialEnd) || initialStart || null);
-    const [selectedMonth, setSelectedMonth] = useState<number>(now.month());
+    const [_, setSelectedMonth] = useState<number>(now.month());
     const [selectView, setSelectView] = useState<string | null>(null);
 
     const weekdays = moment.weekdaysShort(true);
@@ -63,14 +64,33 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         moment(startOfMonth).add(weekNumber, 'weeks'),
     );
 
+    const getYearsFromStartYear = (startYear = 1970) => {
+        const currentYear = moment().year();
+
+        return Array.from({length: currentYear - startYear + 1}, (_, index) => startYear + index);
+    };
+
     const getDaysOfWeek = (week: Moment) => {
         return [...Array.from(Array(7).keys())].map((idx) => moment(week).weekday(idx) as Moment);
+    };
+
+    const onSelectCurrentView = (view: 'month' | 'year') => {
+        if (selectView === view) {
+            return setSelectView(null);
+        }
+
+        return setSelectView(view);
     };
 
     const onMonthChange = (monthIndex: number) => {
         setSelectedMonth(monthIndex);
         setSelectView(null);
         setNow(moment(now).month(monthIndex)); // Переключаем `now` на выбранный месяц
+    };
+
+    const onYearChange = (year: number) => {
+        setSelectView(null); // Закрываем выбор года
+        setNow(moment(now).year(year)); // Устанавливаем выбранный год в состоянии
     };
 
     const monthData: Array<Array<Moment>> = weeks.map((week) => getDaysOfWeek(week));
@@ -101,6 +121,12 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     const selectedWeekend =
         end?.isSame(moment(today).isoWeekday(7), 'day') &&
         (today.isAfter(moment(today).isoWeekday(6)) || start?.isSame(moment(today).isoWeekday(6), 'day'));
+
+    const bodyClasses = classNames('cdatepicker__body', {
+        ['view-selected']: !!selectView,
+        ['month']: selectView === 'month',
+        ['year']: selectView === 'year',
+    });
 
     const weekClasses = (week: Moment) =>
         component(
@@ -141,6 +167,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         setStart(start);
         setEnd(end);
         setNow(start);
+        setSelectView(null);
     };
 
     const dayClicked = (day: Moment) => {
@@ -174,10 +201,12 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             <div className="cdatepicker__header">
                 <div className="cdatepicker__title">
                     <span>
-                        <span onClick={() => setSelectView('month')} className="cdatepicker__month">
+                        <span onClick={() => onSelectCurrentView('month')} className="cdatepicker__month">
                             {now.format('MMMM')}
                         </span>{' '}
-                        <span className="cdatepicker__year">{now.format('YYYY')}</span>
+                        <span onClick={() => onSelectCurrentView('year')} className="cdatepicker__year">
+                            {now.format('YYYY')}
+                        </span>
                     </span>
                 </div>
                 <div className="cdatepicker__pager">
@@ -202,7 +231,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                         </span>
                     ))}
             </div>
-            <div className="cdatepicker__body">
+            <div className={bodyClasses}>
                 {selectView === 'month' && (
                     <div className="cdatepicker__month-selection">
                         {months.map((month, index) => {
@@ -214,6 +243,23 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 >
                                     <span className="cdatepicker__month-cell">
                                         <span className="cdatepicker__month-text">{month}</span>
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                {selectView === 'year' && (
+                    <div className="cdatepicker__year-selection">
+                        {getYearsFromStartYear().map((year, index) => {
+                            return (
+                                <div
+                                    onClick={() => onYearChange(year)}
+                                    className="cdatepicker__year-selection--item"
+                                    key={year + index}
+                                >
+                                    <span className="cdatepicker__year-cell">
+                                        <span className="cdatepicker__year-text">{year}</span>
                                     </span>
                                 </div>
                             );
@@ -242,7 +288,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                         </div>
                     ))}
             </div>
-            {withShortcats && (
+            {withShortcats && !selectView && (
                 <>
                     <div className="cdatepicker__shortcuts">
                         <Button

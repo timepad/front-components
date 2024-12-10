@@ -23,7 +23,8 @@
         line-height: @lh-body;
     }
 
-    &__month {
+    &__month,
+    &__year {
         text-transform: capitalize;
 
         &-selection {
@@ -31,7 +32,7 @@
             flex-wrap: wrap;
             column-gap: 8px;
             row-gap: 16px;
-            max-width: 308px;
+            max-width: calc(308px - 16px);
 
             &--item {
                 width: calc(100% / 3 - 8px);
@@ -47,6 +48,13 @@
 
     &__year {
         color: @c-gray-35;
+
+        &-selection {
+            &--item {
+                text-align: center;
+                width: calc(100% / 5 - 8px);
+            }
+        }
     }
 
     &__pager {
@@ -85,6 +93,15 @@
         grid-auto-flow: row;
         grid-gap: 8px;
         padding: 16px;
+
+        &.view-selected {
+            overflow-y: scroll;
+
+            &.year {
+                padding-top: 0;
+                max-height: 264px;
+            }
+        }
     }
 
     &__week {
