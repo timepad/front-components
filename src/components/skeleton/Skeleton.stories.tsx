@@ -1,9 +1,10 @@
 import React from 'react';
-import {Skeleton} from './Skeleton';
+
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent} from '../../services/helpers/storyBookHelpers';
+
+import {Skeleton} from './Skeleton';
 import {Typography} from '../typography';
-import {Button} from '../button';
 import {Pic} from '../userpic';
 
 export default {
@@ -48,38 +49,46 @@ export const WithAnimationSkeleton: IStorybookComponent = () => {
 WithAnimationSkeleton.storyName = 'WithAnimationSkeleton';
 
 export const CompositeSkeletonWithPaddings: IStorybookComponent = () => {
-    const [isContentVisible, setIsContentVisible] = React.useState(false);
-
     return (
         <div>
-            <div>With children typography</div>
             <div>
-                <Button
-                    onClick={() => setIsContentVisible(!isContentVisible)}
-                    label={isContentVisible ? 'Спрятать' : 'Показать'}
-                />
+                <div>With children typography</div>
+                <Skeleton variant="circle" withPaddings>
+                    <Pic label={'Content'} />
+                </Skeleton>
+                <Skeleton withPaddings>
+                    <Typography.Header style={{backgroundColor: 'white'}} fontWeight="black">
+                        Font Weight: black
+                    </Typography.Header>
+                </Skeleton>
+                <Skeleton withPaddings>
+                    <Typography.Multiple style={{backgroundColor: 'white'}}>
+                        <Typography.Small className="t-color-gray-50">Small 16-16</Typography.Small>
+                        <Typography.Body size={16}>Body 16-16</Typography.Body>
+                    </Typography.Multiple>
+                </Skeleton>
+                <Skeleton withPaddings animation="wave">
+                    <Typography.Multiple style={{backgroundColor: 'white'}}>
+                        <Typography.Subheader responsive>Subheader responsive 32–32(24-28)</Typography.Subheader>
+                        <Typography.Caption responsive>Caption 16-16</Typography.Caption>
+                    </Typography.Multiple>
+                </Skeleton>
             </div>
 
-            <Skeleton variant={'circle'} animation={'pulse'} isVisible={isContentVisible}>
+            <div>
                 <Pic label={'Content'} />
-            </Skeleton>
-            <Skeleton variant={'rect'} animation={'pulse'} isVisible={isContentVisible} withPaddings>
                 <Typography.Header style={{backgroundColor: 'white'}} fontWeight="black">
                     Font Weight: black
                 </Typography.Header>
-            </Skeleton>
-            <Skeleton variant={'rect'} animation={'pulse'} isVisible={isContentVisible} withPaddings>
                 <Typography.Multiple style={{backgroundColor: 'white'}}>
                     <Typography.Small className="t-color-gray-50">Small 16-16</Typography.Small>
                     <Typography.Body size={16}>Body 16-16</Typography.Body>
                 </Typography.Multiple>
-            </Skeleton>
-            <Skeleton variant={'rect'} animation={'pulse'} isVisible={isContentVisible} withPaddings>
                 <Typography.Multiple style={{backgroundColor: 'white'}}>
                     <Typography.Subheader responsive>Subheader responsive 32–32(24-28)</Typography.Subheader>
                     <Typography.Caption responsive>Caption 16-16</Typography.Caption>
                 </Typography.Multiple>
-            </Skeleton>
+            </div>
         </div>
     );
 };
