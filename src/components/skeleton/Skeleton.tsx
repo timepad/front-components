@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
+
 import './index.less';
+
 import classNames from 'classnames';
 
 type SkeletonVariant = 'rect' | 'circle';
@@ -20,7 +22,6 @@ type SkeletonProps = {
     animation?: SkeletonAnimation;
     style?: React.CSSProperties;
     children?: React.ReactNode;
-    withPaddings?: boolean;
 };
 
 export const Skeleton: React.FC<SkeletonProps> = ({
@@ -29,7 +30,6 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     width = 'fit-content',
     height = 'auto',
     animation = 'wave',
-    withPaddings = false,
     style,
 }) => {
     const childRef = useRef<HTMLDivElement>(null);
@@ -46,11 +46,12 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     });
 
     useEffect(() => {
-        if (childRef?.current && withPaddings) {
+        if (childRef?.current) {
             const getStyles = childRef.current.querySelector('.getStyles');
             const firstChild = getStyles?.firstElementChild;
 
             if (firstChild && getStyles) {
+                // TODO подумать как избавить от смешения сущностей
                 if (firstChild?.classList?.value.includes('multiple')) {
                     let res: SkeletonStyles[] = [];
                     for (let i = 0; i < firstChild.children.length; i++) {
@@ -70,34 +71,26 @@ export const Skeleton: React.FC<SkeletonProps> = ({
         }
     }, []);
 
-    return withPaddings ? (
+    return (
         <div ref={childRef}>
-            <div style={{visibility: 'hidden', opacity: '0', height: 0}} className={'getStyles'}>
-                {children}
-            </div>
-            {skeletonStyles.map((elem, index) => {
-                return (
-                    <div style={elem} key={index}>
-                        <div className={className} style={{...customStyle}}>
-                            <div style={{width: elem.width, height: elem.height}} />
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-    ) : (
-        <div ref={childRef}>
-            <div className={className} style={customStyle}>
-                {children && (
-                    <div
-                        className={classNames('skeleton__with-children', {
-                            ['no--padding']: withPaddings,
-                        })}
-                    >
+            {children ? (
+                <>
+                    <div style={{visibility: 'hidden', opacity: '0', height: 0}} className={'getStyles'}>
                         {children}
                     </div>
-                )}
-            </div>
+                    {skeletonStyles.map((elem, index) => {
+                        return (
+                            <div style={elem} key={index}>
+                                <div className={className} style={customStyle}>
+                                    <div style={{width: elem.width, height: elem.height}} />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </>
+            ) : (
+                <div style={customStyle} className={className} />
+            )}
         </div>
     );
 };
