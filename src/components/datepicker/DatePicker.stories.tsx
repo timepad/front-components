@@ -56,7 +56,7 @@ export const withPastDates: IStorybookComponent = () => {
         <>
             <StoryTitle>DatePicker with past dates</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enablePastDates />
+                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enableDates="all" />
             </Wrapper>
         </>
     );

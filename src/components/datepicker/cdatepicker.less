@@ -27,15 +27,14 @@
     &__year {
         text-transform: capitalize;
 
-        &-selection {
+        &--selection {
             display: flex;
             flex-wrap: wrap;
             column-gap: 8px;
             row-gap: 16px;
             max-width: calc(308px - 16px);
 
-            &--item {
-                width: calc(100% / 3 - 8px);
+            &_item {
                 height: 38px;
                 cursor: pointer;
 
@@ -44,16 +43,31 @@
                 }
             }
         }
+        &--active {
+            color: #643FFF;
+        }
+    }
+
+    &__month {
+        &--selection {
+            &_item {
+                width: calc(100% / 3 - 8px);
+            }
+        }
     }
 
     &__year {
         color: @c-gray-35;
 
-        &-selection {
-            &--item {
+        &--selection {
+            &_item {
+                color: @c-black;
                 text-align: center;
                 width: calc(100% / 5 - 8px);
             }
+        }
+        &--active {
+            color: #643FFF;
         }
     }
 
