@@ -16,11 +16,42 @@
         padding: 16px;
         height: 64px;
         box-sizing: border-box;
+
+        &--active {
+            box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
+        }
+
+        &-month,
+        &-year {
+            text-transform: capitalize;
+        }
+
+        &-year {
+            color: @c-gray-35;
+        }
     }
 
     &__title {
         font-size: @fs-body;
         line-height: @lh-body;
+    }
+
+    &__month {
+        &--selection {
+            &_item {
+                width: calc(100% / 3 - 8px);
+            }
+        }
+    }
+
+    &__year {
+        &--selection {
+            &_item {
+                color: @c-black;
+                text-align: center;
+                width: calc(100% / 5 - 8px);
+            }
+        }
     }
 
     &__month,
@@ -43,31 +74,18 @@
                 }
             }
         }
+
         &--active {
             color: #643FFF;
         }
-    }
 
-    &__month {
-        &--selection {
-            &_item {
-                width: calc(100% / 3 - 8px);
+        &--inactive {
+            color: @c-gray-35;
+            cursor: default;
+
+            &:hover {
+                color: @c-gray-35;
             }
-        }
-    }
-
-    &__year {
-        color: @c-gray-35;
-
-        &--selection {
-            &_item {
-                color: @c-black;
-                text-align: center;
-                width: calc(100% / 5 - 8px);
-            }
-        }
-        &--active {
-            color: #643FFF;
         }
     }
 
