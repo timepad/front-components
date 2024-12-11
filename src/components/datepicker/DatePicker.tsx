@@ -28,6 +28,7 @@ interface IDatePickerProps {
     dateRange?: boolean;
     analytic?: IAnalyticsProps;
     enableDates?: EnableDates;
+    invalidDates?: Moment[];
 }
 
 interface IDatePickerView {
@@ -133,6 +134,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     dateRange,
     analytic,
     enableDates = 'future',
+    invalidDates,
 }) => {
     const isMounted = useRef(false);
 
@@ -194,6 +196,11 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         return false;
     };
 
+    const isInvalidDate = (day: Moment) => {
+        if (!invalidDates || invalidDates.length === 0) return false;
+        return invalidDates.some((invalidDate) => day.isSame(invalidDate, 'day'));
+    };
+
     const getMonthEdgeStateForDay = (day: Moment) => {
         if (isLastDayOfMonth(moment(day).subtract(1, 'day')) && !isDayOfCurrentMonth(end) && isBetweenSelected(day)) {
             return 'end';
@@ -242,7 +249,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             baseClassName,
             'day',
         )({
-            inactive: isDayInactive(day) || !isDayOfCurrentMonth(day),
+            inactive: isInvalidDate(day) || isDayInactive(day) || !isDayOfCurrentMonth(day),
             cell: isBetweenSelected(day) && isDayOfCurrentMonth(day),
             start: !!end && !start?.isSame(end, 'days') && day.isSame(start, 'days') && isDayOfCurrentMonth(day),
             end: !start?.isSame(end, 'days') && day.isSame(end, 'days') && isDayOfCurrentMonth(day),
@@ -264,6 +271,8 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     };
 
     const dayClicked = (day: Moment) => {
+        if (isInvalidDate(day)) return;
+
         // для одной даты
         if (!dateRange) return selectDates(day);
 
