@@ -1,23 +1,23 @@
-.skeleton {
+.cskeleton {
   display: block;
   background-color: #e0e0e0;
   overflow: hidden;
   position: relative;
 
-  &__rect {
+  &--rect {
     border-radius: 6px;
   }
 
-  &__circle {
+  &--circle {
     border-radius: 50%;
   }
 
-  &__pulse {
+  &--pulse {
     animation: pulse 1.5s ease-in-out infinite;
     z-index: 2;
   }
 
-  &__wave::before {
+  &--wave::before {
     content: '';
     position: absolute;
     top: 0;
@@ -35,12 +35,12 @@
     z-index: 2;
   }
 
-  &__hidden {
+  &--hidden {
     background-color: transparent;
     animation: none;
   }
 
-  &__with-children {
+  &--with-children {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;

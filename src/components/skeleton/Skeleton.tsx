@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import './index.less';
 
-import classNames from 'classnames';
+import {component} from '../../services/helpers/classHelpers';
 
 type SkeletonVariant = 'rect' | 'circle';
 
@@ -41,9 +41,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
         ...style,
     };
 
-    const className = classNames('skeleton', `skeleton__${variant}`, {
-        [`skeleton__${animation}`]: animation,
-    });
+    const className = component('skeleton')({[`${animation}`]: !!animation, [`${variant}`]: !!variant});
 
     useEffect(() => {
         if (childRef?.current) {
