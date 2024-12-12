@@ -4,6 +4,12 @@
   overflow: hidden;
   position: relative;
 
+  &__children {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+  }
+
   &--rect {
     border-radius: 6px;
   }
@@ -35,16 +41,6 @@
     z-index: 2;
   }
 
-  &--hidden {
-    background-color: transparent;
-    animation: none;
-  }
-
-  &--with-children {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
 }
 
 @keyframes pulse {

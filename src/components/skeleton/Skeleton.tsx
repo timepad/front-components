@@ -44,36 +44,33 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     const className = component('skeleton')({[`${animation}`]: !!animation, [`${variant}`]: !!variant});
 
     useEffect(() => {
-        if (childRef?.current) {
-            const getStyles = childRef.current.querySelector('.getStyles');
-            const firstChild = getStyles?.firstElementChild;
+        if (!childRef.current) return;
+        const firstChild = childRef.current?.firstElementChild;
 
-            if (firstChild && getStyles) {
-                // TODO подумать как избавить от смешения сущностей
-                if (firstChild?.classList?.value.includes('multiple')) {
-                    let res: SkeletonStyles[] = [];
-                    for (let i = 0; i < firstChild.children.length; i++) {
-                        const {paddingTop, paddingBottom, width, height}: CSSStyleDeclaration = window.getComputedStyle(
-                            firstChild.children[i],
-                            null,
-                        );
-                        res = [...res, {paddingTop, paddingBottom, width, height}];
-                    }
-                    return setSkeletonStyles(res);
+        if (firstChild) {
+            if (firstChild?.childNodes.length > 1) {
+                const res: SkeletonStyles[] = [];
+                for (const child of firstChild.children) {
+                    const {paddingTop, paddingBottom, width, height}: CSSStyleDeclaration = window.getComputedStyle(
+                        child,
+                        null,
+                    );
+                    res.push({paddingTop, paddingBottom, width, height});
                 }
-
+                setSkeletonStyles(res);
+            } else {
                 const {paddingTop, paddingBottom, width, height} = window.getComputedStyle(firstChild, null);
-                getStyles.remove();
-                return setSkeletonStyles([{paddingTop, paddingBottom, width, height}]);
+                setSkeletonStyles([{paddingTop, paddingBottom, width, height}]);
             }
+            childRef.current?.parentElement?.removeChild(childRef.current);
         }
     }, []);
 
     return (
-        <div ref={childRef}>
+        <div>
             {children ? (
                 <>
-                    <div style={{visibility: 'hidden', opacity: '0', height: 0}} className={'getStyles'}>
+                    <div className={component('skeleton', 'children')()} ref={childRef}>
                         {children}
                     </div>
                     {skeletonStyles.map((elem, index) => {
