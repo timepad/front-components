@@ -13,6 +13,11 @@ moment.locale('ru');
 
 type EnableDates = 'future' | 'past' | 'all';
 
+enum SelectViewTypes {
+    'MONTH' = 'month',
+    'YEAR' = 'year',
+}
+
 export interface IAnalyticsProps {
     todayBtn?: string;
     tomorrowBtn?: string;
@@ -38,7 +43,7 @@ interface IDatePickerView {
 }
 
 interface IDatePickerMonthView extends IDatePickerView {
-    onMonthChange: (month: number) => void;
+    onMonthChange: (month: string) => void;
 }
 
 interface IDatePickerYearView extends IDatePickerView {
@@ -56,8 +61,9 @@ const getYearsFromStartYear = (startYear = 1970) => {
 const MonthSelectView = ({now, onMonthChange, enableDates, today}: IDatePickerMonthView) => {
     const months = moment.months();
 
-    const checkMonthActive = (monthIndex: number) => {
-        const targetMonth = moment(now).month(monthIndex);
+    const checkMonthActive = (monthName: string) => {
+        const targetMonth = moment(now).month(monthName);
+
         if (enableDates === 'future') {
             return !targetMonth.isBefore(today, 'month');
         }
@@ -69,18 +75,18 @@ const MonthSelectView = ({now, onMonthChange, enableDates, today}: IDatePickerMo
 
     return (
         <div className={component(baseClassName, 'month')({['selection']: true})}>
-            {months.map((month, index) => {
-                const isCurrentMonth = moment(now).month() === index;
-                const isMonthActive = checkMonthActive(index);
+            {months.map((month) => {
+                const isCurrentMonth = moment(now).format('MMMM') === month;
+                const isMonthActive = checkMonthActive(month);
 
                 return (
                     <div
-                        onClick={() => isMonthActive && onMonthChange(index)}
+                        key={month}
+                        onClick={() => isMonthActive && onMonthChange(month)}
                         className={component(
                             baseClassName,
                             'month',
                         )({['selection_item']: true, ['active']: isCurrentMonth, ['inactive']: !isMonthActive})}
-                        key={month + index}
                     >
                         <span className={component(baseClassName, 'month')({['text']: true})}>{month}</span>
                     </div>
@@ -143,7 +149,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     const [now, setNow] = useState<Moment>(initialStart || today);
     const [start, setStart] = useState<Moment | null>(initialStart || null);
     const [end, setEnd] = useState<Moment | null>((dateRange && initialEnd) || initialStart || null);
-    const [selectView, setSelectView] = useState<string | null>(null);
+    const [selectView, setSelectView] = useState<SelectViewTypes | null>(null);
 
     const weekdays = moment.weekdaysShort(true);
 
@@ -162,7 +168,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         return [...Array.from(Array(7).keys())].map((idx) => moment(week).weekday(idx) as Moment);
     };
 
-    const onSelectCurrentView = (view: 'month' | 'year') => {
+    const onSelectCurrentView = (view: SelectViewTypes) => {
         if (selectView === view) {
             return setSelectView(null);
         }
@@ -170,14 +176,14 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         return setSelectView(view);
     };
 
-    const onMonthChange = (monthIndex: number) => {
+    const onMonthChange = (monthName: string) => {
         setSelectView(null);
-        setNow(moment(now).month(monthIndex)); // Переключаем `now` на выбранный месяц
+        setNow(moment(now).month(monthName));
     };
 
     const onYearChange = (year: number) => {
-        setSelectView(null); // Закрываем выбор года
-        setNow(moment(now).year(year)); // Устанавливаем выбранный год в состоянии
+        setSelectView(null);
+        setNow(moment(now).year(year));
     };
 
     const monthData: Array<Array<Moment>> = weeks.map((week) => getDaysOfWeek(week));
@@ -225,8 +231,8 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
 
     const bodyClasses = classNames('cdatepicker__body', {
         ['view-selected']: !!selectView,
-        ['month']: selectView === 'month',
-        ['year']: selectView === 'year',
+        ['month']: selectView === SelectViewTypes.MONTH,
+        ['year']: selectView === SelectViewTypes.YEAR,
     });
 
     const weekClasses = (week: Moment) =>
@@ -261,7 +267,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         });
 
     const prevMonth = () => setNow(moment(now).subtract(1, 'month'));
-    const nextMonth = () => setNow(moment(now).add(oneDay, 'month'));
+    const nextMonth = () => setNow(moment(now).add(1, 'month'));
 
     const selectDates = (start: Moment, end: Moment | null = start) => {
         setStart(start);
@@ -304,21 +310,21 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                 <div className={component(baseClassName, 'title')()}>
                     <span>
                         <span
-                            onClick={() => onSelectCurrentView('month')}
+                            onClick={() => onSelectCurrentView(SelectViewTypes.MONTH)}
                             className={component(baseClassName, 'header-month')()}
                         >
                             {now.format('MMMM')}
                         </span>{' '}
                         <span
-                            onClick={() => onSelectCurrentView('year')}
+                            onClick={() => onSelectCurrentView(SelectViewTypes.YEAR)}
                             className={component(baseClassName, 'header-year')()}
                         >
                             {now.format('YYYY')}
                         </span>
                     </span>
                 </div>
-                <div className={component(baseClassName, 'pager')()}>
-                    {!selectView && (
+                {!selectView && (
+                    <div className={component(baseClassName, 'pager')()}>
                         <>
                             <Button
                                 variant={Button.variant.transparent}
@@ -335,8 +341,8 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 icon={<IconArrow style={{transform: 'rotate(-90deg)'}} />}
                             />
                         </>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
             {!selectView && (
                 <div className={component(baseClassName, 'weekdays')()}>
@@ -348,10 +354,10 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                 </div>
             )}
             <div className={bodyClasses}>
-                {selectView === 'month' && (
+                {selectView === SelectViewTypes.MONTH && (
                     <MonthSelectView now={now} onMonthChange={onMonthChange} enableDates={enableDates} today={today} />
                 )}
-                {selectView === 'year' && (
+                {selectView === SelectViewTypes.YEAR && (
                     <YearSelectView now={now} onYearChange={onYearChange} enableDates={enableDates} today={today} />
                 )}
                 {!selectView &&
