@@ -6,4 +6,5 @@ export const Styles = {
 export const Media = {
     isMobilePortraitMax: `(max-width: ${Styles['rsp-mobile-portrait-max']}px)`,
     isMobileMax: `(max-width: ${Styles['rsp-mobile-max']}px)`,
+    isTabletMax: `((min-width: ${Styles['rsp-mobile-portrait-max']}px) and (max-width: ${Styles['rsp-mobile-max']}px))`,
 };
