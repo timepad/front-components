@@ -1,5 +1,4 @@
-import {FC} from 'react';
-import * as React from 'react';
+import React, {FC} from 'react';
 import {DropdownFooter} from './DropdownHeaderFooter';
 import {Button, ButtonVariant} from '../../button';
 import {component} from '../../../services/helpers/classHelpers';
