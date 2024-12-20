@@ -1,6 +1,6 @@
 import React, {FC, useState, MouseEvent, useMemo, ReactElement} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import {Dropdown} from './index';
+import {Dropdown, Brick, Form, Row, Typography, useMedia} from 'index';
 import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {List} from '../list';
 import {Button, ButtonVariant} from '../button';
@@ -8,7 +8,6 @@ import IconEdit from 'assets/svg/24/icon-edit-24.svg';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
-import {Brick, Form, Row, Typography, useMedia} from 'index';
 import {Divider} from '../divider';
 
 import 'css/bundle.less';
@@ -279,6 +278,7 @@ export const ProfileDrop: IStorybookComponent = () => {
             <StoryTitle>Profile Drop</StoryTitle>
             <div className="floating-profile">
                 <Dropdown
+                    theme="dark"
                     priorityPositions="bottom-left"
                     fixPositionOnScroll
                     triggerProps={{className: 'floating-profile__button'}}
@@ -290,7 +290,7 @@ export const ProfileDrop: IStorybookComponent = () => {
                         />
                     )}
                 >
-                    <Dropdown.Header mobile desktop>
+                    <Dropdown.Header down element>
                         <Row hoverable>
                             <Row.Icon>
                                 <Pic
@@ -316,7 +316,7 @@ export const ProfileDrop: IStorybookComponent = () => {
                             </Row.Icon>
                         </Row>
                     </Dropdown.Header>
-                    <div className="mtheme--darkpic-bg mtheme--darkpic">
+                    <div>
                         {ProfileListData.map((el) => (
                             <Row key={el} hoverable>
                                 <Row.Body>
@@ -404,7 +404,7 @@ export const WithLongItemList: IStorybookComponent = () => {
             <StoryDescription>Ниже есть еще 2 кнопки</StoryDescription>
             <div style={{marginTop: '130px', display: 'flex', justifyContent: 'space-between'}}>
                 <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-                    <Dropdown.Header mobile>
+                    <Dropdown.Header down>
                         <Row>
                             <Row.Body style={{padding: '9px 0'}}>
                                 <Row.Text>
@@ -428,7 +428,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                     </div>
                 </Dropdown>
                 <Dropdown priorityPositions={'left-center'} trigger={() => <Button>Выпадающий список</Button>}>
-                    <Dropdown.Header mobile>
+                    <Dropdown.Header down>
                         <Row>
                             <Row.Body style={{padding: '9px 0'}}>
                                 <Row.Text>
@@ -454,7 +454,7 @@ export const WithLongItemList: IStorybookComponent = () => {
             </div>
             <div style={{marginTop: '1000px', display: 'flex', justifyContent: 'space-between'}}>
                 <Dropdown trigger={() => <Button>Выпадающий список</Button>}>
-                    <Dropdown.Header mobile>
+                    <Dropdown.Header down>
                         <Row>
                             <Row.Body style={{padding: '9px 0'}}>
                                 <Row.Text>
@@ -478,7 +478,7 @@ export const WithLongItemList: IStorybookComponent = () => {
                     </div>
                 </Dropdown>
                 <Dropdown priorityPositions={'left-center'} trigger={() => <Button>Выпадающий список</Button>}>
-                    <Dropdown.Header mobile>
+                    <Dropdown.Header down>
                         <Row>
                             <Row.Body style={{padding: '9px 0'}}>
                                 <Row.Text>
@@ -548,5 +548,87 @@ export const RepositionOnChangeContent: FC<React.PropsWithChildren<unknown>> = (
                 </div>
             </Dropdown>
         </div>
+    );
+};
+
+export const DownPinnedVariant: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Pinned Variant</StoryTitle>
+            <Dropdown pinned="down" trigger={() => <Button label={'Выпадающий список'} />}>
+                <div>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 1</Row.Text>
+                            <Row.Caption>Secondary text</Row.Caption>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 2</Row.Text>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 3</Row.Text>
+                        </Row.Body>
+                    </Row>
+                </div>
+            </Dropdown>
+        </>
+    );
+};
+
+export const CenterPinnedVariant: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Pinned Variant</StoryTitle>
+            <Dropdown pinned="center" trigger={() => <Button label={'Выпадающий список'} />}>
+                <Row hoverable>
+                    <Row.Body>
+                        <Row.Text>Primary text 1</Row.Text>
+                        <Row.Caption>Secondary text</Row.Caption>
+                    </Row.Body>
+                </Row>
+                <Row hoverable>
+                    <Row.Body>
+                        <Row.Text>Primary text 2</Row.Text>
+                    </Row.Body>
+                </Row>
+                <Row hoverable>
+                    <Row.Body>
+                        <Row.Text>Primary text 3</Row.Text>
+                    </Row.Body>
+                </Row>
+            </Dropdown>
+        </>
+    );
+};
+
+export const ElementPinnedVariant: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Pinned Variant</StoryTitle>
+            <Dropdown pinned="element" trigger={() => <Button label={'Выпадающий список'} />}>
+                <div>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 1</Row.Text>
+                            <Row.Caption>Secondary text</Row.Caption>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 2</Row.Text>
+                        </Row.Body>
+                    </Row>
+                    <Row hoverable>
+                        <Row.Body>
+                            <Row.Text>Primary text 3</Row.Text>
+                        </Row.Body>
+                    </Row>
+                </div>
+            </Dropdown>
+        </>
     );
 };
