@@ -14,10 +14,12 @@ export interface IFooterHeaderProps
 
 export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
     children,
+    /* eslint-disable no-unused-vars */
     element,
     down,
     center,
     auto,
+    /* eslint-enable no-unused-vars */
     ...props
 }) => {
     const className = cx(component('dropdown', 'header')(), props.className);
@@ -32,9 +34,11 @@ export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = (
 export const DropdownFooter: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
     down,
     children,
+    /* eslint-disable no-unused-vars */
     element,
     center,
     auto,
+    /* eslint-enable no-unused-vars */
     ...props
 }) => {
     const className = cx(component('dropdown', 'footer')(), props.className);
