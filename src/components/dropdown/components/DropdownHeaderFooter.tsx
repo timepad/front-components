@@ -12,7 +12,14 @@ export interface IFooterHeaderProps
     auto?: boolean;
 }
 
-export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({children, ...props}) => {
+export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
+    children,
+    element,
+    down,
+    center,
+    auto,
+    ...props
+}) => {
     const className = cx(component('dropdown', 'header')(), props.className);
 
     return (
@@ -22,7 +29,14 @@ export const DropdownHeader: FC<React.PropsWithChildren<IFooterHeaderProps>> = (
     );
 };
 
-export const DropdownFooter: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({down, children, ...props}) => {
+export const DropdownFooter: FC<React.PropsWithChildren<IFooterHeaderProps>> = ({
+    down,
+    children,
+    element,
+    center,
+    auto,
+    ...props
+}) => {
     const className = cx(component('dropdown', 'footer')(), props.className);
     return (
         <div>

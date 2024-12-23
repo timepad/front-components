@@ -5,16 +5,15 @@ import {component} from '../../../services/helpers/classHelpers';
 
 interface IDefaultFooterProps {
     onCancel?: () => void;
-    isMobile?: boolean;
 }
 
-export const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel, isMobile}) => {
+export const DefaultFooter: FC<React.PropsWithChildren<IDefaultFooterProps>> = ({onCancel}) => {
     return (
         <DropdownFooter down>
             <Button
                 large
                 variant={ButtonVariant.transparent}
-                className={isMobile ? component('cancel-button', 'mobile')() : component('cancel-button', 'tablet')()}
+                className={component('cancel-button', 'mobile')()}
                 onClick={onCancel}
             >
                 Отменить
