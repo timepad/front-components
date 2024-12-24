@@ -1,6 +1,6 @@
-import {Button, ButtonVariant, IButtonProps} from '../../button';
 import React, {FC} from 'react';
-import cx from 'classnames';
+import {Button, ButtonVariant, IButtonProps} from '../../button';
+import {component} from '../../../services/helpers/classHelpers';
 
 export const DropdownButton: FC<React.PropsWithChildren<IButtonProps>> = ({
     children,
@@ -8,7 +8,7 @@ export const DropdownButton: FC<React.PropsWithChildren<IButtonProps>> = ({
     ...buttonProps
 }) => {
     return (
-        <div className={cx('cdropdown__button', {'mtheme--darkpic': variant === ButtonVariant.secondary})}>
+        <div className={component('dropdown', 'button')()}>
             <Button variant={variant} {...buttonProps}>
                 {children}
             </Button>
