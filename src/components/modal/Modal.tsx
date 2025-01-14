@@ -7,6 +7,7 @@ import {Header, Title, Description} from './ModalHeader';
 import {Footer} from './ModalFooter';
 import {Body} from './ModalBody';
 import {Content} from './ModalContent';
+import {ClickOutsideException, ExceptionCn} from './ModalClickOutsideException';
 import './index.less';
 
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
@@ -18,10 +19,12 @@ const useClickOutside = (
 ) => {
     useEffect(() => {
         const listener = (event: MouseEvent | TouchEvent) => {
+            const exceptionRefs = document.getElementsByClassName(ExceptionCn);
             if (
                 !ref.current ||
                 ref.current.contains(event.target as Node) ||
-                target?.current.contains(event.target as Node)
+                target?.current.contains(event.target as Node) ||
+                Array.from(exceptionRefs).some( el => el === event.target || el.contains(event.target as Node))
             ) {
                 return;
             }
@@ -66,6 +69,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Title: typeof Title;
     Description: typeof Description;
     Content: typeof Content;
+    ClickOutsideException: typeof ClickOutsideException;
 } = (props) => {
     const {
         children,
@@ -135,3 +139,4 @@ Modal.Footer = Footer;
 Modal.Title = Title;
 Modal.Description = Description;
 Modal.Content = Content;
+Modal.ClickOutsideException = ClickOutsideException;
