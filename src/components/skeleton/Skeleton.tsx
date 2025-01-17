@@ -50,9 +50,9 @@ export const Skeleton: React.FC<SkeletonProps> = ({
         if (firstChild) {
             if (firstChild?.childNodes.length > 1) {
                 const res: SkeletonStyles[] = [];
-                for (const child of firstChild.children) {
+                for (let i = 0; i < firstChild.children.length; i++) {
                     const {paddingTop, paddingBottom, width, height}: CSSStyleDeclaration = window.getComputedStyle(
-                        child,
+                        firstChild.children[i],
                         null,
                     );
                     res.push({paddingTop, paddingBottom, width, height});
