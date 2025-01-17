@@ -12,11 +12,12 @@ export const ElementPinnedContent: React.FC<IElementPinnedContentProps> = ({
     modifier,
     header,
     footer,
+    theme,
     otherChildren,
     isScrollable,
     elementRef,
 }) => {
-    const darkThemeClasses = 'mtheme--darkpic-bg mtheme--darkpic';
+    const darkThemeClasses = theme === 'dark' ? 'mtheme--darkpic-bg mtheme--darkpic' : '';
 
     return (
         <div
