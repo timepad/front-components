@@ -3,24 +3,13 @@ import cx from 'classnames';
 
 import './index.less';
 import {UploadApiService} from './UploadApiService';
-import {IUploadcareConfig, IUploadFile} from './UploadInput.types';
+import {IUploadInputProps} from './UploadInput.types';
 import {Brick} from '../brick';
 import {Button} from '../button';
 import {Gap} from '../gap';
 import {Typography} from '../typography';
 import IconDelete from '../../assets/svg/24/icon-delete-24.svg';
 import {component, layout} from '../../services/helpers/classHelpers';
-
-export interface IUploadInputProps {
-    name: string;
-    config: IUploadcareConfig;
-    label?: string;
-    onChange: (name: string, value: string) => void;
-    setStatus: (status: string) => void;
-    onLoad?: IUploadFile['onLoad'];
-    setProgress?: IUploadFile['setProgress'];
-    onError?: IUploadFile['onError'];
-}
 
 export const UploadInput: React.FC<IUploadInputProps> = ({
     label = '',
@@ -34,7 +23,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     setProgress = () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onError = () => {},
-}: IUploadInputProps) => {
+}) => {
     const uploadApiService = new UploadApiService(config);
     const inputRef = useRef<HTMLInputElement | null>(null);
 

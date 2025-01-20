@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ScriptAttributes = {callback?: () => void} & Record<string, any> & React.HTMLProps<HTMLScriptElement>;
 
 export const useScript = (attrs: ScriptAttributes): [boolean] => {
@@ -29,7 +28,6 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
         return () => {
             document.body.removeChild(script);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [attrs.src, attrs?.callback]);
 
     return [isLoading];

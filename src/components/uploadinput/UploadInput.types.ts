@@ -14,3 +14,14 @@ export interface IUploadFile {
     onUpload: (url: string) => void;
     onError: (error: string) => void;
 }
+
+export interface IUploadInputProps {
+    name: string;
+    config: IUploadcareConfig;
+    label?: string;
+    onChange: (name: string, value: string) => void;
+    setStatus: (status: string) => void;
+    onLoad?: IUploadFile['onLoad'];
+    setProgress?: IUploadFile['setProgress'];
+    onError?: IUploadFile['onError'];
+}
