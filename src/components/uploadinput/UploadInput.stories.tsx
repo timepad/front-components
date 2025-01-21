@@ -26,8 +26,10 @@ export const DefaultUploadInput: IStorybookComponent = () => {
                 <UploadInput
                     name={'file'}
                     onChange={(name, value) => {
+                        // eslint-disable-next-line no-console
                         console.log({name, value});
                     }}
+                    // eslint-disable-next-line no-console
                     setStatus={(status) => console.log(status)}
                     config={config}
                 />
