@@ -3,7 +3,7 @@ import {Fragment} from 'react';
 import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
 import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
-import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
+import BackSvg from '../../assets/svg/24/icon-arrow-down-24.svg';
 import {Typography} from '../typography';
 import {Brick} from '../brick';
 import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';

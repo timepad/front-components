@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Row} from '../row';
-import InfoIcon from '../../assets/svg/24/icon-info-circle-24.svg';
-import ErrorIcon from '../../assets/svg/24/icon-error-24.svg';
+import InfoIcon from '../../assets/svg/24/icon-info-24.svg';
+import ErrorIcon from '../../assets/svg/24/icon-warning-24.svg';
 import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';

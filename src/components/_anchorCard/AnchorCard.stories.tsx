@@ -7,7 +7,7 @@ import {CollectionCard, ICollectionCardProps} from './TmpCollectionCard/Collecti
 import {Typography} from '../typography';
 import {Button, ButtonVariant, IButtonProps} from '../button';
 import BookmarkIcon from '../../assets/svg/24/icon-bookmark-24.svg';
-import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark_s-24.svg';
+import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark-solid-24.svg';
 import PlayIcon from '../../assets/svg/32/icon-play-video-32.svg';
 import {Brick} from '../brick';
 import {TextLight} from '../form/TextLight';

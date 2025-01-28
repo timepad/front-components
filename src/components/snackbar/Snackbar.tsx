@@ -4,8 +4,8 @@ import './index.less';
 import {Button} from '../button';
 
 import {ISnackbarProps} from './SnackbarProvider';
-import SuccessSvg from '../../assets/svg/16/icon-success-16.svg';
-import WarningSvg from '../../assets/svg/24/icon-error-24.svg';
+import SuccessSvg from '../../assets/svg/16/icon-success-old-16.svg';
+import WarningSvg from '../../assets/svg/24/icon-warning-24.svg';
 import {component} from '../../services/helpers/classHelpers';
 
 export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button}) => {

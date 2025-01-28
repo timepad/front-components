@@ -1,7 +1,7 @@
 import {Children, cloneElement, FC, isValidElement, ReactNode, useCallback, useEffect, useState} from 'react';
 import {SortableContainer, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../../list';
-import DragIcon from '../../../assets/svg/16/icon-dragable-16.svg';
+import DragIcon from '../../../assets/svg/16/icon-drag-16.svg';
 import {IDropdownSortableListProps} from '../interfaces';
 import * as React from 'react';
 import {arrayMoveImmutable} from '../../../services/helpers/moveArray';

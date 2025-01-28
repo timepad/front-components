@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
-import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
+import IconArrow from '../../assets/svg/24/icon-arrow-down-24.svg';
 
 import moment, {Moment} from 'moment';
 
