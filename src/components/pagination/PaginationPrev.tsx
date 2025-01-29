@@ -1,7 +1,7 @@
 import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import Left from '../../assets/svg/48/shape-left-48.svg';
+import Left from '../../assets/svg/24/icon-arrow-left-24.svg';
 import {PaginationContext} from './Pagination';
 
 export const PaginationPrev: FC<React.PropsWithChildren<HTMLAttributes<HTMLButtonElement>>> = ({

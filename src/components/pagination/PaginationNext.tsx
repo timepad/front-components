@@ -1,7 +1,7 @@
 import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import Right from '../../assets/svg/48/shape-right-48.svg';
+import Right from '../../assets/svg/24/icon-arrow-right-24.svg';
 import {PaginationContext} from './Pagination';
 
 export const PaginationNext: FC<React.PropsWithChildren<HTMLAttributes<HTMLButtonElement>>> = ({
