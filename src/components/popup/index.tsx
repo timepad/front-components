@@ -37,7 +37,8 @@ export type PopupPosition =
     | 'corner-top-left'
     | 'corner-top-right'
     | 'corner-bottom-left'
-    | 'corner-bottom-right';
+    | 'corner-bottom-right'
+    | 'screen-center';
 
 export interface IPopupActions {
     open: () => void;
@@ -77,6 +78,7 @@ export interface IPopupProps {
     keepTooltipInside?: boolean | string;
     triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
     customPopupRoot?: string;
+    isMobile?: boolean;
 }
 const noop = () => {
     return;
@@ -113,6 +115,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             customPopupRoot,
             children,
             triggerProps: tProps,
+            isMobile,
         },
         ref,
     ) => {
@@ -364,8 +367,16 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
         const renderContent = () => {
             const style = {
                 position: fixPositionOnScroll ? 'fixed' : 'absolute',
-                zIndex: '999',
-            };
+                zIndex: 999,
+            } as React.CSSProperties;
+
+            // пришлось добавить эти свойства из-за того, что инпуты могут быть с автофокусом и страница скролится
+            // если бы я только знал почему это так работает и почему это нужно фиксить так(
+            if (isMobile) {
+                style['bottom'] = 0;
+            } else {
+                style['top'] = 0;
+            }
 
             // input нужен что бы не было автофокуса по 1ому элементу
             return (

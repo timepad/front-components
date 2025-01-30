@@ -7,6 +7,7 @@ import {Header, Title, Description} from './ModalHeader';
 import {Footer} from './ModalFooter';
 import {Body} from './ModalBody';
 import {Content} from './ModalContent';
+import {ClickOutsideException, ExceptionCn} from './ModalClickOutsideException';
 import './index.less';
 
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
@@ -18,10 +19,12 @@ const useClickOutside = (
 ) => {
     useEffect(() => {
         const listener = (event: MouseEvent | TouchEvent) => {
+            const exceptionRefs = document.getElementsByClassName(ExceptionCn);
             if (
                 !ref.current ||
                 ref.current.contains(event.target as Node) ||
-                target?.current.contains(event.target as Node)
+                target?.current.contains(event.target as Node) ||
+                Array.from(exceptionRefs).some( el => el === event.target || el.contains(event.target as Node))
             ) {
                 return;
             }
@@ -56,6 +59,7 @@ export interface IModalProps {
     isOpen: boolean;
     blockCloseOnOutsideClick?: boolean;
     onClose?: () => void;
+    parentSelector?: () => HTMLElement;
 }
 
 export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
@@ -65,8 +69,19 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Title: typeof Title;
     Description: typeof Description;
     Content: typeof Content;
+    ClickOutsideException: typeof ClickOutsideException;
 } = (props) => {
-    const {children, isClean, className, overlayClassName, isOpen, blockCloseOnOutsideClick, onClose, ...rest} = props;
+    const {
+        children,
+        isClean,
+        className,
+        overlayClassName,
+        isOpen,
+        blockCloseOnOutsideClick,
+        onClose,
+        parentSelector,
+        ...rest
+    } = props;
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -109,6 +124,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
             contentRef={contentRef}
+            parentSelector={parentSelector}
         >
             {isOpen &&
                 children &&
@@ -123,3 +139,4 @@ Modal.Footer = Footer;
 Modal.Title = Title;
 Modal.Description = Description;
 Modal.Content = Content;
+Modal.ClickOutsideException = ClickOutsideException;

@@ -1,4 +1,4 @@
-import {KeyboardEvent, ChangeEvent, FocusEvent, useMemo, useState} from 'react';
+import {KeyboardEvent, ChangeEvent, FocusEvent, useMemo, useState, FocusEventHandler} from 'react';
 
 import {useCallbackAfterRender} from './useCallbackAfterRender';
 import {
@@ -21,6 +21,8 @@ interface IMaskProps {
     maskPlaceholder: string;
     type?: 'phone' | 'card' | string;
     prefix?: string;
+    onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
+    onFocus?: FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 /**
@@ -39,7 +41,15 @@ interface IMaskInputProps {
 
 export type Mask = Array<string | RegExp>;
 
-export function useMask({value = '', onChange, mask, maskPlaceholder, type, prefix = ''}: IMaskProps): IMaskInputProps {
+export function useMask({
+    value = '',
+    onChange,
+    mask,
+    maskPlaceholder,
+    type,
+    prefix = '',
+    ...props
+}: IMaskProps): IMaskInputProps {
     const [focus, setFocus] = useState(false);
 
     const parsedMask = useMemo(() => parseMask(mask), [mask]);
@@ -87,22 +97,22 @@ export function useMask({value = '', onChange, mask, maskPlaceholder, type, pref
         setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
     }
 
-    function onFocus({target}: FocusEvent<HTMLInputElement>) {
+    function onFocus(event: FocusEvent<HTMLInputElement>) {
+        props?.onFocus?.(event);
+
         setFocus(true);
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
-            setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
+            setCursorPositionForElement(event.target as HTMLInputElement, lastCursorPosition);
         });
     }
 
-    function onBlur({target}: FocusEvent<HTMLInputElement>) {
+    function onBlur(event: FocusEvent<HTMLInputElement>) {
+        props?.onBlur?.(event);
+
         setFocus(false);
         // Work around in chrome to make sure focus sets cursor position
-
-        requestAnimationFrame(() => {
-            setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
-        });
     }
 
     const placeholderValue = maskPlaceholder ? placeholder : prefix;
