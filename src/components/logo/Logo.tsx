@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LogoSVG from '../../assets/svg/vendor/logo/logo.svg';
+import {Logo as LogoSVG} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 

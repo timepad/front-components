@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {component} from '../../../services/helpers/classHelpers';
-import CheckboxIcon from '../../../assets/svg/24/icon-check-24.svg';
-import IndeterminateCheckBoxIcon from '../../../assets/svg/24/icon-minus-24.svg';
+import {IconCheck24, IconMinus24} from '../../../icons';
 import cn from 'classnames';
 import {ICheckboxProps} from './Checkbox.types';
 import {Row} from '../../row';
@@ -38,7 +37,7 @@ export const Checkbox: FC<ICheckboxProps> = ({
         small,
     });
 
-    const icon = indeterminate ? <IndeterminateCheckBoxIcon /> : <CheckboxIcon />;
+    const icon = indeterminate ? <IconMinus24 /> : <IconCheck24 />;
 
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>

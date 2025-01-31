@@ -3,7 +3,7 @@ import Typography, {ITypographyProps} from '../typography/Typography';
 import './index.less';
 import {Gap} from '../gap';
 import {Button, ButtonVariant} from '../button';
-import ArrowBack from '../../assets/svg/24/icon-arrow-tale-24.svg';
+import {IconArrowTale24} from '../../icons';
 
 export interface IPageHeaderProps {
     children?: any;
@@ -83,7 +83,7 @@ const PageHeader: FC<React.PropsWithChildren<IPageHeaderProps>> = ({children, la
                         className="cpageheader__backbtn"
                         onClick={onBackClick}
                         variant={ButtonVariant.transparent}
-                        icon={<ArrowBack />}
+                        icon={<IconArrowTale24 />}
                     />
                 )}
                 {React.Children.toArray(children).map((button) => (

@@ -5,7 +5,7 @@ import {List} from './List';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 import {Button, ButtonVariant} from '../button';
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {IconPlus24} from '../../icons';
 import {ThemeContainer} from '../utility/Modifiers';
 
 import 'css/bundle.less';
@@ -16,10 +16,10 @@ export default {
 } as Meta;
 
 const Prefix: React.FC<React.PropsWithChildren<unknown>> = () => (
-    <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+    <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} />
 );
 const Suffix: React.FC<React.PropsWithChildren<unknown>> = () => (
-    <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+    <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} />
 );
 
 export const Menu: IStorybookComponent = () => {
@@ -35,14 +35,14 @@ export const Menu: IStorybookComponent = () => {
                         active={true}
                         as={'a'}
                         href={'#'}
-                        prefix={<AddIcon />}
-                        suffix={<AddIcon />}
+                        prefix={<IconPlus24 />}
+                        suffix={<IconPlus24 />}
                         label={'События'}
                     />
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />}>
                         Рассылки
                     </List.Item>
-                    <List.Item as={'button'} type={'button'} suffix={<AddIcon />}>
+                    <List.Item as={'button'} type={'button'} suffix={<IconPlus24 />}>
                         Участники
                     </List.Item>
                     <List.Item as={'a'} href={'#'}>
@@ -55,11 +55,11 @@ export const Menu: IStorybookComponent = () => {
                     <List.Item href={'#'} as={'a'}>
                         Главная
                     </List.Item>
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />} suffix={<IconPlus24 />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />}>
                         Рассылки
                     </List.Item>
-                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} suffix={<IconPlus24 />}>
                         Участники
                     </List.Item>
                     <List.Item href={'#'} as={'a'}>
@@ -72,11 +72,11 @@ export const Menu: IStorybookComponent = () => {
                     <List.Item href={'#'} as={'a'}>
                         Главная
                     </List.Item>
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />} suffix={<IconPlus24 />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />}>
                         Рассылки
                     </List.Item>
-                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} suffix={<IconPlus24 />}>
                         Участники
                     </List.Item>
                     <List.Item href={'#'} as={'a'}>
@@ -90,13 +90,13 @@ export const Menu: IStorybookComponent = () => {
                         Главная
                     </List.Item>
                     <List.Divider />
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />} suffix={<AddIcon />} label={'События'} />
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />} suffix={<IconPlus24 />} label={'События'} />
                     <List.Divider />
-                    <List.Item as={'a'} href={'#'} prefix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} prefix={<IconPlus24 />}>
                         Рассылки
                     </List.Item>
                     <List.Divider />
-                    <List.Item as={'a'} href={'#'} suffix={<AddIcon />}>
+                    <List.Item as={'a'} href={'#'} suffix={<IconPlus24 />}>
                         Участники
                     </List.Item>
                     <List.Divider />
@@ -110,15 +110,15 @@ export const Menu: IStorybookComponent = () => {
                     <List.Item as={'a'} href={'#'} secondaryText={'Secondary text'}>
                         Primary text
                     </List.Item>
-                    <List.Item prefix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Caption'}>
+                    <List.Item prefix={<IconPlus24 />} as={'a'} href={'#'} secondaryText={'Caption'}>
                         List item
                     </List.Item>
-                    <List.Item suffix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
+                    <List.Item suffix={<IconPlus24 />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
                         Primary text
                     </List.Item>
                     <List.Item
-                        prefix={<AddIcon />}
-                        suffix={<AddIcon />}
+                        prefix={<IconPlus24 />}
+                        suffix={<IconPlus24 />}
                         as={'a'}
                         href={'#'}
                         secondaryText={'Secondary text'}
@@ -131,15 +131,15 @@ export const Menu: IStorybookComponent = () => {
                     <List.Item as={'a'} href={'#'} secondaryText={'Secondary text'}>
                         Primary text
                     </List.Item>
-                    <List.Item prefix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Caption'}>
+                    <List.Item prefix={<IconPlus24 />} as={'a'} href={'#'} secondaryText={'Caption'}>
                         List item
                     </List.Item>
-                    <List.Item suffix={<AddIcon />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
+                    <List.Item suffix={<IconPlus24 />} as={'a'} href={'#'} secondaryText={'Secondary text'}>
                         Primary text
                     </List.Item>
                     <List.Item
-                        prefix={<AddIcon />}
-                        suffix={<AddIcon />}
+                        prefix={<IconPlus24 />}
+                        suffix={<IconPlus24 />}
                         as={'a'}
                         href={'#'}
                         secondaryText={'Secondary text'}

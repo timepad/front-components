@@ -8,7 +8,7 @@ import {Brick} from '../brick';
 import {Button} from '../button';
 import {Gap} from '../gap';
 import {Typography} from '../typography';
-import IconDelete from '../../assets/svg/24/icon-delete-24.svg';
+import {IconDelete24} from '../../icons';
 import {component, layout} from '../../services/helpers/classHelpers';
 
 export const UploadInput: React.FC<IUploadInputProps> = ({
@@ -94,7 +94,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
                         <Button
                             variant={Button.variant.transparent}
                             onClick={handleDeleteFileClick}
-                            icon={<IconDelete />}
+                            icon={<IconDelete24 />}
                         />
                     </>
                 )}

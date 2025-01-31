@@ -3,7 +3,7 @@ import {component} from '../../../services/helpers/classHelpers';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import cn from 'classnames';
 import {Row} from '../../row';
-import BulletSvg from '../../../assets/svg/16/icon-bullet-16.svg';
+import {IconBullet16} from '../../../icons';
 import {IFormRadioProps} from './Radio.types';
 
 import './index.less';
@@ -46,7 +46,7 @@ export const Radio: FC<IFormRadioProps> = ({
                             {...props}
                         />
                         <span className={radioClasses}>
-                            <BulletSvg />
+                            <IconBullet16 />
                         </span>
                     </label>
                 </Row.Icon>
