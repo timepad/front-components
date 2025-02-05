@@ -31,3 +31,4 @@ export * from './components/_anchorCard';
 export * from './components/carousel';
 export * from './components/searchinput';
 export * from './components/skeleton';
+export * from './components/uploadinput';
