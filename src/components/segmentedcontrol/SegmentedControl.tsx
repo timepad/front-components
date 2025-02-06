@@ -1,26 +1,14 @@
-import React, {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import React, {createContext, FC, HTMLAttributes, useMemo, useState} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import {Control, ControlId} from './Control';
 import {ControlList} from './ControlList';
-import {action, observable} from 'mobx';
 
 import './index.less';
 
-class SegmentedControlStore {
-    @observable activeControlId: string;
-
-    constructor(activeControlId = '') {
-        this.activeControlId = activeControlId;
-    }
-
-    @action.bound setActiveControlId(id: string) {
-        this.activeControlId = id;
-    }
-}
-
 interface ISegmentedControlStoreContext {
-    segmentedControlStore: SegmentedControlStore;
+    activeControlId: string;
+    setActiveControlId: (activeControlId: string) => void;
     onControlClick: ControlClickHandler;
 }
 
@@ -50,27 +38,24 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
     ...rest
 }: ISegmentedControlProps) => {
     const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
+    const [controlId, setControlId] = useState(initialControlId ?? activeControlId ?? '');
     const divClasses = cx(component('segmentedcontrol')({fix}), className);
-
-    const segmentedControlStore = useMemo(
-        () => new SegmentedControlStore(initialControlId ?? activeControlId),
-        [initialControlId, activeControlId],
-    );
 
     const handleOnControlClick: ControlClickHandler = onControlClick
         ? (ControlId: string) => {
-              onControlClick(ControlId, segmentedControlStore.setActiveControlId);
+              onControlClick(ControlId, setControlId);
           }
         : (ControlId: string) => {
-              segmentedControlStore.setActiveControlId(ControlId);
+              setControlId(ControlId);
           };
 
     return (
         <div {...rest} className={divClasses}>
             <SegmentedControlContext.Provider
                 value={{
-                    segmentedControlStore,
+                    activeControlId: controlId,
                     onControlClick: handleOnControlClick,
+                    setActiveControlId: setControlId,
                 }}
             >
                 {children}
