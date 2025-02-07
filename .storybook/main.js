@@ -1,10 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
     '@storybook/addon-docs',
     "@storybook/addon-links",
@@ -12,21 +10,24 @@ module.exports = {
     "@storybook/addon-controls",
     "@storybook/addon-viewport",
     "@storybook/addon-storysource",
+    "@storybook/test",
   ],
+  
   typescript: {
-    reactDocgen: 'react-docgen',
+    reactDocgen: false,
   },
+  
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
     svgRule.test = /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|cur|ani|pdf)(\?.*)?$/;
 
     // prevent error on require 'fs', 'net', 'tls'
-    config.node = {
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-    }
+    // config.node = {
+    //   fs: false,
+    //   net: false,
+    //   tls: false,
+    // }
 
     // Добавил из нашего вебпака обработчик less, svg и шрифтовой загрузчик
     config.module.rules.push.apply(config.module.rules, [
@@ -70,4 +71,9 @@ module.exports = {
 
     return config;
   },
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  }
 }

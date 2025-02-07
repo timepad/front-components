@@ -49,7 +49,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             <Form.Text
                                 placeholder="Multiline"
                                 value={value}
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
                                 multiline
                             />
                         </div>
