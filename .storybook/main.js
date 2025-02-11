@@ -5,29 +5,24 @@ module.exports = {
 
   addons: [
     '@storybook/addon-docs',
+    '@storybook/addon-storysource',
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-controls",
     "@storybook/addon-viewport",
-    "@storybook/addon-storysource",
+    "@storybook/preview-api",
+    "@storybook/manager-api",
     "@storybook/test",
   ],
   
   typescript: {
-    reactDocgen: false,
+    reactDocgen: "react-docgen-typescript",
   },
   
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
     svgRule.test = /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|cur|ani|pdf)(\?.*)?$/;
-
-    // prevent error on require 'fs', 'net', 'tls'
-    // config.node = {
-    //   fs: false,
-    //   net: false,
-    //   tls: false,
-    // }
 
     // Добавил из нашего вебпака обработчик less, svg и шрифтовой загрузчик
     config.module.rules.push.apply(config.module.rules, [
@@ -38,7 +33,19 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                math: 'always', // всегда вычислять деление как арифметику
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
