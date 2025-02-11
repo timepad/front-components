@@ -147,7 +147,7 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
                         if (isValidElement<IChildWithIndexProps>(child)) {
                             return cloneElement(child, {
                                 key: `drop${index}`,
-                                // @ts-expect-error
+                                // @ts-expect-error (non strict)
                                 index,
                                 children: valueNodes[index].children,
                                 prefix: <SortIcon />,
