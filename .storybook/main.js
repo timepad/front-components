@@ -5,7 +5,8 @@ module.exports = {
 
   addons: [
     '@storybook/addon-docs',
-    '@storybook/addon-storysource',
+    // TODO Ждём пока снова заработает на версии сторибука 8.5 или выше
+    // '@storybook/addon-storysource',
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-controls",
