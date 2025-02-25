@@ -71,15 +71,14 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                 name="customContent"
                                 caption="Secondary text"
                                 customContent={
-                                    <a
-                                        href="https://timepad.ru/upload/docs/TimePad_PD_Polices.pdf"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        custom
-                                    </a>
+                                    <>
+                                        custom{' '}
+                                        <a href="https://timepad.ru/" target="_blank" rel="noopener noreferrer">
+                                            link
+                                        </a>{' '}
+                                        Content
+                                    </>
                                 }
-                                text="Content"
                             />
                         </div>
                     </div>
