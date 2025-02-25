@@ -8,4 +8,5 @@ export interface ICheckboxProps
     small?: boolean;
     error?: string;
     indeterminate?: boolean;
+    customContent?: React.ReactNode;
 }

@@ -21,6 +21,7 @@ export const Checkbox: FC<ICheckboxProps> = ({
     small = false,
     onChange = noop,
     className,
+    customContent,
     ...props
 }) => {
     const wrapperClasses = cn(component('form__checkbox')({error: !!error, disabled: disabled}), className);
@@ -50,7 +51,11 @@ export const Checkbox: FC<ICheckboxProps> = ({
                     </label>
                 </Row.Icon>
                 <Row.Body className={bodyClassNames}>
-                    {text && <Row.Text id={id}>{text}</Row.Text>}
+                    {text && (
+                        <Row.Text id={id}>
+                            {customContent && customContent} {text}
+                        </Row.Text>
+                    )}
                     {caption && <Row.Caption>{caption}</Row.Caption>}
                 </Row.Body>
             </label>
