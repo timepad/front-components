@@ -70,7 +70,7 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             <Form.Checkbox
                                 name="customContent"
                                 caption="Secondary text"
-                                customContent={
+                                text={
                                     <>
                                         custom{' '}
                                         <a href="https://timepad.ru/" target="_blank" rel="noopener noreferrer">
