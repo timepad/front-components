@@ -1,6 +1,9 @@
 FROM node:22-alpine AS deps
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y git openssh-client ca-certificates
+RUN apk update \
+    && apk add --no-cache \
+    git \
+    openssh-client \
+    ca-certificates
 
 WORKDIR /front-components
 
