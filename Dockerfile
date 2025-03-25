@@ -16,6 +16,6 @@ RUN REPO=$(cat package.json| grep front-shared | awk '{print $2}' | sed 's/,//g'
     cat package.json | sed '/front-shared/d' > tmpfile && mv tmpfile package.json
 
 RUN npm install --legacy-peer-deps
-RUN BROWSER=none npm run storybook build -- -o ./dist/storybook
+RUN npm run build-storybook
 
 CMD npm run storybook
