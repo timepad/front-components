@@ -30,23 +30,31 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                math: 'always', // Всегда вычислять деление как арифметику
+                            },
+                        },
+                    },
+                ],
             },
+
             {
                 test: /\.svg$/,
                 use: ['@svgr/webpack'],
             },
             {
                 test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'fonts/',
-                        },
-                    },
-                ],
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]',
+                },
             },
         ],
     },

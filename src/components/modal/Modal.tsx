@@ -24,7 +24,7 @@ const useClickOutside = (
                 !ref.current ||
                 ref.current.contains(event.target as Node) ||
                 target?.current.contains(event.target as Node) ||
-                Array.from(exceptionRefs).some( el => el === event.target || el.contains(event.target as Node))
+                Array.from(exceptionRefs).some((el) => el === event.target || el.contains(event.target as Node))
             ) {
                 return;
             }
@@ -112,7 +112,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     const contentRef = (element: HTMLDivElement) => {
         Object.keys(rest).length &&
             Object.entries(rest).forEach(([key, value]) => {
-                element?.setAttribute(key, value);
+                element?.setAttribute(key, value as string);
             });
     };
 
