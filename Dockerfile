@@ -1,6 +1,9 @@
-FROM cr.yandex/crpt7n2li2drrrf292dl/node:12.16.3-buster-slim as deps
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y git openssh-client ca-certificates
+FROM node:22-alpine AS deps
+RUN apk update \
+    && apk add --no-cache \
+    git \
+    openssh-client \
+    ca-certificates
 
 WORKDIR /front-components
 
