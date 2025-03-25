@@ -70,7 +70,7 @@
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o ./dist/storybook",
+    "build-storybook": "BROWSER=none storybook build -o ./dist/storybook",
     "lint": "eslint --ext js,jsx,ts,tsx ./",
     "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
     "chromatic": "npx chromatic --project-token 58cee8519832"
