@@ -45,7 +45,14 @@ export const Checkbox: FC<ICheckboxProps> = ({
             <label htmlFor={id}>
                 <Row.Icon top={!!caption}>
                     <label>
-                        <input checked={checked} type="checkbox" id={id} onChange={onChange} {...props} />
+                        <input
+                            disabled={disabled}
+                            checked={checked}
+                            type="checkbox"
+                            id={id}
+                            onChange={onChange}
+                            {...props}
+                        />
                         <span className={checkboxClasses}>{icon}</span>
                     </label>
                 </Row.Icon>
