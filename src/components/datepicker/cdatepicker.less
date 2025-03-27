@@ -16,6 +16,19 @@
         padding: 16px;
         height: 64px;
         box-sizing: border-box;
+
+        &--active {
+            box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.2);
+        }
+
+        &-month,
+        &-year {
+            text-transform: capitalize;
+        }
+
+        &-year {
+            color: @c-gray-35;
+        }
     }
 
     &__title {
@@ -24,11 +37,56 @@
     }
 
     &__month {
-        text-transform: capitalize;
+        &--selection {
+            &_item {
+                width: calc(100% / 3 - 8px);
+            }
+        }
     }
 
     &__year {
-        color: @c-gray-35;
+        &--selection {
+            &_item {
+                color: @c-black;
+                text-align: center;
+                width: calc(100% / 5 - 8px);
+            }
+        }
+    }
+
+    &__month,
+    &__year {
+        text-transform: capitalize;
+
+        &--selection {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 8px;
+            row-gap: 16px;
+            max-width: calc(308px - 16px);
+
+            &_item {
+                height: 38px;
+                cursor: pointer;
+
+                &:hover {
+                    color: @c-primary-blue;
+                }
+            }
+        }
+
+        &--active {
+            color: #643FFF;
+        }
+
+        &--inactive {
+            color: @c-gray-35;
+            cursor: default;
+
+            &:hover {
+                color: @c-gray-35;
+            }
+        }
     }
 
     &__pager {
@@ -67,6 +125,15 @@
         grid-auto-flow: row;
         grid-gap: 8px;
         padding: 16px;
+
+        &.view-selected {
+            overflow-y: scroll;
+
+            &.year {
+                padding-top: 0;
+                max-height: 264px;
+            }
+        }
     }
 
     &__week {

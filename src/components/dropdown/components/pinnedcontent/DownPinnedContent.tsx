@@ -12,10 +12,11 @@ export const DownPinnedContent: React.FC<IDownPinnedContentProps> = ({
     modifier,
     header,
     footer,
+    theme,
     otherChildren,
     popupRef,
 }) => {
-    const darkThemeClasses = 'mtheme--darkpic-bg mtheme--darkpic';
+    const darkThemeClasses = theme === 'dark' ? 'mtheme--darkpic-bg mtheme--darkpic' : '';
 
     return (
         <div className={cx('сdropdown-body--mobile', darkThemeClasses, modifier)}>
