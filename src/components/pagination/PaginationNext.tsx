@@ -1,7 +1,7 @@
 import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import Right from '../../assets/svg/48/shape-right-48.svg';
+import {IconArrowRight24} from '../../icons';
 import {PaginationContext} from './Pagination';
 
 export const PaginationNext: FC<React.PropsWithChildren<HTMLAttributes<HTMLButtonElement>>> = ({
@@ -19,7 +19,7 @@ export const PaginationNext: FC<React.PropsWithChildren<HTMLAttributes<HTMLButto
             disabled={isDisabled}
             onClick={() => onChange(activePage + 1)}
         >
-            <Right />
+            <IconArrowRight24 />
         </button>
     );
 };

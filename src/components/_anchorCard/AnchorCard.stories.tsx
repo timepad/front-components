@@ -6,9 +6,7 @@ import './demo.less';
 import {CollectionCard, ICollectionCardProps} from './TmpCollectionCard/CollectionCard';
 import {Typography} from '../typography';
 import {Button, ButtonVariant, IButtonProps} from '../button';
-import BookmarkIcon from '../../assets/svg/24/icon-bookmark-24.svg';
-import BookmarkStrongIcon from '../../assets/svg/24/icon-bookmark_s-24.svg';
-import PlayIcon from '../../assets/svg/32/icon-play-video-32.svg';
+import {IconBookmark24, IconBookmarkSolid24, IconPlayVideo} from '../../icons';
 import {Brick} from '../brick';
 import {TextLight} from '../form/TextLight';
 
@@ -91,7 +89,7 @@ export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
 
 const FavoriteIconButton: FC<IButtonProps> = (props) => {
     const [active, setActive] = useState(false);
-    const currentIcon = !active ? <BookmarkIcon /> : <BookmarkStrongIcon />;
+    const currentIcon = !active ? <IconBookmark24 /> : <IconBookmarkSolid24 />;
     return (
         <Button
             onClick={() => setActive(!active)}
@@ -147,7 +145,7 @@ export const AnchorCardBadges: IStorybookComponent = () => {
                         <FavoriteIconButton />
                     </AnchorCard.Poster.Badge>,
                     <AnchorCard.Poster.Badge key={2}>
-                        <PlayIcon />
+                        <IconPlayVideo />
                     </AnchorCard.Poster.Badge>,
                     <AnchorCard.Poster.Badge key={3} margin={8}>
                         <Text text="00:50" />

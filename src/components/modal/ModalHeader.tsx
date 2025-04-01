@@ -2,8 +2,7 @@ import * as React from 'react';
 import {Fragment} from 'react';
 import {component, layout} from '../../services/helpers/classHelpers';
 import {Button} from '../button';
-import CloseSvg from '../../assets/svg/24/icon-close-24.svg';
-import BackSvg from '../../assets/svg/24/icon-arrow-24.svg';
+import {IconArrowDown24, IconClose24} from '../../icons';
 import {Typography} from '../typography';
 import {Brick} from '../brick';
 import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
@@ -69,7 +68,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
             {backHandler && (
                 <Button
                     variant={Button.variant.transparent}
-                    icon={<BackSvg />}
+                    icon={<IconArrowDown24 />}
                     className={component('form', 'icon')({back: true})}
                     onClick={backHandler}
                     {...extractDataAttrs<AttrKeysType>('btn-back', attrs)}
@@ -83,7 +82,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
             {closeHandler && (
                 <Button
                     variant={Button.variant.transparent}
-                    icon={<CloseSvg />}
+                    icon={<IconClose24 />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
                     {...extractDataAttrs<AttrKeysType>('btn-close', attrs)}

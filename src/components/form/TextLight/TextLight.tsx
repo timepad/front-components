@@ -1,7 +1,7 @@
 import React from 'react';
 import {component} from '../../../services/helpers/classHelpers';
 import cx from 'classnames';
-import CheckSvg from '../../../assets/svg/24/icon-check-24.svg';
+import {IconCheck24} from '../../../icons';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {ITextLightProps} from './TextLight.types';
@@ -48,7 +48,7 @@ export const TextLight: React.FC<ITextLightProps> = ({
                 <Input name={name} id={id} disabled={disabled} style={style} {...props} />
                 <label htmlFor={id}>{!!error ? error : props.placeholder}</label>
                 <span className={inputIconClasses}>
-                    {customIcon ? customIcon : success && <CheckSvg className={iconClasses} />}
+                    {customIcon ? customIcon : success && <IconCheck24 className={iconClasses} />}
                 </span>
             </div>
             {!!caption && <div className={captionClasses}>{caption}</div>}

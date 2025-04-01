@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {IconPlus24} from '../../icons';
 import {Meta} from '@storybook/react/types-6-0';
 import {Button, ButtonIconAlignment, ButtonVariant, SliderButton} from './index';
 import {dummy, IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
@@ -17,7 +17,7 @@ export const Primary: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.primary} icon={<AddIcon />} />
+                <Button variant={ButtonVariant.primary} icon={<IconPlus24 />} />
                 <Spacer />
                 <Button variant={ButtonVariant.primary} label="Auto primary" />
                 <Spacer />
@@ -26,21 +26,21 @@ export const Primary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                 />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Primary disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.primary} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.primary} icon={<IconPlus24 />} disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.primary} label="Auto primary" disabled />
                 <Spacer />
@@ -49,7 +49,7 @@ export const Primary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                 />
@@ -57,7 +57,7 @@ export const Primary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                 />
@@ -71,7 +71,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
         <>
             <StoryTitle>Primary large</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.primary} icon={<AddIcon />} large />
+                <Button variant={ButtonVariant.primary} icon={<IconPlus24 />} large />
                 <Spacer />
                 <Button variant={ButtonVariant.primary} label="Auto primary" large />
                 <Spacer />
@@ -80,7 +80,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                 />
@@ -88,7 +88,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                 />
@@ -96,7 +96,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Primary large disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.primary} icon={<AddIcon />} large disabled />
+                <Button variant={ButtonVariant.primary} icon={<IconPlus24 />} large disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.primary} label="Auto primary" large disabled />
                 <Spacer />
@@ -105,7 +105,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                     disabled
@@ -114,7 +114,7 @@ export const PrimaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.primary}
                     label="Auto icon primary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                     disabled
@@ -130,7 +130,7 @@ export const Secondary: IStorybookComponent = () => {
         <>
             <StoryTitle>Secondary</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" />
                 <Spacer />
@@ -139,21 +139,21 @@ export const Secondary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                 />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Secondary disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" disabled />
                 <Spacer />
@@ -162,7 +162,7 @@ export const Secondary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                 />
@@ -170,7 +170,7 @@ export const Secondary: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                 />
@@ -184,7 +184,7 @@ export const CustomColor: IStorybookComponent = () => {
         <>
             <StoryTitle>Custom text color</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} labelColor="red" />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} labelColor="red" />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" labelColor="blue" />
                 <Spacer />
@@ -193,7 +193,7 @@ export const CustomColor: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     labelColor="green"
                 />
@@ -201,7 +201,7 @@ export const CustomColor: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     labelColor="red"
                 />
@@ -209,7 +209,7 @@ export const CustomColor: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Custom text color disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} disabled labelColor="red" />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} disabled labelColor="red" />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" disabled labelColor="blue" />
                 <Spacer />
@@ -218,7 +218,7 @@ export const CustomColor: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                     labelColor="green"
@@ -227,7 +227,7 @@ export const CustomColor: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                     labelColor="red"
@@ -244,7 +244,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
         <>
             <StoryTitle>Secondary large</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} large />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} large />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" large />
                 <Spacer />
@@ -253,7 +253,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                 />
@@ -261,7 +261,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                 />
@@ -269,7 +269,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Secondary large disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.secondary} icon={<AddIcon />} large disabled />
+                <Button variant={ButtonVariant.secondary} icon={<IconPlus24 />} large disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.secondary} label="Auto secondary" large disabled />
                 <Spacer />
@@ -278,7 +278,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                     disabled
@@ -287,7 +287,7 @@ export const SecondaryLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.secondary}
                     label="Auto icon secondary"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                     disabled
@@ -303,7 +303,7 @@ export const Stroke: IStorybookComponent = () => {
         <>
             <StoryTitle>Stroke</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} />
+                <Button variant={ButtonVariant.stroke} icon={<IconPlus24 />} />
                 <Spacer />
                 <Button variant={ButtonVariant.stroke} label="Auto stroke" />
                 <Spacer />
@@ -312,21 +312,21 @@ export const Stroke: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                 />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Stroke disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.stroke} icon={<IconPlus24 />} disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.stroke} label="Auto stroke" disabled />
                 <Spacer />
@@ -335,7 +335,7 @@ export const Stroke: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                 />
@@ -343,7 +343,7 @@ export const Stroke: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                 />
@@ -357,7 +357,7 @@ export const StrokeLarge: IStorybookComponent = () => {
         <>
             <StoryTitle>Stroke large</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} large />
+                <Button variant={ButtonVariant.stroke} icon={<IconPlus24 />} large />
                 <Spacer />
                 <Button variant={ButtonVariant.stroke} label="Auto stroke" large />
                 <Spacer />
@@ -366,7 +366,7 @@ export const StrokeLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                 />
@@ -374,7 +374,7 @@ export const StrokeLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                 />
@@ -382,7 +382,7 @@ export const StrokeLarge: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Stroke large disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.stroke} icon={<AddIcon />} large disabled />
+                <Button variant={ButtonVariant.stroke} icon={<IconPlus24 />} large disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.stroke} label="Auto stroke" large disabled />
                 <Spacer />
@@ -391,7 +391,7 @@ export const StrokeLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                     disabled
@@ -400,7 +400,7 @@ export const StrokeLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.stroke}
                     label="Auto icon stroke"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                     disabled
@@ -416,7 +416,7 @@ export const Transparent: IStorybookComponent = () => {
         <>
             <StoryTitle>Transparent</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" />
                 <Spacer />
@@ -425,21 +425,21 @@ export const Transparent: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                 />
                 <Spacer />
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Transparent disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" disabled />
                 <Spacer />
@@ -448,7 +448,7 @@ export const Transparent: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                 />
@@ -456,7 +456,7 @@ export const Transparent: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                 />
@@ -470,7 +470,7 @@ export const TransparentLarge: IStorybookComponent = () => {
         <>
             <StoryTitle>Transparent large</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} large />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} large />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" large />
                 <Spacer />
@@ -479,7 +479,7 @@ export const TransparentLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                 />
@@ -487,7 +487,7 @@ export const TransparentLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                 />
@@ -495,7 +495,7 @@ export const TransparentLarge: IStorybookComponent = () => {
             <div className="lbrick-2" />
             <StoryTitle>Transparent large disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} large disabled />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} large disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" large disabled />
                 <Spacer />
@@ -504,7 +504,7 @@ export const TransparentLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     large
                     disabled
@@ -513,7 +513,7 @@ export const TransparentLarge: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     large
                     disabled
@@ -529,7 +529,7 @@ export const TransparentWithHoverLabel: IStorybookComponent = () => {
         <>
             <StoryTitle>Transparent with hover label</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} hoverLabel="Hover text" />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} hoverLabel="Hover text" />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" hoverLabel="Hover text" />
                 <Spacer />
@@ -539,7 +539,7 @@ export const TransparentWithHoverLabel: IStorybookComponent = () => {
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
                     hoverLabel="Hover text"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                 />
                 <Spacer />
@@ -547,14 +547,14 @@ export const TransparentWithHoverLabel: IStorybookComponent = () => {
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
                     hoverLabel="Hover text"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                 />
             </div>
             <div className="lbrick-2" />
             <StoryTitle>Transparent with hover label disabled</StoryTitle>
             <div className="lflex">
-                <Button variant={ButtonVariant.transparent} icon={<AddIcon />} disabled />
+                <Button variant={ButtonVariant.transparent} icon={<IconPlus24 />} disabled />
                 <Spacer />
                 <Button variant={ButtonVariant.transparent} label="Auto transparent" disabled />
                 <Spacer />
@@ -563,7 +563,7 @@ export const TransparentWithHoverLabel: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.left}
                     disabled
                 />
@@ -571,7 +571,7 @@ export const TransparentWithHoverLabel: IStorybookComponent = () => {
                 <Button
                     variant={ButtonVariant.transparent}
                     label="Auto icon transparent"
-                    icon={<AddIcon />}
+                    icon={<IconPlus24 />}
                     iconAlignment={ButtonIconAlignment.right}
                     disabled
                 />

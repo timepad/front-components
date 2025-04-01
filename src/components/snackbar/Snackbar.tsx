@@ -4,8 +4,7 @@ import './index.less';
 import {Button} from '../button';
 
 import {ISnackbarProps} from './SnackbarProvider';
-import SuccessSvg from '../../assets/svg/16/icon-success-16.svg';
-import WarningSvg from '../../assets/svg/24/icon-error-24.svg';
+import {IconCheck24, IconWarning24} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 
 export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button}) => {
@@ -20,8 +19,8 @@ export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({tex
                 }),
             )}
         >
-            {state === 'successWithIcon' && <SuccessSvg />}
-            {state === 'errorWithIcon' && <WarningSvg />}
+            {state === 'successWithIcon' && <IconCheck24 />}
+            {state === 'errorWithIcon' && <IconWarning24 />}
             <div className="csnackbar__text">{text}</div>
             {button ? (
                 <Button className="csnackbar__button" variant={Button.variant.secondary} onClick={button.onClick}>
