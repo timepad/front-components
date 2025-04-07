@@ -4,7 +4,7 @@ import {Dropdown, Brick, Form, Row, Typography, useMedia} from 'index';
 import {IStorybookComponent, StoryDescription, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {List} from '../list';
 import {Button, ButtonVariant} from '../button';
-import IconEdit from 'assets/svg/24/icon-edit-24.svg';
+import {IconEdit24} from '../../icons';
 import {cities} from '../../data/cities';
 import {Pic} from '../userpic';
 import {IDropdownProps} from './interfaces';
@@ -264,11 +264,11 @@ export const ProfileDrop: IStorybookComponent = () => {
         () => [
             {
                 title: 'Организаторам',
-                icon: <IconEdit />,
+                icon: <IconEdit24 />,
             },
             {
                 title: 'Стать организатором',
-                icon: <IconEdit />,
+                icon: <IconEdit24 />,
             },
         ],
         [],
@@ -312,7 +312,7 @@ export const ProfileDrop: IStorybookComponent = () => {
                                 </Row.Caption>
                             </Row.Body>
                             <Row.Icon>
-                                <Button icon={<IconEdit />} variant={ButtonVariant.transparent} />
+                                <Button icon={<IconEdit24 />} variant={ButtonVariant.transparent} />
                             </Row.Icon>
                         </Row>
                     </Dropdown.Header>

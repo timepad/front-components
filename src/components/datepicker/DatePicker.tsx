@@ -1,9 +1,10 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
 import classNames from 'classnames';
+import {IconArrowDown24} from '../../icons';
+
 import moment, {Moment} from 'moment';
 
-import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
 import {Button} from '../button';
 import {component, layout} from '../../services/helpers/classHelpers';
 
@@ -330,7 +331,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 variant={Button.variant.transparent}
                                 onClick={prevMonth}
                                 disabled={enableDates !== 'past' && enableDates !== 'all' && today.isSame(now, 'month')}
-                                icon={<IconArrow style={{transform: 'rotate(90deg)'}} />}
+                                icon={<IconArrowDown24 style={{transform: 'rotate(90deg)'}} />}
                             />
                             <Button
                                 variant={Button.variant.transparent}
@@ -338,7 +339,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 disabled={
                                     enableDates !== 'future' && enableDates !== 'all' && today.isSame(now, 'month')
                                 }
-                                icon={<IconArrow style={{transform: 'rotate(-90deg)'}} />}
+                                icon={<IconArrowDown24 style={{transform: 'rotate(-90deg)'}} />}
                             />
                         </>
                     </div>

@@ -5,9 +5,7 @@ import './index.less';
 import {ISearchInputProps} from './SearchInput.types';
 import {Button} from '../button';
 import {Text} from '../form/Text';
-import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
-import BackIcon from '../../assets/svg/24/icon-arrow-tale-24.svg';
-import SearchIcon from '../../assets/svg/24/icon-search-24.svg';
+import {IconArrowTale24, IconClose24, IconSearch24} from '../../icons';
 import {keyPressHelper} from '../../services/helpers/keyPressHelper';
 import {component} from '../../services/helpers/classHelpers';
 
@@ -96,11 +94,13 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     return (
         <label htmlFor={id} className={searchInputClassName} ref={labelRef}>
             {showBackButton && (
-                <Button icon={<BackIcon />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
+                <Button icon={<IconArrowTale24 />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
             )}
 
             {/*white modifier only for mdark-theme*/}
-            {withSearchIcon && <SearchIcon className={component('search', 'search-icon')({white: value.length > 0})} />}
+            {withSearchIcon && (
+                <IconSearch24 className={component('search', 'search-icon')({white: value.length > 0})} />
+            )}
 
             <Text
                 id={id}
@@ -117,7 +117,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
             />
 
             <Button
-                icon={<CloseIcon />}
+                icon={<IconClose24 />}
                 variant={Button.variant.transparent}
                 className={resetBtnClassName}
                 onClick={handleResetButtonClick}

@@ -1,7 +1,7 @@
 import {Children, cloneElement, FC, isValidElement, ReactNode, useCallback, useEffect, useState} from 'react';
 import {SortableContainer, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../../list';
-import DragIcon from '../../../assets/svg/16/icon-dragable-16.svg';
+import {IconDrag16} from '../../../icons';
 import {IDropdownSortableListProps} from '../interfaces';
 import * as React from 'react';
 import {arrayMoveImmutable} from '../../../services/helpers/moveArray';
@@ -23,7 +23,7 @@ interface IChildWithIndexProps extends Omit<React.HTMLAttributes<HTMLElement>, '
 }
 
 const Slist = SortableContainer<React.PropsWithChildren<IList>>(List);
-const SortIcon = SortableHandle(() => <DragIcon className="cdropdown__dragicon" />);
+const SortIcon = SortableHandle(() => <IconDrag16 className="cdropdown__dragicon" />);
 export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableListProps>> = ({
     show,
     modifier,
