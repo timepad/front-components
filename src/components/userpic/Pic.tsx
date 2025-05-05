@@ -2,7 +2,7 @@ import React, {FC, HTMLAttributes} from 'react';
 import {MouseEventHandler} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import ProfileIcon from '../../assets/svg/24/icon-profile-24.svg';
+import {IconProfile24} from '../../icons';
 
 import './index.less';
 
@@ -34,7 +34,7 @@ const UserImage: FC<React.PropsWithChildren<IUserImageProps>> = ({className, img
 );
 
 const UserLabel: FC<React.PropsWithChildren<IUserLabel>> = ({label}) =>
-    label ? <span>{label[0].toUpperCase()}</span> : <ProfileIcon className={svgClassName} />;
+    label ? <span>{label[0].toUpperCase()}</span> : <IconProfile24 className={svgClassName} />;
 
 export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     imgURL,

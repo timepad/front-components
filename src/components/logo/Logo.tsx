@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LogoSVG from '../../assets/svg/logo/logo.svg';
+import {Logo as LogoSVG} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
@@ -13,7 +13,7 @@ export interface ILogoProps {
 }
 
 export const Logo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, action, color}) => {
-    const className = component('logo')({
+    const className = component('vendor')({
         expandable: action === 'expandable',
         hoverable: action === 'hoverable',
     });

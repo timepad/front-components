@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, ButtonVariant} from '../button';
-import IconArrow from '../../assets/svg/24/icon-arrow-24.svg';
+import {IconArrowDown24} from '../../icons';
 
 import {component} from '../../services/helpers/classHelpers';
 
@@ -17,7 +17,7 @@ export const SliderBtn: React.FC<ISliderBtnProps> = ({direction}) => {
         <Button
             variant={ButtonVariant.secondary}
             labelColor="rgba(100, 63, 255, 1)"
-            icon={<IconArrow />}
+            icon={<IconArrowDown24 />}
             className={buttonClassName}
         />
     );
