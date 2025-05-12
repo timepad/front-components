@@ -48,6 +48,7 @@
     "file-loader": "6.2.0",
     "front-shared": "https://github.com/timepad/front-shared.git#05c161220b3f944d79c5b40bff6e22c5594eb043",
     "html-webpack-plugin": "5.3.1",
+    "husky": "^9.1.7",
     "less": "3.13.1",
     "less-loader": "5.0.0",
     "postcss-loader": "3.0.0",
