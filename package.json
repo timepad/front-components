@@ -69,6 +69,18 @@
     "build-storybook": "build-storybook -o ./dist/storybook",
     "lint": "eslint --ext js,jsx,ts,tsx ./",
     "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
-    "chromatic": "npx chromatic --project-token 58cee8519832"
+    "chromatic": "npx chromatic --project-token 58cee8519832",
+    "prepare": "husky",
+    "type-check": "tsc --noEmit --pretty"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write",
+      "bash -c 'tsc --noEmit --pretty'"
+    ],
+    "*.{json,md,html}": [
+      "prettier --write"
+    ]
   }
 }
