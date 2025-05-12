@@ -64,6 +64,10 @@
         "webpack-cli": "4.7.2",
         "webpack-dev-server": "3.11.2"
     },
+    "peerDependencies": {
+        "husky": "8.0.3",
+        "lint-staged": "10.0.0"
+    },
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook -o ./dist/storybook",
@@ -83,5 +87,10 @@
         "*.{json,md,html}": [
             "prettier --write"
         ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     }
 }
