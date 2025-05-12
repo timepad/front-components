@@ -69,7 +69,7 @@
         "build-storybook": "build-storybook -o ./dist/storybook",
         "lint": "eslint --ext js,jsx,ts,tsx ./",
         "lint:fix": "eslint --fix --ext js,jsx,ts,tsx ./",
-        "chromatic": "npx chromatic --project-token 58cee8519832",
+        "chromatic": "npx chromatic --project-token 58cee8519832"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
