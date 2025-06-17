@@ -14,6 +14,14 @@ interface ISortableListState {
     children: ReactNode;
 }
 
+interface IChildWithIndexProps extends Omit<React.HTMLAttributes<HTMLElement>, 'prefix' | 'onClick'> {
+    index?: number;
+    children?: ReactNode;
+    prefix?: ReactNode;
+    className?: string;
+    onClick?: (event: MouseEvent, value: any) => void;
+}
+
 const Slist = SortableContainer<React.PropsWithChildren<IList>>(List);
 const SortIcon = SortableHandle(() => <IconDrag16 className="cdropdown__dragicon" />);
 export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableListProps>> = ({
@@ -136,7 +144,7 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
                     onSortEnd={sortEndHandler}
                 >
                     {Children.map<ReactNode, ReactNode>(children, (child, index) => {
-                        if (isValidElement(child)) {
+                        if (isValidElement<IChildWithIndexProps>(child)) {
                             return cloneElement(child, {
                                 key: `drop${index}`,
                                 index,

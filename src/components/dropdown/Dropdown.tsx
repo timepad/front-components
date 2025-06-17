@@ -31,7 +31,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     // TODO если нам нужно чтобы попап открывался и был привязан не к корневому диву, а другом месте - указываем нужный айдишник в этой переменной (используем в OrgerGroup NTP)
     // customPopupRoot,
     pinned = 'auto',
-    // theme = 'dark', // для будущей темы
+    theme = 'dark', // для будущей темы
     ...props
 }) => {
     const popupRef = useRef<IPopupActions>(null);
@@ -110,10 +110,15 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         <Popup open={show} keepTooltipInside={keepInsideParent} isMobile={isMobile} {...popupProps} ref={popupRef}>
             <>
                 {isDesktop && (
-                    <ElementPinnedContent isScrollable={isScrollable} elementRef={ref} {...contentCommonProps} />
+                    <ElementPinnedContent
+                        isScrollable={isScrollable}
+                        elementRef={ref}
+                        theme={theme}
+                        {...contentCommonProps}
+                    />
                 )}
-                {isTablet && <CenterPinnedContent {...contentCommonProps} />}
-                {isMobile && <DownPinnedContent popupRef={popupRef} {...contentCommonProps} />}
+                {isTablet && <CenterPinnedContent theme={theme} {...contentCommonProps} />}
+                {isMobile && <DownPinnedContent theme={theme} popupRef={popupRef} {...contentCommonProps} />}
             </>
         </Popup>
     );
