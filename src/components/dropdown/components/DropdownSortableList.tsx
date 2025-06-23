@@ -1,4 +1,4 @@
-import {Children, cloneElement, FC, isValidElement, ReactNode, useCallback, useEffect, useState} from 'react';
+import {Children, cloneElement, FC, isValidElement, ReactNode, ReactElement, useCallback, useEffect, useState} from 'react';
 import {SortableContainer, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../../list';
 import {IconDrag16} from '../../../icons';
@@ -144,10 +144,9 @@ export const DropdownSortableList: FC<React.PropsWithChildren<IDropdownSortableL
                     onSortEnd={sortEndHandler}
                 >
                     {Children.map<ReactNode, ReactNode>(children, (child, index) => {
-                        if (isValidElement<IChildWithIndexProps>(child)) {
-                            return cloneElement(child, {
+                        if (isValidElement(child)) {
+                            return cloneElement(child as ReactElement, {
                                 key: `drop${index}`,
-                                // @ts-expect-error (non strict)
                                 index,
                                 children: valueNodes[index].children,
                                 prefix: <SortIcon />,
