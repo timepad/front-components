@@ -7,23 +7,36 @@ import {Typography} from '../typography';
 import {Brick} from '../brick';
 import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
 
-enum AttrKeys {
+enum BtnAttrKeys {
     'btn-close',
     'btn-back',
 }
 
-type AttrKeysType = keyof typeof AttrKeys;
+enum TitleAttrKeys {
+    'title-name',
+}
+
+type BtnAttrKeysType = keyof typeof BtnAttrKeys;
+type BtnAttrsType = Array<IDataAttr<BtnAttrKeysType>>;
+
+type TitleAttrKeyType = keyof typeof TitleAttrKeys;
+type TitleAttrType = Array<IDataAttr<TitleAttrKeyType>>;
 
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
     backHandler?: () => void;
     closeHandler?: () => void;
-    attrs?: Array<IDataAttr<AttrKeysType>>;
+    attrs?: BtnAttrsType;
 }
 
-export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+export const Title: React.FC<React.PropsWithChildren<{attrs?: TitleAttrType}>> = ({children, attrs}) => {
     return (
-        <Typography.Lead noPadding responsive className={component('form', 'title-text')()}>
+        <Typography.Lead
+            noPadding
+            responsive
+            className={component('form', 'title-text')()}
+            {...extractDataAttrs<TitleAttrKeyType>('title-name', attrs)}
+        >
             {children}
         </Typography.Lead>
     );
@@ -71,7 +84,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconArrowDown24 />}
                     className={component('form', 'icon')({back: true})}
                     onClick={backHandler}
-                    {...extractDataAttrs<AttrKeysType>('btn-back', attrs)}
+                    {...extractDataAttrs<BtnAttrKeysType>('btn-back', attrs)}
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
@@ -85,7 +98,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconClose24 />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
-                    {...extractDataAttrs<AttrKeysType>('btn-close', attrs)}
+                    {...extractDataAttrs<BtnAttrKeysType>('btn-close', attrs)}
                 />
             )}
         </div>
