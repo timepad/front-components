@@ -51,6 +51,19 @@ export const Simple: IStorybookComponent = () => {
 
 Simple.storyName = 'Simple';
 
+export const withPastDates: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>DatePicker with past dates</StoryTitle>
+            <Wrapper>
+                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enableDates="all" />
+            </Wrapper>
+        </>
+    );
+};
+
+withPastDates.storyName = 'withPastDates';
+
 export const Range: IStorybookComponent = () => {
     return (
         <>
