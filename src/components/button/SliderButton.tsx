@@ -12,6 +12,7 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
     value,
     disabled,
     onChange,
+    ...props
 }: ISliderButtonProps) => {
     const [state, update] = useState(value);
 
@@ -26,6 +27,7 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
                     update(!state);
                 }
             }}
+            {...props}
         >
             <b /> {/* сделано элементом а не псевдо-элементом только чтобы можно было таскать драгом*/}
         </div>
