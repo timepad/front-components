@@ -126,17 +126,17 @@ export const PicSizes: IStorybookComponent = () => {
 
             <StoryTitle>Icon in size MS</StoryTitle>
             <div className="lflex">
-                <Pic size="ms" hoverable />
+                <Pic size="ml" hoverable />
                 <Spacer />
-                <Pic size="ms" label={label} hoverable />
+                <Pic size="ml" label={label} hoverable />
                 <Spacer />
-                <Pic size="ms" imgURL={imageUrl} hoverable />
+                <Pic size="ml" imgURL={imageUrl} hoverable />
                 <Spacer />
-                <Pic size="ms" hoverable square />
+                <Pic size="ml" hoverable square />
                 <Spacer />
-                <Pic size="ms" label={label} hoverable square />
+                <Pic size="ml" label={label} hoverable square />
                 <Spacer />
-                <Pic size="ms" imgURL={imageUrl} hoverable square />
+                <Pic size="ml" imgURL={imageUrl} hoverable square />
             </div>
             <Brick size={2} />
 

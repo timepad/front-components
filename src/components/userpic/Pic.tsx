@@ -6,7 +6,7 @@ import {IconProfile24} from '../../icons';
 
 import './index.less';
 
-type PicSize = 's' | 'm' | 'ms' | 'l' | 'xl';
+type PicSize = 's' | 'm' | 'ml' | 'l' | 'xl';
 
 interface IProps {
     imgURL?: string;
