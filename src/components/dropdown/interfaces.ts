@@ -26,8 +26,8 @@ export interface IDropdownProps {
     fixPositionOnScroll?: boolean;
     customPopupRoot?: string;
     customMobileBreakpoint?: number;
-    pinned?: 'auto' | 'center' | 'down' | 'element'; //'center' - посередине (планшет), 'down' - нижний край (телефон), 'element' - рядом с элементом (десктоп)
-    theme?: 'light' | 'dark';
+    pinned?: IPinnedPositions;
+    theme?: IThemeTypes;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
@@ -47,5 +47,10 @@ export interface IPinnedContentProps {
     modifier?: string;
     header?: ReactElement<IFooterHeaderProps, typeof DropdownHeader>;
     footer?: ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
+    theme: IThemeTypes;
     otherChildren: React.ReactNode[];
 }
+
+type IThemeTypes = 'light' | 'dark';
+
+type IPinnedPositions = 'auto' | 'center' | 'down' | 'element'; //'center' - посередине (планшет), 'down' - нижний край (телефон), 'element' - рядом с элементом (десктоп)

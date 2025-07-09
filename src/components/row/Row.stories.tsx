@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import {Row} from './index';
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {IconPlus24} from '../../icons';
 
 import 'css/bundle.less';
 import {IRowProps} from './Row';
@@ -58,13 +58,13 @@ const CreateRowObject = ({
         caption: haveCaption ? 'Secondary text' : '',
         leftIcon: leftIconPosition
             ? {
-                  icon: <AddIcon />,
+                  icon: <IconPlus24 />,
                   position: leftIconPosition,
               }
             : undefined,
         rightIcon: rightIconPosition
             ? {
-                  icon: <AddIcon />,
+                  icon: <IconPlus24 />,
                   position: rightIconPosition,
               }
             : undefined,

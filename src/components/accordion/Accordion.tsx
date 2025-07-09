@@ -3,8 +3,7 @@ import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 
 import './index.less';
-import ArrowDown from '../../assets/svg/24/icon-arrow-down-24.svg';
-import ArrowUp from '../../assets/svg/24/icon-arrow-up-24.svg';
+import {IconArrowDown24, IconArrowUp24} from '../../icons';
 
 interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     text: string;
@@ -28,7 +27,7 @@ export const Accordion: FC<React.PropsWithChildren<IProps>> = ({
     children,
 }) => {
     const [open, setOpen] = useState(false);
-    const icon = open ? <ArrowUp /> : <ArrowDown />;
+    const icon = open ? <IconArrowUp24 /> : <IconArrowDown24 />;
     const baseClassName = 'accordion';
 
     const containerClassNames = cx(

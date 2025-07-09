@@ -2,7 +2,7 @@ import React from 'react';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Meta} from '@storybook/react/types-6-0';
 import {Accordion} from './index';
-import AddIcon from 'svg/24/icon-plus-24.svg';
+import {IconPlus24} from '../../icons';
 
 import 'css/bundle.less';
 
@@ -32,7 +32,7 @@ export const Default: IStorybookComponent = () => {
             <Accordion text="Text" caption="Caption">
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
+            <Accordion text="Text" caption="Caption" secondIcon={<IconPlus24 />}>
                 <p>Inner content</p>
             </Accordion>
             <Accordion text="Text" large>
@@ -44,7 +44,7 @@ export const Default: IStorybookComponent = () => {
             <Accordion text="Text" caption="Caption" large reverse>
                 <p>Inner content</p>
             </Accordion>
-            <Accordion text="Text" border caption="Caption" large secondIcon={<AddIcon />}>
+            <Accordion text="Text" border caption="Caption" large secondIcon={<IconPlus24 />}>
                 <p>Inner content</p>
             </Accordion>
         </>
@@ -67,7 +67,7 @@ export const Dark: IStorybookComponent = () => {
                             <Accordion text="Text" caption="Caption">
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" caption="Caption" secondIcon={<AddIcon />}>
+                            <Accordion text="Text" caption="Caption" secondIcon={<IconPlus24 />}>
                                 <p>Inner content</p>
                             </Accordion>
                             <Accordion text="Text" large>
@@ -79,7 +79,7 @@ export const Dark: IStorybookComponent = () => {
                             <Accordion text="Text" caption="Caption" large reverse>
                                 <p>Inner content</p>
                             </Accordion>
-                            <Accordion text="Text" border caption="Caption" large secondIcon={<AddIcon />}>
+                            <Accordion text="Text" border caption="Caption" large secondIcon={<IconPlus24 />}>
                                 <p>Inner content</p>
                             </Accordion>
                         </div>

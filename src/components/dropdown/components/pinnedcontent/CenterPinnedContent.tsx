@@ -4,8 +4,14 @@ import {IPinnedContentProps} from '../../interfaces';
 
 interface ICenterPinnedContentProps extends IPinnedContentProps {}
 
-export const CenterPinnedContent: React.FC<ICenterPinnedContentProps> = ({modifier, header, footer, otherChildren}) => {
-    const darkThemeClasses = 'mtheme--darkpic-bg mtheme--darkpic';
+export const CenterPinnedContent: React.FC<ICenterPinnedContentProps> = ({
+    modifier,
+    header,
+    footer,
+    theme,
+    otherChildren,
+}) => {
+    const darkThemeClasses = theme === 'dark' ? 'mtheme--darkpic-bg mtheme--darkpic' : '';
 
     return (
         <div className={cx('сdropdown-body--tablet', darkThemeClasses, modifier)}>

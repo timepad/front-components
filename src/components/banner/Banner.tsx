@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Row} from '../row';
-import InfoIcon from '../../assets/svg/24/icon-info-circle-24.svg';
-import ErrorIcon from '../../assets/svg/24/icon-error-24.svg';
-import CloseIcon from '../../assets/svg/24/icon-close-24.svg';
+import {IconClose24, IconInfo24, IconWarning24} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {Button, ButtonVariant} from '../button';
@@ -48,7 +46,7 @@ export const Banner: FC<React.PropsWithChildren<IBannerProps>> = ({
                     <Button
                         onClick={() => handleOnCloseClick()}
                         variant={ButtonVariant.transparent}
-                        icon={<CloseIcon />}
+                        icon={<IconClose24 />}
                     />
                 </Row.Icon>
             )}
@@ -57,9 +55,9 @@ export const Banner: FC<React.PropsWithChildren<IBannerProps>> = ({
 };
 
 export const InfoBanner: FC<React.PropsWithChildren<Omit<IBannerProps, 'icon'>>> = (props) => {
-    return <Banner {...props} icon={<InfoIcon />} />;
+    return <Banner {...props} icon={<IconInfo24 />} />;
 };
 
 export const WarningBanner: FC<React.PropsWithChildren<Omit<IBannerProps, 'icon'>>> = (props) => {
-    return <Banner {...props} icon={<ErrorIcon />} />;
+    return <Banner {...props} icon={<IconWarning24 />} />;
 };

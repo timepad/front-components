@@ -67,6 +67,19 @@ const InputsContainer = (props: IInputsContainerProps) => {
                                 indeterminate
                                 disabled
                             />
+                            <Form.Checkbox
+                                name="customContent"
+                                caption="Secondary text"
+                                text={
+                                    <>
+                                        custom{' '}
+                                        <a href="https://timepad.ru/" target="_blank" rel="noopener noreferrer">
+                                            link
+                                        </a>{' '}
+                                        Content
+                                    </>
+                                }
+                            />
                         </div>
                     </div>
                     <div className="lgap-4-0" />
