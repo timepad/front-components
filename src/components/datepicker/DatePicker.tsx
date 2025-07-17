@@ -162,7 +162,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
 
     const weekCount = Math.round(lastWeekSunday.diff(firstWeekMonday, 'weeks', true));
     const weeks = [...Array.from(Array(weekCount).keys())].map((weekNumber) =>
-        moment(startOfMonth).subtract(-weekNumber, 'weeks'),
+        moment(startOfMonth).add(weekNumber, 'weeks'),
     );
 
     const getDaysOfWeek = (week: Moment) => {
@@ -212,7 +212,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
         if (isLastDayOfMonth(moment(day).subtract(1, 'day')) && !isDayOfCurrentMonth(end) && isBetweenSelected(day)) {
             return 'end';
         } else if (
-            isFirstDayOfMonth(moment(day).subtract(-oneDay, 'day')) &&
+            isFirstDayOfMonth(moment(day).add(oneDay, 'day')) &&
             !isDayOfCurrentMonth(start) &&
             isBetweenSelected(day)
         ) {
@@ -225,8 +225,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     // TODO: Переработать правила, на основе имеющихся
     const selectedToday = start?.isSame(today, 'day') && end?.isSame(today, 'day');
     const selectedTomorrow =
-        start?.isSame(moment(today).subtract(-oneDay, 'day'), 'day') &&
-        end?.isSame(moment(today).subtract(-oneDay, 'day'), 'day');
+        start?.isSame(moment(today).add(oneDay, 'day'), 'day') && end?.isSame(moment(today).add(oneDay, 'day'), 'day');
     const selectedWeekend =
         end?.isSame(moment(today).isoWeekday(7), 'day') &&
         (today.isAfter(moment(today).isoWeekday(6)) || start?.isSame(moment(today).isoWeekday(6), 'day'));
@@ -268,8 +267,9 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
+    const oneMonth = 1;
     const prevMonth = () => setNow(moment(now).subtract(1, 'month'));
-    const nextMonth = () => setNow(moment(now).subtract(-1, 'month'));
+    const nextMonth = () => setNow(moment(now).add(oneMonth, 'month'));
 
     const selectDates = (start: Moment, end: Moment | null = start) => {
         setStart(start);
@@ -396,7 +396,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                         <Button
                             label="Завтра"
                             variant={selectedTomorrow ? Button.variant.primary : Button.variant.stroke}
-                            onClick={() => selectDates(moment(today).subtract(-oneDay, 'day'))}
+                            onClick={() => selectDates(moment(today).add(oneDay, 'day'))}
                             data-analytics={analytic?.tomorrowBtn}
                         />
                         {dateRange && (
