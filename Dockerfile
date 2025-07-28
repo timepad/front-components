@@ -12,11 +12,11 @@ RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g; \
 COPY package.json package-lock.json* ./
 RUN REPO=$(grep '"front-shared"' package.json | awk -F\" '{print $4}') \
  && npm install git+$REPO --no-save \
- && sed -i '/"front-shared"/d' package.json
+ && sed -i '/"front-shared"/d' package.json \
+ && npm install --legacy-peer-deps
 
 # 3) Копируем остальное, ставим и билдим
 COPY . .
-RUN npm install --legacy-peer-deps
 RUN npm run build-storybook
 
 CMD ["npm", "run", "storybook"]
