@@ -6,14 +6,13 @@ export interface ISliderButtonProps {
     value: boolean;
     disabled?: boolean;
     onChange: MouseEventHandler;
-    dataAttrs?: Record<string, any>;
 }
 
 export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>> = ({
     value,
     disabled,
     onChange,
-    dataAttrs,
+    ...props
 }: ISliderButtonProps) => {
     const [state, update] = useState(value);
 
@@ -21,6 +20,7 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
 
     return (
         <div
+            {...props}
             className={sliderClasses}
             onClick={(e) => {
                 if (!disabled) {
@@ -28,7 +28,6 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
                     update(!state);
                 }
             }}
-            {...dataAttrs}
         >
             <b /> {/* сделано элементом а не псевдо-элементом только чтобы можно было таскать драгом*/}
         </div>
