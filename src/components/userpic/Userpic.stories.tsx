@@ -124,6 +124,22 @@ export const PicSizes: IStorybookComponent = () => {
             </div>
             <Brick size={2} />
 
+            <StoryTitle>Icon in size MS</StoryTitle>
+            <div className="lflex">
+                <Pic size="ml" hoverable />
+                <Spacer />
+                <Pic size="ml" label={label} hoverable />
+                <Spacer />
+                <Pic size="ml" imgURL={imageUrl} hoverable />
+                <Spacer />
+                <Pic size="ml" hoverable square />
+                <Spacer />
+                <Pic size="ml" label={label} hoverable square />
+                <Spacer />
+                <Pic size="ml" imgURL={imageUrl} hoverable square />
+            </div>
+            <Brick size={2} />
+
             <StoryTitle>Icon in size L</StoryTitle>
             <div className="lflex">
                 <Pic size="l" hoverable />
