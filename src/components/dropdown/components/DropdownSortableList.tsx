@@ -1,4 +1,14 @@
-import {Children, cloneElement, FC, isValidElement, ReactNode, ReactElement, useCallback, useEffect, useState} from 'react';
+import {
+    Children,
+    cloneElement,
+    FC,
+    isValidElement,
+    ReactNode,
+    ReactElement,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 import {SortableContainer, SortableHandle, SortEnd, SortOver, SortStart} from 'react-sortable-hoc';
 import {List} from '../../list';
 import {IconDrag16} from '../../../icons';
@@ -12,14 +22,6 @@ import {IList} from '../../list/List';
 interface ISortableListState {
     value: any;
     children: ReactNode;
-}
-
-interface IChildWithIndexProps extends Omit<React.HTMLAttributes<HTMLElement>, 'prefix' | 'onClick'> {
-    index?: number;
-    children?: ReactNode;
-    prefix?: ReactNode;
-    className?: string;
-    onClick?: (event: MouseEvent, value: any) => void;
 }
 
 const Slist = SortableContainer<React.PropsWithChildren<IList>>(List);
