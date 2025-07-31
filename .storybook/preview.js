@@ -1,8 +1,7 @@
-import {addParameters} from '@storybook/react';
-import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-addParameters({
+export const parameters = {
     viewport: {
         viewports: INITIAL_VIEWPORTS,
     },
-});
+};
