@@ -19,8 +19,12 @@ export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({tex
                 }),
             )}
         >
-            {state === 'successWithIcon' && <IconCheck24 />}
-            {state === 'errorWithIcon' && <IconWarning24 />}
+            {(state === 'successWithIcon' || state === 'errorWithIcon') && (
+                <div className={component('snackbar', 'icon')()}>
+                    {state === 'successWithIcon' ? <IconCheck24 /> : <IconWarning24 />}
+                </div>
+            )}
+
             <div className="csnackbar__text">{text}</div>
             {button ? (
                 <Button className="csnackbar__button" variant={Button.variant.secondary} onClick={button.onClick}>
