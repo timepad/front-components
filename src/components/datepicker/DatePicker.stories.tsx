@@ -17,9 +17,12 @@ import {IAnalyticsProps} from './DatePicker';
 export default {
     title: 'DatePicker',
     component: DatePicker,
+    parameters: {
+        chromatic: {delay: 300},
+    },
 } as Meta;
 
-const initialDate = moment('2020-03-24');
+const initialDate = moment();
 
 const Wrapper: FC<React.PropsWithChildren<unknown>> = ({children}) => (
     <div className="сdropdown-body" style={{width: 'fit-content'}}>
@@ -51,10 +54,24 @@ export const Simple: IStorybookComponent = () => {
 
 Simple.storyName = 'Simple';
 
-export const withPastDates: IStorybookComponent = () => {
+export const EnabledDates: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>DatePicker with past dates</StoryTitle>
+            <StoryTitle>Enabled past days</StoryTitle>
+            <Wrapper>
+                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enableDates="past" />
+            </Wrapper>
+            <Brick size={3} />
+            <StoryTitle>Enabled future days</StoryTitle>
+            <Wrapper>
+                <DatePicker
+                    withShortcats
+                    initialStart={initialDate}
+                    analytic={dataAnalyticsProps}
+                    enableDates="future"
+                />
+            </Wrapper>
+            <StoryTitle>Enabled all days</StoryTitle>
             <Wrapper>
                 <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enableDates="all" />
             </Wrapper>
@@ -62,7 +79,7 @@ export const withPastDates: IStorybookComponent = () => {
     );
 };
 
-withPastDates.storyName = 'withPastDates';
+EnabledDates.storyName = 'Enabled dates';
 
 export const Range: IStorybookComponent = () => {
     return (
