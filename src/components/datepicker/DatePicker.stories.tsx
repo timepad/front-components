@@ -17,12 +17,9 @@ import {IAnalyticsProps} from './DatePicker';
 export default {
     title: 'DatePicker',
     component: DatePicker,
-    parameters: {
-        chromatic: {delay: 300},
-    },
 } as Meta;
 
-const initialDate = moment();
+const initialDate = moment('2020-03-24');
 
 const Wrapper: FC<React.PropsWithChildren<unknown>> = ({children}) => (
     <div className="сdropdown-body" style={{width: 'fit-content'}}>
