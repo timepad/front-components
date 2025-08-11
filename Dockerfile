@@ -1,12 +1,16 @@
-FROM cr.yandex/crpt7n2li2drrrf292dl/node:12.16.3-buster-slim AS deps
+FROM node:22-alpine AS deps
 WORKDIR /front-components
 
-# Переключаем buster на архивные репы и ставим git/ssh/ca-certs
-RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g; \
-            s|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list \
- && apt-get -o Acquire::Check-Valid-Until=false update \
- && apt-get install --no-install-recommends -y git openssh-client ca-certificates \
- && rm -rf /var/lib/apt/lists/*
+# Аналог apt-пакетов для Alpine + тулчейн для возможных native deps
+RUN apk add --no-cache \
+    git \
+    openssh-client \
+    ca-certificates
+
+# Подсказываем npm предпочесть prebuilt и меньше сюрпризов
+ENV CI=true \
+    npm_config_build_from_source=false \
+    PUPPETEER_SKIP_DOWNLOAD=true
 
 # Копируем package-файлы и ставим все зависимости
 COPY package.json package-lock.json* ./
