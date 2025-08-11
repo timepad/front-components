@@ -8,20 +8,23 @@ import {IconCheck24, IconWarning24} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 
 export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button}) => {
+    const isSuccessWithIcon = state === 'successWithIcon';
+    const isErrorWithIcon = state === 'errorWithIcon';
+
     // Returns the Provider that must wrap the application
     return (
         <div
             className={cx(
                 't-caption',
                 component('snackbar')({
-                    error: state === 'error' || state === 'errorWithIcon',
-                    success: state === 'successWithIcon',
+                    error: state === 'error' || isErrorWithIcon,
+                    success: isSuccessWithIcon,
                 }),
             )}
         >
-            {(state === 'successWithIcon' || state === 'errorWithIcon') && (
+            {(isSuccessWithIcon || isErrorWithIcon) && (
                 <div className={component('snackbar', 'icon')()}>
-                    {state === 'successWithIcon' ? <IconCheck24 /> : <IconWarning24 />}
+                    {isSuccessWithIcon ? <IconCheck24 /> : <IconWarning24 />}
                 </div>
             )}
 
