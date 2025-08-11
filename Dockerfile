@@ -1,4 +1,4 @@
-FROM node:22-alpine AS deps
+FROM cr.yandex/crpiniaaa3jpf6bp5it7/node:22-alpine AS deps
 WORKDIR /front-components
 # Подсказываем npm предпочесть prebuilt и ускоряем сборку
 ENV CI=true \
