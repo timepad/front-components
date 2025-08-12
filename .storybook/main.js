@@ -1,32 +1,29 @@
 const path = require('path');
 
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
     '@storybook/addon-docs',
+    // TODO Ждём пока снова заработает на версии сторибука 8.5 или выше
+    // '@storybook/addon-storysource',
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-controls",
     "@storybook/addon-viewport",
-    "@storybook/addon-storysource",
+    "@storybook/preview-api",
+    "@storybook/manager-api",
+    "@storybook/test",
   ],
+  
   typescript: {
-    reactDocgen: 'react-docgen',
+    reactDocgen: "react-docgen-typescript",
   },
+  
   webpackFinal: async config => {
     // Добавляем исключение на обработку svg'шек базовым загрузчиком
     const svgRule = config.module.rules.find(({ test }) => String(test).includes('svg'));
     svgRule.test = /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|cur|ani|pdf)(\?.*)?$/;
-
-    // prevent error on require 'fs', 'net', 'tls'
-    config.node = {
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-    }
 
     // Добавил из нашего вебпака обработчик less, svg и шрифтовой загрузчик
     config.module.rules.push.apply(config.module.rules, [
@@ -37,7 +34,19 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                math: 'always', // всегда вычислять деление как арифметику
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
@@ -70,4 +79,9 @@ module.exports = {
 
     return config;
   },
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  }
 }
