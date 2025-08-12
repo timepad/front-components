@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import {IStorybookComponent, StoryTitle} from '../../../services/helpers/storyBookHelpers';
 import 'css/bundle.less';
@@ -49,7 +49,9 @@ const InputsContainer = (props: IInputsContainerProps) => {
                             <Form.Text
                                 placeholder="Multiline"
                                 value={value}
-                                onChange={(e) => setValue(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) =>
+                                    setValue(e.target.value)
+                                }
                                 multiline
                             />
                         </div>
