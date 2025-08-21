@@ -7,23 +7,23 @@ import {Typography} from '../typography';
 import {Brick} from '../brick';
 import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
 
-enum AttrKeys {
-    'btn-close',
-    'btn-back',
+enum TitleAttrKeys {
+    'title-name',
 }
 
-type AttrKeysType = keyof typeof AttrKeys;
+type TitleAttrKeysType = keyof typeof TitleAttrKeys;
 
-export interface IHeaderComponentProps {
-    titleIsTransparent?: boolean;
-    backHandler?: () => void;
-    closeHandler?: () => void;
-    attrs?: Array<IDataAttr<AttrKeysType>>;
-}
-
-export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+export const Title: React.FC<React.PropsWithChildren<{attrs?: Array<IDataAttr<TitleAttrKeysType>>}>> = ({
+    children,
+    attrs,
+}) => {
     return (
-        <Typography.Lead noPadding responsive className={component('form', 'title-text')()}>
+        <Typography.Lead
+            noPadding
+            responsive
+            className={component('form', 'title-text')()}
+            {...extractDataAttrs<TitleAttrKeysType>('title-name', attrs)}
+        >
             {children}
         </Typography.Lead>
     );
@@ -39,6 +39,20 @@ export const Description: React.FC<React.PropsWithChildren<unknown>> = ({childre
         </Fragment>
     );
 };
+
+enum HeaderAttrKeys {
+    'btn-close',
+    'btn-back',
+}
+
+type HeaderAttrKeysType = keyof typeof HeaderAttrKeys;
+
+export interface IHeaderComponentProps {
+    titleIsTransparent?: boolean;
+    backHandler?: () => void;
+    closeHandler?: () => void;
+    attrs?: Array<IDataAttr<HeaderAttrKeysType>>;
+}
 
 export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = ({
     backHandler,
@@ -71,7 +85,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconArrowDown24 />}
                     className={component('form', 'icon')({back: true})}
                     onClick={backHandler}
-                    {...extractDataAttrs<AttrKeysType>('btn-back', attrs)}
+                    {...extractDataAttrs<HeaderAttrKeysType>('btn-back', attrs)}
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
@@ -85,7 +99,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconClose24 />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
-                    {...extractDataAttrs<AttrKeysType>('btn-close', attrs)}
+                    {...extractDataAttrs<HeaderAttrKeysType>('btn-close', attrs)}
                 />
             )}
         </div>
