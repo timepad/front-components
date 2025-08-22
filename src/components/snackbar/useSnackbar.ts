@@ -5,8 +5,8 @@ import {SnackbarContext, ISnackbarProps} from './SnackbarProvider';
 export const useSnackbar = (): (((props: ISnackbarProps) => void) | (() => void))[] => {
     const {openSnackbar, closeSnackbar = () => null} = useContext(SnackbarContext);
 
-    const open = ({text = '', state = 'info', button}: ISnackbarProps) => {
-        openSnackbar && openSnackbar({text, state, button});
+    const open = ({text = '', state = 'info', button, position = 'bottom'}: ISnackbarProps) => {
+        openSnackbar && openSnackbar({text, state, button, position});
     };
 
     // Returns methods in hooks array way
