@@ -267,8 +267,9 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
+    const oneMonth = 1;
     const prevMonth = () => setNow(moment(now).subtract(1, 'month'));
-    const nextMonth = () => setNow(moment(now).add(1, 'month'));
+    const nextMonth = () => setNow(moment(now).add(oneMonth, 'month'));
 
     const selectDates = (start: Moment, end: Moment | null = start) => {
         setStart(start);
