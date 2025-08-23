@@ -46,6 +46,8 @@ const LoadersContainer: React.FC<React.PropsWithChildren<ILoadersContainer>> = (
                         <div className="t-lead t-lead-24">{themes[themeColor].title}</div>
                         <div className="inputs-container lfelx-y-axis">
                             <LoaderCase theme={theme} />
+                            <LoaderCase theme={theme} />
+                            <WithLoaderCase theme={theme} />
                             <WithLoaderCase theme={theme} />
                         </div>
                     </div>
