@@ -15,6 +15,7 @@ export interface ISnackbarProps {
     state?: snackbarStateType;
     text?: string;
     button?: snackbarButtonType;
+    position?: 'top' | 'bottom';
 }
 
 export type ContextType = {
@@ -34,12 +35,14 @@ export const SnackbarProvider: React.FC<React.PropsWithChildren<unknown>> = ({ch
     const [text, setText] = useState('');
     const [state, setState] = useState<snackbarStateType>('info');
     const [actionButton, setActionButton] = useState<snackbarButtonType>();
+    const [position, setPosition] = useState<'top' | 'bottom'>('bottom');
 
-    const triggerSnackbar = ({text, state, button}: ISnackbarProps) => {
+    const triggerSnackbar = ({text, state, button, position}: ISnackbarProps) => {
         setText(text || '');
         setOpen(true);
         setState(state || 'info');
         setActionButton(button);
+        setPosition(position || 'bottom');
     };
 
     // Manages all the snackbar's opening process
@@ -75,7 +78,7 @@ export const SnackbarProvider: React.FC<React.PropsWithChildren<unknown>> = ({ch
                     const timerId: number = +setTimeout(() => setOpen(false), snackbarDuration);
                     setTimeoutId(timerId);
                 }}
-                className={`csnackbar-wrapper`}
+                className={`csnackbar-wrapper csnackbar-wrapper--${position}`}
                 classNames={{
                     enter: `csnackbar-enter`,
                     enterActive: 'csnackbar-enter-active',
