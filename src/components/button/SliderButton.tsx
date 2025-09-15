@@ -12,6 +12,7 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
     value,
     disabled,
     onChange,
+    ...props
 }: ISliderButtonProps) => {
     const [state, update] = useState(value);
 
@@ -19,6 +20,7 @@ export const SliderButton: React.FC<React.PropsWithChildren<ISliderButtonProps>>
 
     return (
         <div
+            {...props}
             className={sliderClasses}
             onClick={(e) => {
                 if (!disabled) {

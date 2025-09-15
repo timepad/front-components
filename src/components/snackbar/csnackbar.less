@@ -6,37 +6,73 @@
     position: fixed;
     right: 0;
     left: 0;
-    bottom: 32px;
     z-index: @z-index-dropdowns;
-    transition: opacity 150ms ease-out, bottom 150ms ease-out;
+
+    &--bottom {
+        top: unset;
+        bottom: 32px;
+        transition: opacity 150ms ease-out, bottom 150ms ease-out;
+
+        /* CSSTransition classNames logic */
+        .csnackbar-enter,
+        .csnackbar-exit-active {
+            bottom: 24px;
+            opacity: 0;
+        }
+
+        .csnackbar-enter-active {
+            bottom: 32px;
+            opacity: 1;
+        }
+    }
+
+    &--top {
+        bottom: unset;
+        top: 32px;
+        transition: opacity 150ms ease-out, top 150ms ease-out;
+
+        /* CSSTransition classNames logic */
+        .csnackbar-enter,
+        .csnackbar-exit-active {
+            top: 24px;
+            opacity: 0;
+        }
+
+        .csnackbar-enter-active {
+            top: 32px;
+            opacity: 1;
+        }
+    }
 }
 
 .csnackbar {
     display: flex;
     border-radius: 8px;
-    padding: 7px 0 11px 0;
+    padding: 7px 0 !important;
+    margin-bottom: 4px;
     box-sizing: border-box;
     background-color: @c-black;
     font-style: normal;
     font-weight: normal;
     width: max-content;
-    height: 40px;
+    min-height: 40px;
     color: @c-white;
-
-    &--success {
-        > svg {
-            margin: -3px -11px 0 4px;
-        }
-    }
 
     &--error {
         > svg {
-            margin: -3px -11px 0 4px;
             > path {
                 fill: @c-white;
             }
         }
         background-color: @c-red;
+    }
+
+    &__icon {
+        margin-left: 5px;
+
+        svg {
+           display: block;
+        }
     }
 }
 
@@ -44,22 +80,12 @@
     &.cbtn.cbtn--variant_secondary,
     &.cbtn.cbtn--variant_secondary:active {
         --text-color: @c-white;
-        margin: -3px 4px 4px 0;
+        height: 32px;
+        margin-right: 4px;
     }
 }
 
 .csnackbar__text {
     padding: 0 16px;
-}
-
-/* CSSTransition classNames logic */
-.csnackbar-enter,
-.csnackbar-exit-active {
-    bottom: 24px;
-    opacity: 0;
-}
-
-.csnackbar-enter-active {
-    bottom: 32px;
-    opacity: 1;
+    margin: auto 0;
 }

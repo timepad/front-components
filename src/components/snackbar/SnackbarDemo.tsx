@@ -79,6 +79,22 @@ export const SnackbarDemo: React.FC<React.PropsWithChildren<unknown>> = () => {
             >
                 Click to see error snackbar with icon and button
             </Button>
+            <div className="lbrick" />
+            <Button
+                onClick={() =>
+                    openSnackbar({
+                        text: 'Что-то совсем страшное произошло',
+                        state: 'errorWithIcon',
+                        button: {
+                            label: 'Ок',
+                            onClick: () => alert('Нажата кнопка Ок'),
+                        },
+                        position: 'top',
+                    })
+                }
+            >
+                Click to see error snackbar with icon and button, position top
+            </Button>
         </div>
     );
 };
