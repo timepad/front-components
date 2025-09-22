@@ -1,4 +1,4 @@
-import {KeyboardEvent, ChangeEvent, FocusEvent, useMemo, useState, FocusEventHandler} from 'react';
+import {ChangeEvent, FocusEvent, FocusEventHandler, KeyboardEvent, useMemo, useState} from 'react';
 
 import {useCallbackAfterRender} from './useCallbackAfterRender';
 import {
@@ -38,6 +38,8 @@ interface IMaskInputProps {
     onKeyUp: (e: KeyboardEvent<HTMLInputElement>) => void;
     onFocus: (e: FocusEvent<HTMLInputElement>) => void;
     onBlur: (e: FocusEvent<HTMLInputElement>) => void;
+    onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => void;
+    onSelect: (e: React.SyntheticEvent<HTMLInputElement>) => void;
 }
 
 export type Mask = Array<string | RegExp>;
@@ -75,7 +77,6 @@ export function useMask({
             }
         )?.nativeEvent?.inputType;
 
-        // Capture cursor BEFORE value transformation
         const prevCursor = target.selectionStart ?? 0;
 
         const action: 'insert' | 'delete' | 'paste' | 'move' = (() => {
@@ -93,12 +94,10 @@ export function useMask({
 
         const isForwardDelete = inputType === 'deleteContentForward';
 
-        // Align caret for delete: if caret stands on a literal, shift left to nearest digit slot
         const isDelete = inputType === 'deleteContentBackward' || inputType === 'deleteContentForward';
         const caretForDelete = (() => {
             if (!isDelete) return prevCursor;
             let i = prevCursor;
-            // If on literal, move left to nearest pattern slot
             while (i > 0 && !(parsedMask[i] instanceof RegExp)) i -= 1;
             return i;
         })();
@@ -119,81 +118,74 @@ export function useMask({
 
         onChange?.(newValueWithPrefix);
 
-        // Preserve caret strictly after the newly inserted digit (delete+insert friendly)
         scheduleAfterRender(() => {
-            const actionLocal = action;
-
-            // Prefer computing caret around the actual visual change point to avoid end fallbacks
-            const prevMasked = maskedValue;
-            const currentMasked = (target as HTMLInputElement).value;
-
-            let diffIndex = -1;
-            const minLen = Math.min(prevMasked.length, currentMasked.length);
-            for (let i = 0; i < minLen; i += 1) {
-                if (prevMasked.charAt(i) !== currentMasked.charAt(i)) {
-                    diffIndex = i;
-                    break;
-                }
-            }
-            if (diffIndex === -1) {
-                diffIndex = minLen;
+            let cursorToSet = getCursorPosition({
+                value: newValue,
+                mask: parsedMask,
+                currentCursor: prevCursor,
+                action,
+            });
+            if (newValue.length === 0 && isPhoneType) {
+                cursorToSet = prefix.length;
+            } else if (action === 'insert' && newValue.length === 0) {
+                cursorToSet = getNextCursorPosition(newValue, parsedMask);
             }
 
-            // Find closest pattern slot at/after diff index
-            const findPatternAtOrAfter = (start: number): number => {
-                for (let i = Math.max(0, start); i < parsedMask.length; i += 1) {
-                    if (parsedMask[i] instanceof RegExp) return i;
-                }
-                return parsedMask.length - 1;
-            };
-
-            let desiredCursor = findPatternAtOrAfter(diffIndex);
-            if (actionLocal === 'insert' || actionLocal === 'paste') {
-                desiredCursor = Math.min(desiredCursor + 1, currentMasked.length);
-            }
-            // Forward delete should keep caret at the same logical slot (not jump left)
-            if (actionLocal === 'delete' && inputType === 'deleteContentForward') {
-                desiredCursor = prevCursor;
-            }
-            // Backward delete from a literal should place caret at previous pattern slot
-            if (actionLocal === 'delete' && inputType === 'deleteContentBackward') {
-                let i = prevCursor;
-                if (!(parsedMask[i] instanceof RegExp)) i -= 1;
-                while (i > 0 && !(parsedMask[i] instanceof RegExp)) i -= 1;
-                if (i >= 0) desiredCursor = i;
-            }
-
-            // Fallback to computed helper if something goes off-path
-            if (Number.isNaN(desiredCursor) || desiredCursor < 0) {
-                desiredCursor = getCursorPosition({
-                    value: newValue,
-                    mask: parsedMask,
-                    currentCursor: prevCursor,
-                    action: actionLocal,
-                });
-            }
-
-            setCursorPositionForElement(target, desiredCursor);
+            setCursorPositionForElement(target, cursorToSet);
         });
     }
 
     // For some reason, tests fail without this...
     // TODO: Figure out why this is necessary
     function onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
-        // keep caret; no-op to satisfy linter
         void e;
     }
 
     function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-        // keep caret; no-op to satisfy linter
-        void e;
+        const target = e.target as HTMLInputElement;
+        const currentPosition = target.selectionStart ?? 0;
+        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
+
+        if (e.key === 'ArrowLeft' && currentPosition <= prefixLength) {
+            e.preventDefault();
+            setCursorPositionForElement(target, prefixLength);
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            setCursorPositionForElement(target, prefixLength);
+        }
+    }
+
+    function onMouseDown(event: React.MouseEvent<HTMLInputElement>) {
+        const target = event.target as HTMLInputElement;
+        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
+
+        if (event.detail <= 2) {
+            const clickPosition = target.selectionStart ?? 0;
+            if (clickPosition < prefixLength) {
+                event.preventDefault();
+                requestAnimationFrame(() => {
+                    setCursorPositionForElement(target, prefixLength);
+                });
+            }
+        }
+    }
+
+    function onSelectionChange(event: React.SyntheticEvent<HTMLInputElement>) {
+        const target = event.target as HTMLInputElement;
+        const currentPosition = target.selectionStart ?? 0;
+        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
+
+        if (currentPosition < prefixLength) {
+            requestAnimationFrame(() => {
+                setCursorPositionForElement(target, prefixLength);
+            });
+        }
     }
 
     function onFocus(event: FocusEvent<HTMLInputElement>) {
         props?.onFocus?.(event);
 
         setFocus(true);
-        // On focus, move caret to first empty slot for faster entry
         requestAnimationFrame(() => {
             setCursorPositionForElement(
                 event.target as HTMLInputElement,
@@ -206,7 +198,6 @@ export function useMask({
         props?.onBlur?.(event);
 
         setFocus(false);
-        // Work around in chrome to make sure focus sets cursor position
     }
 
     const placeholderValue = maskPlaceholder ? placeholder : prefix;
@@ -222,5 +213,7 @@ export function useMask({
         onKeyUp,
         onFocus,
         onBlur,
+        onMouseDown,
+        onSelect: onSelectionChange,
     };
 }
