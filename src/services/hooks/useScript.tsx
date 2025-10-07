@@ -13,7 +13,6 @@ export const useScript = (attrs: ScriptAttributes): [boolean] => {
 
         const script: HTMLScriptElement = document.createElement('script');
         script.async = true;
-        script.id = attrs.id || 'script_id';
         Object.entries(attrs).forEach(([name, value]) => {
             if (name === 'callback') return;
             if (name !== 'innerText') {
