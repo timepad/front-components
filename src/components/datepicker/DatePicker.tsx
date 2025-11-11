@@ -267,8 +267,9 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
             today: day.isSame(today, 'day') && day.isSame(now, 'month'),
         });
 
+    const oneMonth = 1;
     const prevMonth = () => setNow(moment(now).subtract(1, 'month'));
-    const nextMonth = () => setNow(moment(now).add(1, 'month'));
+    const nextMonth = () => setNow(moment(now).add(oneMonth, 'month'));
 
     const selectDates = (start: Moment, end: Moment | null = start) => {
         setStart(start);
@@ -313,12 +314,14 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                         <span
                             onClick={() => onSelectCurrentView(SelectViewTypes.MONTH)}
                             className={component(baseClassName, 'header-month')()}
+                            data-qa="title-current-month"
                         >
                             {now.format('MMMM')}
                         </span>{' '}
                         <span
                             onClick={() => onSelectCurrentView(SelectViewTypes.YEAR)}
                             className={component(baseClassName, 'header-year')()}
+                            data-qa="title-current-year"
                         >
                             {now.format('YYYY')}
                         </span>
@@ -332,6 +335,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 onClick={prevMonth}
                                 disabled={enableDates !== 'past' && enableDates !== 'all' && today.isSame(now, 'month')}
                                 icon={<IconArrowDown24 style={{transform: 'rotate(90deg)'}} />}
+                                data-qa="btn-back-to"
                             />
                             <Button
                                 variant={Button.variant.transparent}
@@ -340,6 +344,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                     enableDates !== 'future' && enableDates !== 'all' && today.isSame(now, 'month')
                                 }
                                 icon={<IconArrowDown24 style={{transform: 'rotate(-90deg)'}} />}
+                                data-qa="btn-next-to"
                             />
                         </>
                     </div>
@@ -371,6 +376,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                         // whileTap="tap"
                                         className={dayClasses(day)}
                                         onClick={() => dayClicked(day)}
+                                        data-qa={`block-day-${isDayOfCurrentMonth(day) && day.date()}`}
                                     >
                                         <span className={component(baseClassName, 'day-cell')()}>
                                             <span className={component(baseClassName, 'day-text')()}>
