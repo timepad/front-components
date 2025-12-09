@@ -51,18 +51,32 @@ export const Simple: IStorybookComponent = () => {
 
 Simple.storyName = 'Simple';
 
-export const withPastDates: IStorybookComponent = () => {
+export const AvailableRange: IStorybookComponent = () => {
     return (
         <>
-            <StoryTitle>DatePicker with past dates</StoryTitle>
+            <StoryTitle>Available only past dates</StoryTitle>
             <Wrapper>
-                <DatePicker withShortcats initialStart={initialDate} analytic={dataAnalyticsProps} enableDates="all" />
+                <DatePicker withShortcats initialToday={initialDate} analytic={dataAnalyticsProps} enableDates="past" />
+            </Wrapper>
+            <Brick size={3} />
+            <StoryTitle>Available only future dates</StoryTitle>
+            <Wrapper>
+                <DatePicker
+                    withShortcats
+                    initialToday={initialDate}
+                    analytic={dataAnalyticsProps}
+                    enableDates="future"
+                />
+            </Wrapper>
+            <StoryTitle>Available all dates range</StoryTitle>
+            <Wrapper>
+                <DatePicker withShortcats initialToday={initialDate} analytic={dataAnalyticsProps} enableDates="all" />
             </Wrapper>
         </>
     );
 };
 
-withPastDates.storyName = 'withPastDates';
+AvailableRange.storyName = 'Available Range';
 
 export const Range: IStorybookComponent = () => {
     return (
