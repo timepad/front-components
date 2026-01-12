@@ -29,7 +29,6 @@ export interface IDropdownProps {
     pinned?: IPinnedPositions;
     theme?: IThemeTypes;
     contentStyle?: React.CSSProperties;
-    overlayStyle?: React.CSSProperties;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
