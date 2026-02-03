@@ -52,7 +52,7 @@
         position: relative;
         display: inline-flex;
         flex-direction: column;
-        padding-top: 32px;
+        padding-top: var(--tl-label-space, 32px);
         width: 100%;
         max-height: 87px;
 
@@ -71,10 +71,9 @@
             font-size: 15px;
             line-height: 19px !important; // TODO: среднее значение, компромисс для ровной анимации
 
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            white-space: normal;
             overflow: hidden;
-            max-width: 100%;
+            max-width: calc(100% - var(--tl-icon-space, 0px));
 
             touch-action: manipulation;
             transform-origin: left bottom;
