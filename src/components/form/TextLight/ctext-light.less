@@ -49,10 +49,18 @@
 
 .ctext-light {
     &__container {
+        --tl-label-space: 32px;
+        --tl-label-input-gap: 8px;
+        --tl-icon-size: 32px;
+        --tl-icon-space: 0;
+        --tl-input-pr: 0;
+
         position: relative;
         display: inline-flex;
         flex-direction: column;
-        padding-top: var(--tl-label-space, 32px);
+        padding-top: calc(
+            var(--tl-label-space) + var(--tl-label-input-gap)
+        );
         width: 100%;
         max-height: 87px;
 
@@ -65,6 +73,11 @@
             box-sizing: border-box;
         }
 
+        &--has-icon {
+            --tl-icon-space: var(--tl-icon-size);
+            --tl-input-pr: var(--tl-icon-size);
+        }
+
         label {
             position: absolute;
             left: 0;
@@ -73,7 +86,7 @@
 
             white-space: normal;
             overflow: hidden;
-            max-width: calc(100% - var(--tl-icon-space, 0px));
+            max-width: calc(100% - var(--tl-icon-space));
 
             touch-action: manipulation;
             transform-origin: left bottom;
@@ -165,6 +178,7 @@
             border: medium none;
             background-color: transparent;
             margin: 0;
+            padding: 0 var(--tl-input-pr) 12px 0;
 
             color: @c-black;
 

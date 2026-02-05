@@ -5,14 +5,9 @@ import {IconCheck24} from '../../../icons';
 import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {ITextLightProps} from './TextLight.types';
-import './index.less';
 import {Input} from './Input';
 
 const CSS_VAR_LABEL_SPACE = '--tl-label-space';
-const CSS_VAR_ICON_SPACE = '--tl-icon-space';
-
-const ICON_SPACE_PX = 32;
-const LABEL_INPUT_GAP_PX = 8;
 
 export const TextLight: React.FC<ITextLightProps> = ({
     customIcon = undefined,
@@ -39,12 +34,11 @@ export const TextLight: React.FC<ITextLightProps> = ({
         let raf = 0;
 
         const measure = () => {
-            if (raf) cancelAnimationFrame(raf);
+            cancelAnimationFrame(raf);
 
             raf = requestAnimationFrame(() => {
                 const labelHeight = Math.ceil(label.getBoundingClientRect().height);
-                container.style.setProperty(CSS_VAR_LABEL_SPACE, `${labelHeight + LABEL_INPUT_GAP_PX}px`);
-                container.style.setProperty(CSS_VAR_ICON_SPACE, hasIcon ? `${ICON_SPACE_PX}px` : '0px');
+                container.style.setProperty(CSS_VAR_LABEL_SPACE, `${labelHeight}px`);
             });
         };
 
@@ -57,14 +51,14 @@ export const TextLight: React.FC<ITextLightProps> = ({
         window.addEventListener('resize', measure);
 
         return () => {
-            if (raf) cancelAnimationFrame(raf);
+            cancelAnimationFrame(raf);
             ro.disconnect();
             window.removeEventListener('resize', measure);
         };
     }, [labelText, hasIcon]);
 
     const inputClasses = cx(
-        component('text-light', 'container')(),
+        component('text-light', 'container')({'has-icon': hasIcon}),
         component(
             'text-light',
             'input',
@@ -72,6 +66,7 @@ export const TextLight: React.FC<ITextLightProps> = ({
             disabled,
             error: !!error,
             success,
+            'has-icon': !!customIcon || success,
         }),
     );
     const iconClasses = component('icon')();
@@ -84,13 +79,10 @@ export const TextLight: React.FC<ITextLightProps> = ({
         disabled,
     });
 
-    const style =
-        customIcon || success ? {...props.style, padding: '0 32px 12px 0'} : {...props.style, padding: '0 0 12px 0'};
-
     return (
         <>
             <div className={inputClasses} ref={containerRef}>
-                <Input name={name} id={id} disabled={disabled} style={style} {...props} />
+                <Input name={name} id={id} disabled={disabled} {...props} />
                 <label ref={labelRef} htmlFor={id}>
                     {labelText}
                 </label>
