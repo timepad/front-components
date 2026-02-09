@@ -46,18 +46,21 @@ const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaPro
 
             measurementsCacheRef.current = nodeSizingData;
 
-            const [height, rowHeight] = calculateNodeHeight(
-                nodeSizingData,
-                node.value || node.placeholder || 'x',
-                minRows,
-                maxRows,
-            );
+            const [height, rowHeight] = calculateNodeHeight(nodeSizingData, node.value || 'x', minRows, maxRows);
 
             if (heightRef.current !== height) {
                 heightRef.current = height;
                 node.style.setProperty('height', `${height}px`, 'important');
                 onHeightChange(height, {rowHeight});
             }
+
+            if (!node.value) {
+                node.style.overflowY = 'hidden';
+                return;
+            }
+
+            const isOverflowing = node.scrollHeight > node.clientHeight + 1;
+            node.style.overflowY = isOverflowing ? 'auto' : 'hidden';
         }
     };
 
