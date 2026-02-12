@@ -6,9 +6,11 @@ interface IGetNewValueParams {
     oldValue: string;
     maskedValue: string;
     mask: Mask;
-    lastCursorPosition: number;
     isPhoneMode: boolean;
     prefix: string;
+    caretMaskIndex?: number;
+    action?: 'insert' | 'delete' | 'paste' | 'move';
+    deleteDirection?: 'backward' | 'forward';
 }
 
 export function getNewValue({
@@ -16,49 +18,62 @@ export function getNewValue({
     oldValue,
     maskedValue,
     mask,
-    lastCursorPosition,
     isPhoneMode,
     prefix,
+    caretMaskIndex,
+    action,
+    deleteDirection,
 }: IGetNewValueParams): string {
-    let newValue: string;
+    const totalPatternSlots = mask.reduce((acc, item) => (item instanceof RegExp ? acc + 1 : acc), 0);
+    let rawDigits = isPhoneMode ? getFormattedPhone(inputValue, prefix) : (inputValue.match(/\d/g) || []).join('');
+    const oldDigitsCount = (oldValue.match(/\d/g) || []).length;
+    const newDigitsCount = rawDigits.length;
+    const isComplete = oldDigitsCount >= totalPatternSlots;
+    const isInserting = action === 'insert' || action === 'paste';
 
-    // 48888 48888 48888 48888
-    // +7(999) 999 99 99
-    // +8 960 486-00-12
-    // 8 999 123
-    // 9991232233
+    if (isComplete && isInserting && newDigitsCount > oldDigitsCount) {
+        rawDigits = oldValue;
+    }
 
-    if (inputValue.length > 1 && oldValue.length === 0) {
-        if (isPhoneMode) {
-            // autocomplete , paste ...
-            newValue = getFormattedPhone(inputValue, prefix);
-        } else {
-            // удаляем пробелы навсякий случай, чтоб привести к нормальному формату
-            newValue = inputValue.replaceAll(' ', '');
-        }
-    } else if (inputValue.length > maskedValue.length) {
-        const maskCharacterOrPattern = mask[lastCursorPosition];
-        const insertedCharacter = inputValue.charAt(lastCursorPosition);
+    if (isPhoneMode && rawDigits.length > 0) {
+        const hasPrefix = rawDigits.startsWith('7') || rawDigits.startsWith('8');
+        const inputHasPrefix = inputValue.includes('+7') || inputValue.includes('+8');
 
-        if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
-            newValue = `${oldValue}${insertedCharacter}`;
-        } else {
-            newValue = oldValue; // ignore
-        }
-    } else {
-        if (oldValue.length === 0) {
-            const maskCharacterOrPattern = mask[lastCursorPosition];
-            const insertedCharacter = inputValue.charAt(0);
-
-            if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
-                newValue = insertedCharacter;
-            } else {
-                newValue = oldValue; // ignore
-            }
-        } else {
-            newValue = oldValue.slice(0, oldValue.length - 1); // Remove a character
+        if (inputHasPrefix && hasPrefix) {
+            rawDigits = rawDigits.slice(1);
         }
     }
 
-    return newValue;
+    if (action === 'delete' && typeof caretMaskIndex === 'number') {
+        const oldDigits = oldValue;
+        const leftDigitsCount = (maskedValue.slice(0, Math.max(0, caretMaskIndex)).match(/\d/g) || []).length;
+        if (oldDigits.length > 0 && rawDigits.length === oldDigits.length) {
+            if (deleteDirection === 'forward') {
+                rawDigits = `${oldDigits.slice(0, leftDigitsCount)}${oldDigits.slice(leftDigitsCount + 1)}`;
+            } else {
+                rawDigits = `${oldDigits.slice(0, Math.max(0, leftDigitsCount - 1))}${oldDigits.slice(
+                    leftDigitsCount,
+                )}`;
+            }
+        }
+    }
+
+    if ((!action || action === 'move') && typeof caretMaskIndex === 'number') {
+        const inputDigits = (inputValue.match(/\d/g) || []).join('');
+        const oldDigits = oldValue;
+        if (inputDigits.length === oldDigits.length && inputValue === maskedValue) {
+            let prevPatternIndex = caretMaskIndex - 1;
+            while (prevPatternIndex >= 0 && !(mask[prevPatternIndex] instanceof RegExp)) {
+                prevPatternIndex -= 1;
+            }
+            if (prevPatternIndex >= 0) {
+                const leftDigitsCount = (maskedValue.slice(0, prevPatternIndex + 1).match(/\d/g) || []).length;
+                rawDigits = `${oldDigits.slice(0, Math.max(0, leftDigitsCount - 1))}${oldDigits.slice(
+                    leftDigitsCount,
+                )}`;
+            }
+        }
+    }
+
+    return rawDigits.slice(0, totalPatternSlots);
 }
