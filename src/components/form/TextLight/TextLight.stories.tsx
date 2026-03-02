@@ -50,9 +50,28 @@ const inputsData: IInputData[] = [
         error: undefined,
         caption: 'Caption',
     },
+    {
+        placeholder: 'Multiline empty input with multiline label, label can be multiline.',
+        value: '',
+        multiline: true,
+        disabled: false,
+        success: false,
+        error: undefined,
+        caption: 'Caption',
+    },
     // Empty input
     {
         placeholder: 'Empty',
+        value: '',
+        multiline: false,
+        disabled: false,
+        success: false,
+        error: undefined,
+        caption: 'Caption',
+    },
+    // Empty input with multiline label
+    {
+        placeholder: 'Empty input with multiline label, label can be multiline.',
         value: '',
         multiline: false,
         disabled: false,
@@ -105,6 +124,15 @@ const inputsData: IInputData[] = [
     // Successful input
     {
         placeholder: 'Input caption',
+        value: 'Filled',
+        disabled: false,
+        success: true,
+        error: undefined,
+        caption: 'Caption',
+    },
+    // Successful input with multiline label
+    {
+        placeholder: 'Input caption with multiline label, label can be multiline',
         value: 'Filled',
         disabled: false,
         success: true,
