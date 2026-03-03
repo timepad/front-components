@@ -368,6 +368,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
             const style = {
                 position: fixPositionOnScroll ? 'fixed' : 'absolute',
                 zIndex: 999,
+                ...(!isMobile ? contentStyle : {}),
             } as React.CSSProperties;
 
             // пришлось добавить эти свойства из-за того, что инпуты могут быть с автофокусом и страница скролится
