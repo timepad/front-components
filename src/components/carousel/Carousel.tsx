@@ -1,16 +1,18 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ScrollContainer, {ScrollContainerProps} from 'react-indiana-drag-scroll';
 
 import './index.less';
 import {SliderBtn} from './SliderBtn';
 import {component} from '../../services/helpers/classHelpers';
+import {addQaTagsToChildren, qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
 interface IContentCoords {
     start: number;
     end: number;
 }
 
-interface ICarouselProps extends Omit<ScrollContainerProps, 'ref' | 'vertical'> {
+interface ICarouselProps extends Omit<ScrollContainerProps, 'ref' | 'vertical'>, IAdditionalAttributes {
     nextBtn?: React.ReactElement;
     prevBtn?: React.ReactElement;
 }
@@ -25,7 +27,12 @@ export const Carousel: React.FC<ICarouselProps> = ({
 }) => {
     //variablesa
     const carouselClassName = component('carousel', 'track')({vertical: !horizontal});
-    const slides = React.Children.toArray(children).filter(Boolean); /* fix zero children */
+
+    const slides = useMemo(() => {
+        const extendedChildren = addQaTagsToChildren(children, qaTags.carouselSlideItem);
+        return React.Children.toArray(extendedChildren).filter(Boolean); /* fix zero children */
+    }, [children]);
+
     const countSlides = slides.length;
     //hooks
     const [contentMap, setContentMap] = useState<Array<IContentCoords>>([]);
@@ -148,7 +155,7 @@ export const Carousel: React.FC<ICarouselProps> = ({
     }, [onScrollProgress]);
 
     return (
-        <div className={component('carousel')()}>
+        <div className={component('carousel')()} data-qa={props['data-qa'] || qaTags.carousel}>
             <ScrollContainer
                 className={`${carouselClassName} ${className}`}
                 ref={trackRef as React.MutableRefObject<ScrollContainer> & React.ReactNode}
@@ -159,8 +166,16 @@ export const Carousel: React.FC<ICarouselProps> = ({
             >
                 {slides}
             </ScrollContainer>
-            {scrollProgress > 0 && allowScroll && <div onClick={prev}>{prevBtn}</div>}
-            {scrollProgress < 1 && allowScroll && <div onClick={next}>{nextBtn}</div>}
+            {scrollProgress > 0 && allowScroll && (
+                <div onClick={prev} data-qa={qaTags.btnBackTo}>
+                    {prevBtn}
+                </div>
+            )}
+            {scrollProgress < 1 && allowScroll && (
+                <div onClick={next} data-qa={qaTags.btnNextTo}>
+                    {nextBtn}
+                </div>
+            )}
         </div>
     );
 };

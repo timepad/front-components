@@ -4,15 +4,19 @@ import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {component} from '../../services/helpers/classHelpers';
 import {observer} from 'mobx-react';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 export type TabId = string;
 
-interface ITabProps extends HTMLAttributes<HTMLLIElement> {
+interface ITabProps extends HTMLAttributes<HTMLLIElement>, IAdditionalAttributes {
     tabId: TabId;
 }
 
-export const Tab: FC<React.PropsWithChildren<ITabProps>> = observer(({children, className, tabId, ...rest}) => {
+export const Tab: FC<React.PropsWithChildren<ITabProps>> = observer(({children, className, tabId, ...props}) => {
     const {tabsStore, handleOnTabClick} = useContext(TabsContext);
+
+    const isActive = tabsStore.activeTabId === tabId;
     const liClasses = cx(component('tab-bar', 'li')({['is-active']: tabsStore.activeTabId === tabId}), className);
     const buttonClasses = component('tab-bar', 'button')();
 
@@ -25,7 +29,7 @@ export const Tab: FC<React.PropsWithChildren<ITabProps>> = observer(({children, 
     }, []);
 
     return (
-        <li {...rest} className={liClasses}>
+        <li {...props} className={liClasses} data-qa={isActive ? qaTags.tabsItemSelected : props['data-qa']}>
             <button className={buttonClasses} onClick={() => handleOnTabClick(tabId)}>
                 {children}
             </button>

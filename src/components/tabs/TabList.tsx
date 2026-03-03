@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {component} from '../../services/helpers/classHelpers';
 import {observer} from 'mobx-react';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
 interface IHighlighterStyle {
     transform: string;
@@ -46,10 +47,14 @@ export const TabList: FC<React.PropsWithChildren<HTMLAttributes<HTMLUListElement
             setHighlighterStyles(getHighlighterStyles());
         }, [tabsStore.activeTabId]);
 
+        const extendedChildren = React.useMemo(() => {
+            return addQaTagsToChildren(children, qaTags.tabsItem);
+        }, [children]);
+
         return (
             <div className={highlighterBoxClasses} ref={boxRef}>
                 <ul {...restProps} className={ulClasses}>
-                    {children}
+                    {extendedChildren}
                 </ul>
 
                 <span className={spanClasses} style={highlighterStyles} />

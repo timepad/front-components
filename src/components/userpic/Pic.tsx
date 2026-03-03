@@ -5,10 +5,12 @@ import {component} from '../../services/helpers/classHelpers';
 import {IconProfile24} from '../../icons';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from 'services';
 
 type PicSize = 's' | 'm' | 'ml' | 'l' | 'xl';
 
-interface IProps {
+interface IProps extends IAdditionalAttributes {
     imgURL?: string;
     label?: string;
     square?: boolean;
@@ -46,7 +48,7 @@ export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     hoverable,
     bordered,
     ...props
-}: IProps) => {
+}) => {
     const classNames = cx(
         className,
         component('userpic')({
@@ -61,7 +63,7 @@ export const Pic: React.FC<React.PropsWithChildren<IProps>> = ({
     const imgClassName = component('userpic', 'img')();
 
     return (
-        <div className={classNames} onClick={onClick} {...props}>
+        <div className={classNames} onClick={onClick} {...props} data-qa={props['data-qa'] || qaTags.picture}>
             {!!imgURL ? <UserImage className={imgClassName} imgURL={imgURL} /> : <UserLabel label={label} />}
         </div>
     );

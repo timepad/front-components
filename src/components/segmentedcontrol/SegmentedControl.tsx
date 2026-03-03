@@ -6,6 +6,8 @@ import {ControlList} from './ControlList';
 import {action, observable} from 'mobx';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 class SegmentedControlStore {
     @observable activeControlId: string;
@@ -30,7 +32,7 @@ export const SegmentedControlContext = createContext<ISegmentedControlStoreConte
 
 type ControlClickHandler = (ControlId: string) => void;
 
-export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
+export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement>, IAdditionalAttributes {
     defaultControlId?: ControlId;
     activeControlId?: ControlId;
     fix?: boolean;
@@ -47,7 +49,7 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
     fix,
     onControlClick,
     className,
-    ...rest
+    ...props
 }: ISegmentedControlProps) => {
     const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
     const divClasses = cx(component('segmentedcontrol')({fix}), className);
@@ -66,7 +68,7 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
           };
 
     return (
-        <div {...rest} className={divClasses}>
+        <div {...props} className={divClasses} data-qa={props['data-qa'] || qaTags.segmentControl}>
             <SegmentedControlContext.Provider
                 value={{
                     segmentedControlStore,

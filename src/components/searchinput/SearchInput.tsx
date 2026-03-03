@@ -8,6 +8,7 @@ import {Text} from '../form/Text';
 import {IconArrowTale24, IconClose24, IconSearch24} from '../../icons';
 import {keyPressHelper} from '../../services/helpers/keyPressHelper';
 import {component} from '../../services/helpers/classHelpers';
+import {qaTags} from '../../services';
 
 export const SearchInput: React.FC<ISearchInputProps> = ({
     value,
@@ -26,6 +27,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     id = 'search-input',
     autoComplete = 'off',
     withSearchIcon = false,
+    'data-qa': dataQA,
     ...props
 }) => {
     const [isFocus, setIsFocus] = useState(false);
@@ -92,7 +94,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
     });
 
     return (
-        <label htmlFor={id} className={searchInputClassName} ref={labelRef}>
+        <label htmlFor={id} className={searchInputClassName} ref={labelRef} data-qa={dataQA || qaTags.searchInput}>
             {showBackButton && (
                 <Button icon={<IconArrowTale24 />} variant={Button.variant.transparent} onClick={onBackButtonClick} />
             )}

@@ -5,24 +5,15 @@ import {Button} from '../button';
 import {IconArrowDown24, IconClose24} from '../../icons';
 import {Typography} from '../typography';
 import {Brick} from '../brick';
-import {extractDataAttrs, IDataAttr} from '../../services/helpers/extractDataAttrs';
+import {qaTags} from '../../services';
 
-enum TitleAttrKeys {
-    'title-name',
-}
-
-type TitleAttrKeysType = keyof typeof TitleAttrKeys;
-
-export const Title: React.FC<React.PropsWithChildren<{attrs?: Array<IDataAttr<TitleAttrKeysType>>}>> = ({
-    children,
-    attrs,
-}) => {
+export const Title: React.FC<React.PropsWithChildren> = ({children}) => {
     return (
         <Typography.Lead
             noPadding
             responsive
             className={component('form', 'title-text')()}
-            {...extractDataAttrs<TitleAttrKeysType>('title-name', attrs)}
+            data-qa={qaTags.titleModalName}
         >
             {children}
         </Typography.Lead>
@@ -33,25 +24,21 @@ export const Description: React.FC<React.PropsWithChildren<unknown>> = ({childre
     return (
         <Fragment>
             <Brick />
-            <Typography.Caption noPadding className={component('form', 'title-desc')()}>
+            <Typography.Caption
+                noPadding
+                className={component('form', 'title-desc')()}
+                data-qa={qaTags.blockModalDescription}
+            >
                 {children}
             </Typography.Caption>
         </Fragment>
     );
 };
 
-enum HeaderAttrKeys {
-    'btn-close',
-    'btn-back',
-}
-
-type HeaderAttrKeysType = keyof typeof HeaderAttrKeys;
-
 export interface IHeaderComponentProps {
     titleIsTransparent?: boolean;
     backHandler?: () => void;
     closeHandler?: () => void;
-    attrs?: Array<IDataAttr<HeaderAttrKeysType>>;
 }
 
 export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = ({
@@ -59,7 +46,6 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
     closeHandler,
     titleIsTransparent,
     children,
-    attrs,
 }) => {
     const titleClass = component(
         'form',
@@ -85,7 +71,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconArrowDown24 />}
                     className={component('form', 'icon')({back: true})}
                     onClick={backHandler}
-                    {...extractDataAttrs<HeaderAttrKeysType>('btn-back', attrs)}
+                    data-qa={qaTags.btnBackTo}
                 />
             )}
             <div className={layout('flex')({'y-axis': true})}>
@@ -99,7 +85,7 @@ export const Header: React.FC<React.PropsWithChildren<IHeaderComponentProps>> = 
                     icon={<IconClose24 />}
                     className={component('form', 'icon')({close: true})}
                     onClick={handleClose}
-                    {...extractDataAttrs<HeaderAttrKeysType>('btn-close', attrs)}
+                    data-qa={qaTags.btnCloseModal}
                 />
             )}
         </div>
