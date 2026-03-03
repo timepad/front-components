@@ -7,7 +7,7 @@ import {Typography} from '../typography';
 import {Brick} from '../brick';
 import {qaTags} from '../../services';
 
-export const Title: React.FC<React.PropsWithChildren> = ({children}) => {
+export const Title: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
     return (
         <Typography.Lead
             noPadding

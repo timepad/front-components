@@ -116,7 +116,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
             isOpen={isOpen}
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
-            contentRef={(element) => {
+            contentRef={(element: HTMLDivElement) => {
                 //По-другому нет возможности устанавливать data* атрибуты
                 element.setAttribute('data-qa', props['data-qa'] || qaTags.modal);
             }}
