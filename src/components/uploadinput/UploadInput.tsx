@@ -10,7 +10,7 @@ import {Gap} from '../gap';
 import {Typography} from '../typography';
 import {IconDelete24} from '../../icons';
 import {component, layout} from '../../services/helpers/classHelpers';
-import {qaTags} from 'services';
+import {qaTags} from '../../services';
 
 export const UploadInput: React.FC<IUploadInputProps> = ({
     label = '',

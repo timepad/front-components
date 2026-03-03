@@ -6,7 +6,7 @@ import {IconProfile24} from '../../icons';
 
 import './index.less';
 import {IAdditionalAttributes} from '../../../types';
-import {qaTags} from 'services';
+import {qaTags} from '../../services';
 
 type PicSize = 's' | 'm' | 'ml' | 'l' | 'xl';
 
