@@ -1,4 +1,5 @@
 import React, {MutableRefObject} from 'react';
+import {IAdditionalAttributes} from '../../../types';
 
 export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     onEnterPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -10,4 +11,4 @@ export type ISearchInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     inputRef?: MutableRefObject<HTMLInputElement | null>;
     isWide?: boolean;
     withSearchIcon?: boolean;
-};
+} & IAdditionalAttributes;

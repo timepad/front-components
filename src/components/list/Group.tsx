@@ -1,8 +1,10 @@
 import * as React from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
+import {qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
-export interface IItem {
+export interface IItem extends IAdditionalAttributes {
     className?: string;
     secondaryText?: string;
     label?: string;
@@ -32,6 +34,7 @@ const Group: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<H
             label,
             header,
             active,
+            'data-qa': dataQa,
             ...props
         }: IItem,
         ref,
@@ -51,7 +54,7 @@ const Group: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<H
 
         const mainText = label ? label : children;
         return (
-            <div ref={ref} className={classNames}>
+            <div ref={ref} className={classNames} data-qa={dataQa}>
                 {Prefix ? (
                     <div className={component('list-item', 'prefix')()}>
                         <Prefix />
@@ -60,11 +63,20 @@ const Group: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<H
                 <Tag className={component('list-item', 'tag')()} {...props}>
                     {secondaryText ? (
                         <div>
-                            <div className={component('list-item', 'main-text')()}>{mainText}</div>
-                            <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                            <div className={component('list-item', 'main-text')()} data-qa={qaTags.listItemMainTitle}>
+                                {mainText}
+                            </div>
+                            <div
+                                className={component('list-item', 'secondary-text')()}
+                                data-qa={qaTags.listItemSecondTitle}
+                            >
+                                {secondaryText}
+                            </div>
                         </div>
                     ) : (
-                        <div className={component('list-item', 'main-text')()}>{mainText}</div>
+                        <div className={component('list-item', 'main-text')()} data-qa={qaTags.listItemMainTitle}>
+                            {mainText}
+                        </div>
                     )}
                 </Tag>
                 {Suffix ? (

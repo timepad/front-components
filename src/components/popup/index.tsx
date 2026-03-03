@@ -6,6 +6,8 @@ import {calculateModifiers} from './utils';
 import {styles} from './styles';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 const getRootPopup = (popupId = 'popup-root') => {
     let PopupRoot = document.getElementById(popupId);
@@ -76,7 +78,8 @@ export interface IPopupProps {
     overlayStyle?: React.CSSProperties;
     className?: string;
     keepTooltipInside?: boolean | string;
-    triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    triggerProps?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
+        IAdditionalAttributes;
     customPopupRoot?: string;
     isMobile?: boolean;
 }
@@ -303,6 +306,7 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
                 key: 'T',
                 ref: triggerRef,
                 'aria-describedby': popupId.current,
+                'data-qa': tProps?.['data-qa'] || qaTags.btnShowDropdown,
             };
             const onAsArray = Array.isArray(on) ? on : [on];
             for (let i = 0, len = onAsArray.length; i < len; i++) {

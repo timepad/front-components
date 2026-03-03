@@ -7,6 +7,7 @@ import {Row} from '../../row';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {noop} from '../Textarea/utils';
 import './index.less';
+import {qaTags} from '../../../services';
 
 export const Checkbox: FC<ICheckboxProps> = ({
     rounded = false,
@@ -41,7 +42,7 @@ export const Checkbox: FC<ICheckboxProps> = ({
 
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>
-            <label htmlFor={id}>
+            <label htmlFor={id} data-qa={qaTags.checkboxLabel}>
                 <Row.Icon top={!!caption}>
                     <label>
                         <input
@@ -51,6 +52,7 @@ export const Checkbox: FC<ICheckboxProps> = ({
                             id={id}
                             onChange={onChange}
                             {...props}
+                            data-qa={props['data-qa'] || qaTags.checkbox}
                         />
                         <span className={checkboxClasses}>{icon}</span>
                     </label>
