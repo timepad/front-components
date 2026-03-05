@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Meta, StoryFn} from '@storybook/react';
+import {Draggable, DragHandle} from './Draggable';
 import {DraggableList} from './DraggableList';
-import Row from '../row/Row';
 
 interface IItem {
     id: string;
@@ -9,8 +9,8 @@ interface IItem {
 }
 
 export default {
-    title: 'Components/DraggableList',
-    component: DraggableList,
+    title: 'Draggable',
+    component: Draggable,
     argTypes: {},
 } as Meta;
 
@@ -27,21 +27,28 @@ const Template: StoryFn = () => {
         setItems(newItems);
     };
 
-    const renderItem = (item: IItem) => (
-        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-            <span>{item.name}</span>
-        </div>
-    );
-
     return (
         <div style={{padding: '20px'}}>
             <h2>Draggable List</h2>
-            <DraggableList items={items} onReorder={handleReorder} getKey={(item) => item.id} renderItem={renderItem} />
+            <Draggable
+                items={items}
+                onReorder={handleReorder}
+                getKey={(item) => item.id}
+                itemClassName="draggable-story-item"
+                renderHandle={() => null}
+            >
+                {(item, dnd) => (
+                    <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                        <DragHandle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
+                        <span style={{paddingBottom: 6}}>{item.name}</span>
+                    </div>
+                )}
+            </Draggable>
         </div>
     );
 };
 
-const WithRowTemplate: StoryFn = () => {
+const DraggableListTemplate: StoryFn = () => {
     const [items, setItems] = useState<IItem[]>([
         {id: '1', name: 'Элемент 1'},
         {id: '2', name: 'Элемент 2'},
@@ -54,18 +61,12 @@ const WithRowTemplate: StoryFn = () => {
         setItems(newItems);
     };
 
-    const renderItem = (item: IItem) => (
-        <Row hoverable>
-            <Row.Body>
-                <Row.Text>{item.name}</Row.Text>
-            </Row.Body>
-        </Row>
-    );
-
     return (
         <div style={{padding: '20px'}}>
-            <h2>Draggable List with Row</h2>
-            <DraggableList items={items} onReorder={handleReorder} getKey={(item) => item.id} renderItem={renderItem} />
+            <h2>DraggableList (Row preset)</h2>
+            <DraggableList items={items} onReorder={handleReorder} getKey={(item) => item.id}>
+                {(item) => item.name}
+            </DraggableList>
         </div>
     );
 };
@@ -73,5 +74,5 @@ const WithRowTemplate: StoryFn = () => {
 export const Default = Template.bind({});
 Default.args = {};
 
-export const WithRow = WithRowTemplate.bind({});
-WithRow.args = {};
+export const RowPreset = DraggableListTemplate.bind({});
+RowPreset.args = {};
