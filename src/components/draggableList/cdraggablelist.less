@@ -1,0 +1,44 @@
+@cdraggable-list: ~'cdraggable-list';
+
+.@{cdraggable-list} {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: default;
+    position: relative;
+    will-change: transform;
+
+    &_dragging {
+      opacity: 0.5;
+      z-index: 1;
+    }
+  }
+
+  &__drag-handle {
+    flex-shrink: 0;
+    cursor: grab !important;
+    padding: 4px;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    &:active {
+      cursor: grabbing !important;
+    }
+  }
+}
