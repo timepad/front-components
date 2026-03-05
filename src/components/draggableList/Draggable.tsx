@@ -33,15 +33,6 @@ export interface ISortableItemDndProps {
     isDragging: boolean;
 }
 
-// --- 1. Компонент "Ручка" (Handle) ---
-export interface IDragHandleProps {
-    style?: React.CSSProperties;
-    id: string | number;
-    className?: string;
-    attributes?: ReturnType<typeof useSortable>['attributes'];
-    listeners?: ReturnType<typeof useSortable>['listeners'];
-}
-
 const useDraggableSensors = () => {
     return useSensors(
         useSensor(PointerSensor, {
@@ -52,6 +43,15 @@ const useDraggableSensors = () => {
         }),
     );
 };
+
+// --- 1. Компонент "Ручка" (Handle) ---
+export interface IDragHandleProps {
+    style?: React.CSSProperties;
+    id: string | number;
+    className?: string;
+    attributes?: ReturnType<typeof useSortable>['attributes'];
+    listeners?: ReturnType<typeof useSortable>['listeners'];
+}
 
 export const DragHandle = ({style, id, className, attributes, listeners}: IDragHandleProps): JSX.Element => {
     return (

@@ -6,7 +6,7 @@ import {Draggable, DragHandle, IDraggableProps} from './Draggable';
  * Готовый row-пресет на базе Draggable.
  *
  * Сигнатура children:
- * `(item, index) => ReactNode`
+ * `(item) => ReactNode`
  */
 export interface IDraggableListProps<T>
     extends Omit<IDraggableProps<T>, 'children' | 'renderHandle'>,
