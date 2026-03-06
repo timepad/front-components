@@ -128,7 +128,7 @@ export interface IDraggableProps<T> {
     itemClassName?: string;
 }
 
-export const Draggable = <T,>({
+const DraggableBase = <T,>({
     items,
     onReorder,
     getKey,
@@ -247,4 +247,10 @@ export const Draggable = <T,>({
             </DragOverlay>
         </DndContext>
     );
+};
+
+export const Draggable = Object.assign(DraggableBase, {
+    Handle: DragHandle,
+}) as typeof DraggableBase & {
+    Handle: typeof DragHandle;
 };

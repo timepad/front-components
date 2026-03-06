@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Meta, StoryFn} from '@storybook/react';
-import {Draggable, DragHandle} from './Draggable';
+import {Draggable} from './Draggable';
 import {DraggableList} from './DraggableList';
 
 interface IItem {
@@ -39,7 +39,7 @@ const Template: StoryFn = () => {
             >
                 {(item, dnd) => (
                     <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                        <DragHandle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
+                        <Draggable.Handle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
                         <span style={{paddingBottom: 6}}>{item.name}</span>
                     </div>
                 )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Row, {IRowProps} from '../row/Row';
-import {Draggable, DragHandle, IDraggableProps} from './Draggable';
+import {Draggable, IDraggableProps} from './Draggable';
 
 /**
  * Готовый row-пресет на базе Draggable.
@@ -52,7 +52,7 @@ export const DraggableList = <T,>({
                     horizontalPadding={horizontalPadding}
                 >
                     <Row.Icon>
-                        <DragHandle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
+                        <Draggable.Handle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
                     </Row.Icon>
                     <Row.Body>
                         <Row.Text>{children(item)}</Row.Text>
