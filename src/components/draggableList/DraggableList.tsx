@@ -15,6 +15,7 @@ export interface IDraggableListProps<T>
             'hoverable' | 'activable' | 'selectable' | 'small' | 'transparent' | 'ffFont' | 'horizontalPadding'
         > {
     children: (item: T) => React.ReactNode;
+    renderRightIcon?: (item: T) => React.ReactElement;
 }
 
 export const DraggableList = <T,>({
@@ -22,6 +23,7 @@ export const DraggableList = <T,>({
     onReorder,
     getKey,
     children,
+    renderRightIcon,
     className,
     itemClassName,
     hoverable = true,
@@ -57,6 +59,7 @@ export const DraggableList = <T,>({
                     <Row.Body>
                         <Row.Text>{children(item)}</Row.Text>
                     </Row.Body>
+                    {renderRightIcon && <Row.Icon>{renderRightIcon(item)}</Row.Icon>}
                 </Row>
             )}
         </Draggable>
