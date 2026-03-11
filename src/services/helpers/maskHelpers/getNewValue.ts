@@ -28,22 +28,26 @@ export function getNewValue({
     // 8 999 123
     // 9991232233
 
-    if (inputValue.length > 1 && oldValue.length === 0) {
-        if (isPhoneMode) {
-            // autocomplete , paste ...
-            newValue = getFormattedPhone(inputValue, prefix);
-        } else {
-            // удаляем пробелы навсякий случай, чтоб привести к нормальному формату
-            newValue = inputValue.replaceAll(' ', '');
-        }
+    if (isPhoneMode) {
+        newValue = getFormattedPhone(inputValue, prefix);
+    } else if (inputValue.length > 1 && oldValue.length === 0) {
+        newValue = inputValue.replaceAll(' ', '');
     } else if (inputValue.length > maskedValue.length) {
-        const maskCharacterOrPattern = mask[lastCursorPosition];
-        const insertedCharacter = inputValue.charAt(lastCursorPosition);
+        const diffIndex = findFirstDifferenceIndex(maskedValue, inputValue);
+        const patternIndex = getNextPatternIndex(mask, diffIndex);
 
-        if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
-            newValue = `${oldValue}${insertedCharacter}`;
+        if (patternIndex === -1) {
+            newValue = oldValue;
         } else {
-            newValue = oldValue; // ignore
+            const maskCharacterOrPattern = mask[patternIndex];
+            const insertedCharacter = inputValue.charAt(patternIndex);
+
+            if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
+                const insertPosition = countPatternsUpTo(mask, patternIndex);
+                newValue = `${oldValue.slice(0, insertPosition)}${insertedCharacter}${oldValue.slice(insertPosition)}`;
+            } else {
+                newValue = oldValue; // ignore
+            }
         }
     } else {
         if (oldValue.length === 0) {
@@ -56,9 +60,52 @@ export function getNewValue({
                 newValue = oldValue; // ignore
             }
         } else {
-            newValue = oldValue.slice(0, oldValue.length - 1); // Remove a character
+            const diffIndex = findFirstDifferenceIndex(maskedValue, inputValue);
+            const patternIndex = getNextPatternIndex(mask, diffIndex);
+
+            if (patternIndex === -1) {
+                newValue = oldValue;
+            } else {
+                const removePosition = countPatternsUpTo(mask, patternIndex) - 1;
+
+                if (removePosition < 0 || removePosition >= oldValue.length) {
+                    newValue = oldValue;
+                } else {
+                    newValue = `${oldValue.slice(0, removePosition)}${oldValue.slice(removePosition + 1)}`;
+                }
+            }
         }
     }
 
     return newValue;
+}
+
+function findFirstDifferenceIndex(oldMasked: string, newMasked: string): number {
+    const maxLength = Math.max(oldMasked.length, newMasked.length);
+
+    for (let index = 0; index < maxLength; index++) {
+        if (oldMasked.charAt(index) !== newMasked.charAt(index)) {
+            return index;
+        }
+    }
+
+    return -1;
+}
+
+function getNextPatternIndex(mask: Mask, fromIndex: number): number {
+    if (fromIndex < 0) {
+        return -1;
+    }
+
+    for (let index = fromIndex; index < mask.length; index++) {
+        if (mask[index] instanceof RegExp) {
+            return index;
+        }
+    }
+
+    return -1;
+}
+
+function countPatternsUpTo(mask: Mask, patternIndex: number): number {
+    return mask.slice(0, patternIndex + 1).filter((characterOrPattern) => characterOrPattern instanceof RegExp).length;
 }

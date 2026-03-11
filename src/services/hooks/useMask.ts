@@ -67,8 +67,16 @@ export function useMask({
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
+        const input = target as HTMLInputElement;
+
+        let digitsBeforeCaret = 0;
+        if (isPhoneType) {
+            const caretPosition = input.selectionStart ?? input.value.length;
+            digitsBeforeCaret = input.value.slice(0, caretPosition).replace(/\D+/g, '').length;
+        }
+
         const newValue = getNewValue({
-            inputValue: target.value,
+            inputValue: input.value,
             maskedValue,
             oldValue: formattedValueByType,
             mask: parsedMask,
@@ -79,22 +87,62 @@ export function useMask({
         const newValueWithPrefix = newValue && isPhoneType ? `${prefix || '+7'}${newValue}` : newValue;
         onChange?.(newValueWithPrefix);
 
-        // onChange is asynchronous so update cursor after it re-renders
-        scheduleAfterRender(() => {
-            setCursorPositionForElement(target, getNextCursorPosition(newValue, parsedMask));
-        });
+        if (isPhoneType) {
+            const digitsBeforeCaretSnapshot = digitsBeforeCaret;
+
+            scheduleAfterRender(() => {
+                const maskedAfterChange = getMaskedValue(newValue, parsedMask, placeholder);
+
+                let newCaretPosition = maskedAfterChange.length;
+
+                if (digitsBeforeCaretSnapshot === 0) {
+                    const firstDigitIndex = maskedAfterChange.search(/\d/);
+                    newCaretPosition = firstDigitIndex > -1 ? firstDigitIndex : 0;
+                } else {
+                    let digitsSeen = 0;
+                    for (let index = 0; index < maskedAfterChange.length; index++) {
+                        if (/\d/.test(maskedAfterChange.charAt(index))) {
+                            digitsSeen++;
+                            if (digitsSeen === digitsBeforeCaretSnapshot) {
+                                newCaretPosition = index + 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                setCursorPositionForElement(input, newCaretPosition);
+            });
+        } else {
+            const cursorPositionAfterChange = input.selectionStart ?? lastCursorPosition;
+
+            // onChange is asynchronous so update cursor after it re-renders
+            scheduleAfterRender(() => {
+                setCursorPositionForElement(input, cursorPositionAfterChange);
+            });
+        }
     }
 
     // For some reason, tests fail without this...
     // TODO: Figure out why this is necessary
     function onKeyUp({target}: KeyboardEvent<HTMLInputElement>) {
-        setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
+        if (isPhoneType) return;
+
+        const input = target as HTMLInputElement;
+
+        if (input.selectionStart == null) {
+            setCursorPositionForElement(input, lastCursorPosition);
+        }
     }
 
     function onKeyDown({target}: KeyboardEvent<HTMLInputElement>) {
-        // make sure cursor is positioned correctly before input happens
-        // or else the character might not be in the right position
-        setCursorPositionForElement(target as HTMLInputElement, lastCursorPosition);
+        if (isPhoneType) return;
+
+        const input = target as HTMLInputElement;
+
+        if (input.selectionStart == null) {
+            setCursorPositionForElement(input, lastCursorPosition);
+        }
     }
 
     function onFocus(event: FocusEvent<HTMLInputElement>) {
