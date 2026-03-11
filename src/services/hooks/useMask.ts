@@ -1,4 +1,4 @@
-import {ChangeEvent, FocusEvent, FocusEventHandler, KeyboardEvent, useMemo, useState} from 'react';
+import {KeyboardEvent, ChangeEvent, FocusEvent, useMemo, useState, FocusEventHandler} from 'react';
 
 import {useCallbackAfterRender} from './useCallbackAfterRender';
 import {
@@ -10,7 +10,6 @@ import {
     setCursorPositionForElement,
 } from '../helpers/maskHelpers';
 import {getFormattedPhone} from '../helpers/maskHelpers/getFormattedPhone';
-import {getCursorPosition} from '../helpers/maskHelpers/getCursorPosition';
 
 /**
  * Props you need to pass to useMask()
@@ -38,8 +37,6 @@ interface IMaskInputProps {
     onKeyUp: (e: KeyboardEvent<HTMLInputElement>) => void;
     onFocus: (e: FocusEvent<HTMLInputElement>) => void;
     onBlur: (e: FocusEvent<HTMLInputElement>) => void;
-    onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => void;
-    onSelect: (e: React.SyntheticEvent<HTMLInputElement>) => void;
 }
 
 export type Mask = Array<string | RegExp>;
@@ -65,120 +62,86 @@ export function useMask({
     const formattedValueByType = isPhoneType ? getFormattedPhone(value, prefix) : value;
 
     const maskedValue = getMaskedValue(formattedValueByType, parsedMask, placeholder);
+    const lastCursorPosition = getNextCursorPosition(formattedValueByType, parsedMask);
     const scheduleAfterRender = useCallbackAfterRender();
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
-    function handleChange(event: ChangeEvent<HTMLInputElement>) {
-        const {target} = event;
+    function handleChange({target}: ChangeEvent<HTMLInputElement>) {
+        const input = target as HTMLInputElement;
 
-        const inputType: string | undefined = (
-            event as unknown as {
-                nativeEvent?: {inputType?: string};
-            }
-        )?.nativeEvent?.inputType;
-
-        const prevCursor = target.selectionStart ?? 0;
-
-        const action: 'insert' | 'delete' | 'paste' | 'move' = (() => {
-            if (typeof inputType !== 'string') return 'move';
-            if (inputType === 'deleteContentBackward' || inputType === 'deleteContentForward') return 'delete';
-            if (
-                inputType === 'insertFromPaste' ||
-                inputType === 'insertFromDrop' ||
-                inputType === 'insertReplacementText'
-            )
-                return 'paste';
-            if (inputType.startsWith('insert')) return 'insert';
-            return 'move';
-        })();
-
-        const isForwardDelete = inputType === 'deleteContentForward';
-
-        const isDelete = inputType === 'deleteContentBackward' || inputType === 'deleteContentForward';
-        const caretForDelete = (() => {
-            if (!isDelete) return prevCursor;
-            let i = prevCursor;
-            while (i > 0 && !(parsedMask[i] instanceof RegExp)) i -= 1;
-            return i;
-        })();
+        let digitsBeforeCaret = 0;
+        if (isPhoneType) {
+            const caretPosition = input.selectionStart ?? input.value.length;
+            digitsBeforeCaret = input.value.slice(0, caretPosition).replace(/\D+/g, '').length;
+        }
 
         const newValue = getNewValue({
-            inputValue: target.value,
+            inputValue: input.value,
             maskedValue,
             oldValue: formattedValueByType,
             mask: parsedMask,
+            lastCursorPosition,
             isPhoneMode: isPhoneType,
             prefix,
-            caretMaskIndex: caretForDelete,
-            action,
-            deleteDirection: isForwardDelete ? 'forward' : 'backward',
         });
-
         const newValueWithPrefix = newValue && isPhoneType ? `${prefix || '+7'}${newValue}` : newValue;
-
         onChange?.(newValueWithPrefix);
 
-        scheduleAfterRender(() => {
-            let cursorToSet = getCursorPosition({
-                value: newValue,
-                mask: parsedMask,
-                currentCursor: prevCursor,
-                action,
-            });
-            if (newValue.length === 0 && isPhoneType) {
-                cursorToSet = prefix.length;
-            } else if (action === 'insert' && newValue.length === 0) {
-                cursorToSet = getNextCursorPosition(newValue, parsedMask);
-            }
+        if (isPhoneType) {
+            const digitsBeforeCaretSnapshot = digitsBeforeCaret;
 
-            setCursorPositionForElement(target, cursorToSet);
-        });
+            scheduleAfterRender(() => {
+                const maskedAfterChange = getMaskedValue(newValue, parsedMask, placeholder);
+
+                let newCaretPosition = maskedAfterChange.length;
+
+                if (digitsBeforeCaretSnapshot === 0) {
+                    const firstDigitIndex = maskedAfterChange.search(/\d/);
+                    newCaretPosition = firstDigitIndex > -1 ? firstDigitIndex : 0;
+                } else {
+                    let digitsSeen = 0;
+                    for (let index = 0; index < maskedAfterChange.length; index++) {
+                        if (/\d/.test(maskedAfterChange.charAt(index))) {
+                            digitsSeen++;
+                            if (digitsSeen === digitsBeforeCaretSnapshot) {
+                                newCaretPosition = index + 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                setCursorPositionForElement(input, newCaretPosition);
+            });
+        } else {
+            const cursorPositionAfterChange = input.selectionStart ?? lastCursorPosition;
+
+            // onChange is asynchronous so update cursor after it re-renders
+            scheduleAfterRender(() => {
+                setCursorPositionForElement(input, cursorPositionAfterChange);
+            });
+        }
     }
 
     // For some reason, tests fail without this...
     // TODO: Figure out why this is necessary
-    function onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
-        void e;
-    }
+    function onKeyUp({target}: KeyboardEvent<HTMLInputElement>) {
+        if (isPhoneType) return;
 
-    function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-        const target = e.target as HTMLInputElement;
-        const currentPosition = target.selectionStart ?? 0;
-        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
+        const input = target as HTMLInputElement;
 
-        if (e.key === 'ArrowLeft' && currentPosition <= prefixLength) {
-            e.preventDefault();
-            setCursorPositionForElement(target, prefixLength);
-        } else if (e.key === 'Home') {
-            e.preventDefault();
-            setCursorPositionForElement(target, prefixLength);
+        if (input.selectionStart == null) {
+            setCursorPositionForElement(input, lastCursorPosition);
         }
     }
 
-    function onMouseDown(event: React.MouseEvent<HTMLInputElement>) {
-        const target = event.target as HTMLInputElement;
-        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
+    function onKeyDown({target}: KeyboardEvent<HTMLInputElement>) {
+        if (isPhoneType) return;
 
-        if (event.detail <= 2) {
-            const clickPosition = target.selectionStart ?? 0;
-            if (clickPosition < prefixLength) {
-                event.preventDefault();
-                requestAnimationFrame(() => {
-                    setCursorPositionForElement(target, prefixLength);
-                });
-            }
-        }
-    }
+        const input = target as HTMLInputElement;
 
-    function onSelectionChange(event: React.SyntheticEvent<HTMLInputElement>) {
-        const target = event.target as HTMLInputElement;
-        const currentPosition = target.selectionStart ?? 0;
-        const prefixLength = isPhoneType ? (prefix || '+7').length : 0;
-
-        if (currentPosition < prefixLength) {
-            requestAnimationFrame(() => {
-                setCursorPositionForElement(target, prefixLength);
-            });
+        if (input.selectionStart == null) {
+            setCursorPositionForElement(input, lastCursorPosition);
         }
     }
 
@@ -186,11 +149,10 @@ export function useMask({
         props?.onFocus?.(event);
 
         setFocus(true);
+        // Work around in chrome to make sure focus sets cursor position
+
         requestAnimationFrame(() => {
-            setCursorPositionForElement(
-                event.target as HTMLInputElement,
-                getNextCursorPosition(formattedValueByType, parsedMask),
-            );
+            setCursorPositionForElement(event.target as HTMLInputElement, lastCursorPosition);
         });
     }
 
@@ -198,6 +160,7 @@ export function useMask({
         props?.onBlur?.(event);
 
         setFocus(false);
+        // Work around in chrome to make sure focus sets cursor position
     }
 
     const placeholderValue = maskPlaceholder ? placeholder : prefix;
@@ -213,7 +176,5 @@ export function useMask({
         onKeyUp,
         onFocus,
         onBlur,
-        onMouseDown,
-        onSelect: onSelectionChange,
     };
 }

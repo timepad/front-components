@@ -6,11 +6,9 @@ interface IGetNewValueParams {
     oldValue: string;
     maskedValue: string;
     mask: Mask;
+    lastCursorPosition: number;
     isPhoneMode: boolean;
     prefix: string;
-    caretMaskIndex?: number;
-    action?: 'insert' | 'delete' | 'paste' | 'move';
-    deleteDirection?: 'backward' | 'forward';
 }
 
 export function getNewValue({
@@ -18,62 +16,96 @@ export function getNewValue({
     oldValue,
     maskedValue,
     mask,
+    lastCursorPosition,
     isPhoneMode,
     prefix,
-    caretMaskIndex,
-    action,
-    deleteDirection,
 }: IGetNewValueParams): string {
-    const totalPatternSlots = mask.reduce((acc, item) => (item instanceof RegExp ? acc + 1 : acc), 0);
-    let rawDigits = isPhoneMode ? getFormattedPhone(inputValue, prefix) : (inputValue.match(/\d/g) || []).join('');
-    const oldDigitsCount = (oldValue.match(/\d/g) || []).length;
-    const newDigitsCount = rawDigits.length;
-    const isComplete = oldDigitsCount >= totalPatternSlots;
-    const isInserting = action === 'insert' || action === 'paste';
+    let newValue: string;
 
-    if (isComplete && isInserting && newDigitsCount > oldDigitsCount) {
-        rawDigits = oldValue;
-    }
+    // 48888 48888 48888 48888
+    // +7(999) 999 99 99
+    // +8 960 486-00-12
+    // 8 999 123
+    // 9991232233
 
-    if (isPhoneMode && rawDigits.length > 0) {
-        const hasPrefix = rawDigits.startsWith('7') || rawDigits.startsWith('8');
-        const inputHasPrefix = inputValue.includes('+7') || inputValue.includes('+8');
+    if (isPhoneMode) {
+        newValue = getFormattedPhone(inputValue, prefix);
+    } else if (inputValue.length > 1 && oldValue.length === 0) {
+        newValue = inputValue.replaceAll(' ', '');
+    } else if (inputValue.length > maskedValue.length) {
+        const diffIndex = findFirstDifferenceIndex(maskedValue, inputValue);
+        const patternIndex = getNextPatternIndex(mask, diffIndex);
 
-        if (inputHasPrefix && hasPrefix) {
-            rawDigits = rawDigits.slice(1);
-        }
-    }
+        if (patternIndex === -1) {
+            newValue = oldValue;
+        } else {
+            const maskCharacterOrPattern = mask[patternIndex];
+            const insertedCharacter = inputValue.charAt(patternIndex);
 
-    if (action === 'delete' && typeof caretMaskIndex === 'number') {
-        const oldDigits = oldValue;
-        const leftDigitsCount = (maskedValue.slice(0, Math.max(0, caretMaskIndex)).match(/\d/g) || []).length;
-        if (oldDigits.length > 0 && rawDigits.length === oldDigits.length) {
-            if (deleteDirection === 'forward') {
-                rawDigits = `${oldDigits.slice(0, leftDigitsCount)}${oldDigits.slice(leftDigitsCount + 1)}`;
+            if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
+                const insertPosition = countPatternsUpTo(mask, patternIndex);
+                newValue = `${oldValue.slice(0, insertPosition)}${insertedCharacter}${oldValue.slice(insertPosition)}`;
             } else {
-                rawDigits = `${oldDigits.slice(0, Math.max(0, leftDigitsCount - 1))}${oldDigits.slice(
-                    leftDigitsCount,
-                )}`;
+                newValue = oldValue; // ignore
+            }
+        }
+    } else {
+        if (oldValue.length === 0) {
+            const maskCharacterOrPattern = mask[lastCursorPosition];
+            const insertedCharacter = inputValue.charAt(0);
+
+            if (maskCharacterOrPattern instanceof RegExp && maskCharacterOrPattern.test(insertedCharacter)) {
+                newValue = insertedCharacter;
+            } else {
+                newValue = oldValue; // ignore
+            }
+        } else {
+            const diffIndex = findFirstDifferenceIndex(maskedValue, inputValue);
+            const patternIndex = getNextPatternIndex(mask, diffIndex);
+
+            if (patternIndex === -1) {
+                newValue = oldValue;
+            } else {
+                const removePosition = countPatternsUpTo(mask, patternIndex) - 1;
+
+                if (removePosition < 0 || removePosition >= oldValue.length) {
+                    newValue = oldValue;
+                } else {
+                    newValue = `${oldValue.slice(0, removePosition)}${oldValue.slice(removePosition + 1)}`;
+                }
             }
         }
     }
 
-    if ((!action || action === 'move') && typeof caretMaskIndex === 'number') {
-        const inputDigits = (inputValue.match(/\d/g) || []).join('');
-        const oldDigits = oldValue;
-        if (inputDigits.length === oldDigits.length && inputValue === maskedValue) {
-            let prevPatternIndex = caretMaskIndex - 1;
-            while (prevPatternIndex >= 0 && !(mask[prevPatternIndex] instanceof RegExp)) {
-                prevPatternIndex -= 1;
-            }
-            if (prevPatternIndex >= 0) {
-                const leftDigitsCount = (maskedValue.slice(0, prevPatternIndex + 1).match(/\d/g) || []).length;
-                rawDigits = `${oldDigits.slice(0, Math.max(0, leftDigitsCount - 1))}${oldDigits.slice(
-                    leftDigitsCount,
-                )}`;
-            }
+    return newValue;
+}
+
+function findFirstDifferenceIndex(oldMasked: string, newMasked: string): number {
+    const maxLength = Math.max(oldMasked.length, newMasked.length);
+
+    for (let index = 0; index < maxLength; index++) {
+        if (oldMasked.charAt(index) !== newMasked.charAt(index)) {
+            return index;
         }
     }
 
-    return rawDigits.slice(0, totalPatternSlots);
+    return -1;
+}
+
+function getNextPatternIndex(mask: Mask, fromIndex: number): number {
+    if (fromIndex < 0) {
+        return -1;
+    }
+
+    for (let index = fromIndex; index < mask.length; index++) {
+        if (mask[index] instanceof RegExp) {
+            return index;
+        }
+    }
+
+    return -1;
+}
+
+function countPatternsUpTo(mask: Mask, patternIndex: number): number {
+    return mask.slice(0, patternIndex + 1).filter((characterOrPattern) => characterOrPattern instanceof RegExp).length;
 }
