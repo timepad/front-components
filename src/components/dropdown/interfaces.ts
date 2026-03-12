@@ -28,6 +28,7 @@ export interface IDropdownProps {
     customMobileBreakpoint?: number;
     pinned?: IPinnedPositions;
     theme?: IThemeTypes;
+    contentStyle?: React.CSSProperties;
 }
 
 export type IDropdownSortableListProps = Omit<IDropdownProps, 'onClose'> & {
