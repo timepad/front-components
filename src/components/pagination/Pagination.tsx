@@ -8,10 +8,12 @@ import {component} from '../../services/helpers/classHelpers';
 import {usePagination} from './usePagination';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 export type TOnChange = (page: number) => void;
 
-export interface IPagination extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface IPagination extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, IAdditionalAttributes {
     theme?: 'dark' | 'light';
     activePage: number;
     total: number;
@@ -59,7 +61,7 @@ const Pagination: FC<React.PropsWithChildren<IPagination>> & {
     });
 
     return (
-        <div {...restProps} className={paginationClassName}>
+        <div {...restProps} className={paginationClassName} data-qa={restProps['data-qa'] || qaTags.pagination}>
             <PaginationContext.Provider value={{activePage, total, onChange}}>
                 {children ? (
                     children

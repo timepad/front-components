@@ -3,6 +3,7 @@ import cx from 'classnames';
 import {SegmentedControlContext} from './SegmentedControl';
 import {component} from '../../services/helpers/classHelpers';
 import {observer} from 'mobx-react';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
 interface IHighlighterStyle {
     transform: string;
@@ -43,6 +44,10 @@ export const ControlList: FC<React.PropsWithChildren<HTMLAttributes<HTMLUListEle
             return value;
         };
 
+        const extendedChildren = React.useMemo(() => {
+            return addQaTagsToChildren(children, qaTags.segmentControlItem);
+        }, [children]);
+
         useEffect(() => {
             setHighlighterStyles(getHighlighterStyles());
         }, [segmentedControlStore.activeControlId, children]);
@@ -50,7 +55,7 @@ export const ControlList: FC<React.PropsWithChildren<HTMLAttributes<HTMLUListEle
         return (
             <div className={highlighterBoxClasses} ref={boxRef}>
                 <ul {...restProps} className={ulClasses}>
-                    {children}
+                    {extendedChildren}
                 </ul>
 
                 <span className={spanClasses} style={highlighterStyles} />

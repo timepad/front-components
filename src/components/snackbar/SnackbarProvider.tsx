@@ -3,6 +3,7 @@ import {CSSTransition} from 'react-transition-group';
 // TODO:при использовании react-transition-group необходимо добавить в package.json проекта. Нужно это исправить
 import './index.less';
 import {Snackbar} from './Snackbar';
+import {IAdditionalAttributes} from '../../../types';
 
 export type snackbarStateType = 'info' | 'success' | 'error' | 'successWithIcon' | 'errorWithIcon';
 
@@ -11,7 +12,7 @@ export type snackbarButtonType = {
     onClick: () => void;
 };
 
-export interface ISnackbarProps {
+export interface ISnackbarProps extends IAdditionalAttributes {
     state?: snackbarStateType;
     text?: string;
     button?: snackbarButtonType;

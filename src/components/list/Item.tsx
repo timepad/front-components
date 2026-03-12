@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
+import {qaTags} from '../../services';
 
 export interface IItem {
     className?: string;
@@ -68,11 +69,20 @@ const Item: React.FC<React.PropsWithChildren<IItem | any>> = React.forwardRef<HT
                 <div className={tagClassNames}>
                     {secondaryText ? (
                         <div className={component('list-item', 'wrapper')()}>
-                            <div className={component('list-item', 'main-text')()}>{mainText}</div>
-                            <div className={component('list-item', 'secondary-text')()}>{secondaryText}</div>
+                            <div className={component('list-item', 'main-text')()} data-qa={qaTags.listItemMainTitle}>
+                                {mainText}
+                            </div>
+                            <div
+                                className={component('list-item', 'secondary-text')()}
+                                data-qa={qaTags.listItemSecondTitle}
+                            >
+                                {secondaryText}
+                            </div>
                         </div>
                     ) : (
-                        <div className={component('list-item', 'main-text')()}>{mainText}</div>
+                        <div className={component('list-item', 'main-text')()} data-qa={qaTags.listItemMainTitle}>
+                            {mainText}
+                        </div>
                     )}
                 </div>
                 {suffix ? (

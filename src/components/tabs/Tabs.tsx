@@ -8,6 +8,8 @@ import {component} from '../../services/helpers/classHelpers';
 import {action, observable} from 'mobx';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 class TabsStore {
     constructor(activeTabId = '') {
@@ -29,7 +31,7 @@ export const TabsContext = createContext<ITabsStoreContext>({} as ITabsStoreCont
 
 type TabClickHandler = (TabId: string) => void;
 
-export interface ITabProps extends HTMLAttributes<HTMLDivElement> {
+export interface ITabProps extends HTMLAttributes<HTMLDivElement>, IAdditionalAttributes {
     defaultTabId?: TabId;
     activeTabId?: TabId;
     onTabClick?: (TabId: string, setActiveTabId: (id: string) => void) => void;
@@ -41,7 +43,7 @@ const TabsBase: FC<React.PropsWithChildren<ITabProps>> = ({
     activeTabId,
     onTabClick,
     className,
-    ...rest
+    ...props
 }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const initialTabId = useMemo(() => defaultTabId, []);
@@ -60,7 +62,7 @@ const TabsBase: FC<React.PropsWithChildren<ITabProps>> = ({
           };
 
     return (
-        <div {...rest} className={divClasses}>
+        <div {...props} className={divClasses} data-qa={props['data-qa'] || qaTags.tabs}>
             <TabsContext.Provider
                 value={{
                     tabsStore: tabsStore,
