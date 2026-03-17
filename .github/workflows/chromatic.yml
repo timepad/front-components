@@ -10,6 +10,8 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm i
+      - name: Rebuild swc
+        run: npm rebuild @swc/core
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
