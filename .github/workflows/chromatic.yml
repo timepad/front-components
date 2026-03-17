@@ -18,7 +18,7 @@ jobs:
           node-version: 22
           cache: npm
       - name: Install dependencies
-        run: npm сi
+        run: npm i
       - name: Rebuild swc
         run: npm rebuild @swc/core
       - name: Publish to Chromatic
