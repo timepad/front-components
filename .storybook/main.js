@@ -10,7 +10,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-storysource",
-    "@storybook/addon-webpack5-compiler-swc"
+    // "@storybook/addon-webpack5-compiler-swc"
   ],
 
   typescript: {
