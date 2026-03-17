@@ -85,9 +85,29 @@ export function useMask({
         }
     }
 
+    const maskPatternsCount = useMemo(
+        () => parsedMask.filter((characterOrPattern) => characterOrPattern instanceof RegExp).length,
+        [parsedMask],
+    );
+
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
         const input = target as HTMLInputElement;
+
+        // для ввода кода (####):
+        // просто берём все цифры из инпута, обрезаем по длине маски и отдаём наружу.
+        if (type === 'code') {
+            const digits = input.value.replace(/\D+/g, '');
+            const limitedDigits = maskPatternsCount ? digits.slice(0, maskPatternsCount) : digits;
+            onChange?.(limitedDigits);
+
+            const cursorPositionAfterChange = input.selectionStart ?? lastCursorPosition;
+            scheduleAfterRender(() => {
+                setCursorPositionForElement(input, cursorPositionAfterChange);
+            });
+
+            return;
+        }
 
         let digitsBeforeCaret = 0;
         if (isPhoneType) {
