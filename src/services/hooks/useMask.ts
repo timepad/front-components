@@ -1,4 +1,4 @@
-import {KeyboardEvent, ChangeEvent, FocusEvent, useMemo, useState, FocusEventHandler} from 'react';
+import {KeyboardEvent, ChangeEvent, FocusEvent, MouseEvent, useMemo, useState, FocusEventHandler} from 'react';
 
 import {useCallbackAfterRender} from './useCallbackAfterRender';
 import {
@@ -37,6 +37,7 @@ interface IMaskInputProps {
     onKeyUp: (e: KeyboardEvent<HTMLInputElement>) => void;
     onFocus: (e: FocusEvent<HTMLInputElement>) => void;
     onBlur: (e: FocusEvent<HTMLInputElement>) => void;
+    onClick: (e: MouseEvent<HTMLInputElement>) => void;
 }
 
 export type Mask = Array<string | RegExp>;
@@ -64,6 +65,25 @@ export function useMask({
     const maskedValue = getMaskedValue(formattedValueByType, parsedMask, placeholder);
     const lastCursorPosition = getNextCursorPosition(formattedValueByType, parsedMask);
     const scheduleAfterRender = useCallbackAfterRender();
+
+    const firstPatternIndex = useMemo(
+        () => parsedMask.findIndex((characterOrPattern) => characterOrPattern instanceof RegExp),
+        [parsedMask],
+    );
+
+    function clampPhoneCaret(input: HTMLInputElement) {
+        if (!isPhoneType) return;
+        if (input.selectionStart == null) return;
+
+        const minPosition = firstPatternIndex === -1 ? 0 : firstPatternIndex;
+        const start = input.selectionStart;
+        const end = input.selectionEnd ?? start;
+
+        if (start < minPosition || end < minPosition) {
+            const newPos = Math.max(minPosition, start, end);
+            setCursorPositionForElement(input, newPos);
+        }
+    }
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
@@ -93,6 +113,7 @@ export function useMask({
             scheduleAfterRender(() => {
                 const maskedAfterChange = getMaskedValue(newValue, parsedMask, placeholder);
 
+                const minPosition = firstPatternIndex === -1 ? 0 : firstPatternIndex;
                 let newCaretPosition = maskedAfterChange.length;
 
                 if (digitsBeforeCaretSnapshot === 0) {
@@ -111,7 +132,8 @@ export function useMask({
                     }
                 }
 
-                setCursorPositionForElement(input, newCaretPosition);
+                // Не позволяем курсору заходить в префикс (+7 и т.п.)
+                setCursorPositionForElement(input, Math.max(minPosition, newCaretPosition));
             });
         } else {
             const cursorPositionAfterChange = input.selectionStart ?? lastCursorPosition;
@@ -126,9 +148,12 @@ export function useMask({
     // For some reason, tests fail without this...
     // TODO: Figure out why this is necessary
     function onKeyUp({target}: KeyboardEvent<HTMLInputElement>) {
-        if (isPhoneType) return;
-
         const input = target as HTMLInputElement;
+
+        if (isPhoneType) {
+            clampPhoneCaret(input);
+            return;
+        }
 
         if (input.selectionStart == null) {
             setCursorPositionForElement(input, lastCursorPosition);
@@ -136,9 +161,12 @@ export function useMask({
     }
 
     function onKeyDown({target}: KeyboardEvent<HTMLInputElement>) {
-        if (isPhoneType) return;
-
         const input = target as HTMLInputElement;
+
+        if (isPhoneType) {
+            clampPhoneCaret(input);
+            return;
+        }
 
         if (input.selectionStart == null) {
             setCursorPositionForElement(input, lastCursorPosition);
@@ -152,8 +180,21 @@ export function useMask({
         // Work around in chrome to make sure focus sets cursor position
 
         requestAnimationFrame(() => {
-            setCursorPositionForElement(event.target as HTMLInputElement, lastCursorPosition);
+            const input = event.target as HTMLInputElement;
+
+            if (isPhoneType) {
+                clampPhoneCaret(input);
+            } else {
+                setCursorPositionForElement(input, lastCursorPosition);
+            }
         });
+    }
+
+    function onClick({target}: MouseEvent<HTMLInputElement>) {
+        if (!isPhoneType) return;
+
+        const input = target as HTMLInputElement;
+        clampPhoneCaret(input);
     }
 
     function onBlur(event: FocusEvent<HTMLInputElement>) {
@@ -176,5 +217,6 @@ export function useMask({
         onKeyUp,
         onFocus,
         onBlur,
+        onClick,
     };
 }
