@@ -42,7 +42,7 @@
     "autoprefixer": "^10.4.27",
     "chromatic": "5.9.2",
     "css-loader": "5.2.6",
-    "eslint": "^10.0.2",
+    "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
