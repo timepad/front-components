@@ -75,10 +75,12 @@ interface ISortableItemProps {
     index: number;
     children: (dnd: ISortableItemDndProps) => React.ReactNode;
     className?: string;
+    as?: 'div' | 'tr';
 }
 
-const SortableItem = ({id, index, children, className}: ISortableItemProps): JSX.Element => {
+const SortableItem = ({id, index, children, className, as = 'div'}: ISortableItemProps): JSX.Element => {
     const {setNodeRef, transform, transition, isDragging, attributes, listeners} = useSortable({id});
+    const Component = as;
 
     const style: React.CSSProperties = {
         transform: CSS.Transform.toString(transform),
@@ -87,7 +89,7 @@ const SortableItem = ({id, index, children, className}: ISortableItemProps): JSX
     };
 
     return (
-        <div
+        <Component
             ref={setNodeRef}
             style={style}
             className={cx(
@@ -107,7 +109,7 @@ const SortableItem = ({id, index, children, className}: ISortableItemProps): JSX
                 listeners,
                 isDragging,
             })}
-        </div>
+        </Component>
     );
 };
 
@@ -126,6 +128,7 @@ export interface IDraggableProps<T> {
     renderHandle?: (dnd: ISortableItemDndProps) => React.ReactNode;
     className?: string;
     itemClassName?: string;
+    as?: 'div' | 'tr';
 }
 
 const DraggableBase = <T,>({
@@ -136,6 +139,7 @@ const DraggableBase = <T,>({
     renderHandle,
     className,
     itemClassName,
+    as = 'div',
 }: IDraggableProps<T>): JSX.Element => {
     const [activeId, setActiveId] = React.useState<string | number | null>(null);
 
@@ -187,10 +191,20 @@ const DraggableBase = <T,>({
                 return renderHandle(dnd);
             }
 
+            if (as === 'tr') {
+                return (
+                    <td>
+                        <DragHandle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />
+                    </td>
+                );
+            }
+
             return <DragHandle id={dnd.id} attributes={dnd.attributes} listeners={dnd.listeners} />;
         },
-        [renderHandle],
+        [as, renderHandle],
     );
+
+    const ListTag = as === 'tr' ? 'tbody' : 'div';
 
     return (
         <DndContext
@@ -201,12 +215,12 @@ const DraggableBase = <T,>({
             onDragEnd={handleDragEnd}
         >
             <SortableContext items={ids} strategy={verticalListSortingStrategy}>
-                <div className={cx(component(baseClassName)(), className)}>
+                <ListTag className={cx(component(baseClassName)(), className)}>
                     {items.map((item, index) => {
                         const id = ids[index];
 
                         return (
-                            <SortableItem key={id} id={id} index={index} className={itemClassName}>
+                            <SortableItem key={id} id={id} index={index} className={itemClassName} as={as}>
                                 {(dnd) => (
                                     <>
                                         {getHandle(dnd)}
@@ -216,7 +230,7 @@ const DraggableBase = <T,>({
                             </SortableItem>
                         );
                     })}
-                </div>
+                </ListTag>
             </SortableContext>
 
             {/*
@@ -225,24 +239,49 @@ const DraggableBase = <T,>({
             */}
             <DragOverlay zIndex={3000}>
                 {activeItem !== null && activeId !== null && activeIndex !== undefined ? (
-                    <div
-                        className={cx(
-                            component(
-                                baseClassName,
-                                'item',
-                            )({
-                                dragging: true,
-                            }),
-                            itemClassName,
-                        )}
-                    >
-                        {getHandle({id: activeId, index: activeIndex, isDragging: true})}
-                        {children(activeItem, {
-                            id: activeId,
-                            index: activeIndex,
-                            isDragging: true,
-                        })}
-                    </div>
+                    as === 'tr' ? (
+                        <table className={cx(component(baseClassName)(), className)}>
+                            <tbody>
+                                <tr
+                                    className={cx(
+                                        component(
+                                            baseClassName,
+                                            'item',
+                                        )({
+                                            dragging: true,
+                                        }),
+                                        itemClassName,
+                                    )}
+                                >
+                                    {getHandle({id: activeId, index: activeIndex, isDragging: true})}
+                                    {children(activeItem, {
+                                        id: activeId,
+                                        index: activeIndex,
+                                        isDragging: true,
+                                    })}
+                                </tr>
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div
+                            className={cx(
+                                component(
+                                    baseClassName,
+                                    'item',
+                                )({
+                                    dragging: true,
+                                }),
+                                itemClassName,
+                            )}
+                        >
+                            {getHandle({id: activeId, index: activeIndex, isDragging: true})}
+                            {children(activeItem, {
+                                id: activeId,
+                                index: activeIndex,
+                                isDragging: true,
+                            })}
+                        </div>
+                    )
                 ) : null}
             </DragOverlay>
         </DndContext>
