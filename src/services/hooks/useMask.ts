@@ -117,10 +117,7 @@ export function useMask({
 
         const newValue = getNewValue({
             inputValue: input.value,
-            maskedValue,
-            oldValue: formattedValueByType,
             mask: parsedMask,
-            lastCursorPosition,
             isPhoneMode: isPhoneType,
             prefix,
         });
@@ -156,10 +153,34 @@ export function useMask({
                 setCursorPositionForElement(input, Math.max(minPosition, newCaretPosition));
             });
         } else {
-            const cursorPositionAfterChange = input.selectionStart ?? lastCursorPosition;
+            const caretPosition = input.selectionStart ?? input.value.length;
+            const valueCharsBeforeCaret = countValueCharsBeforeCaret(input.value, caretPosition, parsedMask);
 
             // onChange is asynchronous so update cursor after it re-renders
             scheduleAfterRender(() => {
+                const maskedAfterChange = getMaskedValue(newValue, parsedMask, placeholder);
+                const patterns = parsedMask.filter((item): item is RegExp => item instanceof RegExp);
+
+                let cursorPositionAfterChange = maskedAfterChange.length;
+
+                if (valueCharsBeforeCaret > 0) {
+                    let matchedValueChars = 0;
+                    for (let index = 0; index < maskedAfterChange.length; index++) {
+                        const currentPattern = patterns[matchedValueChars];
+                        if (!currentPattern) break;
+
+                        if (currentPattern.test(maskedAfterChange.charAt(index))) {
+                            matchedValueChars += 1;
+                            if (matchedValueChars === valueCharsBeforeCaret) {
+                                cursorPositionAfterChange = index + 1;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    cursorPositionAfterChange = 0;
+                }
+
                 setCursorPositionForElement(input, cursorPositionAfterChange);
             });
         }
@@ -172,11 +193,6 @@ export function useMask({
 
         if (isPhoneType) {
             clampPhoneCaret(input);
-            return;
-        }
-
-        if (input.selectionStart == null) {
-            setCursorPositionForElement(input, lastCursorPosition);
         }
     }
 
@@ -185,11 +201,6 @@ export function useMask({
 
         if (isPhoneType) {
             clampPhoneCaret(input);
-            return;
-        }
-
-        if (input.selectionStart == null) {
-            setCursorPositionForElement(input, lastCursorPosition);
         }
     }
 
@@ -204,8 +215,6 @@ export function useMask({
 
             if (isPhoneType) {
                 clampPhoneCaret(input);
-            } else {
-                setCursorPositionForElement(input, lastCursorPosition);
             }
         });
     }
@@ -239,4 +248,22 @@ export function useMask({
         onBlur,
         onClick,
     };
+}
+
+function countValueCharsBeforeCaret(inputValue: string, caretPosition: number, mask: Mask): number {
+    const patterns = mask.filter((item): item is RegExp => item instanceof RegExp);
+    let valueCharsCount = 0;
+
+    for (const char of inputValue.slice(0, caretPosition)) {
+        const currentPattern = patterns[valueCharsCount];
+        if (!currentPattern) {
+            break;
+        }
+
+        if (currentPattern.test(char)) {
+            valueCharsCount += 1;
+        }
+    }
+
+    return valueCharsCount;
 }
