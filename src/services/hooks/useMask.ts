@@ -78,6 +78,11 @@ export function useMask({
         const minPosition = firstPatternIndex === -1 ? 0 : firstPatternIndex;
         const start = input.selectionStart;
         const end = input.selectionEnd ?? start;
+        const hasRangeSelection = start !== end;
+
+        if (hasRangeSelection) {
+            return;
+        }
 
         if (start < minPosition || end < minPosition) {
             const newPos = Math.max(minPosition, start, end);
