@@ -6,8 +6,10 @@ import {Divider} from '../divider';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {ReactNode} from 'react';
+import {IAdditionalAttributes} from '../../../types';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
-export interface IList {
+export interface IList extends IAdditionalAttributes {
     className?: string;
     children?: ReactNode | ReactNode[];
     as?: keyof JSX.IntrinsicElements;
@@ -27,7 +29,8 @@ const ListBase: React.FC<React.PropsWithChildren<IList>> = ({
     size,
     fontSize,
     fontFamily,
-}): JSX.Element => {
+    ...props
+}) => {
     const Tag = as;
     const classNames = cx(
         component('list')({
@@ -39,10 +42,13 @@ const ListBase: React.FC<React.PropsWithChildren<IList>> = ({
         }),
         className,
     );
+    const extendedChildren = React.useMemo(() => {
+        return addQaTagsToChildren(children, qaTags.listItem);
+    }, [children]);
 
     return (
-        <Tag as={as} className={classNames}>
-            {children}
+        <Tag as={as} className={classNames} data-qa={props['data-qa'] || qaTags.list}>
+            {extendedChildren}
         </Tag>
     );
 };

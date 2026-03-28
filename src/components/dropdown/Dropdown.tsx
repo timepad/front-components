@@ -13,6 +13,7 @@ import {DropdownFooter, DropdownHeader, IFooterHeaderProps} from './components/D
 import {CenterPinnedContent, DownPinnedContent, ElementPinnedContent} from './components/pinnedcontent';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
 export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
     Button: FC<React.PropsWithChildren<IButtonProps>>;
@@ -65,7 +66,14 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
                 }
                 footer = child as ReactElement<IFooterHeaderProps, typeof DropdownFooter>;
             } else {
-                otherChildren.push(child as ReactElement);
+                const extendedChild = React.isValidElement(child)
+                    ? React.cloneElement(child, {
+                          ...child.props,
+                          'data-qa': qaTags.dropdownList,
+                          children: addQaTagsToChildren(child.props.children, qaTags.dropdownItem),
+                      })
+                    : child;
+                otherChildren.push(extendedChild);
             }
         });
         return [header, footer, otherChildren];

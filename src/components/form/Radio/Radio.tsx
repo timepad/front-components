@@ -8,6 +8,7 @@ import {IFormRadioProps} from './Radio.types';
 
 import './index.less';
 import {noop} from '../Textarea/utils';
+import {qaTags} from '../../../services';
 
 export const Radio: FC<IFormRadioProps> = ({
     checked = false,
@@ -33,7 +34,7 @@ export const Radio: FC<IFormRadioProps> = ({
 
     return (
         <Row ffFont small={small} disabled={disabled} className={wrapperClasses} horizontalPadding={0}>
-            <label htmlFor={id}>
+            <label htmlFor={id} data-qa={qaTags.radioBtnLabel}>
                 <Row.Icon top={!!caption}>
                     <label>
                         <input
@@ -44,6 +45,7 @@ export const Radio: FC<IFormRadioProps> = ({
                             onChange={onChange}
                             name={name}
                             {...props}
+                            data-qa={props['data-qa'] || qaTags.radioBtn}
                         />
                         <span className={radioClasses}>
                             <IconBullet16 />
