@@ -441,6 +441,14 @@ export const icons24: IIconProps[] = [
         SVGSrc: Icons.IconWidget24,
         title: 'icon-widget-24',
     },
+    {
+        SVGSrc: Icons.IconHeartFill24,
+        title: 'icon-heart-fill-24',
+    },
+    {
+        SVGSrc: Icons.IconHeartOutline24,
+        title: 'icon-heart-outline-24',
+    },
 ];
 
 export const iconsMap: IIconProps[] = [
