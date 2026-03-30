@@ -1,4 +1,14 @@
-import {KeyboardEvent, ChangeEvent, FocusEvent, MouseEvent, useMemo, useState, FocusEventHandler} from 'react';
+import {
+    KeyboardEvent,
+    ChangeEvent,
+    FocusEvent,
+    MouseEvent,
+    useMemo,
+    useState,
+    FocusEventHandler,
+    FormEvent,
+    ClipboardEvent,
+} from 'react';
 
 import {useCallbackAfterRender} from './useCallbackAfterRender';
 import {
@@ -38,6 +48,8 @@ interface IMaskInputProps {
     onFocus: (e: FocusEvent<HTMLInputElement>) => void;
     onBlur: (e: FocusEvent<HTMLInputElement>) => void;
     onClick: (e: MouseEvent<HTMLInputElement>) => void;
+    onBeforeInput: (e: FormEvent<HTMLInputElement>) => void;
+    onPaste: (e: ClipboardEvent<HTMLInputElement>) => void;
 }
 
 export type Mask = Array<string | RegExp>;
@@ -94,6 +106,53 @@ export function useMask({
         () => parsedMask.filter((characterOrPattern) => characterOrPattern instanceof RegExp).length,
         [parsedMask],
     );
+    const maskPatterns = useMemo(
+        () => parsedMask.filter((characterOrPattern): characterOrPattern is RegExp => characterOrPattern instanceof RegExp),
+        [parsedMask],
+    );
+
+    function hasRangeSelection(input: HTMLInputElement): boolean {
+        return input.selectionStart != null && input.selectionEnd != null && input.selectionStart !== input.selectionEnd;
+    }
+
+    function canApplyInsertedText(text: string): boolean {
+        if (!text.length) {
+            return true;
+        }
+
+        return [...text].some((character) => maskPatterns.some((pattern) => pattern.test(character)));
+    }
+
+    function onBeforeInput(event: FormEvent<HTMLInputElement>) {
+        const input = event.currentTarget;
+        const nativeEvent = event.nativeEvent as InputEvent;
+        const insertedText = nativeEvent.data ?? '';
+
+        if (!hasRangeSelection(input) || !insertedText) {
+            return;
+        }
+
+        if (!canApplyInsertedText(insertedText)) {
+            event.preventDefault();
+            const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
+            setCursorPositionForElement(input, cursorPosition);
+        }
+    }
+
+    function onPaste(event: ClipboardEvent<HTMLInputElement>) {
+        const input = event.currentTarget;
+        const pastedText = event.clipboardData.getData('text');
+
+        if (!hasRangeSelection(input)) {
+            return;
+        }
+
+        if (!canApplyInsertedText(pastedText)) {
+            event.preventDefault();
+            const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
+            setCursorPositionForElement(input, cursorPosition);
+        }
+    }
 
     // Using an onChange instead of keyboard events because mobile devices don't fire key events
     function handleChange({target}: ChangeEvent<HTMLInputElement>) {
@@ -252,6 +311,8 @@ export function useMask({
         onFocus,
         onBlur,
         onClick,
+        onBeforeInput,
+        onPaste,
     };
 }
 
