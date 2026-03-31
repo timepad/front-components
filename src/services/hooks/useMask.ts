@@ -107,12 +107,17 @@ export function useMask({
         [parsedMask],
     );
     const maskPatterns = useMemo(
-        () => parsedMask.filter((characterOrPattern): characterOrPattern is RegExp => characterOrPattern instanceof RegExp),
+        () =>
+            parsedMask.filter(
+                (characterOrPattern): characterOrPattern is RegExp => characterOrPattern instanceof RegExp,
+            ),
         [parsedMask],
     );
 
     function hasRangeSelection(input: HTMLInputElement): boolean {
-        return input.selectionStart != null && input.selectionEnd != null && input.selectionStart !== input.selectionEnd;
+        return (
+            input.selectionStart != null && input.selectionEnd != null && input.selectionStart !== input.selectionEnd
+        );
     }
 
     function canApplyInsertedText(text: string): boolean {
@@ -264,11 +269,11 @@ export function useMask({
         }
     }
 
-    function onKeyDown({target}: KeyboardEvent<HTMLInputElement>) {
-        const input = target as HTMLInputElement;
+    function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+        const input = event.target as HTMLInputElement;
 
-        if (input && (eventIsSpaceKey(arguments[0] as KeyboardEvent<HTMLInputElement>))) {
-            (arguments[0] as KeyboardEvent<HTMLInputElement>).preventDefault();
+        if (eventIsSpaceKey(event)) {
+            event.preventDefault();
             if (hasRangeSelection(input)) {
                 const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
                 setCursorPositionForElement(input, cursorPosition);
