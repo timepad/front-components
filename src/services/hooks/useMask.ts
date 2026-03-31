@@ -128,14 +128,16 @@ export function useMask({
         const nativeEvent = event.nativeEvent as InputEvent;
         const insertedText = nativeEvent.data ?? '';
 
-        if (!hasRangeSelection(input) || !insertedText) {
+        if (!insertedText) {
             return;
         }
 
         if (!canApplyInsertedText(insertedText)) {
             event.preventDefault();
-            const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
-            setCursorPositionForElement(input, cursorPosition);
+            if (hasRangeSelection(input)) {
+                const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
+                setCursorPositionForElement(input, cursorPosition);
+            }
         }
     }
 
@@ -143,14 +145,16 @@ export function useMask({
         const input = event.currentTarget;
         const pastedText = event.clipboardData.getData('text');
 
-        if (!hasRangeSelection(input)) {
+        if (!pastedText) {
             return;
         }
 
         if (!canApplyInsertedText(pastedText)) {
             event.preventDefault();
-            const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
-            setCursorPositionForElement(input, cursorPosition);
+            if (hasRangeSelection(input)) {
+                const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
+                setCursorPositionForElement(input, cursorPosition);
+            }
         }
     }
 
@@ -263,9 +267,22 @@ export function useMask({
     function onKeyDown({target}: KeyboardEvent<HTMLInputElement>) {
         const input = target as HTMLInputElement;
 
+        if (input && (eventIsSpaceKey(arguments[0] as KeyboardEvent<HTMLInputElement>))) {
+            (arguments[0] as KeyboardEvent<HTMLInputElement>).preventDefault();
+            if (hasRangeSelection(input)) {
+                const cursorPosition = input.selectionEnd ?? input.selectionStart ?? 0;
+                setCursorPositionForElement(input, cursorPosition);
+            }
+            return;
+        }
+
         if (isPhoneType) {
             clampPhoneCaret(input);
         }
+    }
+
+    function eventIsSpaceKey(event: KeyboardEvent<HTMLInputElement>): boolean {
+        return event.key === ' ' || event.code === 'Space';
     }
 
     function onFocus(event: FocusEvent<HTMLInputElement>) {
