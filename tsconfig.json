@@ -19,7 +19,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "removeComments": true,
-    "outDir": "./src",
     "baseUrl": "./src",
     "typeRoots": ["./types", "./node_modules/@types"],
     "experimentalDecorators": true
