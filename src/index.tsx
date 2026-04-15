@@ -7,6 +7,7 @@ export * from './components/tabs';
 export * from './components/userpic';
 export * from './components/modal';
 export * from './components/logo';
+export * from './components/oldlogo';
 export * from './components/dropdown';
 export * from './components/list';
 export * from './components/loader';
