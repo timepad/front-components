@@ -3,7 +3,7 @@ import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import {Control, ControlId} from './Control';
 import {ControlList} from './ControlList';
-import {action, observable} from 'mobx';
+import {action, makeObservable, observable} from 'mobx';
 
 import './index.less';
 
@@ -11,6 +11,7 @@ class SegmentedControlStore {
     @observable activeControlId: string;
 
     constructor(activeControlId = '') {
+        makeObservable(this);
         this.activeControlId = activeControlId;
     }
 
