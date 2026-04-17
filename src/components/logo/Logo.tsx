@@ -1,26 +1,24 @@
 import * as React from 'react';
-import {Logo as LogoSVG} from '../../icons';
-import {component} from '../../services/helpers/classHelpers';
+import cx from 'classnames';
+
 import './index.less';
+import {TimepadLogoBlack, TimepadLogoWhite, TimepadLogoShortFill, TimepadLogoShortOutline} from '../../icons';
+import {component} from '../../services/helpers/classHelpers';
 
-type Colors = 'gray' | 'white' | 'blue' | 'purple';
-type Actions = 'expandable' | 'hoverable';
-
-export interface ILogoProps {
+export interface ILogoProps extends React.HTMLAttributes<HTMLDivElement> {
     short?: boolean;
-    action?: Actions;
-    color?: Colors;
+    inverted?: boolean;
 }
 
-export const Logo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, action, color}) => {
-    const className = component('vendor')({
-        expandable: action === 'expandable',
-        hoverable: action === 'hoverable',
-    });
+export const Logo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, inverted, className, ...props}) => {
+    const Icon = short ? <TimepadLogoShortFill /> : <TimepadLogoBlack />;
+    const InvertedIcon = short ? <TimepadLogoShortOutline /> : <TimepadLogoWhite />;
+
+    const logoClassName = cx(component('timepad-logo')(), className);
 
     return (
-        <div className={className}>
-            <LogoSVG className={color ?? ''} width={short ? 12 : 107} />
+        <div className={logoClassName} {...props}>
+            {inverted ? InvertedIcon : Icon}
         </div>
     );
 };
