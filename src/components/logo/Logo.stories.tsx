@@ -24,6 +24,18 @@ export const FullLogo: IStorybookComponent = () => {
 };
 FullLogo.storyName = 'FullLogo';
 
+export const FullWhiteLogo: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Full White Logo</StoryTitle>
+            <div style={{backgroundColor: 'black'}}>
+                <Logo inverted />
+            </div>
+        </>
+    );
+};
+FullWhiteLogo.storyName = 'FullWhiteLogo';
+
 export const ShortLogo: IStorybookComponent = () => {
     return (
         <>
@@ -33,3 +45,14 @@ export const ShortLogo: IStorybookComponent = () => {
     );
 };
 ShortLogo.storyName = 'ShortLogo';
+
+export const ShortOutlineLogo: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>Short Outline Logo</StoryTitle>
+
+            <Logo short inverted />
+        </>
+    );
+};
+ShortOutlineLogo.storyName = 'ShortOutlineLogo';

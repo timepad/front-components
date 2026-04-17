@@ -542,8 +542,16 @@ export const iconsLogo: IIconProps[] = [
         title: 'timepad-logo-black',
     },
     {
-        SVGSrc: Icons.TimepadLogoShort,
-        title: 'timepad-logo-short',
+        SVGSrc: Icons.TimepadLogoWhite,
+        title: 'timepad-logo-white',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortFill,
+        title: 'timepad-logo-short-fill',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortOutline,
+        title: 'timepad-logo-short-outline',
     },
 ];
 
