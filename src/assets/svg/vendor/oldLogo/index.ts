@@ -1,4 +1,4 @@
-import Logo from './logo.svg';
+import OldLogo from './old-logo.svg';
 import SumsubLogo from './sumsub-logo.svg';
 
-export {Logo, SumsubLogo};
+export {OldLogo, SumsubLogo};
