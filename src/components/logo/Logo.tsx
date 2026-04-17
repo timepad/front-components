@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import './index.less';
 import {TimepadLogoBlack, TimepadLogoWhite, TimepadLogoShortFill, TimepadLogoShortOutline} from '../../icons';
-import {component} from 'services/helpers/classHelpers';
+import {component} from '../../services/helpers/classHelpers';
 
 export interface ILogoProps extends React.HTMLAttributes<HTMLDivElement> {
     short?: boolean;
