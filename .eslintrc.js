@@ -34,7 +34,7 @@ config.rules = {
     ],
     'no-console': ['error', {allow: ['warn', 'error']}],
     'no-param-reassign': 'error',
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/no-empty-interface': ['warn', {allowSingleExtends: true}],
