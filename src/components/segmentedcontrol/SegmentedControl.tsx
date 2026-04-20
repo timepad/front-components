@@ -1,27 +1,14 @@
-import React, {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import React, {createContext, FC, HTMLAttributes, useMemo, useState} from 'react';
 import {component} from '../../services/helpers/classHelpers';
 import cx from 'classnames';
 import {Control, ControlId} from './Control';
 import {ControlList} from './ControlList';
-import {action, makeObservable, observable} from 'mobx';
 
 import './index.less';
 
-class SegmentedControlStore {
-    @observable activeControlId: string;
-
-    constructor(activeControlId = '') {
-        makeObservable(this);
-        this.activeControlId = activeControlId;
-    }
-
-    @action.bound setActiveControlId(id: string) {
-        this.activeControlId = id;
-    }
-}
-
 interface ISegmentedControlStoreContext {
-    segmentedControlStore: SegmentedControlStore;
+    activeControlId: string;
+    setActiveControlId: (id: string) => void;
     onControlClick: ControlClickHandler;
 }
 
@@ -53,24 +40,16 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
     const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
     const divClasses = cx(component('segmentedcontrol')({fix}), className);
 
-    const segmentedControlStore = useMemo(
-        () => new SegmentedControlStore(initialControlId ?? activeControlId),
-        [initialControlId, activeControlId],
-    );
-
-    const handleOnControlClick: ControlClickHandler = onControlClick
-        ? (ControlId: string) => {
-              onControlClick(ControlId, segmentedControlStore.setActiveControlId);
-          }
-        : (ControlId: string) => {
-              segmentedControlStore.setActiveControlId(ControlId);
-          };
+    const [currentControlId, setCurrentControlId] = useState(initialControlId ?? activeControlId ?? '');
+    const handleOnControlClick: ControlClickHandler = (ControlId) =>
+        onControlClick ? onControlClick(ControlId, setCurrentControlId) : setCurrentControlId(ControlId);
 
     return (
         <div {...rest} className={divClasses}>
             <SegmentedControlContext.Provider
                 value={{
-                    segmentedControlStore,
+                    activeControlId: currentControlId,
+                    setActiveControlId: setCurrentControlId,
                     onControlClick: handleOnControlClick,
                 }}
             >

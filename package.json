@@ -12,7 +12,6 @@
     "@popperjs/core": "2.9.2",
     "classnames": "2.3.1",
     "formik": "2.2.9",
-    "mobx-react": "9.2.0",
     "moment": "2.29.1",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-modal": "3.16.1",
@@ -62,11 +61,9 @@
     "ts-loader": "8.3.0",
     "typescript": "^5.9.2",
     "webpack": "^5.105.0",
-    "webpack-cli": "^5.1.0",
-    "mobx": "6.13.6"
+    "webpack-cli": "^5.1.0"
   },
   "peerDependencies": {
-    "mobx": "6.13.6"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
