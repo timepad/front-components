@@ -40,6 +40,18 @@
         fill: @c-green;
     }
 
+    &&--red use {
+        fill: @c-red;
+    }
+
+    &&--black use {
+        fill: @c-black;
+    }
+
+    &&--purple use {
+        fill: @c-primary-blue-80;
+    }
+
     &__auto {
         height: auto;
         width: auto;
@@ -68,10 +80,20 @@
 .cicon.cicon--inline.cicon--16 {
     margin: -8px -4px;
     position: relative;
+    //top: 2px; высота была в aicon в otp
     vertical-align: baseline;
 }
 
 .cicon.cicon--32 {
+    // ширина и высота были в aicon в otp
+    width: 32px;
+    height: 32px;
+}
+
+// ширина и высота были в aicon в otp
+.cicon.cicon--48 {
+    height: 48px;
+    width: 48px;
 }
 
 .cicon.cicon--header {
