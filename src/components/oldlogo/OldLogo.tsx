@@ -1,18 +1,18 @@
 import * as React from 'react';
-import {OldLogo as LogoSVG} from '../../icons';
+import {OldLogo as Logo} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 
 type Colors = 'gray' | 'white' | 'blue' | 'purple';
 type Actions = 'expandable' | 'hoverable';
 
-interface ILogoProps {
+interface IOldLogoProps {
     short?: boolean;
     action?: Actions;
     color?: Colors;
 }
 
-export const OldLogo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, action, color}) => {
+export const OldLogo: React.FC<React.PropsWithChildren<IOldLogoProps>> = ({short, action, color}) => {
     const className = component('old-logo')({
         expandable: action === 'expandable',
         hoverable: action === 'hoverable',
@@ -20,7 +20,7 @@ export const OldLogo: React.FC<React.PropsWithChildren<ILogoProps>> = ({short, a
 
     return (
         <div className={className}>
-            <LogoSVG className={color ?? ''} width={short ? 12 : 107} />
+            <Logo className={color ?? ''} width={short ? 12 : 107} />
         </div>
     );
 };
