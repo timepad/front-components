@@ -71,7 +71,7 @@ export function Button({onClick, labelColor, ...props}: IButtonProps): JSX.Eleme
     const iconAlignedLeft = hasIconWithLabel && props.iconAlignment === ButtonIconAlignment.left;
     const iconAlignedRight =
         hasIconWithLabel && (props.iconAlignment === ButtonIconAlignment.right || !iconAlignedLeft);
-    const iconClasses = ['aicon', 'cicon'];
+    const iconClasses = ['cicon'];
     if (props.icon?.props?.className) {
         iconClasses.push(props.icon.props.className);
     }
