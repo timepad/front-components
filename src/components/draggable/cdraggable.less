@@ -1,0 +1,20 @@
+.cdraggable {
+  position: relative;
+  isolation: isolate;
+
+  &__item {
+    position: relative;
+    will-change: transform;
+
+    &_dragging {
+      z-index: 1000;
+    }
+  }
+
+  &__drag-handle {
+    cursor: grab !important;
+    &:active {
+      cursor: grabbing !important;
+    }
+  }
+}
