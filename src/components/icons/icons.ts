@@ -538,12 +538,20 @@ export const iconsAppbank: IIconProps[] = [
 
 export const iconsLogo: IIconProps[] = [
     {
-        SVGSrc: Icons.Logo,
-        title: 'logo',
+        SVGSrc: Icons.TimepadLogoBlack,
+        title: 'timepad-logo-black',
     },
     {
-        SVGSrc: Icons.SumsubLogo,
-        title: 'sumsub-logo',
+        SVGSrc: Icons.TimepadLogoWhite,
+        title: 'timepad-logo-white',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortFill,
+        title: 'timepad-logo-short-fill',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortOutline,
+        title: 'timepad-logo-short-outline',
     },
 ];
 
