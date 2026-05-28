@@ -33,4 +33,5 @@ export * from './components/carousel';
 export * from './components/searchinput';
 export * from './components/skeleton';
 export * from './components/uploadinput';
+export * from './components/imageuploaduppy';
 export * from './components/draggable';
