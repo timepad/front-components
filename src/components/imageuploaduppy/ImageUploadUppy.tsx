@@ -11,6 +11,7 @@ import '@uppy/image-editor/dist/style.min.css';
 
 import './index.less';
 
+import {Button, ButtonVariant} from '../button';
 import {Brick} from '../brick';
 import {Typography} from '../typography';
 import {
@@ -198,14 +199,12 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     const controlsNode = strategy === 'manual' && (
         <>
             <Brick size={1} />
-            <button
-                className="c-button c-button--secondary"
+            <Button
+                variant={ButtonVariant.secondary}
                 disabled={uploading || disabled}
                 onClick={() => uppy.upload()}
-                type="button"
-            >
-                {uploading ? 'Загрузка...' : 'Загрузить изображение'}
-            </button>
+                label={uploading ? 'Загрузка...' : 'Загрузить изображение'}
+            />
         </>
     );
 
@@ -219,14 +218,12 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
             )}
             {viewMode === 'modal' && (
                 <>
-                    <button
-                        className="c-button c-button--secondary"
+                    <Button
+                        variant={ButtonVariant.secondary}
                         disabled={disabled}
                         onClick={() => setModalOpen(true)}
-                        type="button"
-                    >
-                        {openModalButtonText}
-                    </button>
+                        label={openModalButtonText}
+                    />
                     <DashboardModal
                         uppy={uppy as any}
                         open={isModalOpen}

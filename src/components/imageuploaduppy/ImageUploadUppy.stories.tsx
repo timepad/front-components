@@ -1,9 +1,11 @@
 import React from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import Uppy from '@uppy/core/lib/index.js';
+import XHRUpload from '@uppy/xhr-upload';
 import 'css/bundle.less';
 
 import {ImageUploadUppy} from './ImageUploadUppy';
+import {createS3PresignedUploadPlugin} from './s3PresignedExample';
 import {IStorybookComponent, Spacer, StoryTitle} from '../../services/helpers/storyBookHelpers';
 
 export default {
@@ -31,6 +33,17 @@ const createAutoUploader = () => {
     });
 };
 
+const withDemoUpload = [
+    ({uppy}: {uppy: Uppy}) => {
+        (uppy as any).use(XHRUpload as any, {
+            endpoint: 'https://httpbin.org/post',
+            method: 'post',
+            formData: true,
+            fieldName: 'file',
+        });
+    },
+];
+
 export const SingleUploadManual: IStorybookComponent = () => {
     return (
         <>
@@ -41,6 +54,7 @@ export const SingleUploadManual: IStorybookComponent = () => {
                     adapter={{
                         createUploader: createBaseUploader,
                         uploadStrategy: 'manual',
+                        plugins: withDemoUpload,
                     }}
                     onSuccess={(result) => {
                         // eslint-disable-next-line no-console
@@ -66,6 +80,7 @@ export const ImageCropAuto: IStorybookComponent = () => {
                     adapter={{
                         createUploader: createAutoUploader,
                         uploadStrategy: 'auto',
+                        plugins: withDemoUpload,
                         locale: {
                             strings: {
                                 dropPasteFiles: 'Перетащите изображение сюда или %{browseFiles}',
@@ -90,6 +105,7 @@ export const ButtonWithModal: IStorybookComponent = () => {
                     adapter={{
                         createUploader: createBaseUploader,
                         uploadStrategy: 'manual',
+                        plugins: withDemoUpload,
                     }}
                 />
             </div>
@@ -111,6 +127,34 @@ export const ErrorStateDemo: IStorybookComponent = () => {
                     onError={(error) => {
                         // eslint-disable-next-line no-console
                         console.error('expected error (no uploader plugin configured)', error);
+                    }}
+                />
+            </div>
+        </>
+    );
+};
+
+export const S3PresignedUploadExample: IStorybookComponent = () => {
+    return (
+        <>
+            <StoryTitle>S3-compatible presigned upload example</StoryTitle>
+            <Spacer width={8} />
+            <div style={{width: '640px'}}>
+                <ImageUploadUppy
+                    adapter={{
+                        createUploader: createBaseUploader,
+                        uploadStrategy: 'manual',
+                        plugins: [
+                            createS3PresignedUploadPlugin({
+                                // Replace with your backend endpoint that returns
+                                // { uploadUrl, headers?, publicUrl? }.
+                                presignEndpoint: '/api/uploads/presign-image',
+                            }),
+                        ],
+                    }}
+                    onError={(error) => {
+                        // eslint-disable-next-line no-console
+                        console.error('s3 presigned upload error', error);
                     }}
                 />
             </div>
