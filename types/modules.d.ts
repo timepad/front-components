@@ -6,6 +6,11 @@ declare module '@uppy/core' {
         constructor(options?: unknown);
         use: (...args: unknown[]) => unknown;
         on: (...args: unknown[]) => unknown;
+        off: (...args: unknown[]) => unknown;
+        emit: (...args: unknown[]) => unknown;
+        addUploader: (...args: unknown[]) => unknown;
+        removeUploader: (...args: unknown[]) => unknown;
+        getFile: (...args: unknown[]) => unknown;
         upload: (...args: unknown[]) => unknown;
         setFileMeta: (...args: unknown[]) => unknown;
         getPlugin: (...args: unknown[]) => unknown;
@@ -34,13 +39,13 @@ declare module '@uppy/xhr-upload' {
 declare module '@uppy/react/dashboard' {
     import type React from 'react';
 
-    const Dashboard: React.ComponentType<any>;
+    const Dashboard: React.ComponentType<Record<string, unknown>>;
     export default Dashboard;
 }
 
 declare module '@uppy/react/dashboard-modal' {
     import type React from 'react';
 
-    const DashboardModal: React.ComponentType<any>;
+    const DashboardModal: React.ComponentType<Record<string, unknown>>;
     export default DashboardModal;
 }

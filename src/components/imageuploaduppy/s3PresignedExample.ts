@@ -1,6 +1,7 @@
 import XHRUpload from '@uppy/xhr-upload';
+import type Uppy from '@uppy/core';
 
-import type {ImageUploadPluginFactory} from './ImageUploadUppy.types';
+import type {ImageUploadPluginFactory, IImageUploadUppyFile} from './ImageUploadUppy.types';
 
 export interface IS3PresignRequestPayload {
     fileName: string;
@@ -17,33 +18,58 @@ export interface IS3PresignResponse {
 export interface IS3PresignedPluginOptions {
     presignEndpoint: string;
     getAuthToken?: () => string | undefined | Promise<string | undefined>;
+    pluginId?: string;
+    presignTimeoutMs?: number;
 }
+
+type UppyWithS3PluginApi = Uppy & {
+    getPlugin?: (pluginId: string) => unknown;
+    removePlugin?: (pluginInstance: unknown) => void;
+};
 
 export const createS3PresignedUploadPlugin = ({
     presignEndpoint,
     getAuthToken,
+    pluginId = 'S3PresignedXHRUpload',
+    presignTimeoutMs = 10000,
 }: IS3PresignedPluginOptions): ImageUploadPluginFactory => {
     return ({uppy}) => {
-        (uppy as any).use(XHRUpload as any, {
+        const uppyWithS3PluginApi = uppy as UppyWithS3PluginApi;
+        const existingPlugin = uppyWithS3PluginApi.getPlugin?.(pluginId);
+
+        if (existingPlugin) {
+            return;
+        }
+
+        uppy.use(XHRUpload as unknown, {
+            id: pluginId,
             // Presigned S3 PUT: upload raw file body to the signed URL.
             formData: false,
             method: 'PUT',
-            endpoint: async (file: any) => {
+            endpoint: async (file: IImageUploadUppyFile) => {
                 const payload: IS3PresignRequestPayload = {
-                    fileName: file?.name || 'file',
-                    mimeType: file?.type,
-                    size: file?.size,
+                    fileName: file.name || 'file',
+                    mimeType: file.type,
+                    size: file.size,
                 };
 
                 const token = await getAuthToken?.();
-                const response = await fetch(presignEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                        ...(token ? {authorization: `Bearer ${token}`} : {}),
-                    },
-                    body: JSON.stringify(payload),
-                });
+                const abortController = new AbortController();
+                const timeoutId = setTimeout(() => abortController.abort(), presignTimeoutMs);
+                let response: Response;
+                try {
+                    response = await fetch(presignEndpoint, {
+                        signal: abortController.signal,
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            ...(token ? {authorization: `Bearer ${token}`} : {}),
+                        },
+                        body: JSON.stringify(payload),
+                    });
+                } finally {
+                    clearTimeout(timeoutId);
+                }
 
                 if (!response.ok) {
                     throw new Error(`Presign failed with status ${response.status}`);
@@ -58,14 +84,21 @@ export const createS3PresignedUploadPlugin = ({
 
                 return presignData.uploadUrl;
             },
-            headers: (file: any) => {
-                return file?.meta?.s3Headers || {};
+            headers: (file: IImageUploadUppyFile) => {
+                return file.meta?.s3Headers || {};
             },
-            getResponseData: (_xhr: XMLHttpRequest, file: any) => {
+            getResponseData: (_xhr: XMLHttpRequest, file: IImageUploadUppyFile) => {
                 return {
-                    url: file?.meta?.publicUrl || file?.uploadURL || '',
+                    url: file.meta?.publicUrl || file.uploadURL || '',
                 };
             },
         });
+
+        return () => {
+            const pluginInstance = uppyWithS3PluginApi.getPlugin?.(pluginId);
+            if (pluginInstance) {
+                uppyWithS3PluginApi.removePlugin?.(pluginInstance);
+            }
+        };
     };
 };

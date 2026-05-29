@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Uppy from '@uppy/core';
 import ImageEditor from '@uppy/image-editor';
 import Dashboard from '@uppy/react/dashboard';
@@ -17,6 +17,8 @@ import {Typography} from '../typography';
 import {
     IImageUploadError,
     IImageUploadResult,
+    IImageUploadUppyFile,
+    ImageUploadPluginFactoryCleanup,
     IImageUploadUppyProps,
     UppyUploadStrategy,
 } from './ImageUploadUppy.types';
@@ -39,6 +41,12 @@ const DASHBOARD_COMMON_OPTIONS = {
     hideCancelButton: false,
 };
 
+type UppyWithPluginApi = Uppy & {
+    getPlugin?: (pluginId: string) => unknown;
+    destroy?: () => void;
+    close?: () => void;
+};
+
 const getDefaultUppy = (localeStrings?: Record<string, string>) => {
     const instance = new Uppy({
         autoProceed: false,
@@ -49,19 +57,17 @@ const getDefaultUppy = (localeStrings?: Record<string, string>) => {
         locale: localeStrings ? {strings: localeStrings} : undefined,
     });
 
-    instance.use(
-        ImageEditor as any,
-        IMAGE_EDITOR_OPTIONS as any,
-    );
+    instance.use(ImageEditor as unknown, IMAGE_EDITOR_OPTIONS as unknown);
 
     return instance;
 };
 
 const ensureImageEditorPlugin = (uppy: Uppy) => {
-    const imageEditorPlugin = (uppy as any).getPlugin?.('ImageEditor');
+    const uppyWithPluginApi = uppy as UppyWithPluginApi;
+    const imageEditorPlugin = uppyWithPluginApi.getPlugin?.('ImageEditor');
 
     if (!imageEditorPlugin) {
-        uppy.use(ImageEditor as any, IMAGE_EDITOR_OPTIONS as any);
+        uppy.use(ImageEditor as unknown, IMAGE_EDITOR_OPTIONS as unknown);
     }
 };
 
@@ -84,6 +90,7 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     dashboardHeight = 360,
     viewMode = 'inline',
     openModalButtonText = DEFAULT_OPEN_MODAL_BUTTON_TEXT,
+    showNativeUploadButton,
     adapter,
     onReady,
     onUploadStart,
@@ -96,74 +103,129 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     const [previewUrl, setPreviewUrl] = useState<string>('');
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const strategy: UppyUploadStrategy = adapter?.uploadStrategy || 'manual';
+    const isNativeUploadButtonVisible = strategy === 'manual' && (showNativeUploadButton ?? viewMode === 'modal');
+    const adapterCreateUploader = adapter?.createUploader;
+    const adapterLocaleStrings = adapter?.locale?.strings;
+    const adapterPlugins = adapter?.plugins;
+    const callbacksRef = useRef({
+        onReady,
+        onUploadStart,
+        onProgress,
+        onSuccess,
+        onError,
+        onFileRemove,
+    });
 
     const uppy = useMemo(() => {
-        const customUppy = adapter?.createUploader?.();
+        const customUppy = adapterCreateUploader?.();
         if (customUppy) {
             return customUppy;
         }
 
-        return getDefaultUppy(adapter?.locale?.strings);
-    }, [adapter]);
+        return getDefaultUppy(adapterLocaleStrings);
+    }, [adapterCreateUploader, adapterLocaleStrings]);
+
+    useEffect(() => {
+        callbacksRef.current = {
+            onReady,
+            onUploadStart,
+            onProgress,
+            onSuccess,
+            onError,
+            onFileRemove,
+        };
+    }, [onError, onFileRemove, onProgress, onReady, onSuccess, onUploadStart]);
 
     useEffect(() => {
         ensureImageEditorPlugin(uppy);
-        adapter?.plugins?.forEach((pluginFactory) => pluginFactory({uppy}));
+        const pluginCleanups: ImageUploadPluginFactoryCleanup[] = [];
+        adapterPlugins?.forEach((pluginFactory) => {
+            const cleanup = pluginFactory({uppy});
+            if (typeof cleanup === 'function') {
+                pluginCleanups.push(cleanup);
+            }
+        });
 
-        onReady?.(uppy);
+        callbacksRef.current.onReady?.(uppy);
 
-        uppy.on('upload', () => {
+        const onUpload = () => {
             setUploading(true);
-            onUploadStart?.();
-        });
+            callbacksRef.current.onUploadStart?.();
+        };
 
-        uppy.on('progress', (progress: number) => {
-            onProgress?.(progress);
-        });
+        const onProgressEvent = (progress: number) => {
+            callbacksRef.current.onProgress?.(progress);
+        };
 
-        uppy.on('upload-success', (file: any, response: any) => {
+        const onUploadSuccess = (file: IImageUploadUppyFile, response: unknown) => {
             const result: IImageUploadResult = {
-                fileId: file?.id,
-                fileName: file?.name,
-                mimeType: file?.type,
-                size: file?.size,
-                uploadURL: file?.uploadURL,
+                fileId: file.id,
+                fileName: file.name || file.id,
+                mimeType: file.type,
+                size: file.size,
+                uploadURL: file.uploadURL,
                 response,
             };
 
-            if (file?.preview) {
+            if (file.preview) {
                 setPreviewUrl(file.preview);
             }
 
-            onSuccess?.(result);
-        });
+            callbacksRef.current.onSuccess?.(result);
+        };
 
-        uppy.on('upload-error', (_file: any, error: unknown) => {
-            onError?.(normalizeError(error));
-        });
+        const onUploadError = (_file: IImageUploadUppyFile, error: unknown) => {
+            callbacksRef.current.onError?.(normalizeError(error));
+        };
 
-        uppy.on('error', (error: unknown) => {
-            onError?.(normalizeError(error));
-        });
+        const onErrorEvent = (error: unknown) => {
+            callbacksRef.current.onError?.(normalizeError(error));
+        };
 
-        uppy.on('file-removed', (file: any) => {
-            onFileRemove?.(file?.id);
+        const onFileRemoved = (file: IImageUploadUppyFile) => {
+            callbacksRef.current.onFileRemove?.(file.id);
             setPreviewUrl('');
-        });
+        };
 
-        uppy.on('complete', () => {
+        const onComplete = () => {
             setUploading(false);
-        });
-    }, [adapter?.plugins, onError, onFileRemove, onProgress, onReady, onSuccess, onUploadStart, uppy]);
+        };
+
+        uppy.on('upload', onUpload);
+        uppy.on('progress', onProgressEvent);
+        uppy.on('upload-success', onUploadSuccess);
+        uppy.on('upload-error', onUploadError);
+        uppy.on('error', onErrorEvent);
+        uppy.on('file-removed', onFileRemoved);
+        uppy.on('complete', onComplete);
+
+        return () => {
+            uppy.off('upload', onUpload);
+            uppy.off('progress', onProgressEvent);
+            uppy.off('upload-success', onUploadSuccess);
+            uppy.off('upload-error', onUploadError);
+            uppy.off('error', onErrorEvent);
+            uppy.off('file-removed', onFileRemoved);
+            uppy.off('complete', onComplete);
+            pluginCleanups.forEach((cleanup) => cleanup());
+        };
+    }, [adapterPlugins, uppy]);
 
     useEffect(() => {
+        const uppyWithPluginApi = uppy as UppyWithPluginApi;
         return () => {
-            (uppy as any).destroy?.();
-            (uppy as any).close?.();
+            uppyWithPluginApi.destroy?.();
+            uppyWithPluginApi.close?.();
         };
     }, [uppy]);
 
-    const controlsNode = strategy === 'manual' && (
+    useEffect(() => {
+        if (viewMode !== 'modal' && isModalOpen) {
+            setModalOpen(false);
+        }
+    }, [isModalOpen, viewMode]);
+
+    const controlsNode = strategy === 'manual' && !isNativeUploadButtonVisible && (
         <>
             <Brick size={1} />
             <Button
@@ -180,11 +242,11 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
             {viewMode === 'inline' && (
                 <>
                     <Dashboard
-                        uppy={uppy as any}
-                        {...(DASHBOARD_COMMON_OPTIONS as any)}
+                        uppy={uppy}
+                        {...DASHBOARD_COMMON_OPTIONS}
                         height={dashboardHeight}
                         note={note}
-                        hideUploadButton={strategy === 'auto'}
+                        hideUploadButton={!isNativeUploadButtonVisible}
                         disabled={disabled}
                     />
                     {controlsNode}
@@ -201,12 +263,12 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
                         label={openModalButtonText}
                     />
                     <DashboardModal
-                        uppy={uppy as any}
-                        {...(DASHBOARD_COMMON_OPTIONS as any)}
+                        uppy={uppy}
+                        {...DASHBOARD_COMMON_OPTIONS}
                         open={isModalOpen}
                         onRequestClose={() => setModalOpen(false)}
                         note={note}
-                        hideUploadButton={strategy === 'auto'}
+                        hideUploadButton={!isNativeUploadButtonVisible}
                         closeModalOnClickOutside={true}
                         disabled={disabled}
                     />

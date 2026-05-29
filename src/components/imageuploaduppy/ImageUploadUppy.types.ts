@@ -17,6 +17,22 @@ export interface IImageUploadError {
     cause?: unknown;
 }
 
+export interface IImageUploadFileMeta {
+    s3Headers?: Record<string, string>;
+    publicUrl?: string;
+    [key: string]: unknown;
+}
+
+export interface IImageUploadUppyFile {
+    id: string;
+    name?: string;
+    type?: string;
+    size?: number;
+    preview?: string;
+    uploadURL?: string;
+    meta?: IImageUploadFileMeta;
+}
+
 export interface IImageUploadLocale {
     strings?: Record<string, string>;
 }
@@ -25,9 +41,13 @@ export interface IImageUploadPluginFactoryContext {
     uppy: Uppy;
 }
 
-export type ImageUploadPluginFactory = (context: IImageUploadPluginFactoryContext) => void;
+export type ImageUploadPluginFactoryCleanup = () => void;
+export type ImageUploadPluginFactory = (
+    context: IImageUploadPluginFactoryContext,
+) => void | ImageUploadPluginFactoryCleanup;
 
 export interface IImageUploadUppyAdapterConfig {
+    // Adapter should be memoized in parent to avoid recreating Uppy instance.
     createUploader?: () => Uppy;
     plugins?: ImageUploadPluginFactory[];
     locale?: IImageUploadLocale;
@@ -41,6 +61,7 @@ export interface IImageUploadUppyProps {
     dashboardHeight?: number;
     viewMode?: UppyViewMode;
     openModalButtonText?: string;
+    showNativeUploadButton?: boolean;
     adapter?: IImageUploadUppyAdapterConfig;
     onReady?: (uppy: Uppy) => void;
     onUploadStart?: () => void;
