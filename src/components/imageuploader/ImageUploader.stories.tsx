@@ -40,7 +40,13 @@ type UppyWithStoryApi = IUppyLike & {
 };
 
 const installMockUploadPlugin = (uppy: UppyWithStoryApi, mode: StoryMockMode = 'success') => {
+    let isDisposed = false;
     const createdObjectUrls = new Set<string>();
+
+    const wait = async (ms: number): Promise<boolean> => {
+        await sleep(ms);
+        return !isDisposed;
+    };
 
     const createPreviewUrl = (file: StoryUppyFile): string => {
         if (file.preview) {
@@ -58,15 +64,23 @@ const installMockUploadPlugin = (uppy: UppyWithStoryApi, mode: StoryMockMode = '
     };
 
     const uploader = async (fileIds: string[]) => {
+        if (isDisposed) {
+            return;
+        }
+
         const files = fileIds
             .map((fileId) => uppy.getFile?.(fileId) as IImageUploaderFile | undefined)
             .filter(Boolean) as IImageUploaderFile[];
 
-        if (files.length > 0) {
+        if (!isDisposed && files.length > 0) {
             uppy.emit?.('upload-start', files);
         }
 
         for (const fileId of fileIds) {
+            if (isDisposed) {
+                return;
+            }
+
             const file = uppy.getFile?.(fileId) as StoryUppyFile | undefined;
             if (!file) {
                 continue;
@@ -76,8 +90,13 @@ const installMockUploadPlugin = (uppy: UppyWithStoryApi, mode: StoryMockMode = '
             const progressSteps = [0.25, 0.6, 1];
 
             for (const step of progressSteps) {
-                await sleep(180);
+                if (!(await wait(180))) {
+                    return;
+                }
                 const bytesUploaded = Math.min(bytesTotal, Math.round(bytesTotal * step));
+                if (isDisposed) {
+                    return;
+                }
                 uppy.emit?.('upload-progress', file, {
                     uploadStarted: Date.now(),
                     bytesUploaded,
@@ -86,16 +105,26 @@ const installMockUploadPlugin = (uppy: UppyWithStoryApi, mode: StoryMockMode = '
             }
 
             if (mode === 'error') {
-                await sleep(120);
+                if (!(await wait(120))) {
+                    return;
+                }
                 const uploadError = new Error('Mock upload failed');
+                if (isDisposed) {
+                    return;
+                }
                 uppy.emit?.('upload-error', file, uploadError);
                 throw uploadError;
             }
 
-            await sleep(120);
+            if (!(await wait(120))) {
+                return;
+            }
 
             const uploadURL =
                 createPreviewUrl(file) || `https://example.local/uploads/${encodeURIComponent(file.name || file.id)}`;
+            if (isDisposed) {
+                return;
+            }
             uppy.emit?.('upload-progress', file, {
                 uploadStarted: Date.now(),
                 bytesUploaded: bytesTotal,
@@ -112,6 +141,7 @@ const installMockUploadPlugin = (uppy: UppyWithStoryApi, mode: StoryMockMode = '
     uppy.addUploader?.(uploader);
 
     return () => {
+        isDisposed = true;
         uppy.removeUploader?.(uploader);
         createdObjectUrls.forEach((objectUrl) => {
             if (typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
