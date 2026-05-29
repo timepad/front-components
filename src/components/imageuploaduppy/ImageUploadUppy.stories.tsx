@@ -1,6 +1,6 @@
 import React from 'react';
 import {Meta} from '@storybook/react/types-6-0';
-import Uppy from '@uppy/core/lib/index.js';
+import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import 'css/bundle.less';
 

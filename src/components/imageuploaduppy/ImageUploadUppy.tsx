@@ -1,16 +1,16 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import cx from 'classnames';
-import Uppy from '@uppy/core/lib/index.js';
-import Dashboard from '@uppy/dashboard';
-import ImageEditor from '@uppy/image-editor/lib/index.js';
-import DashboardModal from '@uppy/react/lib/DashboardModal.js';
+import Uppy from '@uppy/core';
+import ImageEditor from '@uppy/image-editor';
+import Dashboard from '@uppy/react/dashboard';
+import DashboardModal from '@uppy/react/dashboard-modal';
 
-import '@uppy/core/dist/style.min.css';
-import '@uppy/dashboard/dist/style.min.css';
-import '@uppy/image-editor/dist/style.min.css';
+import '@uppy/core/css/style.min.css';
+import '@uppy/dashboard/css/style.min.css';
+import '@uppy/image-editor/css/style.min.css';
 
 import './index.less';
 
+import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../button';
 import {Brick} from '../brick';
 import {Typography} from '../typography';
@@ -23,6 +23,21 @@ import {
 
 const DEFAULT_NOTE = 'Выберите изображение и при необходимости обрежьте его через Edit';
 const DEFAULT_OPEN_MODAL_BUTTON_TEXT = 'Открыть загрузчик';
+const cnImageUploadUppy = component('image-upload-uppy');
+const IMAGE_EDITOR_OPTIONS = {
+    quality: 0.9,
+    cropperOptions: {
+        viewMode: 1,
+        background: false,
+        autoCropArea: 1,
+    },
+};
+const DASHBOARD_COMMON_OPTIONS = {
+    plugins: ['ImageEditor'],
+    proudlyDisplayPoweredByUppy: false,
+    showProgressDetails: true,
+    hideCancelButton: false,
+};
 
 const getDefaultUppy = (localeStrings?: Record<string, string>) => {
     const instance = new Uppy({
@@ -36,14 +51,7 @@ const getDefaultUppy = (localeStrings?: Record<string, string>) => {
 
     instance.use(
         ImageEditor as any,
-        {
-            quality: 0.9,
-            cropperOptions: {
-                viewMode: 1,
-                background: false,
-                autoCropArea: 1,
-            },
-        } as any,
+        IMAGE_EDITOR_OPTIONS as any,
     );
 
     return instance;
@@ -53,17 +61,7 @@ const ensureImageEditorPlugin = (uppy: Uppy) => {
     const imageEditorPlugin = (uppy as any).getPlugin?.('ImageEditor');
 
     if (!imageEditorPlugin) {
-        uppy.use(
-            ImageEditor as any,
-            {
-                quality: 0.9,
-                cropperOptions: {
-                    viewMode: 1,
-                    background: false,
-                    autoCropArea: 1,
-                },
-            } as any,
-        );
+        uppy.use(ImageEditor as any, IMAGE_EDITOR_OPTIONS as any);
     }
 };
 
@@ -97,8 +95,6 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     const [uploading, setUploading] = useState<boolean>(false);
     const [previewUrl, setPreviewUrl] = useState<string>('');
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
-
-    const [dashboardHost, setDashboardHost] = useState<HTMLDivElement | null>(null);
     const strategy: UppyUploadStrategy = adapter?.uploadStrategy || 'manual';
 
     const uppy = useMemo(() => {
@@ -161,40 +157,11 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     }, [adapter?.plugins, onError, onFileRemove, onProgress, onReady, onSuccess, onUploadStart, uppy]);
 
     useEffect(() => {
-        if (viewMode !== 'inline' || !dashboardHost) {
-            return;
-        }
-
-        uppy.use(
-            Dashboard as any,
-            {
-                target: dashboardHost,
-                inline: true,
-                plugins: ['ImageEditor'],
-                height: dashboardHeight,
-                proudlyDisplayPoweredByUppy: false,
-                showProgressDetails: true,
-                hideCancelButton: false,
-                note,
-                hideUploadButton: strategy === 'auto',
-            } as any,
-        );
-    }, [dashboardHeight, dashboardHost, note, strategy, uppy, viewMode]);
-
-    useEffect(() => {
         return () => {
             (uppy as any).destroy?.();
             (uppy as any).close?.();
         };
     }, [uppy]);
-
-    const dashboardNode = (
-        <div
-            ref={(node) => {
-                setDashboardHost((prev) => (prev === node ? prev : node));
-            }}
-        />
-    );
 
     const controlsNode = strategy === 'manual' && (
         <>
@@ -209,10 +176,17 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
     );
 
     return (
-        <div className={cx('c-image-upload-uppy', className, {'c-image-upload-uppy--disabled': disabled})}>
+        <div className={cnImageUploadUppy({disabled}, [className])}>
             {viewMode === 'inline' && (
                 <>
-                    {dashboardNode}
+                    <Dashboard
+                        uppy={uppy as any}
+                        {...(DASHBOARD_COMMON_OPTIONS as any)}
+                        height={dashboardHeight}
+                        note={note}
+                        hideUploadButton={strategy === 'auto'}
+                        disabled={disabled}
+                    />
                     {controlsNode}
                 </>
             )}
@@ -221,19 +195,20 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
                     <Button
                         variant={ButtonVariant.secondary}
                         disabled={disabled}
-                        onClick={() => setModalOpen(true)}
+                        onClick={() => {
+                            setModalOpen(true);
+                        }}
                         label={openModalButtonText}
                     />
                     <DashboardModal
                         uppy={uppy as any}
+                        {...(DASHBOARD_COMMON_OPTIONS as any)}
                         open={isModalOpen}
                         onRequestClose={() => setModalOpen(false)}
-                        plugins={['ImageEditor'] as any}
-                        proudlyDisplayPoweredByUppy={false}
-                        showProgressDetails={true}
-                        hideCancelButton={false}
                         note={note}
                         hideUploadButton={strategy === 'auto'}
+                        closeModalOnClickOutside={true}
+                        disabled={disabled}
                     />
                 </>
             )}

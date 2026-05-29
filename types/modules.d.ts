@@ -1,21 +1,46 @@
 declare module '*.less';
 declare module '*.css';
 
-declare module '@uppy/core/lib/index.js' {
-    import Uppy from '@uppy/core';
+declare module '@uppy/core' {
+    class Uppy {
+        constructor(options?: unknown);
+        use: (...args: unknown[]) => unknown;
+        on: (...args: unknown[]) => unknown;
+        upload: (...args: unknown[]) => unknown;
+        setFileMeta: (...args: unknown[]) => unknown;
+        getPlugin: (...args: unknown[]) => unknown;
+        removePlugin: (...args: unknown[]) => unknown;
+        destroy: (...args: unknown[]) => unknown;
+        close: (...args: unknown[]) => unknown;
+    }
     export default Uppy;
 }
 
-declare module '@uppy/react/lib/index.js' {
-    export {DashboardModal} from '@uppy/react';
+declare module '@uppy/dashboard' {
+    const Dashboard: unknown;
+    export default Dashboard;
 }
 
-declare module '@uppy/react/lib/DashboardModal.js' {
-    import {DashboardModal} from '@uppy/react';
-    export default DashboardModal;
-}
-
-declare module '@uppy/image-editor/lib/index.js' {
-    import ImageEditor from '@uppy/image-editor';
+declare module '@uppy/image-editor' {
+    const ImageEditor: unknown;
     export default ImageEditor;
+}
+
+declare module '@uppy/xhr-upload' {
+    const XHRUpload: unknown;
+    export default XHRUpload;
+}
+
+declare module '@uppy/react/dashboard' {
+    import type React from 'react';
+
+    const Dashboard: React.ComponentType<any>;
+    export default Dashboard;
+}
+
+declare module '@uppy/react/dashboard-modal' {
+    import type React from 'react';
+
+    const DashboardModal: React.ComponentType<any>;
+    export default DashboardModal;
 }

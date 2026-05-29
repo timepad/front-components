@@ -40,6 +40,11 @@
     "@types/react-transition-group": "4.4.2",
     "@typescript-eslint/eslint-plugin": "4.27.0",
     "@typescript-eslint/parser": "4.27.0",
+    "@uppy/core": "^5.2.0",
+    "@uppy/dashboard": "^5.1.1",
+    "@uppy/image-editor": "^4.2.0",
+    "@uppy/react": "^5.2.0",
+    "@uppy/xhr-upload": "^5.2.0",
     "autoprefixer": "^10.4.27",
     "chromatic": "5.9.2",
     "css-loader": "5.2.6",
@@ -65,20 +70,15 @@
     "typescript": "^5.9.2",
     "webpack": "^5.105.0",
     "webpack-cli": "^5.1.0",
-    "yup": "0.32.9",
-    "@uppy/core": "^3.13.1",
-    "@uppy/dashboard": "^3.9.1",
-    "@uppy/image-editor": "^3.4.2",
-    "@uppy/react": "^3.4.0",
-    "@uppy/xhr-upload": "^3.6.8"
+    "yup": "0.32.9"
   },
   "peerDependencies": {
-    "yup": "0.32.9",
-    "@uppy/core": "^3.13.1",
-    "@uppy/dashboard": "^3.9.1",
-    "@uppy/image-editor": "^3.4.2",
-    "@uppy/react": "^3.4.0",
-    "@uppy/xhr-upload": "^3.6.8"
+    "@uppy/core": "^5.2.0",
+    "@uppy/dashboard": "^5.1.1",
+    "@uppy/image-editor": "^4.2.0",
+    "@uppy/react": "^5.2.0",
+    "@uppy/xhr-upload": "^5.2.0",
+    "yup": "0.32.9"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
