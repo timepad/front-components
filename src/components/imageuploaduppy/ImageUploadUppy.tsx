@@ -39,12 +39,14 @@ const DASHBOARD_COMMON_OPTIONS = {
     proudlyDisplayPoweredByUppy: false,
     showProgressDetails: true,
     hideCancelButton: false,
+    hideProgressAfterFinish: false,
 };
 
 type UppyWithPluginApi = Uppy & {
     getPlugin?: (pluginId: string) => unknown;
     destroy?: () => void;
     close?: () => void;
+    cancelAll?: () => void;
 };
 
 const getDefaultUppy = (localeStrings?: Record<string, string>) => {
@@ -237,6 +239,15 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
         </>
     );
 
+    const onDoneClick = () => {
+        const uppyWithPluginApi = uppy as UppyWithPluginApi;
+        uppyWithPluginApi.cancelAll?.();
+
+        if (viewMode === 'modal') {
+            setModalOpen(false);
+        }
+    };
+
     return (
         <div className={cnImageUploadUppy({disabled}, [className])}>
             {viewMode === 'inline' && (
@@ -247,6 +258,7 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
                         height={dashboardHeight}
                         note={note}
                         hideUploadButton={!isNativeUploadButtonVisible}
+                        doneButtonHandler={onDoneClick}
                         disabled={disabled}
                     />
                     {controlsNode}
@@ -269,6 +281,7 @@ export const ImageUploadUppy: React.FC<IImageUploadUppyProps> = ({
                         onRequestClose={() => setModalOpen(false)}
                         note={note}
                         hideUploadButton={!isNativeUploadButtonVisible}
+                        doneButtonHandler={onDoneClick}
                         closeModalOnClickOutside={true}
                         disabled={disabled}
                     />

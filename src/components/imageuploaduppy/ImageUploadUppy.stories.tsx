@@ -52,6 +52,14 @@ const createMockUploadPlugin = () => {
     return ({uppy}: IImageUploadPluginFactoryContext) => {
         const uppyWithStoryEvents = uppy as UppyWithStoryEvents;
         const uploader = async (fileIds: string[]) => {
+            const files = fileIds
+                .map((fileId) => uppyWithStoryEvents.getFile?.(fileId))
+                .filter(Boolean) as IImageUploadUppyFile[];
+
+            if (files.length > 0) {
+                uppyWithStoryEvents.emit?.('upload-start', files);
+            }
+
             for (const fileId of fileIds) {
                 const file = uppyWithStoryEvents.getFile?.(fileId) as IImageUploadUppyFile | undefined;
                 if (!file) {
@@ -59,15 +67,26 @@ const createMockUploadPlugin = () => {
                 }
 
                 const bytesTotal = Number(file.size) || 1;
+                const progressSteps = [0.25, 0.6, 1];
+
+                for (const step of progressSteps) {
+                    await sleep(180);
+                    const bytesUploaded = Math.min(bytesTotal, Math.round(bytesTotal * step));
+                    uppyWithStoryEvents.emit?.('upload-progress', file, {
+                        uploadStarted: Date.now(),
+                        bytesUploaded,
+                        bytesTotal,
+                    });
+                }
+
+                await sleep(120);
+
+                const uploadURL = `https://example.local/uploads/${encodeURIComponent(file.name || file.id)}`;
                 uppyWithStoryEvents.emit?.('upload-progress', file, {
                     uploadStarted: Date.now(),
                     bytesUploaded: bytesTotal,
                     bytesTotal,
                 });
-
-                await sleep(250);
-
-                const uploadURL = `https://example.local/uploads/${encodeURIComponent(file.name || file.id)}`;
                 uppyWithStoryEvents.emit?.('upload-success', file, {
                     status: 200,
                     body: {url: uploadURL},
