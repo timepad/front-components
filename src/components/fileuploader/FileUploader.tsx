@@ -7,24 +7,25 @@ import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../button';
 import {Brick} from '../brick';
 import {
-    IImageUploaderDriver,
-    IImageUploaderDriverEventMap,
-    IImageUploaderDriverMountHandle,
-    IImageUploaderDriverMountOptions,
-    IImageUploaderError,
-    IImageUploaderResult,
-    IImageUploaderFile,
-    IImageUploaderModalTriggerOptions,
-    IImageUploaderProps,
-} from './ImageUploader.types';
+    IFileUploaderDriver,
+    IFileUploaderDriverEventMap,
+    IFileUploaderDriverMountHandle,
+    IFileUploaderDriverMountOptions,
+    IFileUploaderError,
+    IFileUploaderResult,
+    IFileUploaderFile,
+    IFileUploaderModalTriggerOptions,
+    IFileUploaderProps,
+} from './FileUploader.types';
 
-const DEFAULT_NOTE = 'Выберите изображение и при необходимости обрежьте его через Edit';
+const DEFAULT_NOTE = 'Выберите файл для загрузки';
 const DEFAULT_OPEN_MODAL_BUTTON_TEXT = 'Открыть загрузчик';
-const cnImageUploader = component('image-uploader');
+const DEFAULT_UPLOAD_BUTTON_TEXT = 'Загрузить файл';
+const cnFileUploader = component('file-uploader');
 
 const normalizeMountHandle = (
-    mountResult: void | (() => void) | IImageUploaderDriverMountHandle,
-): IImageUploaderDriverMountHandle => {
+    mountResult: void | (() => void) | IFileUploaderDriverMountHandle,
+): IFileUploaderDriverMountHandle => {
     if (typeof mountResult === 'function') {
         return {cleanup: mountResult};
     }
@@ -32,7 +33,7 @@ const normalizeMountHandle = (
     return mountResult || {};
 };
 
-const destroyMountHandle = (mountHandle: IImageUploaderDriverMountHandle | null | undefined) => {
+const destroyMountHandle = (mountHandle: IFileUploaderDriverMountHandle | null | undefined) => {
     if (!mountHandle) {
         return;
     }
@@ -45,7 +46,7 @@ const destroyMountHandle = (mountHandle: IImageUploaderDriverMountHandle | null 
     mountHandle.cleanup?.();
 };
 
-const normalizeError = (error: unknown): IImageUploaderError => {
+const normalizeError = (error: unknown): IFileUploaderError => {
     if (error instanceof Error) {
         return {message: error.message, cause: error};
     }
@@ -57,7 +58,7 @@ const normalizeError = (error: unknown): IImageUploaderError => {
     return {message: 'Upload error', cause: error};
 };
 
-const createResult = (file: IImageUploaderFile, response: unknown): IImageUploaderResult => {
+const createResult = (file: IFileUploaderFile, response: unknown): IFileUploaderResult => {
     return {
         fileId: file.id,
         fileName: file.name || file.id,
@@ -68,10 +69,10 @@ const createResult = (file: IImageUploaderFile, response: unknown): IImageUpload
     };
 };
 
-const subscribeDriverEvent = <K extends keyof IImageUploaderDriverEventMap>(
-    driver: IImageUploaderDriver,
+const subscribeDriverEvent = <K extends keyof IFileUploaderDriverEventMap>(
+    driver: IFileUploaderDriver,
     eventName: K,
-    callback: IImageUploaderDriverEventMap[K],
+    callback: IFileUploaderDriverEventMap[K],
 ): (() => void) => {
     const unsubscribe = driver.on?.(eventName, callback);
 
@@ -88,7 +89,26 @@ const subscribeDriverEvent = <K extends keyof IImageUploaderDriverEventMap>(
     return () => undefined;
 };
 
-export const ImageUploader: React.FC<IImageUploaderProps> = ({
+/**
+ * Абстрактная оболочка для загрузчика файлов.
+ *
+ * Компонент отвечает за layout, inline/modal режимы, внешнюю кнопку загрузки и нормализацию callbacks.
+ * Конкретная uploader-библиотека подключается через `driver`, поэтому в проектах можно использовать разные
+ * версии Uppy или другой upload UI без изменения `FileUploader`.
+ *
+ * @example
+ * <FileUploader
+ *     driver={driver}
+ *     viewMode="modal"
+ *     uploadStrategy="manual"
+ *     onSuccess={(result) => saveFile(result)}
+ * >
+ *     {({disabled, open, uploading}) => (
+ *         <Button disabled={disabled || uploading} onClick={open} label="Добавить файл" />
+ *     )}
+ * </FileUploader>
+ */
+export const FileUploader: React.FC<IFileUploaderProps> = ({
     className,
     children,
     disabled,
@@ -96,6 +116,7 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
     dashboardHeight = 360,
     viewMode = 'inline',
     openModalButtonText = DEFAULT_OPEN_MODAL_BUTTON_TEXT,
+    uploadButtonText = DEFAULT_UPLOAD_BUTTON_TEXT,
     showNativeUploadButton,
     uploadStrategy = 'manual',
     driver,
@@ -112,10 +133,11 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
     const isNativeUploadButtonVisible = uploadStrategy === 'manual' && (showNativeUploadButton ?? viewMode === 'modal');
 
     const inlineContainerRef = useRef<HTMLDivElement | null>(null);
-    const inlineMountHandleRef = useRef<IImageUploaderDriverMountHandle | null>(null);
+    const inlineMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
     const modalContainerRef = useRef<HTMLDivElement | null>(null);
-    const modalMountHandleRef = useRef<IImageUploaderDriverMountHandle | null>(null);
-    const mountOptionsRef = useRef<IImageUploaderDriverMountOptions | null>(null);
+    const modalMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
+    const activeUploadsCountRef = useRef<number>(0);
+    const mountOptionsRef = useRef<IFileUploaderDriverMountOptions | null>(null);
     const missingMountMethodReportedRef = useRef<{inline: boolean; modal: boolean}>({inline: false, modal: false});
     const callbacksRef = useRef({
         onReady,
@@ -139,7 +161,24 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
 
     useEffect(() => {
         missingMountMethodReportedRef.current = {inline: false, modal: false};
+        activeUploadsCountRef.current = 0;
+        setUploading(false);
     }, [driver]);
+
+    const startUploadSession = useCallback(() => {
+        activeUploadsCountRef.current += 1;
+        setUploading(true);
+    }, []);
+
+    const finishUploadSession = useCallback(() => {
+        activeUploadsCountRef.current = Math.max(0, activeUploadsCountRef.current - 1);
+        setUploading(activeUploadsCountRef.current > 0);
+    }, []);
+
+    const resetUploadSessions = useCallback(() => {
+        activeUploadsCountRef.current = 0;
+        setUploading(false);
+    }, []);
 
     const reportDriverConfigurationError = useCallback((mode: 'inline' | 'modal') => {
         if (missingMountMethodReportedRef.current[mode]) {
@@ -147,7 +186,7 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
         }
 
         missingMountMethodReportedRef.current[mode] = true;
-        const message = `ImageUploader driver must implement mount${
+        const message = `FileUploader driver must implement mount${
             mode === 'inline' ? 'Inline' : 'Modal'
         } for viewMode="${mode}"`;
 
@@ -162,7 +201,7 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
 
     useEffect(() => {
         const onUploadStartEvent = () => {
-            setUploading(true);
+            startUploadSession();
             callbacksRef.current.onUploadStart?.();
         };
 
@@ -170,26 +209,24 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
             callbacksRef.current.onProgress?.(progress);
         };
 
-        const onUploadSuccessEvent = (file: IImageUploaderFile, response?: unknown) => {
+        const onUploadSuccessEvent = (file: IFileUploaderFile, response?: unknown) => {
             callbacksRef.current.onSuccess?.(createResult(file, response));
         };
 
-        const onUploadErrorEvent = (_file: IImageUploaderFile | undefined, error: unknown) => {
-            setUploading(false);
+        const onUploadErrorEvent = (_file: IFileUploaderFile | undefined, error: unknown) => {
             callbacksRef.current.onError?.(normalizeError(error));
         };
 
         const onErrorEvent = (error: unknown) => {
-            setUploading(false);
             callbacksRef.current.onError?.(normalizeError(error));
         };
 
-        const onFileRemovedEvent = (file: IImageUploaderFile) => {
+        const onFileRemovedEvent = (file: IFileUploaderFile) => {
             callbacksRef.current.onFileRemove?.(file.id);
         };
 
         const onCompleteEvent = () => {
-            setUploading(false);
+            finishUploadSession();
         };
 
         const unsubs = [
@@ -205,7 +242,7 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
         return () => {
             unsubs.forEach((unsubscribe) => unsubscribe());
         };
-    }, [driver]);
+    }, [driver, finishUploadSession, startUploadSession]);
 
     const onModalRequestClose = useCallback(() => {
         setModalOpen(false);
@@ -221,15 +258,15 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
 
     const onDoneClick = useCallback(() => {
         driver.cancelAll?.();
-        setUploading(false);
+        resetUploadSessions();
 
         if (viewMode === 'modal') {
             setModalOpen(false);
         }
-    }, [driver, viewMode]);
+    }, [driver, resetUploadSessions, viewMode]);
 
     const renderModalTrigger = useCallback(() => {
-        const triggerOptions: IImageUploaderModalTriggerOptions = {
+        const triggerOptions: IFileUploaderModalTriggerOptions = {
             disabled,
             open: openModal,
             uploading,
@@ -382,10 +419,10 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
         try {
             await driver.upload();
         } catch (error) {
-            setUploading(false);
+            resetUploadSessions();
             callbacksRef.current.onError?.(normalizeError(error));
         }
-    }, [driver]);
+    }, [driver, resetUploadSessions]);
 
     const controlsNode = uploadStrategy === 'manual' && !isNativeUploadButtonVisible && (
         <>
@@ -394,13 +431,13 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
                 variant={ButtonVariant.secondary}
                 disabled={uploading || disabled}
                 onClick={handleManualUpload}
-                label={uploading ? 'Загрузка...' : 'Загрузить изображение'}
+                label={uploading ? 'Загрузка...' : uploadButtonText}
             />
         </>
     );
 
     return (
-        <div className={cx(cnImageUploader({disabled}), className)}>
+        <div className={cx(cnFileUploader({disabled}), className)}>
             {viewMode === 'inline' && (
                 <>
                     <div ref={inlineContainerRef} />
