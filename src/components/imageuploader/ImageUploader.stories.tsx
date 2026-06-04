@@ -10,6 +10,7 @@ import {createReactImageUploaderBundle, IReactImageUploaderBundle, IUppyLike} fr
 import {IImageUploaderFile, IImageUploaderResult} from './ImageUploader.types';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Brick} from 'components/brick';
+import {Button, ButtonVariant} from 'components/button';
 
 export default {
     title: 'ImageUploader',
@@ -242,12 +243,16 @@ export const FullPassThroughModalManual: IStorybookComponent = () => {
         <>
             <StoryTitle>Full pass-through: button + modal</StoryTitle>
             <div style={{width: '640px'}}>
-                <ImageUploader
-                    driver={driver}
-                    viewMode="modal"
-                    uploadStrategy="manual"
-                    openModalButtonText="Добавить изображение"
-                />
+                <ImageUploader driver={driver} viewMode="modal" uploadStrategy="manual">
+                    {({disabled, open, uploading}) => (
+                        <Button
+                            variant={ButtonVariant.secondary}
+                            disabled={disabled || uploading}
+                            onClick={open}
+                            label="Добавить изображение"
+                        />
+                    )}
+                </ImageUploader>
             </div>
         </>
     );

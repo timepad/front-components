@@ -6,6 +6,7 @@ import ImageEditor from '@uppy/image-editor';
 import {
     IImageUploaderDriver,
     IImageUploaderDriverEventMap,
+    IImageUploaderDriverMountHandle,
     IImageUploaderDriverMountOptions,
     IImageUploaderFile,
 } from './ImageUploader.types';
@@ -119,11 +120,7 @@ export interface IImageUploaderBundle {
     destroy: () => void;
 }
 
-export interface IReactImageUploaderBundle {
-    uppy: IUppyLike;
-    driver: IImageUploaderDriver;
-    destroy: () => void;
-}
+export type IReactImageUploaderBundle = IImageUploaderBundle;
 
 interface IUppyFileLike {
     id: string;
@@ -156,6 +153,12 @@ let dashboardMountCounter = 0;
 let reactDashboardRuntime: IReactDashboardRuntime | null = null;
 
 type IDriverDashboardConfig = Pick<ICreateUppyDriverOptions, 'dashboard' | 'plugins'>;
+
+interface ICreateUppyInstanceOptions {
+    uppy?: IUppyLike;
+    uppyOptions?: Record<string, unknown>;
+    createUppy?: () => IUppyLike;
+}
 
 const getDefaultExport = <T>(moduleRecord: unknown): T => {
     if (moduleRecord && typeof moduleRecord === 'object' && 'default' in moduleRecord) {
@@ -402,6 +405,56 @@ const unmountDashboard = (uppy: IUppyLike, dashboard: IDashboardPluginLike | nul
     uppy.removePlugin(dashboard);
 };
 
+const createDashboardMountHandle = (
+    uppy: IUppyLike,
+    dashboard: IDashboardPluginLike,
+    mode: 'inline' | 'modal',
+    config: IDriverDashboardConfig,
+    imageEditorPluginId: string | null,
+): IImageUploaderDriverMountHandle => {
+    let isDestroyed = false;
+
+    const destroy = () => {
+        if (isDestroyed) {
+            return;
+        }
+
+        isDestroyed = true;
+        unmountDashboard(uppy, dashboard);
+    };
+
+    const mountHandle: IImageUploaderDriverMountHandle = {
+        setOptions: (nextOptions) => {
+            if (isDestroyed) {
+                return;
+            }
+
+            updateDashboard(dashboard, mode, nextOptions, config, imageEditorPluginId);
+        },
+        cleanup: destroy,
+        destroy,
+    };
+
+    if (mode === 'modal') {
+        mountHandle.open = () => {
+            if (isDestroyed) {
+                return;
+            }
+
+            void dashboard.openModal();
+        };
+        mountHandle.close = () => {
+            if (isDestroyed) {
+                return;
+            }
+
+            void dashboard.closeModal({manualClose: true});
+        };
+    }
+
+    return mountHandle;
+};
+
 export const createS3UploadStrategy = ({
     getUploadParameters,
 }: ICreateS3UploadStrategyOptions): IImageUploaderS3UploadStrategy => {
@@ -573,33 +626,8 @@ export const createUppyDriver = (uppy: IUppyLike, options: ICreateUppyDriverOpti
                 options,
                 registeredImageEditorPluginId,
             );
-            let isDestroyed = false;
 
-            return {
-                setOptions: (nextOptions) => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    updateDashboard(dashboard, 'inline', nextOptions, options, registeredImageEditorPluginId);
-                },
-                cleanup: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    isDestroyed = true;
-                    unmountDashboard(uppy, dashboard);
-                },
-                destroy: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    isDestroyed = true;
-                    unmountDashboard(uppy, dashboard);
-                },
-            };
+            return createDashboardMountHandle(uppy, dashboard, 'inline', options, registeredImageEditorPluginId);
         },
         mountModal: (container, mountOptions) => {
             const dashboard = mountDashboard(
@@ -610,47 +638,8 @@ export const createUppyDriver = (uppy: IUppyLike, options: ICreateUppyDriverOpti
                 options,
                 registeredImageEditorPluginId,
             );
-            let isDestroyed = false;
 
-            return {
-                setOptions: (nextOptions) => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    updateDashboard(dashboard, 'modal', nextOptions, options, registeredImageEditorPluginId);
-                },
-                open: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    void dashboard.openModal();
-                },
-                close: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    void dashboard.closeModal({manualClose: true});
-                },
-                cleanup: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    isDestroyed = true;
-                    unmountDashboard(uppy, dashboard);
-                },
-                destroy: () => {
-                    if (isDestroyed) {
-                        return;
-                    }
-
-                    isDestroyed = true;
-                    unmountDashboard(uppy, dashboard);
-                },
-            };
+            return createDashboardMountHandle(uppy, dashboard, 'modal', options, registeredImageEditorPluginId);
         },
         on,
         off,
@@ -776,13 +765,13 @@ export const createReactUppyDriver = (
     };
 };
 
-export const createReactImageUploaderBundle = (
-    options: ICreateReactImageUploaderBundleOptions = {},
-): IReactImageUploaderBundle => {
+const createUppyInstance = (options: ICreateUppyInstanceOptions): IUppyLike => {
     const uppyConstructor = Uppy as unknown as {new (uppyOptions?: Record<string, unknown>): IUppyLike};
-    const uppy = options.uppy || options.createUppy?.() || new uppyConstructor(options.uppyOptions);
-    const driver = createReactUppyDriver(uppy, options.driverOptions);
 
+    return options.uppy || options.createUppy?.() || new uppyConstructor(options.uppyOptions);
+};
+
+const createImageUploaderBundleFromDriver = (uppy: IUppyLike, driver: IImageUploaderDriver): IImageUploaderBundle => {
     return {
         uppy,
         driver,
@@ -792,16 +781,18 @@ export const createReactImageUploaderBundle = (
     };
 };
 
+export const createReactImageUploaderBundle = (
+    options: ICreateReactImageUploaderBundleOptions = {},
+): IReactImageUploaderBundle => {
+    const uppy = createUppyInstance(options);
+    const driver = createReactUppyDriver(uppy, options.driverOptions);
+
+    return createImageUploaderBundleFromDriver(uppy, driver);
+};
+
 export const createImageUploaderBundle = (options: ICreateImageUploaderBundleOptions = {}): IImageUploaderBundle => {
-    const uppyConstructor = Uppy as unknown as {new (uppyOptions?: Record<string, unknown>): IUppyLike};
-    const uppy = options.uppy || options.createUppy?.() || new uppyConstructor(options.uppyOptions);
+    const uppy = createUppyInstance(options);
     const driver = createUppyDriver(uppy, options.driverOptions);
 
-    return {
-        uppy,
-        driver,
-        destroy: () => {
-            uppy.destroy();
-        },
-    };
+    return createImageUploaderBundleFromDriver(uppy, driver);
 };

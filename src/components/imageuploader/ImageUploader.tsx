@@ -14,6 +14,7 @@ import {
     IImageUploaderError,
     IImageUploaderResult,
     IImageUploaderFile,
+    IImageUploaderModalTriggerOptions,
     IImageUploaderProps,
 } from './ImageUploader.types';
 
@@ -89,6 +90,7 @@ const subscribeDriverEvent = <K extends keyof IImageUploaderDriverEventMap>(
 
 export const ImageUploader: React.FC<IImageUploaderProps> = ({
     className,
+    children,
     disabled,
     note = DEFAULT_NOTE,
     dashboardHeight = 360,
@@ -209,6 +211,14 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
         setModalOpen(false);
     }, []);
 
+    const openModal = useCallback(() => {
+        if (disabled) {
+            return;
+        }
+
+        setModalOpen(true);
+    }, [disabled]);
+
     const onDoneClick = useCallback(() => {
         driver.cancelAll?.();
         setUploading(false);
@@ -217,6 +227,27 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
             setModalOpen(false);
         }
     }, [driver, viewMode]);
+
+    const renderModalTrigger = useCallback(() => {
+        const triggerOptions: IImageUploaderModalTriggerOptions = {
+            disabled,
+            open: openModal,
+            uploading,
+        };
+
+        if (children) {
+            return children(triggerOptions);
+        }
+
+        return (
+            <Button
+                variant={ButtonVariant.secondary}
+                disabled={disabled}
+                onClick={openModal}
+                label={openModalButtonText}
+            />
+        );
+    }, [children, disabled, openModal, openModalButtonText, uploading]);
 
     const mountOptions = useMemo(() => {
         return {
@@ -379,12 +410,7 @@ export const ImageUploader: React.FC<IImageUploaderProps> = ({
 
             {viewMode === 'modal' && (
                 <>
-                    <Button
-                        variant={ButtonVariant.secondary}
-                        disabled={disabled}
-                        onClick={() => setModalOpen(true)}
-                        label={openModalButtonText}
-                    />
+                    {renderModalTrigger()}
                     <div ref={modalContainerRef} />
                 </>
             )}

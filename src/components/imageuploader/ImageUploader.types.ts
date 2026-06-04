@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type ImageUploaderUploadStrategy = 'manual' | 'auto';
 export type ImageUploaderViewMode = 'inline' | 'modal';
 
@@ -80,8 +82,17 @@ export interface IImageUploaderDriver {
     destroy?: () => void;
 }
 
+export interface IImageUploaderModalTriggerOptions {
+    disabled?: boolean;
+    open: () => void;
+    uploading: boolean;
+}
+
+export type ImageUploaderModalTriggerChildren = (options: IImageUploaderModalTriggerOptions) => React.ReactNode;
+
 export interface IImageUploaderProps {
     className?: string;
+    children?: ImageUploaderModalTriggerChildren;
     disabled?: boolean;
     note?: string;
     dashboardHeight?: number;
