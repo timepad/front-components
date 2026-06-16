@@ -6,6 +6,7 @@ import './index.less';
 import {component} from '../../services/helpers/classHelpers';
 import {Button, ButtonVariant} from '../button';
 import {Brick} from '../brick';
+import {Modal} from '../modal';
 import {
     IFileUploaderDriver,
     IFileUploaderDriverEventMap,
@@ -21,7 +22,9 @@ import {
 const DEFAULT_NOTE = 'Выберите файл для загрузки';
 const DEFAULT_OPEN_MODAL_BUTTON_TEXT = 'Открыть загрузчик';
 const DEFAULT_UPLOAD_BUTTON_TEXT = 'Загрузить файл';
+const DEFAULT_MODAL_TITLE = 'Загрузка файла';
 const cnFileUploader = component('file-uploader');
+const cnFileUploaderLibraryModal = component('file-uploader', 'library-modal');
 
 const normalizeMountHandle = (
     mountResult: void | (() => void) | IFileUploaderDriverMountHandle,
@@ -100,6 +103,8 @@ const subscribeDriverEvent = <K extends keyof IFileUploaderDriverEventMap>(
  * <FileUploader
  *     driver={driver}
  *     viewMode="modal"
+ *     modalRenderer="library"
+ *     modalTitle="Загрузка файла"
  *     uploadStrategy="manual"
  *     onSuccess={(result) => saveFile(result)}
  * >
@@ -115,6 +120,10 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     note = DEFAULT_NOTE,
     dashboardHeight = 360,
     viewMode = 'inline',
+    modalRenderer = 'driver',
+    modalTitle = DEFAULT_MODAL_TITLE,
+    modalDescription,
+    modalProps,
     openModalButtonText = DEFAULT_OPEN_MODAL_BUTTON_TEXT,
     uploadButtonText = DEFAULT_UPLOAD_BUTTON_TEXT,
     showNativeUploadButton,
@@ -130,9 +139,13 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
 }) => {
     const [uploading, setUploading] = useState<boolean>(false);
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
-    const isNativeUploadButtonVisible = uploadStrategy === 'manual' && (showNativeUploadButton ?? viewMode === 'modal');
+    const isModalViewMode = viewMode === 'modal';
+    const isDriverModalMode = isModalViewMode && modalRenderer === 'driver';
+    const isLibraryModalMode = isModalViewMode && modalRenderer === 'library';
+    const shouldMountInline = viewMode === 'inline' || (isLibraryModalMode && isModalOpen);
+    const isNativeUploadButtonVisible = uploadStrategy === 'manual' && (showNativeUploadButton ?? isDriverModalMode);
 
-    const inlineContainerRef = useRef<HTMLDivElement | null>(null);
+    const [inlineContainerElement, setInlineContainerElement] = useState<HTMLDivElement | null>(null);
     const inlineMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
     const modalContainerRef = useRef<HTMLDivElement | null>(null);
     const modalMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
@@ -163,7 +176,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         missingMountMethodReportedRef.current = {inline: false, modal: false};
         activeUploadsCountRef.current = 0;
         setUploading(false);
-    }, [driver]);
+    }, [driver, modalRenderer]);
 
     const startUploadSession = useCallback(() => {
         activeUploadsCountRef.current += 1;
@@ -256,6 +269,10 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         setModalOpen(true);
     }, [disabled]);
 
+    const setInlineContainerRef = useCallback((element: HTMLDivElement | null) => {
+        setInlineContainerElement(element);
+    }, []);
+
     const onDoneClick = useCallback(() => {
         driver.cancelAll?.();
         resetUploadSessions();
@@ -302,13 +319,13 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     }, [mountOptions]);
 
     useEffect(() => {
-        if (viewMode !== 'inline') {
+        if (!shouldMountInline) {
             destroyMountHandle(inlineMountHandleRef.current);
             inlineMountHandleRef.current = null;
             return;
         }
 
-        const container = inlineContainerRef.current;
+        const container = inlineContainerElement;
         if (!container) {
             return;
         }
@@ -331,10 +348,10 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
             }
             destroyMountHandle(mountHandle);
         };
-    }, [driver, reportDriverConfigurationError, viewMode]);
+    }, [driver, inlineContainerElement, reportDriverConfigurationError, shouldMountInline]);
 
     useEffect(() => {
-        if (viewMode !== 'modal') {
+        if (!isDriverModalMode) {
             destroyMountHandle(modalMountHandleRef.current);
             modalMountHandleRef.current = null;
             return;
@@ -364,18 +381,18 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
 
             destroyMountHandle(mountHandle);
         };
-    }, [driver, reportDriverConfigurationError, viewMode]);
+    }, [driver, isDriverModalMode, reportDriverConfigurationError]);
 
     useEffect(() => {
-        if (viewMode === 'inline') {
+        if (viewMode === 'inline' || isLibraryModalMode) {
             inlineMountHandleRef.current?.setOptions?.(mountOptions);
             return;
         }
 
-        if (viewMode === 'modal') {
+        if (isDriverModalMode) {
             modalMountHandleRef.current?.setOptions?.(mountOptions);
         }
-    }, [mountOptions, viewMode]);
+    }, [isDriverModalMode, isLibraryModalMode, mountOptions, viewMode]);
 
     useEffect(() => {
         if (viewMode !== 'modal' && isModalOpen) {
@@ -385,7 +402,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
 
     useEffect(() => {
         const mountHandle = modalMountHandleRef.current;
-        if (!mountHandle || viewMode !== 'modal') {
+        if (!mountHandle || !isDriverModalMode) {
             return;
         }
 
@@ -395,7 +412,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         }
 
         mountHandle.close?.();
-    }, [isModalOpen, viewMode]);
+    }, [isDriverModalMode, isModalOpen]);
 
     useEffect(() => {
         return () => {
@@ -424,31 +441,66 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         }
     }, [driver, resetUploadSessions]);
 
-    const controlsNode = uploadStrategy === 'manual' && !isNativeUploadButtonVisible && (
+    const uploadButtonNode = uploadStrategy === 'manual' && !isNativeUploadButtonVisible && (
+        <Button
+            variant={ButtonVariant.primary}
+            fixed
+            large
+            disabled={uploading || disabled}
+            onClick={handleManualUpload}
+            label={uploading ? 'Загрузка...' : uploadButtonText}
+        />
+    );
+
+    const controlsNode = uploadButtonNode && (
         <>
             <Brick size={1} />
-            <Button
-                variant={ButtonVariant.secondary}
-                disabled={uploading || disabled}
-                onClick={handleManualUpload}
-                label={uploading ? 'Загрузка...' : uploadButtonText}
-            />
+            {uploadButtonNode}
         </>
     );
+
+    const renderLibraryModal = () => {
+        const {className: modalClassName, ...restModalProps} = modalProps || {};
+
+        return (
+            <Modal
+                {...restModalProps}
+                isOpen={isModalOpen}
+                onClose={onModalRequestClose}
+                className={cx(cnFileUploaderLibraryModal(), modalClassName)}
+            >
+                <Modal.Header closeHandler={onModalRequestClose}>
+                    {modalTitle && <Modal.Title>{modalTitle}</Modal.Title>}
+                    {modalDescription && <Modal.Description>{modalDescription}</Modal.Description>}
+                </Modal.Header>
+                <Modal.Body>
+                    <div ref={setInlineContainerRef} />
+                </Modal.Body>
+                {uploadButtonNode && <Modal.Footer>{uploadButtonNode}</Modal.Footer>}
+            </Modal>
+        );
+    };
 
     return (
         <div className={cx(cnFileUploader({disabled}), className)}>
             {viewMode === 'inline' && (
                 <>
-                    <div ref={inlineContainerRef} />
+                    <div ref={setInlineContainerRef} />
                     {controlsNode}
                 </>
             )}
 
-            {viewMode === 'modal' && (
+            {isDriverModalMode && (
                 <>
                     {renderModalTrigger()}
                     <div ref={modalContainerRef} />
+                </>
+            )}
+
+            {isLibraryModalMode && (
+                <>
+                    {renderModalTrigger()}
+                    {renderLibraryModal()}
                 </>
             )}
         </div>

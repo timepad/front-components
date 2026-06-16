@@ -1,4 +1,5 @@
 import React from 'react';
+import type {IModalProps} from '../modal';
 
 /**
  * Режим запуска загрузки.
@@ -15,6 +16,14 @@ export type FileUploaderUploadStrategy = 'manual' | 'auto';
  * `modal` монтирует модалку и открывает ее через trigger, переданный в `children`.
  */
 export type FileUploaderViewMode = 'inline' | 'modal';
+
+/**
+ * Какая модалка используется в `viewMode="modal"`.
+ *
+ * `driver` делегирует модалку uploader driver-у, например Uppy DashboardModal.
+ * `library` открывает модалку из `front-components`, а внутри монтирует inline uploader.
+ */
+export type FileUploaderModalRenderer = 'driver' | 'library';
 
 /**
  * Нормализованный результат успешной загрузки, который компонент отдает наружу.
@@ -195,6 +204,14 @@ export interface IFileUploaderProps {
     dashboardHeight?: number;
     /** Inline-дропзона или модалка. */
     viewMode?: FileUploaderViewMode;
+    /** Renderer модалки для `viewMode="modal"`. */
+    modalRenderer?: FileUploaderModalRenderer;
+    /** Заголовок модалки библиотеки. Используется только при `modalRenderer="library"`. */
+    modalTitle?: React.ReactNode;
+    /** Описание под заголовком модалки библиотеки. */
+    modalDescription?: React.ReactNode;
+    /** Дополнительные props для модалки библиотеки. `isOpen` и `onClose` контролирует `FileUploader`. */
+    modalProps?: Omit<IModalProps, 'isOpen' | 'onClose'>;
     /** Текст дефолтной кнопки открытия модалки. */
     openModalButtonText?: string;
     /** Текст внешней кнопки ручной загрузки. */

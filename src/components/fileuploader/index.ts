@@ -11,6 +11,7 @@ export type {
     IFileUploaderProps,
     FileUploaderModalTriggerChildren,
     FileUploaderDriverCleanup,
+    FileUploaderModalRenderer,
     FileUploaderViewMode,
     FileUploaderUploadStrategy,
 } from './FileUploader.types';

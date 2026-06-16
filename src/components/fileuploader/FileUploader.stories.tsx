@@ -350,6 +350,38 @@ export const FileModalManual: IStorybookComponent = () => {
     );
 };
 
+export const FileLibraryModalManual: IStorybookComponent = () => {
+    const driver = useStoryDriver({autoProceed: false});
+
+    return (
+        <FileUploaderStoryFrame title="File: library modal + inline dashboard">
+            <FileUploader
+                driver={driver}
+                viewMode="modal"
+                modalRenderer="library"
+                uploadStrategy="manual"
+                dashboardHeight={320}
+                note="Выберите файл для загрузки внутри модалки"
+                modalTitle="Загрузка файла"
+                modalDescription="Внутри модалки используется inline-режим FileUploader"
+                onSuccess={(result) => {
+                    // eslint-disable-next-line no-console
+                    console.log('library modal success', result);
+                }}
+            >
+                {({disabled, open, uploading}) => (
+                    <Button
+                        variant={ButtonVariant.secondary}
+                        disabled={disabled || uploading}
+                        onClick={open}
+                        label="Открыть загрузчик в модалке"
+                    />
+                )}
+            </FileUploader>
+        </FileUploaderStoryFrame>
+    );
+};
+
 export const FileInlineAuto: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: true});
 
