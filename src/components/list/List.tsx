@@ -42,13 +42,9 @@ const ListBase: React.FC<React.PropsWithChildren<IList>> = ({
         }),
         className,
     );
-    const extendedChildren = React.useMemo(() => {
-        return addQaTagsToChildren(children, qaTags.listItem);
-    }, [children]);
-
     return (
         <Tag as={as} className={classNames} data-qa={props['data-qa'] || qaTags.list}>
-            {extendedChildren}
+            {addQaTagsToChildren(children, qaTags.listItem)}
         </Tag>
     );
 };

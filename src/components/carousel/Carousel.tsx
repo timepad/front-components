@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ScrollContainer, {ScrollContainerProps} from 'react-indiana-drag-scroll';
 
 import './index.less';
@@ -28,10 +28,9 @@ export const Carousel: React.FC<ICarouselProps> = ({
     //variablesa
     const carouselClassName = component('carousel', 'track')({vertical: !horizontal});
 
-    const slides = useMemo(() => {
-        const extendedChildren = addQaTagsToChildren(children, qaTags.carouselSlideItem);
-        return React.Children.toArray(extendedChildren).filter(Boolean); /* fix zero children */
-    }, [children]);
+    const slides = React.Children.toArray(addQaTagsToChildren(children, qaTags.carouselSlideItem)).filter(
+        Boolean,
+    ); /* fix zero children */
 
     const countSlides = slides.length;
     //hooks

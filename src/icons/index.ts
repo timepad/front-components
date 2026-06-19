@@ -18,8 +18,9 @@ export * from '../assets/svg/vendor/appShops';
 // bank
 export * from '../assets/svg/vendor/bank';
 
-// logo
+// logo/oldLogo
 export * from '../assets/svg/vendor/logo';
+export * from '../assets/svg/vendor/oldLogo';
 
 // paymentSystems
 export * from '../assets/svg/vendor/paymentSystems';

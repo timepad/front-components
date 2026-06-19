@@ -6,7 +6,7 @@ import './demo.less';
 import {CollectionCard, ICollectionCardProps} from './TmpCollectionCard/CollectionCard';
 import {Typography} from '../typography';
 import {Button, ButtonVariant, IButtonProps} from '../button';
-import {IconBookmark24, IconBookmarkSolid24, IconPlayVideo} from '../../icons';
+import {IconHeartOutline24, IconHeartFill24, IconPlayVideo} from '../../icons';
 import {Brick} from '../brick';
 import {TextLight} from '../form/TextLight';
 
@@ -89,7 +89,7 @@ export const AnchorCardFixedContainerWidth: IStorybookComponent = () => {
 
 const FavoriteIconButton: FC<IButtonProps> = (props) => {
     const [active, setActive] = useState(false);
-    const currentIcon = !active ? <IconBookmark24 /> : <IconBookmarkSolid24 />;
+    const currentIcon = !active ? <IconHeartOutline24 /> : <IconHeartFill24 />;
     return (
         <Button
             onClick={() => setActive(!active)}

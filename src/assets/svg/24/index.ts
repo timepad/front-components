@@ -76,6 +76,8 @@ import IconVisibilityOn24 from './icon-visibiliy-on-24.svg';
 import IconWarning24 from './icon-warning-24.svg';
 import IconWebsite24 from './icon-website-24.svg';
 import IconWidget24 from './icon-widget-24.svg';
+import IconHeartFill24 from './icon-heart-fill-24.svg';
+import IconHeartOutline24 from './icon-heart-outline-24.svg';
 
 export {
     IconAddCalendar24,
@@ -156,4 +158,6 @@ export {
     IconWarning24,
     IconWebsite24,
     IconWidget24,
+    IconHeartFill24,
+    IconHeartOutline24,
 };

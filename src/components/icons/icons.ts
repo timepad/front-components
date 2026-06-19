@@ -441,6 +441,14 @@ export const icons24: IIconProps[] = [
         SVGSrc: Icons.IconWidget24,
         title: 'icon-widget-24',
     },
+    {
+        SVGSrc: Icons.IconHeartFill24,
+        title: 'icon-heart-fill-24',
+    },
+    {
+        SVGSrc: Icons.IconHeartOutline24,
+        title: 'icon-heart-outline-24',
+    },
 ];
 
 export const iconsMap: IIconProps[] = [
@@ -530,12 +538,20 @@ export const iconsAppbank: IIconProps[] = [
 
 export const iconsLogo: IIconProps[] = [
     {
-        SVGSrc: Icons.Logo,
-        title: 'logo',
+        SVGSrc: Icons.TimepadLogoBlack,
+        title: 'timepad-logo-black',
     },
     {
-        SVGSrc: Icons.SumsubLogo,
-        title: 'sumsub-logo',
+        SVGSrc: Icons.TimepadLogoWhite,
+        title: 'timepad-logo-white',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortFill,
+        title: 'timepad-logo-short-fill',
+    },
+    {
+        SVGSrc: Icons.TimepadLogoShortOutline,
+        title: 'timepad-logo-short-outline',
     },
 ];
 

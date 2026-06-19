@@ -1,29 +1,18 @@
 import * as React from 'react';
-import {createContext, FC, HTMLAttributes, useMemo} from 'react';
+import {createContext, FC, HTMLAttributes, useMemo, useState} from 'react';
 import {Tab, TabId} from './Tab';
 import {TabContent} from './TabContent';
 import {TabList} from './TabList';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
-import {action, observable} from 'mobx';
-
 import './index.less';
 import {IAdditionalAttributes} from '../../../types';
 import {qaTags} from '../../services';
 
-class TabsStore {
-    constructor(activeTabId = '') {
-        this.activeTabId = activeTabId;
-    }
-
-    @observable activeTabId: string;
-    @action.bound setActiveTabId(id: string) {
-        this.activeTabId = id;
-    }
-}
-
 interface ITabsStoreContext {
-    tabsStore: TabsStore;
+    // tabsStore: TabsStore;
+    activeTabId: string;
+    setActiveTabId: (id: string) => void;
     handleOnTabClick: TabClickHandler;
 }
 
@@ -48,24 +37,17 @@ const TabsBase: FC<React.PropsWithChildren<ITabProps>> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const initialTabId = useMemo(() => defaultTabId, []);
     const divClasses = cx(component('tab-bar')(), className);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const tabsStore = useMemo(
-        () => new TabsStore(initialTabId !== undefined ? initialTabId : activeTabId),
-        [activeTabId],
-    );
-    const handleOnTabClick: TabClickHandler = onTabClick
-        ? (TabId: string) => {
-              onTabClick(TabId, tabsStore.setActiveTabId);
-          }
-        : (TabId: string) => {
-              tabsStore.setActiveTabId(TabId);
-          };
 
+    const [currentTabId, setCurrentTabId] = useState(initialTabId !== undefined ? initialTabId : activeTabId || '');
+
+    const handleOnTabClick: TabClickHandler = (TabId: string) =>
+        onTabClick ? onTabClick(TabId, setCurrentTabId) : setCurrentTabId(TabId);
     return (
         <div {...props} className={divClasses} data-qa={props['data-qa'] || qaTags.tabs}>
             <TabsContext.Provider
                 value={{
-                    tabsStore: tabsStore,
+                    activeTabId: currentTabId,
+                    setActiveTabId: setCurrentTabId,
                     handleOnTabClick: handleOnTabClick,
                 }}
             >
