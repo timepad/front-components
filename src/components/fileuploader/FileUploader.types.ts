@@ -1,4 +1,5 @@
 import React from 'react';
+import type {ButtonVariant, IButtonProps} from '../button';
 import type {IModalProps} from '../modal';
 
 /**
@@ -216,6 +217,12 @@ export interface IFileUploaderProps {
     openModalButtonText?: string;
     /** Текст внешней кнопки ручной загрузки. */
     uploadButtonText?: string;
+    /** Вариант внешней кнопки ручной загрузки. */
+    uploadButtonVariant?: ButtonVariant;
+    /** Fixed-режим внешней кнопки ручной загрузки. */
+    uploadButtonFixed?: IButtonProps['fixed'];
+    /** Large-режим внешней кнопки ручной загрузки. */
+    uploadButtonLarge?: IButtonProps['large'];
     /** Показывать кнопку загрузки внутри Dashboard вместо кнопки библиотеки. */
     showNativeUploadButton?: boolean;
     /** Ручная или автоматическая стратегия запуска загрузки. */

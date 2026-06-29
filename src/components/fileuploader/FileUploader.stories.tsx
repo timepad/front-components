@@ -7,10 +7,11 @@ import '@uppy/image-editor/css/style.min.css';
 
 import {FileUploader} from './FileUploader';
 import {
+    createFilePresignUploadStrategy,
     createFileUploaderBundle,
-    createS3UploadStrategy,
     DEFAULT_IMAGE_EDITOR_OPTIONS,
     IFileUploaderBundle,
+    IFileUploaderPresignSession,
     IFileUploaderS3UploadStrategy,
     IImageEditorPluginOptions,
     IUppyLike,
@@ -479,17 +480,18 @@ export const ImageExternalPreview: IStorybookComponent = () => {
 };
 
 export const FileS3PresignExample: IStorybookComponent = () => {
+    const [uploadSession, setUploadSession] = React.useState<IFileUploaderPresignSession | null>(null);
     const s3UploadStrategy = React.useMemo(() => {
-        return createS3UploadStrategy({
-            getUploadParameters: async (file) => {
+        return createFilePresignUploadStrategy({
+            intent: 'event_poster',
+            entityId: 12345,
+            requestPresign: async (payload, file) => {
                 const fileName = encodeURIComponent(file.name || file.id);
 
                 return {
-                    method: 'PUT',
-                    url: `https://s3.example.local/front-components-demo/${fileName}`,
-                    headers: {
-                        'Content-Type': file.type || 'application/octet-stream',
-                    },
+                    upload_url: `https://s3.example.local/front-components-demo/${payload.intent}/${fileName}`,
+                    session_id: `mock-session-${payload.intent}-${file.id}`,
+                    expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
                 };
             },
         });
@@ -497,15 +499,38 @@ export const FileS3PresignExample: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false, s3UploadStrategy});
 
     return (
-        <FileUploaderStoryFrame title="File: S3-compatible presign example">
+        <FileUploaderStoryFrame title="File: /file/presign/ + S3 PUT example">
             <FileUploader
                 driver={driver}
                 uploadStrategy="manual"
+                onUploadStart={() => setUploadSession(null)}
                 onSuccess={(result) => {
+                    const session = s3UploadStrategy.getUploadSession?.(result.fileId) || null;
+                    setUploadSession(session);
                     // eslint-disable-next-line no-console
-                    console.log('s3 success', result);
+                    console.log('file presign success', {result, session});
+                }}
+                onFileRemove={(fileId) => {
+                    s3UploadStrategy.clearUploadSession?.(fileId);
+                    setUploadSession(null);
                 }}
             />
+            {uploadSession && (
+                <>
+                    <Brick />
+                    <pre style={{whiteSpace: 'pre-wrap'}}>
+                        {JSON.stringify(
+                            {
+                                session_id: uploadSession.sessionId,
+                                expires_at: uploadSession.expiresAt,
+                                payload: uploadSession.payload,
+                            },
+                            null,
+                            2,
+                        )}
+                    </pre>
+                </>
+            )}
         </FileUploaderStoryFrame>
     );
 };

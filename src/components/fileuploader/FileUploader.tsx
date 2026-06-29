@@ -126,6 +126,9 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     modalProps,
     openModalButtonText = DEFAULT_OPEN_MODAL_BUTTON_TEXT,
     uploadButtonText = DEFAULT_UPLOAD_BUTTON_TEXT,
+    uploadButtonVariant = ButtonVariant.primary,
+    uploadButtonFixed = true,
+    uploadButtonLarge = true,
     showNativeUploadButton,
     uploadStrategy = 'manual',
     driver,
@@ -443,9 +446,9 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
 
     const uploadButtonNode = uploadStrategy === 'manual' && !isNativeUploadButtonVisible && (
         <Button
-            variant={ButtonVariant.primary}
-            fixed
-            large
+            variant={uploadButtonVariant}
+            fixed={uploadButtonFixed}
+            large={uploadButtonLarge}
             disabled={uploading || disabled}
             onClick={handleManualUpload}
             label={uploading ? 'Загрузка...' : uploadButtonText}
