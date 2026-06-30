@@ -336,6 +336,7 @@ interface IReactRootLike {
 
 interface IReactDashboardRuntime {
     createRoot: (container: HTMLElement) => IReactRootLike;
+    flushSync?: (callback: () => void) => void;
     DashboardComponent: React.ComponentType<Record<string, unknown>>;
     DashboardModalComponent: React.ComponentType<Record<string, unknown>>;
 }
@@ -385,6 +386,7 @@ const loadReactDashboardRuntime = (): IReactDashboardRuntime => {
     }
 
     let createRootFn: ((container: HTMLElement) => IReactRootLike) | undefined;
+    let flushSyncFn: ((callback: () => void) => void) | undefined;
     let dashboardComponent: React.ComponentType<Record<string, unknown>> | undefined;
     let dashboardModalComponent: React.ComponentType<Record<string, unknown>> | undefined;
 
@@ -392,6 +394,9 @@ const loadReactDashboardRuntime = (): IReactDashboardRuntime => {
         // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
         const reactDomClient = require('react-dom/client');
         createRootFn = reactDomClient.createRoot as (container: HTMLElement) => IReactRootLike;
+        // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
+        const reactDom = require('react-dom');
+        flushSyncFn = reactDom.flushSync as (callback: () => void) => void;
     } catch (error) {
         throw new Error(
             `FileUploader: failed to load "react-dom/client". Uppy React driver requires React 18+ and react-dom/client. ${
@@ -425,6 +430,7 @@ const loadReactDashboardRuntime = (): IReactDashboardRuntime => {
 
     reactDashboardRuntime = {
         createRoot: createRootFn,
+        flushSync: typeof flushSyncFn === 'function' ? flushSyncFn : undefined,
         DashboardComponent: dashboardComponent,
         DashboardModalComponent: dashboardModalComponent,
     };
@@ -1122,19 +1128,26 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
                 }
 
                 const commonProps = getCommonDashboardProps(currentOptions);
-                rootState.root.render(
-                    React.createElement(runtime.DashboardModalComponent, {
-                        uppy,
-                        ...commonProps,
-                        open: isOpen,
-                        onRequestClose: () => {
-                            isOpen = false;
-                            currentOptions.onRequestClose?.();
-                            render();
-                        },
-                        closeModalOnClickOutside: resolveCloseModalOnClickOutside(options.dashboard),
-                    }),
-                );
+                const dashboardModal = React.createElement(runtime.DashboardModalComponent, {
+                    uppy,
+                    ...commonProps,
+                    open: isOpen,
+                    onRequestClose: () => {
+                        isOpen = false;
+                        currentOptions.onRequestClose?.();
+                        render();
+                    },
+                    closeModalOnClickOutside: resolveCloseModalOnClickOutside(options.dashboard),
+                });
+
+                if (runtime.flushSync) {
+                    runtime.flushSync(() => {
+                        rootState.root.render(dashboardModal);
+                    });
+                    return;
+                }
+
+                rootState.root.render(dashboardModal);
             };
 
             render();
