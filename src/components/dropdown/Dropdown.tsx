@@ -68,9 +68,9 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
             } else {
                 const extendedChild = React.isValidElement(child)
                     ? React.cloneElement(child, {
+                          'data-qa': qaTags.dropdownList,
                           ...child.props,
                           key: child.key ?? index,
-                          'data-qa': qaTags.dropdownList,
                           children: addQaTagsToChildren(child.props.children, qaTags.dropdownItem),
                       })
                     : child;
