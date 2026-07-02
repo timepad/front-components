@@ -68,10 +68,14 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
             } else {
                 const extendedChild = React.isValidElement(child)
                     ? React.cloneElement(child, {
-                          'data-qa': qaTags.dropdownList,
                           ...child.props,
                           key: child.key ?? index,
-                          children: addQaTagsToChildren(child.props.children, qaTags.dropdownItem),
+                          // qa-атрибуты — только на DOM-обёртках (div и т.п.):
+                          // компоненты вроде DatePicker/List задают data-qa сами через props['data-qa']
+                          ...(typeof child.type === 'string' && {
+                              'data-qa': child.props['data-qa'] || qaTags.dropdownList,
+                              children: addQaTagsToChildren(child.props.children, qaTags.dropdownItem),
+                          }),
                       })
                     : child;
                 otherChildren.push(extendedChild);
