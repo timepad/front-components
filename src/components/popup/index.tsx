@@ -331,8 +331,10 @@ export const Popup = React.forwardRef<IPopupActions, IPopupProps>(
 
             if (typeof trigger === 'function') {
                 const Trigger = trigger;
+                const {key, ...restTriggerProps} = triggerProps;
+
                 return (
-                    <div {...triggerProps}>
+                    <div key={key as string} {...restTriggerProps}>
                         <Trigger isOpen={isOpen} />
                     </div>
                 );

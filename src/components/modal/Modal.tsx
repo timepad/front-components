@@ -109,6 +109,11 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
         };
     }, []);
 
+    //По-другому нет возможности устанавливать data* атрибуты
+    const contentRef = (element: HTMLDivElement) => {
+        element?.setAttribute('data-qa', props['data-qa'] || qaTags.modal);
+    };
+
     return (
         <ModalSafeForReact18
             className={cx(component('portal')(), className)}
@@ -116,10 +121,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
             isOpen={isOpen}
             onRequestClose={onClose}
             shouldCloseOnOverlayClick={false}
-            contentRef={(element: HTMLDivElement) => {
-                //По-другому нет возможности устанавливать data* атрибуты
-                element.setAttribute('data-qa', props['data-qa'] || qaTags.modal);
-            }}
+            contentRef={contentRef}
             parentSelector={parentSelector}
         >
             {isOpen &&

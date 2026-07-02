@@ -52,7 +52,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
         let header: ReactElement<IFooterHeaderProps, typeof DropdownHeader> | undefined;
         let footer: ReactElement<IFooterHeaderProps, typeof DropdownFooter> | undefined;
 
-        React.Children.forEach(children, (child) => {
+        React.Children.forEach(children, (child, index) => {
             const isElement = typeof child === 'object' && !!child && 'type' in child;
 
             if (isElement && child.type === DropdownHeader) {
@@ -69,6 +69,7 @@ export const Dropdown: FC<React.PropsWithChildren<IDropdownProps>> & {
                 const extendedChild = React.isValidElement(child)
                     ? React.cloneElement(child, {
                           ...child.props,
+                          key: child.key ?? index,
                           'data-qa': qaTags.dropdownList,
                           children: addQaTagsToChildren(child.props.children, qaTags.dropdownItem),
                       })
