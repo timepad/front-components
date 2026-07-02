@@ -1,21 +1,20 @@
 import React from 'react';
 import {Meta} from '@storybook/react/types-6-0';
 import 'css/bundle.less';
-import '@uppy/core/css/style.min.css';
-import '@uppy/dashboard/css/style.min.css';
-import '@uppy/image-editor/css/style.min.css';
 
 import {FileUploader} from './FileUploader';
 import {
     createFilePresignUploadStrategy,
-    createFileUploaderBundle,
-    DEFAULT_IMAGE_EDITOR_OPTIONS,
-    IFileUploaderBundle,
     IFileUploaderPresignSession,
     IFileUploaderS3UploadStrategy,
+} from './FileUploader.presign';
+import {
+    createUppyFileUploaderBundle,
+    DEFAULT_IMAGE_EDITOR_OPTIONS,
+    IFileUploaderBundle,
     IImageEditorPluginOptions,
     IUppyLike,
-} from './FileUploader.helpers';
+} from './FileUploader.uppyDriver';
 import {IFileUploaderFile, IFileUploaderResult} from './FileUploader.types';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Brick} from 'components/brick';
@@ -241,7 +240,7 @@ const createStoryBundle = ({
     imageEditor?: IImageEditorPluginOptions | false;
     maxNumberOfFiles: number;
 }): IFileUploaderBundle => {
-    return createFileUploaderBundle({
+    return createUppyFileUploaderBundle({
         uppyOptions: createBaseUppyOptions(autoProceed, allowedFileTypes, maxNumberOfFiles),
         driverOptions: {
             renderer: 'react',
