@@ -36,6 +36,7 @@ export const qaTags = {
     titleModalName: 'title-modal-name',
     blockModalDescription: 'block-modal-description',
     pagination: 'pagination',
+    paginationItem: (index: number): string => `pagination-item-${index}`,
     paginationItemSelected: 'pagination-item-selected',
     searchInput: 'search-input',
     segmentControl: 'segment-control',

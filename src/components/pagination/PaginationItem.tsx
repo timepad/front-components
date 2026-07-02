@@ -17,6 +17,7 @@ export const PaginationItem: FC<React.PropsWithChildren<IPaginationItem>> = ({
 }) => {
     const {activePage, onChange} = useContext(PaginationContext);
     const isActive = activePage === page;
+    const paginationItemIndex = Number.isFinite(page) ? Math.max(0, page - 1) : 0;
     const buttonClassName = cx(
         component(
             'pagination',
@@ -34,7 +35,7 @@ export const PaginationItem: FC<React.PropsWithChildren<IPaginationItem>> = ({
             disabled={disabled}
             className={buttonClassName}
             onClick={() => onChange(page)}
-            data-qa={isActive && qaTags.paginationItemSelected}
+            data-qa={isActive ? qaTags.paginationItemSelected : qaTags.paginationItem(paginationItemIndex)}
         >
             {page}
         </button>
