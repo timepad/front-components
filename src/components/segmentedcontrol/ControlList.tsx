@@ -2,6 +2,7 @@ import React, {FC, HTMLAttributes, useContext, useEffect, useRef, useState} from
 import cx from 'classnames';
 import {SegmentedControlContext} from './SegmentedControl';
 import {component} from '../../services/helpers/classHelpers';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
 interface IHighlighterStyle {
     transform: string;
@@ -52,7 +53,7 @@ export const ControlList: FC<React.PropsWithChildren<HTMLAttributes<HTMLUListEle
     return (
         <div className={highlighterBoxClasses} ref={boxRef}>
             <ul {...restProps} className={ulClasses}>
-                {children}
+                {addQaTagsToChildren(children, qaTags.segmentControlItem)}
             </ul>
 
             <span className={spanClasses} style={highlighterStyles} />

@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {TabId} from './Tab';
 import {component} from '../../services/helpers/classHelpers';
+import {qaTags} from '../../services';
 
 export interface ITabContent extends HTMLAttributes<HTMLDivElement> {
     tabId: TabId;
@@ -14,7 +15,7 @@ export const TabContent: FC<React.PropsWithChildren<ITabContent>> = ({children, 
     const divClasses = cx(component('tab-bar', 'content')(), className);
 
     return activeTabId === tabId ? (
-        <div {...restProps} className={divClasses}>
+        <div {...restProps} className={divClasses} data-qa={qaTags.tabsItemContent}>
             {children}
         </div>
     ) : null;

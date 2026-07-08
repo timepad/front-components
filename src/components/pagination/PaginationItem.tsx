@@ -2,6 +2,7 @@ import React, {FC, HTMLAttributes, useContext} from 'react';
 import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {PaginationContext} from './Pagination';
+import {qaTags} from '../../services';
 
 export interface IPaginationItem extends HTMLAttributes<HTMLButtonElement> {
     disabled?: boolean;
@@ -16,6 +17,7 @@ export const PaginationItem: FC<React.PropsWithChildren<IPaginationItem>> = ({
 }) => {
     const {activePage, onChange} = useContext(PaginationContext);
     const isActive = activePage === page;
+    const paginationItemIndex = Number.isFinite(page) ? Math.max(0, page - 1) : 0;
     const buttonClassName = cx(
         component(
             'pagination',
@@ -28,7 +30,13 @@ export const PaginationItem: FC<React.PropsWithChildren<IPaginationItem>> = ({
     );
 
     return (
-        <button {...restProps} disabled={disabled} className={buttonClassName} onClick={() => onChange(page)}>
+        <button
+            {...restProps}
+            disabled={disabled}
+            className={buttonClassName}
+            onClick={() => onChange(page)}
+            data-qa={isActive ? qaTags.paginationItemSelected : qaTags.paginationItem(paginationItemIndex)}
+        >
             {page}
         </button>
     );

@@ -1,3 +1,5 @@
+import {IAdditionalAttributes} from '../../../types';
+
 export interface IUploadcareConfig {
     UPLOADCARE_PUBLIC_KEY: string;
     STATIC_BASE_URL: string;
@@ -15,7 +17,7 @@ export interface IUploadFile {
     onError: (error: string) => void;
 }
 
-export interface IUploadInputProps {
+export interface IUploadInputProps extends IAdditionalAttributes {
     name: string;
     config: IUploadcareConfig;
     label?: string;

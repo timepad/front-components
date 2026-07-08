@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import {ITextareaProps} from '../Textarea/Textarea';
 import {Mask} from '../../../services/hooks';
+import {IAdditionalAttributes} from '../../../../types';
 
 export type ITextLightProps = {
     error?: string;
@@ -13,4 +14,5 @@ export type ITextLightProps = {
     mask?: string | Mask;
     maskPlaceholder?: string;
     setValue?: (value: string) => void;
-} & (ITextareaProps | React.InputHTMLAttributes<HTMLInputElement>);
+} & (ITextareaProps | React.InputHTMLAttributes<HTMLInputElement>) &
+    IAdditionalAttributes;

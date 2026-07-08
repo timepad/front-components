@@ -3,6 +3,7 @@ import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 import {IconArrowLeft24} from '../../icons';
 import {PaginationContext} from './Pagination';
+import {qaTags} from '../../services';
 
 export const PaginationPrev: FC<React.PropsWithChildren<HTMLAttributes<HTMLButtonElement>>> = ({
     className,
@@ -18,6 +19,7 @@ export const PaginationPrev: FC<React.PropsWithChildren<HTMLAttributes<HTMLButto
             className={buttonClassName}
             disabled={isDisabled}
             onClick={() => onChange(activePage - 1)}
+            data-qa={qaTags.btnBackTo}
         >
             <IconArrowLeft24 />
         </button>

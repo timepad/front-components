@@ -3,6 +3,7 @@ import {FC, HTMLAttributes, useContext, useEffect, useRef, useState} from 'react
 import cx from 'classnames';
 import {TabsContext} from './Tabs';
 import {component} from '../../services/helpers/classHelpers';
+import {addQaTagsToChildren, qaTags} from '../../services';
 
 interface IHighlighterStyle {
     transform: string;
@@ -46,12 +47,12 @@ export const TabList: FC<React.PropsWithChildren<HTMLAttributes<HTMLUListElement
     };
     useEffect(() => {
         setHighlighterStyles(getHighlighterStyles());
-    }, [activeTabId]);
+    }, [activeTabId, children]);
 
     return (
         <div className={highlighterBoxClasses} ref={boxRef}>
             <ul {...restProps} className={ulClasses}>
-                {children}
+                {addQaTagsToChildren(children, qaTags.tabsItem)}
             </ul>
 
             <span className={spanClasses} style={highlighterStyles} />

@@ -10,6 +10,7 @@ import {Gap} from '../gap';
 import {Typography} from '../typography';
 import {IconDelete24} from '../../icons';
 import {component, layout} from '../../services/helpers/classHelpers';
+import {qaTags} from '../../services';
 
 export const UploadInput: React.FC<IUploadInputProps> = ({
     label = '',
@@ -23,6 +24,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     setProgress = () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onError = () => {},
+    ...props
 }) => {
     const uploadApiService = new UploadApiService(config);
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -61,7 +63,7 @@ export const UploadInput: React.FC<IUploadInputProps> = ({
     };
 
     return (
-        <div>
+        <div data-qa={props['data-qa'] || qaTags.uploadInput}>
             <Brick size={1.5} />
             <input
                 ref={inputRef}

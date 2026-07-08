@@ -4,8 +4,12 @@ import cx from 'classnames';
 
 import './index.less';
 import {IconArrowDown24, IconArrowUp24} from '../../icons';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
-interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface IProps
+    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+        IAdditionalAttributes {
     text: string;
     caption?: string;
     secondIcon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
@@ -25,6 +29,7 @@ export const Accordion: FC<React.PropsWithChildren<IProps>> = ({
     secondIcon,
     className = '',
     children,
+    ...props
 }) => {
     const [open, setOpen] = useState(false);
     const icon = open ? <IconArrowUp24 /> : <IconArrowDown24 />;
@@ -47,7 +52,7 @@ export const Accordion: FC<React.PropsWithChildren<IProps>> = ({
     };
 
     return (
-        <div className={containerClassNames}>
+        <div className={containerClassNames} data-qa={props['data-qa'] || qaTags.accordion}>
             <div className={component(baseClassName, 'body')()} onClick={handleClick}>
                 <div className={component(baseClassName, 'text')()}>
                     <div className={component(baseClassName, 'title')()}>{text}</div>

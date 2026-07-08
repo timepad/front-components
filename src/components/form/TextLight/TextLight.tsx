@@ -6,6 +6,7 @@ import './index.less';
 import {uniqueId} from '../../../services/helpers/uniqueId';
 import {ITextLightProps} from './TextLight.types';
 import {Input} from './Input';
+import {qaTags} from '../../../services';
 
 const CSS_VAR_LABEL_SPACE = '--tl-label-space';
 
@@ -82,15 +83,19 @@ export const TextLight: React.FC<ITextLightProps> = ({
     return (
         <>
             <div className={inputClasses} ref={containerRef}>
-                <Input name={name} id={id} disabled={disabled} {...props} />
-                <label ref={labelRef} htmlFor={id}>
+                <Input name={name} id={id} disabled={disabled} {...props} data-qa={props['data-qa'] || qaTags.input} />
+                <label ref={labelRef} htmlFor={id} data-qa={qaTags.inputLabelError}>
                     {labelText}
                 </label>
                 <span className={inputIconClasses}>
                     {customIcon ? customIcon : success && <IconCheck24 className={iconClasses} />}
                 </span>
             </div>
-            {!!caption && <div className={captionClasses}>{caption}</div>}
+            {!!caption && (
+                <div className={captionClasses} data-qa={qaTags.inputCaption}>
+                    {caption}
+                </div>
+            )}
         </>
     );
 };

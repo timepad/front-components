@@ -1,5 +1,7 @@
 import React, {forwardRef, useLayoutEffect, useRef} from 'react';
 import {calculateNodeHeight, getSizingData, noop, useComposedRef, useWindowResizeListener, SizingData} from './utils';
+import {IAdditionalAttributes} from '../../../../types';
+import {qaTags} from '../../../services';
 
 export type TextareaHeightChangeMeta = {
     rowHeight: number;
@@ -7,7 +9,7 @@ export type TextareaHeightChangeMeta = {
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export interface ITextareaProps extends TextareaProps {
+export interface ITextareaProps extends TextareaProps, IAdditionalAttributes {
     maxRows?: number;
     minRows?: number;
     onHeightChange?: (height: number, meta: TextareaHeightChangeMeta) => void;
@@ -74,7 +76,7 @@ const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaPro
     useLayoutEffect(resizeTextarea);
     useWindowResizeListener(resizeTextarea);
 
-    return <textarea {...props} onChange={handleChange} ref={ref} />;
+    return <textarea {...props} onChange={handleChange} ref={ref} data-qa={props['data-qa'] || qaTags.textarea} />;
 };
 
 export default /* #__PURE__ */ forwardRef(Textarea);

@@ -9,6 +9,8 @@ import {Button} from '../button';
 import {component, layout} from '../../services/helpers/classHelpers';
 
 import './index.less';
+import {qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
 moment.locale('ru');
 
@@ -25,7 +27,7 @@ export interface IAnalyticsProps {
     weekendBtn?: string;
 }
 
-interface IDatePickerProps {
+interface IDatePickerProps extends IAdditionalAttributes {
     initialToday?: Moment;
     initialStart?: Moment;
     initialEnd?: Moment;
@@ -142,6 +144,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     analytic,
     enableDates = 'future',
     invalidDates,
+    ...props
 }) => {
     const isMounted = useRef(false);
 
@@ -307,21 +310,21 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
     }, [start, end, today]);
 
     return (
-        <div className={component(baseClassName)()}>
+        <div className={component(baseClassName)()} data-qa={props['data-qa'] || qaTags.datepicker}>
             <div className={component(baseClassName, 'header')({['active']: !!selectView})}>
                 <div className={component(baseClassName, 'title')()}>
                     <span>
                         <span
                             onClick={() => onSelectCurrentView(SelectViewTypes.MONTH)}
                             className={component(baseClassName, 'header-month')()}
-                            data-qa="title-current-month"
+                            data-qa={qaTags.titleCurrentMonth}
                         >
                             {now.format('MMMM')}
                         </span>{' '}
                         <span
                             onClick={() => onSelectCurrentView(SelectViewTypes.YEAR)}
                             className={component(baseClassName, 'header-year')()}
-                            data-qa="title-current-year"
+                            data-qa={qaTags.titleCurrentYear}
                         >
                             {now.format('YYYY')}
                         </span>
@@ -335,7 +338,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                 onClick={prevMonth}
                                 disabled={enableDates !== 'past' && enableDates !== 'all' && today.isSame(now, 'month')}
                                 icon={<IconArrowDown24 style={{transform: 'rotate(90deg)'}} />}
-                                data-qa="btn-back-to"
+                                data-qa={qaTags.btnBackTo}
                             />
                             <Button
                                 variant={Button.variant.transparent}
@@ -344,7 +347,7 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                                     enableDates !== 'future' && enableDates !== 'all' && today.isSame(now, 'month')
                                 }
                                 icon={<IconArrowDown24 style={{transform: 'rotate(-90deg)'}} />}
-                                data-qa="btn-next-to"
+                                data-qa={qaTags.btnNextTo}
                             />
                         </>
                     </div>
@@ -370,18 +373,17 @@ export const DatePicker: FC<React.PropsWithChildren<IDatePickerProps>> = ({
                     monthData.map((week, idx) => (
                         <div key={idx} className={weekClasses(week[0])}>
                             {week.map((day) => {
+                                const date = isDayOfCurrentMonth(day) ? day.date() : null;
                                 return (
                                     <span
                                         key={day.dayOfYear()}
                                         // whileTap="tap"
                                         className={dayClasses(day)}
                                         onClick={() => dayClicked(day)}
-                                        data-qa={`block-day-${isDayOfCurrentMonth(day) && day.date()}`}
+                                        data-qa={qaTags.blockDayItem(date)}
                                     >
                                         <span className={component(baseClassName, 'day-cell')()}>
-                                            <span className={component(baseClassName, 'day-text')()}>
-                                                {isDayOfCurrentMonth(day) && day.date()}
-                                            </span>
+                                            <span className={component(baseClassName, 'day-text')()}>{date}</span>
                                         </span>
                                     </span>
                                 );
