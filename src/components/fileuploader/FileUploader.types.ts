@@ -40,6 +40,8 @@ export interface IFileUploaderResult {
     size?: number;
     /** Финальный URL загруженного файла, если uploader его вернул. */
     uploadURL?: string;
+    /** URL локального preview, если driver умеет его отдавать. */
+    previewURL?: string;
     /** Оригинальный ответ upload-адаптера. */
     response?: unknown;
 }

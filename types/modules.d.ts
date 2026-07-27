@@ -49,3 +49,8 @@ declare module '@uppy/react/dashboard-modal' {
     const DashboardModal: React.ComponentType<Record<string, unknown>>;
     export default DashboardModal;
 }
+
+declare module '@uppy/aws-s3' {
+    const AwsS3: unknown;
+    export default AwsS3;
+}

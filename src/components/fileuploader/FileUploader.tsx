@@ -68,6 +68,7 @@ const createResult = (file: IFileUploaderFile, response: unknown): IFileUploader
         mimeType: file.type,
         size: file.size,
         uploadURL: file.uploadURL,
+        previewURL: file.preview,
         response,
     };
 };

@@ -2,6 +2,7 @@ import type {IFileUploaderFile} from './FileUploader.types';
 
 const FILE_PRESIGN_ENDPOINT = '/file/presign/';
 const FILE_PRESIGN_DEFAULT_CONTENT_TYPE = 'application/octet-stream';
+const BYTES_IN_MEGABYTE = 1024 * 1024;
 const FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME = new Set<FileUploaderPresignIntent>([
     'act_signed_file',
     'passport_scan',
@@ -12,6 +13,7 @@ const FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME = new Set<FileUploaderPresignI
  */
 export type FileUploaderPresignIntent =
     | 'event_poster'
+    | 'sponsor_logo'
     | 'import_csv'
     | 'diploma_pdf'
     | 'passport_scan'
@@ -24,7 +26,9 @@ export type FileUploaderPresignIntent =
     | 'category_image'
     | 'service_icon'
     | 'user_avatar'
-    | 'content_preview_image';
+    | 'afisha_user_avatar'
+    | 'content_preview_image'
+    | 'registration_answer';
 
 /**
  * Тип passport scan для intent `passport_scan`.
@@ -59,6 +63,10 @@ export interface IFileUploaderPresignResponse {
     session_id: string;
     /** Срок жизни session_id. Presigned URL живет меньше, обычно 15 минут. */
     expires_at: string;
+    /** Заголовки, которые backend требует передать при PUT-загрузке. */
+    headers?: Record<string, string>;
+    /** Максимальный размер файла, разрешенный upload-сессией. */
+    size_limit_in_mb?: number;
 }
 
 /**
@@ -204,6 +212,8 @@ const assertFilePresignResponse = (response: unknown): IFileUploaderPresignRespo
         upload_url: presignResponse.upload_url,
         session_id: presignResponse.session_id,
         expires_at: presignResponse.expires_at,
+        headers: presignResponse.headers,
+        size_limit_in_mb: presignResponse.size_limit_in_mb,
     };
 };
 
@@ -316,6 +326,14 @@ export const createFilePresignUploadStrategy = (
 
             const payload = await createFileUploaderPresignPayload(mappedFile, options);
             const presignResponse = await requestFilePresign(mappedFile, payload, options);
+            const sizeLimitInBytes = presignResponse.size_limit_in_mb
+                ? presignResponse.size_limit_in_mb * BYTES_IN_MEGABYTE
+                : undefined;
+
+            if (sizeLimitInBytes && mappedFile.size && mappedFile.size > sizeLimitInBytes) {
+                throw new Error(`File size exceeds the ${presignResponse.size_limit_in_mb} MB limit`);
+            }
+
             const presignSession: IFileUploaderPresignSession = {
                 fileId: mappedFile.id,
                 uploadUrl: presignResponse.upload_url,
@@ -332,6 +350,7 @@ export const createFilePresignUploadStrategy = (
                 url: presignResponse.upload_url,
                 headers: {
                     'Content-Type': payload.content_type,
+                    ...presignResponse.headers,
                 },
                 sessionId: presignResponse.session_id,
                 expiresAt: presignResponse.expires_at,

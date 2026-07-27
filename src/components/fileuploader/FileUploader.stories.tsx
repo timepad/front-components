@@ -247,7 +247,7 @@ const createStoryBundle = ({
             imageEditor,
             dashboard: {
                 proudlyDisplayPoweredByUppy: false,
-                showProgressDetails: true,
+                hideProgressDetails: false,
                 hideCancelButton: false,
                 hideProgressAfterFinish: false,
             },

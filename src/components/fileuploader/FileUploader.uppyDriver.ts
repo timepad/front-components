@@ -57,8 +57,8 @@ export interface IFileUploaderDashboardOptions {
     doneButtonHandler?: () => void;
     /** Показывать подпись Powered by Uppy. */
     proudlyDisplayPoweredByUppy?: boolean;
-    /** Показывать детали прогресса загрузки. */
-    showProgressDetails?: boolean;
+    /** Скрывать детали прогресса загрузки. */
+    hideProgressDetails?: boolean;
     /** Скрыть кнопку cancel. */
     hideCancelButton?: boolean;
     /** Скрыть progress bar после завершения загрузки. */
@@ -754,12 +754,15 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
             const rootState = {root: runtime.createRoot(container), destroyed: false};
             let currentOptions = mountOptions;
             let isOpen = false;
+            let renderRevision = 0;
 
             const render = () => {
                 if (rootState.destroyed) {
                     return;
                 }
 
+                renderRevision += 1;
+                const currentRenderRevision = renderRevision;
                 const commonProps = getCommonDashboardProps(currentOptions);
                 const dashboardModal = React.createElement(runtime.DashboardModalComponent, {
                     uppy,
@@ -773,14 +776,20 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
                     closeModalOnClickOutside: resolveCloseModalOnClickOutside(options.dashboard),
                 });
 
-                if (runtime.flushSync) {
-                    runtime.flushSync(() => {
-                        rootState.root.render(dashboardModal);
-                    });
-                    return;
-                }
+                deferTask(() => {
+                    if (rootState.destroyed || currentRenderRevision !== renderRevision) {
+                        return;
+                    }
 
-                rootState.root.render(dashboardModal);
+                    if (runtime.flushSync) {
+                        runtime.flushSync(() => {
+                            rootState.root.render(dashboardModal);
+                        });
+                        return;
+                    }
+
+                    rootState.root.render(dashboardModal);
+                });
             };
 
             render();
