@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Timepad UI kit",
   "main": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./config": "./config/index.js",
+    "./config/*": "./config/*",
+    "./src/*": "./src/*"
+  },
   "repository": "git@github.com:timepad/front-components.git",
   "author": "Timepad",
   "private": true,

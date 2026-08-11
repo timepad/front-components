@@ -1,11 +1,15 @@
-export * from './services/helpers/classHelpers';
-export * from './services/hooks';
+// services: только то, что реально импортируют ntp-web-app / otp
+export {cn, component, layout, Theme} from './services/helpers/classHelpers';
+export {useClickOutside, useMedia, useScript, useMask} from './services/hooks';
+export {keyPressHelper} from './services/helpers/keyPressHelper';
+export * from './icons';
 export * from './components/button';
 export * from './components/tabs';
 export * from './components/userpic';
 export * from './components/modal';
 export * from './components/logo';
-export * from './components/oldlogo';
+// OldLogo SVG уже экспортируется из ./icons; React-обёртка — под отдельным именем
+export {OldLogo as OldLogoComponent} from './components/oldlogo';
 export * from './components/dropdown';
 export * from './components/list';
 export * from './components/loader';
