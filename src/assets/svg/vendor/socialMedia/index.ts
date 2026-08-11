@@ -1,8 +1,7 @@
-import IconFacebook from './icon-facebook.svg';
-import IconInstagram from './icon-instagram.svg';
-import IconTelegram from './icon-telegram.svg';
-import IconTwitter from './icon-twitter.svg';
-import IconVk from './icon-vk.svg';
-import IconYoutube from './icon-youtube.svg';
-
-export {IconFacebook, IconInstagram, IconTelegram, IconTwitter, IconVk, IconYoutube};
+// Tree-shakeable re-exports: unused icons are dropped by webpack/rollup
+export {default as IconFacebook} from './icon-facebook.svg';
+export {default as IconInstagram} from './icon-instagram.svg';
+export {default as IconTelegram} from './icon-telegram.svg';
+export {default as IconTwitter} from './icon-twitter.svg';
+export {default as IconVk} from './icon-vk.svg';
+export {default as IconYoutube} from './icon-youtube.svg';

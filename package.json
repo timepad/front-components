@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Timepad UI kit",
   "main": "./src/index.tsx",
+  "sideEffects": [
+    "**/*.less",
+    "**/*.css",
+    "./src/assets/css/**/*.less"
+  ],
   "exports": {
     ".": "./src/index.tsx",
     "./config": "./config/index.js",

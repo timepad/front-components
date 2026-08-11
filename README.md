@@ -56,6 +56,13 @@ import {Button, IconClose24, useMedia, component, layout, Theme, keyPressHelper}
 
 Из `services` в публичный API: `component`, `layout`, `cn`, `Theme`, `useMedia`, `useScript`, `useMask`, `useClickOutside`, `keyPressHelper`.
 
+### Tree-shaking
+
+В `package.json` указано `"sideEffects"` (less/css считаются side-effectful, JS/TS/SVG — нет).  
+Иконки экспортируются как `export {default as IconX} from './icon-x.svg'`, поэтому неиспользуемые SVG отбрасываются production-сборкой приложения.
+
+Не импортируйте `import * as Icons from 'front-components'` и не тяните `components/icons/icons.ts` в приложения — это снова соберёт весь набор.
+
 ## Линтер
 
 Использование `@eslint-disable-next-line` допустимо, но на ревью от вас потребуется объяснение, почему иначе нельзя. Особенно это касается типизации с `any`.
