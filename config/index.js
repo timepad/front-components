@@ -1,5 +1,5 @@
 const {aliases, includes} = require('./aliases');
-const {makeTsRule, excludeFrontComponentsFrom} = require('./ts-rule');
+const {makeTsRule, excludeFrontComponentsFrom, usesTsLoader} = require('./ts-rule');
 
 /**
  * Подключает ts-loader для исходников front-components.
@@ -22,8 +22,7 @@ function applyTo(config, {tsconfig} = {}) {
     config.module.rules.unshift(makeTsRule({tsconfig}));
 
     config.module.rules = config.module.rules.map((rule) => {
-        const isTs = rule && rule.test && (rule.test.toString().includes('tsx') || rule.test.toString().includes('ts'));
-        return isTs ? excludeFrontComponentsFrom({...rule}) : rule;
+        return usesTsLoader(rule) ? excludeFrontComponentsFrom({...rule}) : rule;
     });
 
     return config;
@@ -35,4 +34,5 @@ module.exports = {
     includes,
     makeTsRule,
     excludeFrontComponentsFrom,
+    usesTsLoader,
 };

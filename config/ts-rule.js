@@ -22,4 +22,13 @@ function excludeFrontComponentsFrom(rule) {
     return rule;
 }
 
-module.exports = {makeTsRule, excludeFrontComponentsFrom};
+function usesTsLoader(rule) {
+    if (!rule) return false;
+    if (rule.loader === 'ts-loader') return true;
+    const use = rule.use;
+    if (!use) return false;
+    const list = Array.isArray(use) ? use : [use];
+    return list.some((u) => u === 'ts-loader' || (u && u.loader === 'ts-loader'));
+}
+
+module.exports = {makeTsRule, excludeFrontComponentsFrom, usesTsLoader};
