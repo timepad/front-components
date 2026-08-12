@@ -1,6 +1,8 @@
-// services: только то, что реально импортируют ntp-web-app / otp
 export {cn, component, layout, Theme} from './services/helpers/classHelpers';
-export {useClickOutside, useMedia, useScript, useMask} from './services/hooks';
+export {useClickOutside} from './services/hooks/useClickOutside';
+export {useMedia} from './services/hooks/useMedia';
+export {useScript} from './services/hooks/useScript';
+export {useMask} from './services/hooks/useMask';
 export {keyPressHelper} from './services/helpers/keyPressHelper';
 export * from './icons';
 export * from './components/button';
