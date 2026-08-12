@@ -1,3 +1,2 @@
-import Pin64 from './pin-64.svg';
-
-export {Pin64};
+// Tree-shakeable re-exports: unused icons are dropped by webpack/rollup
+export {default as Pin64} from './pin-64.svg';
