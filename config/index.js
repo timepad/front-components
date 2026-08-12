@@ -11,7 +11,6 @@ const {makeTsRule, excludeFrontComponentsFrom, usesTsLoader} = require('./ts-rul
  */
 function applyTo(config, {tsconfig} = {}) {
     config.resolve = config.resolve || {};
-    // гарантируем резолв пакета на src (source-режим)
     config.resolve.alias = {
         ...(config.resolve.alias || {}),
         ...aliases(),
@@ -19,12 +18,12 @@ function applyTo(config, {tsconfig} = {}) {
 
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
-    config.module.rules.unshift(makeTsRule({tsconfig}));
 
     config.module.rules = config.module.rules.map((rule) => {
         return usesTsLoader(rule) ? excludeFrontComponentsFrom({...rule}) : rule;
     });
 
+    config.module.rules.unshift(makeTsRule({tsconfig}));
     return config;
 }
 
