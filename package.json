@@ -2,6 +2,8 @@
   "name": "front-components",
   "version": "1.0.0",
   "description": "Timepad UI kit",
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
   "exports": {
     ".": "./src/index.tsx",
     "./config": "./config/index.js",
