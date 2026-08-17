@@ -6,6 +6,11 @@ const BYTES_IN_MEGABYTE = 1024 * 1024;
 const FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME = new Set<FileUploaderPresignIntent>([
     'act_signed_file',
     'passport_scan',
+    'feedback_file',
+    'act_revision_file',
+    'job_resume_file',
+    'editor_image',
+    'digest_banner',
 ]);
 
 /**
@@ -28,7 +33,13 @@ export type FileUploaderPresignIntent =
     | 'user_avatar'
     | 'afisha_user_avatar'
     | 'content_preview_image'
-    | 'registration_answer';
+    | 'registration_answer'
+    | 'ticket_logo'
+    | 'feedback_file'
+    | 'act_revision_file'
+    | 'job_resume_file'
+    | 'editor_image'
+    | 'digest_banner';
 
 /**
  * Тип passport scan для intent `passport_scan`.
@@ -47,7 +58,7 @@ export interface IFileUploaderPresignPayload {
     content_type: string;
     /** Id сущности для intent-ов, которые уже привязаны к сущности. */
     entity_id?: string | number;
-    /** Имя исходного файла для intent-ов `act_signed_file` и `passport_scan`. */
+    /** Имя исходного файла для intent-ов, которым backend передает исходное имя файла. */
     original_filename?: string;
     /** Вид passport scan. Используется только для `passport_scan`. */
     kind?: FileUploaderPassportScanKind;
@@ -97,7 +108,7 @@ export interface ICreateFileUploaderPresignPayloadOptions {
     entityId?: FileUploaderPresignOptionValue<string | number | undefined>;
     /** Вид passport scan. Обязателен для `passport_scan`. */
     kind?: FileUploaderPresignOptionValue<FileUploaderPassportScanKind | undefined>;
-    /** Переопределение исходного имени файла для `act_signed_file` и `passport_scan`. */
+    /** Переопределение исходного имени файла для intent-ов, которым backend передает исходное имя файла. */
     originalFilename?: FileUploaderPresignOptionValue<string | undefined>;
 }
 
@@ -254,7 +265,7 @@ const requestFilePresign = async (
  *
  * Helper добавляет только те поля, которые нужны backend-контракту:
  * `content_type` всегда, `kind` только для `passport_scan`, `original_filename`
- * только для `passport_scan` и `act_signed_file`.
+ * только для intent-ов из `FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME`.
  */
 export const createFileUploaderPresignPayload = async (
     file: IFileUploaderFile,
