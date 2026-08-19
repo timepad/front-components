@@ -1,10 +1,6 @@
 import React from 'react';
-import Uppy from '@uppy/core';
-import Dashboard from '@uppy/dashboard';
-import ImageEditor from '@uppy/image-editor';
-import '@uppy/core/css/style.min.css';
-import '@uppy/dashboard/css/style.min.css';
-import '@uppy/image-editor/css/style.min.css';
+
+import {Dashboard, Uppy} from './FileUploader.uppyRuntime';
 
 import {
     IFileUploaderDriver,
@@ -85,9 +81,21 @@ export const DEFAULT_IMAGE_EDITOR_OPTIONS: IImageEditorPluginOptions = {
  * Способ рендера Dashboard.
  *
  * `uppy` использует vanilla `@uppy/dashboard`.
- * `react` использует компоненты `@uppy/react/dashboard` и `@uppy/react/dashboard-modal`.
+ * React runtime передается из отдельного entry point `uppyReact`, чтобы vanilla-драйвер
+ * не зависел от `@uppy/react` и `react-dom/client`.
  */
-export type FileUploaderDriverRenderer = 'uppy' | 'react';
+export type FileUploaderDriverRenderer = 'uppy' | IFileUploaderReactRenderer;
+
+/**
+ * Runtime React renderer-а, изолированный в отдельном entry point.
+ */
+export interface IFileUploaderReactRenderer {
+    type: 'react';
+    createRoot: (container: HTMLElement) => IReactRootLike;
+    flushSync?: (callback: () => void) => void;
+    DashboardComponent: React.ComponentType<Record<string, unknown>>;
+    DashboardModalComponent: React.ComponentType<Record<string, unknown>>;
+}
 
 /**
  * Опции создания driver-а поверх Uppy.
@@ -101,6 +109,8 @@ export interface ICreateFileUploaderDriverOptions {
     imageEditorPluginId?: string;
     /** Конфиг ImageEditor. `false` отключает ImageEditor. */
     imageEditor?: IImageEditorPluginOptions | false;
+    /** ImageEditor plugin из отдельного entry point `uppyImageEditor`. */
+    imageEditorPlugin?: unknown;
     /** Опции Dashboard. */
     dashboard?: IFileUploaderDashboardOptions;
     /** Дополнительные plugin id для Dashboard. */
@@ -171,20 +181,12 @@ interface IDashboardPluginLike {
     closeModal: (options?: Record<string, unknown>) => Promise<void> | void;
 }
 
-interface IReactRootLike {
+export interface IReactRootLike {
     render: (node: React.ReactElement) => void;
     unmount: () => void;
 }
 
-interface IReactDashboardRuntime {
-    createRoot: (container: HTMLElement) => IReactRootLike;
-    flushSync?: (callback: () => void) => void;
-    DashboardComponent: React.ComponentType<Record<string, unknown>>;
-    DashboardModalComponent: React.ComponentType<Record<string, unknown>>;
-}
-
 let dashboardMountCounter = 0;
-let reactDashboardRuntime: IReactDashboardRuntime | null = null;
 
 type IDriverDashboardConfig = Pick<ICreateFileUploaderDriverOptions, 'dashboard' | 'plugins'>;
 type FileUploaderDriverMountMethods = Pick<IFileUploaderDriver, 'mountInline' | 'mountModal'>;
@@ -203,14 +205,6 @@ interface ICreateDriverRendererContext {
 
 type FileUploaderDriverRendererFactory = (context: ICreateDriverRendererContext) => FileUploaderDriverMountMethods;
 
-const getDefaultExport = <T>(moduleRecord: unknown): T => {
-    if (moduleRecord && typeof moduleRecord === 'object' && 'default' in moduleRecord) {
-        return (moduleRecord as {default: T}).default;
-    }
-
-    return moduleRecord as T;
-};
-
 const deferTask = (callback: () => void) => {
     if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
         window.requestAnimationFrame(() => {
@@ -220,64 +214,6 @@ const deferTask = (callback: () => void) => {
     }
 
     setTimeout(callback, 0);
-};
-
-const loadReactDashboardRuntime = (): IReactDashboardRuntime => {
-    if (reactDashboardRuntime) {
-        return reactDashboardRuntime;
-    }
-
-    let createRootFn: ((container: HTMLElement) => IReactRootLike) | undefined;
-    let flushSyncFn: ((callback: () => void) => void) | undefined;
-    let dashboardComponent: React.ComponentType<Record<string, unknown>> | undefined;
-    let dashboardModalComponent: React.ComponentType<Record<string, unknown>> | undefined;
-
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-        const reactDomClient = require('react-dom/client');
-        createRootFn = reactDomClient.createRoot as (container: HTMLElement) => IReactRootLike;
-        // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-        const reactDom = require('react-dom');
-        flushSyncFn = reactDom.flushSync as (callback: () => void) => void;
-    } catch (error) {
-        throw new Error(
-            `FileUploader: failed to load "react-dom/client". Uppy React driver requires React 18+ and react-dom/client. ${
-                error instanceof Error ? error.message : ''
-            }`,
-        );
-    }
-
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-        const dashboardModule = require('@uppy/react/dashboard');
-        // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-        const dashboardModalModule = require('@uppy/react/dashboard-modal');
-        dashboardComponent = getDefaultExport<React.ComponentType<Record<string, unknown>>>(dashboardModule);
-        dashboardModalComponent = getDefaultExport<React.ComponentType<Record<string, unknown>>>(dashboardModalModule);
-    } catch (error) {
-        throw new Error(
-            `FileUploader: failed to load "@uppy/react/dashboard(-modal)". Install @uppy/react in the host project. ${
-                error instanceof Error ? error.message : ''
-            }`,
-        );
-    }
-
-    if (typeof createRootFn !== 'function') {
-        throw new Error('FileUploader: react-dom/client.createRoot is unavailable');
-    }
-
-    if (!dashboardComponent || !dashboardModalComponent) {
-        throw new Error('FileUploader: @uppy/react components are unavailable');
-    }
-
-    reactDashboardRuntime = {
-        createRoot: createRootFn,
-        flushSync: typeof flushSyncFn === 'function' ? flushSyncFn : undefined,
-        DashboardComponent: dashboardComponent,
-        DashboardModalComponent: dashboardModalComponent,
-    };
-
-    return reactDashboardRuntime;
 };
 
 const toFileUploaderFile = (file: IUppyFileLike | undefined): IFileUploaderFile | undefined => {
@@ -359,6 +295,7 @@ const ensureImageEditorPlugin = (
     uppy: IUppyLike,
     imageEditorPluginId: string,
     imageEditorOptions: IImageEditorPluginOptions | false,
+    imageEditorPlugin: unknown,
 ): string | null => {
     if (imageEditorOptions === false) {
         return null;
@@ -369,7 +306,13 @@ const ensureImageEditorPlugin = (
         return imageEditorPluginId;
     }
 
-    uppy.use(ImageEditor, {
+    if (!imageEditorPlugin) {
+        throw new Error(
+            'FileUploader: imageEditorPlugin is required when ImageEditor is enabled. Import it from "uppyImageEditor".',
+        );
+    }
+
+    uppy.use(imageEditorPlugin, {
         id: imageEditorPluginId,
         ...imageEditorOptions,
     });
@@ -649,6 +592,7 @@ const createBaseUppyDriver = (
         uppy,
         imageEditorPluginId,
         resolvedImageEditorOptions,
+        options.imageEditorPlugin,
     );
     const {on, off} = createDriverEventHandlers(uppy);
     const renderer = createRenderer({
@@ -711,7 +655,10 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
     options,
     registeredImageEditorPluginId,
 }) => {
-    const runtime = loadReactDashboardRuntime();
+    const runtime = options.renderer;
+    if (!runtime || runtime === 'uppy') {
+        throw new Error('FileUploader: React renderer runtime is not configured');
+    }
 
     const getCommonDashboardProps = (mountOptions: IFileUploaderDriverMountOptions): Record<string, unknown> => {
         const pluginIds = buildPluginIds(registeredImageEditorPluginId, options.plugins, options.dashboard?.plugins);
@@ -814,11 +761,6 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
     };
 };
 
-const FILE_UPLOADER_DRIVER_RENDERERS: Record<FileUploaderDriverRenderer, FileUploaderDriverRendererFactory> = {
-    uppy: createUppyDashboardRenderer,
-    react: createReactDashboardRenderer,
-};
-
 /**
  * Создает `FileUploader` driver поверх существующего Uppy-инстанса.
  *
@@ -827,15 +769,18 @@ const FILE_UPLOADER_DRIVER_RENDERERS: Record<FileUploaderDriverRenderer, FileUpl
  *
  * @example
  * const driver = createUppyFileUploaderDriver(uppy, {
- *     renderer: 'react',
  *     dashboard: {proudlyDisplayPoweredByUppy: false},
  * });
+ *
+ * // Для React renderer-а используйте createReactUppyFileUploaderDriver
+ * // из отдельного entry point `uppyReact`.
  */
 export const createUppyFileUploaderDriver = (
     uppy: IUppyLike,
     options: ICreateFileUploaderDriverOptions = {},
 ): IFileUploaderDriver => {
-    const renderer = FILE_UPLOADER_DRIVER_RENDERERS[options.renderer || 'uppy'];
+    const renderer =
+        !options.renderer || options.renderer === 'uppy' ? createUppyDashboardRenderer : createReactDashboardRenderer;
 
     return createBaseUppyDriver(uppy, options, renderer);
 };
@@ -857,8 +802,11 @@ const createUppyInstance = (options: ICreateUppyInstanceOptions): IUppyLike => {
  * @example
  * const bundle = createUppyFileUploaderBundle({
  *     uppyOptions: {autoProceed: false},
- *     driverOptions: {renderer: 'react'},
+ *     driverOptions: {imageEditor: false},
  * });
+ *
+ * // Для React renderer-а используйте createReactUppyFileUploaderBundle
+ * // из отдельного entry point `uppyReact`.
  */
 export const createUppyFileUploaderBundle = (options: ICreateFileUploaderBundleOptions = {}): IFileUploaderBundle => {
     const uppy = createUppyInstance(options);

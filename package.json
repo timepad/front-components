@@ -8,7 +8,6 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1044.0",
     "@bem-react/classname": "1.5.11",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
@@ -82,6 +81,15 @@
   },
   "peerDependenciesMeta": {
     "@uppy/aws-s3": {
+      "optional": true
+    },
+    "@uppy/core": {
+      "optional": true
+    },
+    "@uppy/dashboard": {
+      "optional": true
+    },
+    "@uppy/image-editor": {
       "optional": true
     },
     "@uppy/react": {

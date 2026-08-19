@@ -3,18 +3,10 @@ import {Meta} from '@storybook/react/types-6-0';
 import 'css/bundle.less';
 
 import {FileUploader} from './FileUploader';
-import {
-    createFilePresignUploadStrategy,
-    IFileUploaderPresignSession,
-    IFileUploaderS3UploadStrategy,
-} from './FileUploader.presign';
-import {
-    createUppyFileUploaderBundle,
-    DEFAULT_IMAGE_EDITOR_OPTIONS,
-    IFileUploaderBundle,
-    IImageEditorPluginOptions,
-    IUppyLike,
-} from './FileUploader.uppyDriver';
+import {createFilePresignUploadStrategy, IFileUploaderPresignSession, IFileUploaderS3UploadStrategy} from './presign';
+import {DEFAULT_IMAGE_EDITOR_OPTIONS, IFileUploaderBundle, IImageEditorPluginOptions, IUppyLike} from './uppy';
+import {UPPY_IMAGE_EDITOR_PLUGIN} from './uppyImageEditor';
+import {createReactUppyFileUploaderBundle} from './uppyReact';
 import {IFileUploaderFile, IFileUploaderResult} from './FileUploader.types';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Brick} from 'components/brick';
@@ -240,11 +232,12 @@ const createStoryBundle = ({
     imageEditor?: IImageEditorPluginOptions | false;
     maxNumberOfFiles: number;
 }): IFileUploaderBundle => {
-    return createUppyFileUploaderBundle({
+    return createReactUppyFileUploaderBundle({
         uppyOptions: createBaseUppyOptions(autoProceed, allowedFileTypes, maxNumberOfFiles),
         driverOptions: {
-            renderer: 'react',
             imageEditor,
+            imageEditorPlugin:
+                imageEditor === false || imageEditor === undefined ? undefined : UPPY_IMAGE_EDITOR_PLUGIN,
             dashboard: {
                 proudlyDisplayPoweredByUppy: false,
                 hideProgressDetails: false,

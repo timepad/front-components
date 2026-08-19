@@ -1,7 +1,6 @@
-import AwsS3 from '@uppy/aws-s3';
-
 import type {IFileUploaderS3UploadStrategy} from './FileUploader.presign';
 import type {IUppyLike} from './FileUploader.uppyDriver';
+import {AwsS3} from './FileUploader.uppyS3Runtime';
 
 const AWS_S3_PLUGIN_ID = 'AwsS3Multipart';
 
