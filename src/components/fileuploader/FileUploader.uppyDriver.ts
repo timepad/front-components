@@ -577,7 +577,11 @@ const destroyReactRoot = (state: {root: IReactRootLike; destroyed: boolean}) => 
 
     state.destroyed = true;
     deferTask(() => {
-        state.root.unmount();
+        // Host renderers such as Storybook may still be completing their own React teardown here.
+        // Leave that lifecycle before unmounting the nested Dashboard root.
+        setTimeout(() => {
+            state.root.unmount();
+        }, 0);
     });
 };
 
