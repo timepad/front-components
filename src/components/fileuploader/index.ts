@@ -19,7 +19,9 @@ export {createFilePresignUploadStrategy, createFileUploaderPresignPayload} from 
 export type {
     FileUploaderPassportScanKind,
     FileUploaderPresignIntent,
+    FileUploaderPresignKind,
     FileUploaderPresignOptionValue,
+    FileUploaderPresignPredicate,
     ICreateFilePresignUploadStrategyOptions,
     ICreateFileUploaderPresignPayloadOptions,
     IFileUploaderPresignPayload,

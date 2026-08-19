@@ -3,65 +3,51 @@ import type {IFileUploaderFile} from './FileUploader.types';
 const FILE_PRESIGN_ENDPOINT = '/file/presign/';
 const FILE_PRESIGN_DEFAULT_CONTENT_TYPE = 'application/octet-stream';
 const BYTES_IN_MEGABYTE = 1024 * 1024;
-const FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME = new Set<FileUploaderPresignIntent>([
-    'act_signed_file',
-    'passport_scan',
-    'feedback_file',
-    'act_revision_file',
-    'job_resume_file',
-    'editor_image',
-    'digest_banner',
-]);
 
 /**
- * Intent нового backend presign API `/file/presign/`.
+ * Intent backend presign API `/file/presign/`.
+ *
+ * Конкретный список intent-ов живет в проекте-потребителе. При необходимости
+ * передайте свой union как generic в `createFilePresignUploadStrategy<TIntent>()`.
  */
-export type FileUploaderPresignIntent =
-    | 'event_poster'
-    | 'sponsor_logo'
-    | 'import_csv'
-    | 'diploma_pdf'
-    | 'passport_scan'
-    | 'act_signed_file'
-    | 'org_logo'
-    | 'org_poster'
-    | 'event_collection_poster'
-    | 'event_collection_bg_web'
-    | 'event_collection_bg_mobile'
-    | 'category_image'
-    | 'service_icon'
-    | 'user_avatar'
-    | 'afisha_user_avatar'
-    | 'content_preview_image'
-    | 'registration_answer'
-    | 'ticket_logo'
-    | 'feedback_file'
-    | 'act_revision_file'
-    | 'job_resume_file'
-    | 'editor_image'
-    | 'digest_banner';
+export type FileUploaderPresignIntent = string;
 
 /**
- * Тип passport scan для intent `passport_scan`.
+ * Дополнительный `kind` для intent-ов, где backend требует уточнить тип файла.
+ *
+ * Конкретный список kind-ов живет в проекте-потребителе.
+ */
+export type FileUploaderPresignKind = string;
+
+/**
+ * Готовый union для текущего passport scan сценария.
  */
 export type FileUploaderPassportScanKind = 'identity' | 'registration';
 
 export type FileUploaderPresignOptionValue<T> = T | ((file: IFileUploaderFile) => T | Promise<T>);
 
+export type FileUploaderPresignPredicate<TIntent extends string = FileUploaderPresignIntent> = (
+    intent: TIntent,
+    file: IFileUploaderFile,
+) => boolean | Promise<boolean>;
+
 /**
  * Тело запроса `POST /file/presign/`.
  */
-export interface IFileUploaderPresignPayload {
+export interface IFileUploaderPresignPayload<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> {
     /** Назначение файла на backend. */
-    intent: FileUploaderPresignIntent;
+    intent: TIntent;
     /** MIME-тип файла. */
     content_type: string;
     /** Id сущности для intent-ов, которые уже привязаны к сущности. */
     entity_id?: string | number;
     /** Имя исходного файла для intent-ов, которым backend передает исходное имя файла. */
     original_filename?: string;
-    /** Вид passport scan. Используется только для `passport_scan`. */
-    kind?: FileUploaderPassportScanKind;
+    /** Дополнительный тип файла для intent-ов, которым это нужно. */
+    kind?: TKind;
 }
 
 /**
@@ -83,7 +69,10 @@ export interface IFileUploaderPresignResponse {
 /**
  * Нормализованная upload-сессия, которую можно сохранить рядом с результатом загрузки.
  */
-export interface IFileUploaderPresignSession {
+export interface IFileUploaderPresignSession<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> {
     /** Внутренний id файла из uploader-а. */
     fileId: string;
     /** Presigned PUT URL. */
@@ -93,7 +82,7 @@ export interface IFileUploaderPresignSession {
     /** Срок жизни session_id. */
     expiresAt: string;
     /** Payload, с которым был вызван backend presign endpoint. */
-    payload: IFileUploaderPresignPayload;
+    payload: IFileUploaderPresignPayload<TIntent, TKind>;
     /** Оригинальный ответ backend-а. */
     response: IFileUploaderPresignResponse;
 }
@@ -101,21 +90,35 @@ export interface IFileUploaderPresignSession {
 /**
  * Опции создания payload-а для `POST /file/presign/`.
  */
-export interface ICreateFileUploaderPresignPayloadOptions {
+export interface ICreateFileUploaderPresignPayloadOptions<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> {
     /** Intent загрузки. */
-    intent: FileUploaderPresignOptionValue<FileUploaderPresignIntent>;
+    intent: FileUploaderPresignOptionValue<TIntent>;
     /** Id сущности для intent-ов, которые уже привязаны к сущности. */
     entityId?: FileUploaderPresignOptionValue<string | number | undefined>;
-    /** Вид passport scan. Обязателен для `passport_scan`. */
-    kind?: FileUploaderPresignOptionValue<FileUploaderPassportScanKind | undefined>;
+    /** Дополнительный тип файла для intent-ов, которым это нужно. */
+    kind?: FileUploaderPresignOptionValue<TKind | undefined>;
     /** Переопределение исходного имени файла для intent-ов, которым backend передает исходное имя файла. */
     originalFilename?: FileUploaderPresignOptionValue<string | undefined>;
+    /** Intent-ы, для которых нужно отправлять `original_filename`. */
+    originalFilenameIntents?: readonly TIntent[];
+    /** Кастомное правило отправки `original_filename`. Имеет приоритет над `originalFilenameIntents`. */
+    shouldSendOriginalFilename?: FileUploaderPresignPredicate<TIntent>;
+    /** Intent-ы, для которых нужно отправлять `kind`. */
+    kindIntents?: readonly TIntent[];
+    /** Кастомное правило отправки `kind`. Имеет приоритет над `kindIntents`. */
+    shouldSendKind?: FileUploaderPresignPredicate<TIntent>;
 }
 
 /**
  * Опции backend-specific helper-а `createFilePresignUploadStrategy`.
  */
-export interface ICreateFilePresignUploadStrategyOptions extends ICreateFileUploaderPresignPayloadOptions {
+export interface ICreateFilePresignUploadStrategyOptions<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> extends ICreateFileUploaderPresignPayloadOptions<TIntent, TKind> {
     /** Endpoint presign API. По умолчанию `/file/presign/`. */
     endpoint?: string;
     /** Дополнительные headers для JSON presign-запроса, например CSRF. */
@@ -126,7 +129,7 @@ export interface ICreateFilePresignUploadStrategyOptions extends ICreateFileUplo
     fetcher?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
     /** Полностью кастомный presign-запрос. Имеет приоритет над `endpoint`/`fetcher`. */
     requestPresign?: (
-        payload: IFileUploaderPresignPayload,
+        payload: IFileUploaderPresignPayload<TIntent, TKind>,
         file: IFileUploaderFile,
     ) => Promise<IFileUploaderPresignResponse>;
 }
@@ -137,7 +140,10 @@ export interface ICreateFilePresignUploadStrategyOptions extends ICreateFileUplo
  * Backend `/file/presign/` возвращает presigned PUT URL, на который uploader
  * отправляет файл напрямую.
  */
-export interface IFileUploaderS3UploadParameters {
+export interface IFileUploaderS3UploadParameters<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> {
     /** HTTP-метод загрузки. */
     method?: 'PUT';
     /** Presigned PUT URL. */
@@ -149,17 +155,20 @@ export interface IFileUploaderS3UploadParameters {
     /** Срок жизни session_id, если он есть. */
     expiresAt?: string;
     /** Нормализованная presign-сессия. */
-    presignSession?: IFileUploaderPresignSession;
+    presignSession?: IFileUploaderPresignSession<TIntent, TKind>;
 }
 
 /**
  * Стратегия presign-загрузки, которую можно передать upload-плагину проекта.
  */
-export interface IFileUploaderS3UploadStrategy {
+export interface IFileUploaderS3UploadStrategy<
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+> {
     /** Возвращает presign-параметры для файла из конкретной uploader-библиотеки. */
-    getUploadParameters: (file: unknown) => Promise<IFileUploaderS3UploadParameters>;
+    getUploadParameters: (file: unknown) => Promise<IFileUploaderS3UploadParameters<TIntent, TKind>>;
     /** Возвращает сохраненную presign-сессию по файлу или file id. */
-    getUploadSession?: (file: unknown) => IFileUploaderPresignSession | undefined;
+    getUploadSession?: (file: unknown) => IFileUploaderPresignSession<TIntent, TKind> | undefined;
     /** Удаляет сохраненную presign-сессию, если она больше не нужна. */
     clearUploadSession?: (file: unknown) => void;
 }
@@ -201,6 +210,37 @@ const resolvePresignOptionValue = async <T>(
     return value;
 };
 
+const hasPresignIntent = <TIntent extends string>(
+    intents: readonly TIntent[] | undefined,
+    intent: TIntent,
+): boolean => {
+    return Boolean(intents?.includes(intent));
+};
+
+const shouldSendOriginalFilename = async <TIntent extends string>(
+    intent: TIntent,
+    file: IFileUploaderFile,
+    options: ICreateFileUploaderPresignPayloadOptions<TIntent>,
+): Promise<boolean> => {
+    if (options.shouldSendOriginalFilename) {
+        return options.shouldSendOriginalFilename(intent, file);
+    }
+
+    return hasPresignIntent(options.originalFilenameIntents, intent);
+};
+
+const shouldSendKind = async <TIntent extends string>(
+    intent: TIntent,
+    file: IFileUploaderFile,
+    options: ICreateFileUploaderPresignPayloadOptions<TIntent>,
+): Promise<boolean> => {
+    if (options.shouldSendKind) {
+        return options.shouldSendKind(intent, file);
+    }
+
+    return hasPresignIntent(options.kindIntents, intent);
+};
+
 const getUploadSessionFileId = (file: unknown): string | undefined => {
     if (typeof file === 'string') {
         return file;
@@ -228,10 +268,13 @@ const assertFilePresignResponse = (response: unknown): IFileUploaderPresignRespo
     };
 };
 
-const requestFilePresign = async (
+const requestFilePresign = async <
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+>(
     file: IFileUploaderFile,
-    payload: IFileUploaderPresignPayload,
-    options: ICreateFilePresignUploadStrategyOptions,
+    payload: IFileUploaderPresignPayload<TIntent, TKind>,
+    options: ICreateFilePresignUploadStrategyOptions<TIntent, TKind>,
 ): Promise<IFileUploaderPresignResponse> => {
     if (options.requestPresign) {
         return assertFilePresignResponse(await options.requestPresign(payload, file));
@@ -264,20 +307,23 @@ const requestFilePresign = async (
  * Создает payload для backend endpoint-а `POST /file/presign/`.
  *
  * Helper добавляет только те поля, которые нужны backend-контракту:
- * `content_type` всегда, `kind` только для `passport_scan`, `original_filename`
- * только для intent-ов из `FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME`.
+ * `content_type` всегда, `original_filename` и `kind` только по правилам,
+ * переданным из проекта.
  */
-export const createFileUploaderPresignPayload = async (
+export const createFileUploaderPresignPayload = async <
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+>(
     file: IFileUploaderFile,
-    options: ICreateFileUploaderPresignPayloadOptions,
-): Promise<IFileUploaderPresignPayload> => {
+    options: ICreateFileUploaderPresignPayloadOptions<TIntent, TKind>,
+): Promise<IFileUploaderPresignPayload<TIntent, TKind>> => {
     const intent = await resolvePresignOptionValue(options.intent, file);
     if (!intent) {
         throw new Error('FileUploader: file presign intent is required');
     }
 
     const entityId = await resolvePresignOptionValue(options.entityId, file);
-    const payload: IFileUploaderPresignPayload = {
+    const payload: IFileUploaderPresignPayload<TIntent, TKind> = {
         intent,
         content_type: file.type || FILE_PRESIGN_DEFAULT_CONTENT_TYPE,
     };
@@ -286,7 +332,7 @@ export const createFileUploaderPresignPayload = async (
         payload.entity_id = entityId;
     }
 
-    if (FILE_PRESIGN_INTENTS_WITH_ORIGINAL_FILENAME.has(intent)) {
+    if (await shouldSendOriginalFilename(intent, file, options)) {
         const originalFilename = (await resolvePresignOptionValue(options.originalFilename, file)) || file.name;
         if (!originalFilename) {
             throw new Error(`FileUploader: original_filename is required for intent "${intent}"`);
@@ -295,10 +341,10 @@ export const createFileUploaderPresignPayload = async (
         payload.original_filename = originalFilename;
     }
 
-    if (intent === 'passport_scan') {
-        const kind = await resolvePresignOptionValue(options.kind, file);
+    const kind = await resolvePresignOptionValue(options.kind, file);
+    if (kind !== undefined || (await shouldSendKind(intent, file, options))) {
         if (!kind) {
-            throw new Error('FileUploader: kind is required for intent "passport_scan"');
+            throw new Error(`FileUploader: kind is required for intent "${intent}"`);
         }
 
         payload.kind = kind;
@@ -317,15 +363,19 @@ export const createFileUploaderPresignPayload = async (
  *
  * @example
  * const uploadStrategy = createFilePresignUploadStrategy({
- *     intent: 'event_poster',
+ *     intent: projectIntent,
  *     entityId: eventId,
+ *     originalFilenameIntents: [intentWithOriginalFilename],
  *     headers: () => ({'X-CSRFToken': csrfToken}),
  * });
  */
-export const createFilePresignUploadStrategy = (
-    options: ICreateFilePresignUploadStrategyOptions,
-): IFileUploaderS3UploadStrategy => {
-    const uploadSessions = new Map<string, IFileUploaderPresignSession>();
+export const createFilePresignUploadStrategy = <
+    TIntent extends string = FileUploaderPresignIntent,
+    TKind extends string = FileUploaderPresignKind,
+>(
+    options: ICreateFilePresignUploadStrategyOptions<TIntent, TKind>,
+): IFileUploaderS3UploadStrategy<TIntent, TKind> => {
+    const uploadSessions = new Map<string, IFileUploaderPresignSession<TIntent, TKind>>();
 
     return {
         getUploadParameters: async (file: unknown) => {
@@ -345,7 +395,7 @@ export const createFilePresignUploadStrategy = (
                 throw new Error(`File size exceeds the ${presignResponse.size_limit_in_mb} MB limit`);
             }
 
-            const presignSession: IFileUploaderPresignSession = {
+            const presignSession: IFileUploaderPresignSession<TIntent, TKind> = {
                 fileId: mappedFile.id,
                 uploadUrl: presignResponse.upload_url,
                 sessionId: presignResponse.session_id,
