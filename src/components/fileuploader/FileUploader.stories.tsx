@@ -23,6 +23,7 @@ export default {
 
 const DOCUMENT_FILE_TYPES = ['application/pdf', 'text/plain', '.doc', '.docx'];
 const IMAGE_FILE_TYPES = ['image/*'];
+const PRESIGN_STORY_FILE_TYPES = ['application/pdf', 'image/*', 'text/*', '.csv', '.doc', '.docx'];
 const STORY_CONTAINER_STYLE: React.CSSProperties = {width: '640px'};
 
 const createBaseUppyOptions = (
@@ -476,17 +477,32 @@ export const PresignedS3Upload: IStorybookComponent = () => {
                     upload_url: `https://s3.example.local/front-components-demo/${payload.intent}/${fileName}`,
                     session_id: `mock-session-${payload.intent}-${file.id}`,
                     expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+                    size_limit_in_mb: 20,
+                    allowed_extensions: ['pdf', 'jpg', 'png', 'csv'],
+                    allowed_content_types: [
+                        'application/pdf',
+                        'image/jpeg',
+                        'image/jpg',
+                        'image/png',
+                        'text/csv',
+                        'application/csv',
+                    ],
                 };
             },
         });
     }, []);
-    const driver = useStoryDriver({autoProceed: false, presignedUploadStrategy});
+    const driver = useStoryDriver({
+        allowedFileTypes: PRESIGN_STORY_FILE_TYPES,
+        autoProceed: false,
+        presignedUploadStrategy,
+    });
 
     return (
         <FileUploaderStoryFrame title="Presigned S3 upload">
             <FileUploader
                 driver={driver}
                 uploadMode="manual"
+                note="Разрешены PDF, JPG, PNG и CSV размером до 20 МБ"
                 onUploadStart={() => setPresignSession(null)}
                 onUploadSuccess={(result) => {
                     const session = presignedUploadStrategy.getPresignSession?.(result.fileId) || null;
@@ -498,6 +514,10 @@ export const PresignedS3Upload: IStorybookComponent = () => {
                     presignedUploadStrategy.clearPresignSession?.(fileId);
                     setPresignSession(null);
                 }}
+                onError={(error) => {
+                    // eslint-disable-next-line no-console
+                    console.error('file presign error', error);
+                }}
             />
             {presignSession && (
                 <>
@@ -508,6 +528,11 @@ export const PresignedS3Upload: IStorybookComponent = () => {
                                 session_id: presignSession.sessionId,
                                 expires_at: presignSession.expiresAt,
                                 payload: presignSession.payload,
+                                restrictions: {
+                                    size_limit_in_mb: presignSession.response.size_limit_in_mb,
+                                    allowed_extensions: presignSession.response.allowed_extensions,
+                                    allowed_content_types: presignSession.response.allowed_content_types,
+                                },
                             },
                             null,
                             2,

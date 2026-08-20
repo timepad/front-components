@@ -65,6 +65,10 @@ export interface IFileUploaderPresignResponse {
     headers?: Record<string, string>;
     /** Максимальный размер файла, разрешенный upload-сессией. */
     size_limit_in_mb?: number;
+    /** Расширения файлов, разрешенные upload-сессией. */
+    allowed_extensions?: string[];
+    /** MIME-типы файлов, разрешенные upload-сессией. */
+    allowed_content_types?: string[];
 }
 
 /**
@@ -224,6 +228,18 @@ const resolveFileId = (file: unknown): string | undefined => {
     return normalizeFileUploaderFile(file as IFileUploaderSourceFile | undefined)?.id;
 };
 
+const parseStringArray = (value: unknown, fieldName: string): string[] | undefined => {
+    if (value === undefined) {
+        return undefined;
+    }
+
+    if (!Array.isArray(value) || value.some((item) => typeof item !== 'string')) {
+        throw new Error(`FileUploader: file presign response field ${fieldName} must be an array of strings`);
+    }
+
+    return value;
+};
+
 const assertFilePresignResponse = (response: unknown): IFileUploaderPresignResponse => {
     if (!response || typeof response !== 'object') {
         throw new Error('FileUploader: invalid file presign response');
@@ -234,13 +250,96 @@ const assertFilePresignResponse = (response: unknown): IFileUploaderPresignRespo
         throw new Error('FileUploader: file presign response must contain upload_url, session_id and expires_at');
     }
 
+    if (
+        presignResponse.size_limit_in_mb !== undefined &&
+        (typeof presignResponse.size_limit_in_mb !== 'number' ||
+            !Number.isFinite(presignResponse.size_limit_in_mb) ||
+            presignResponse.size_limit_in_mb < 0)
+    ) {
+        throw new Error('FileUploader: file presign response field size_limit_in_mb must be a non-negative number');
+    }
+
     return {
         upload_url: presignResponse.upload_url,
         session_id: presignResponse.session_id,
         expires_at: presignResponse.expires_at,
         headers: presignResponse.headers,
         size_limit_in_mb: presignResponse.size_limit_in_mb,
+        allowed_extensions: parseStringArray(presignResponse.allowed_extensions, 'allowed_extensions'),
+        allowed_content_types: parseStringArray(presignResponse.allowed_content_types, 'allowed_content_types'),
     };
+};
+
+const normalizeAllowedExtensions = (extensions: string[] | undefined): string[] => {
+    return Array.from(
+        new Set(
+            (extensions || []).map((extension) => extension.trim().toLowerCase().replace(/^\.+/, '')).filter(Boolean),
+        ),
+    );
+};
+
+const normalizeContentType = (contentType: string): string => {
+    return contentType.split(';', 1)[0].trim().toLowerCase();
+};
+
+const normalizeAllowedContentTypes = (contentTypes: string[] | undefined): string[] => {
+    return Array.from(new Set((contentTypes || []).map(normalizeContentType).filter(Boolean)));
+};
+
+const getFileExtension = (fileName: string | undefined): string | undefined => {
+    if (!fileName) {
+        return undefined;
+    }
+
+    const dotIndex = fileName.lastIndexOf('.');
+    if (dotIndex < 0 || dotIndex === fileName.length - 1) {
+        return undefined;
+    }
+
+    return (
+        fileName
+            .slice(dotIndex + 1)
+            .trim()
+            .toLowerCase() || undefined
+    );
+};
+
+const validateFilePresignRestrictions = (
+    file: IFileUploaderFile,
+    contentType: string,
+    presignResponse: IFileUploaderPresignResponse,
+): void => {
+    const sizeLimitInBytes =
+        presignResponse.size_limit_in_mb !== undefined
+            ? presignResponse.size_limit_in_mb * BYTES_IN_MEGABYTE
+            : undefined;
+
+    if (sizeLimitInBytes !== undefined && file.size !== undefined && file.size > sizeLimitInBytes) {
+        throw new Error(`File size exceeds the ${presignResponse.size_limit_in_mb} MB limit`);
+    }
+
+    const allowedExtensions = normalizeAllowedExtensions(presignResponse.allowed_extensions);
+    if (allowedExtensions.length > 0) {
+        const fileExtension = getFileExtension(file.name);
+        if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
+            const extensionDescription = fileExtension ? `".${fileExtension}"` : 'without an extension';
+            throw new Error(
+                `File extension ${extensionDescription} is not allowed. Allowed extensions: ${allowedExtensions.join(
+                    ', ',
+                )}`,
+            );
+        }
+    }
+
+    const allowedContentTypes = normalizeAllowedContentTypes(presignResponse.allowed_content_types);
+    const normalizedContentType = normalizeContentType(contentType);
+    if (allowedContentTypes.length > 0 && !allowedContentTypes.includes(normalizedContentType)) {
+        throw new Error(
+            `File content type "${normalizedContentType}" is not allowed. Allowed content types: ${allowedContentTypes.join(
+                ', ',
+            )}`,
+        );
+    }
 };
 
 const requestFilePresign = async <
@@ -362,13 +461,7 @@ export const createFilePresignUploadStrategy = <
 
             const payload = await createFilePresignPayload(normalizedFile, options);
             const presignResponse = await requestFilePresign(normalizedFile, payload, options);
-            const sizeLimitInBytes = presignResponse.size_limit_in_mb
-                ? presignResponse.size_limit_in_mb * BYTES_IN_MEGABYTE
-                : undefined;
-
-            if (sizeLimitInBytes && normalizedFile.size && normalizedFile.size > sizeLimitInBytes) {
-                throw new Error(`File size exceeds the ${presignResponse.size_limit_in_mb} MB limit`);
-            }
+            validateFilePresignRestrictions(normalizedFile, payload.content_type, presignResponse);
 
             const presignSession: IFileUploaderPresignSession<TIntent, TKind> = {
                 fileId: normalizedFile.id,
