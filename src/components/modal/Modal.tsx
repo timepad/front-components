@@ -42,21 +42,15 @@ const useClickOutside = (
     }, [ref, handler, target]);
 };
 
-const setReactModalAppElement = () => {
-    const appElement = document.getElementById('root') || document.getElementById('storybook-root');
-
-    if (appElement) {
-        ReactModal.setAppElement(appElement);
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.getElementById('root')) {
+        const root = document.createElement('div');
+        root.id = 'root';
+        document.body.appendChild(root);
     }
-};
 
-if (typeof document !== 'undefined') {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', setReactModalAppElement, {once: true});
-    } else {
-        setReactModalAppElement();
-    }
-}
+    ReactModal.setAppElement('#root');
+});
 
 export interface IModalProps {
     isClean?: boolean;

@@ -1,17 +1,17 @@
 import {
-    createUppyFileUploaderBundle,
+    createUppyFileUploaderIntegration,
     createUppyFileUploaderDriver,
-    ICreateFileUploaderBundleOptions,
-    ICreateFileUploaderDriverOptions,
-    IFileUploaderBundle,
-    IFileUploaderReactRenderer,
+    ICreateUppyFileUploaderIntegrationOptions,
+    ICreateUppyFileUploaderDriverOptions,
+    IUppyFileUploaderIntegration,
+    IUppyReactRendererRuntime,
     IUppyLike,
 } from './FileUploader.uppyDriver';
 import {createRoot, Dashboard, DashboardModal, flushSync} from './FileUploader.uppyReactRuntime';
 import type {IFileUploaderDriver} from './FileUploader.types';
 
 /** React runtime Uppy v5, подключаемый отдельно от vanilla-драйвера. */
-export const UPPY_REACT_RENDERER: IFileUploaderReactRenderer = {
+export const UPPY_REACT_RENDERER_RUNTIME: IUppyReactRendererRuntime = {
     type: 'react',
     createRoot,
     flushSync,
@@ -19,10 +19,10 @@ export const UPPY_REACT_RENDERER: IFileUploaderReactRenderer = {
     DashboardModalComponent: DashboardModal,
 };
 
-export type ICreateReactUppyFileUploaderDriverOptions = Omit<ICreateFileUploaderDriverOptions, 'renderer'>;
+export type ICreateReactUppyFileUploaderDriverOptions = Omit<ICreateUppyFileUploaderDriverOptions, 'dashboardRenderer'>;
 
-export interface ICreateReactUppyFileUploaderBundleOptions
-    extends Omit<ICreateFileUploaderBundleOptions, 'driverOptions'> {
+export interface ICreateReactUppyFileUploaderIntegrationOptions
+    extends Omit<ICreateUppyFileUploaderIntegrationOptions, 'driverOptions'> {
     driverOptions?: ICreateReactUppyFileUploaderDriverOptions;
 }
 
@@ -31,17 +31,23 @@ export const createReactUppyFileUploaderDriver = (
     uppy: IUppyLike,
     options: ICreateReactUppyFileUploaderDriverOptions = {},
 ): IFileUploaderDriver => {
-    return createUppyFileUploaderDriver(uppy, {...options, renderer: UPPY_REACT_RENDERER});
+    return createUppyFileUploaderDriver(uppy, {
+        ...options,
+        dashboardRenderer: UPPY_REACT_RENDERER_RUNTIME,
+    });
 };
 
-/** Создает Uppy bundle с React renderer-ом. Требует React 18+. */
-export const createReactUppyFileUploaderBundle = (
-    options: ICreateReactUppyFileUploaderBundleOptions = {},
-): IFileUploaderBundle => {
-    const {driverOptions, ...bundleOptions} = options;
+/** Создает Uppy-интеграцию с React renderer-ом. Требует React 18+. */
+export const createReactUppyFileUploaderIntegration = (
+    options: ICreateReactUppyFileUploaderIntegrationOptions = {},
+): IUppyFileUploaderIntegration => {
+    const {driverOptions, ...integrationOptions} = options;
 
-    return createUppyFileUploaderBundle({
-        ...bundleOptions,
-        driverOptions: {...driverOptions, renderer: UPPY_REACT_RENDERER},
+    return createUppyFileUploaderIntegration({
+        ...integrationOptions,
+        driverOptions: {
+            ...driverOptions,
+            dashboardRenderer: UPPY_REACT_RENDERER_RUNTIME,
+        },
     });
 };

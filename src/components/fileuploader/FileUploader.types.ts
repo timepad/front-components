@@ -5,10 +5,10 @@ import type {IModalProps} from '../modal';
 /**
  * Режим запуска загрузки.
  *
- * `manual` показывает управляющую кнопку вне Dashboard или нативную кнопку внутри Dashboard.
+ * `manual` показывает управляющую кнопку компонента или встроенную кнопку driver-а.
  * `auto` ожидает, что driver начнет загрузку сам, например через Uppy `autoProceed`.
  */
-export type FileUploaderUploadStrategy = 'manual' | 'auto';
+export type FileUploaderUploadMode = 'manual' | 'auto';
 
 /**
  * Вариант отображения uploader-а.
@@ -24,12 +24,12 @@ export type FileUploaderViewMode = 'inline' | 'modal';
  * `driver` делегирует модалку uploader driver-у, например Uppy DashboardModal.
  * `library` открывает модалку из `front-components`, а внутри монтирует inline uploader.
  */
-export type FileUploaderModalRenderer = 'driver' | 'library';
+export type FileUploaderModalProvider = 'driver' | 'library';
 
 /**
  * Нормализованный результат успешной загрузки, который компонент отдает наружу.
  */
-export interface IFileUploaderResult {
+export interface IFileUploaderUploadResult {
     /** Внутренний id файла из driver-а. */
     fileId: string;
     /** Имя файла, если оно известно driver-у. */
@@ -114,14 +114,14 @@ export type FileUploaderDriverCleanup = () => void;
 export interface IFileUploaderDriverMountOptions {
     /** Подсказка внутри области загрузки. */
     note?: string;
-    /** Высота inline Dashboard. */
-    dashboardHeight?: number;
+    /** Высота inline-интерфейса загрузчика. */
+    contentHeight?: number;
     /** Флаг блокировки uploader-а. */
     disabled?: boolean;
-    /** Нужно ли показывать нативную кнопку загрузки внутри Dashboard. */
-    showNativeUploadButton?: boolean;
-    /** Обработчик кнопки Done внутри Dashboard. */
-    doneButtonHandler?: () => void;
+    /** Нужно ли показывать встроенную кнопку загрузки driver-а. */
+    showDriverUploadButton?: boolean;
+    /** Обработчик завершения работы с загрузчиком. */
+    onDone?: () => void;
     /** Запрос на закрытие модалки из driver-а. */
     onRequestClose?: () => void;
 }
@@ -130,8 +130,6 @@ export interface IFileUploaderDriverMountOptions {
  * Объект управления смонтированным UI driver-а.
  */
 export interface IFileUploaderDriverMountHandle {
-    /** Очистка ресурсов mount-а. */
-    cleanup?: FileUploaderDriverCleanup;
     /** Обновление mount options без полного remount. */
     setOptions?: (options: IFileUploaderDriverMountOptions) => void;
     /** Открыть модалку, если mount поддерживает modal mode. */
@@ -177,7 +175,7 @@ export interface IFileUploaderDriver {
 /**
  * Аргументы render-prop trigger-а для modal mode.
  */
-export interface IFileUploaderModalTriggerOptions {
+export interface IFileUploaderTriggerRenderProps {
     /** Uploader заблокирован. */
     disabled?: boolean;
     /** Открыть модалку загрузки. */
@@ -189,7 +187,7 @@ export interface IFileUploaderModalTriggerOptions {
 /**
  * Render-prop для кастомного trigger-а модалки.
  */
-export type FileUploaderModalTriggerChildren = (options: IFileUploaderModalTriggerOptions) => React.ReactNode;
+export type FileUploaderTriggerRenderer = (props: IFileUploaderTriggerRenderProps) => React.ReactNode;
 
 /**
  * Props компонента `FileUploader`.
@@ -198,18 +196,18 @@ export interface IFileUploaderProps {
     /** Дополнительный CSS-класс корневого элемента. */
     className?: string;
     /** Кастомный trigger для modal mode. */
-    children?: FileUploaderModalTriggerChildren;
-    /** Блокирует trigger, Dashboard и кнопку ручной загрузки. */
+    children?: FileUploaderTriggerRenderer;
+    /** Блокирует trigger, интерфейс driver-а и кнопку ручной загрузки. */
     disabled?: boolean;
     /** Подсказка внутри области загрузки. */
     note?: string;
-    /** Высота inline Dashboard. */
-    dashboardHeight?: number;
+    /** Высота inline-интерфейса загрузчика. */
+    contentHeight?: number;
     /** Inline-дропзона или модалка. */
     viewMode?: FileUploaderViewMode;
-    /** Renderer модалки для `viewMode="modal"`. */
-    modalRenderer?: FileUploaderModalRenderer;
-    /** Заголовок модалки библиотеки. Используется только при `modalRenderer="library"`. */
+    /** Владелец модалки для `viewMode="modal"`. */
+    modalProvider?: FileUploaderModalProvider;
+    /** Заголовок модалки библиотеки. Используется только при `modalProvider="library"`. */
     modalTitle?: React.ReactNode;
     /** Описание под заголовком модалки библиотеки. */
     modalDescription?: React.ReactNode;
@@ -225,10 +223,10 @@ export interface IFileUploaderProps {
     uploadButtonFixed?: IButtonProps['fixed'];
     /** Large-режим внешней кнопки ручной загрузки. */
     uploadButtonLarge?: IButtonProps['large'];
-    /** Показывать кнопку загрузки внутри Dashboard вместо кнопки библиотеки. */
-    showNativeUploadButton?: boolean;
-    /** Ручная или автоматическая стратегия запуска загрузки. */
-    uploadStrategy?: FileUploaderUploadStrategy;
+    /** Показывать встроенную кнопку driver-а вместо кнопки библиотеки. */
+    showDriverUploadButton?: boolean;
+    /** Ручной или автоматический режим запуска загрузки. */
+    uploadMode?: FileUploaderUploadMode;
     /** Driver, который инкапсулирует конкретную uploader-библиотеку. */
     driver: IFileUploaderDriver;
     /** Уничтожить driver при unmount компонента. */
@@ -240,9 +238,9 @@ export interface IFileUploaderProps {
     /** Изменился общий прогресс загрузки. */
     onProgress?: (progress: number) => void;
     /** Успешно загрузился отдельный файл. */
-    onSuccess?: (result: IFileUploaderResult) => void;
+    onUploadSuccess?: (result: IFileUploaderUploadResult) => void;
     /** Произошла ошибка загрузки или настройки driver-а. */
     onError?: (error: IFileUploaderError) => void;
     /** Файл удален из очереди. */
-    onFileRemove?: (fileId: string) => void;
+    onFileRemoved?: (fileId: string) => void;
 }

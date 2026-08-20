@@ -3,11 +3,15 @@ import {Meta} from '@storybook/react/types-6-0';
 import 'css/bundle.less';
 
 import {FileUploader} from './FileUploader';
-import {createFilePresignUploadStrategy, IFileUploaderPresignSession, IFileUploaderS3UploadStrategy} from './presign';
-import {DEFAULT_IMAGE_EDITOR_OPTIONS, IFileUploaderBundle, IImageEditorPluginOptions, IUppyLike} from './uppy';
+import {
+    createFilePresignUploadStrategy,
+    IFileUploaderPresignSession,
+    IFileUploaderPresignedUploadStrategy,
+} from './presign';
+import {DEFAULT_IMAGE_EDITOR_OPTIONS, IUppyFileUploaderIntegration, IUppyImageEditorOptions, IUppyLike} from './uppy';
 import {UPPY_IMAGE_EDITOR_PLUGIN} from './uppyImageEditor';
-import {createReactUppyFileUploaderBundle} from './uppyReact';
-import {IFileUploaderFile, IFileUploaderResult} from './FileUploader.types';
+import {createReactUppyFileUploaderIntegration} from './uppyReact';
+import {IFileUploaderFile, IFileUploaderUploadResult} from './FileUploader.types';
 import {IStorybookComponent, StoryTitle} from '../../services/helpers/storyBookHelpers';
 import {Brick} from 'components/brick';
 import {Button, ButtonVariant} from 'components/button';
@@ -48,7 +52,7 @@ type StoryUppyFile = IFileUploaderFile & {
 };
 type StoryMockUploadOptions = {
     mode?: StoryMockMode;
-    s3UploadStrategy?: IFileUploaderS3UploadStrategy;
+    presignedUploadStrategy?: IFileUploaderPresignedUploadStrategy;
 };
 
 type UppyWithStoryApi = IUppyLike & {
@@ -69,7 +73,7 @@ const FileUploaderStoryFrame: React.FC<{children: React.ReactNode; title: string
 
 const installMockUploadPlugin = (
     uppy: UppyWithStoryApi,
-    {mode = 'success', s3UploadStrategy}: StoryMockUploadOptions = {},
+    {mode = 'success', presignedUploadStrategy}: StoryMockUploadOptions = {},
 ) => {
     let isDisposed = false;
     const createdObjectUrls = new Set<string>();
@@ -81,18 +85,6 @@ const installMockUploadPlugin = (
 
     const getCurrentFile = (fileId: string): StoryUppyFile | undefined => {
         return uppy.getFile?.(fileId) as StoryUppyFile | undefined;
-    };
-
-    const getCurrentFiles = (fileIds: string[]): StoryUppyFile[] => {
-        return fileIds.reduce<StoryUppyFile[]>((files, fileId) => {
-            const file = getCurrentFile(fileId);
-
-            if (file) {
-                files.push(file);
-            }
-
-            return files;
-        }, []);
     };
 
     const getUploadStarted = (file: StoryUppyFile): number => {
@@ -135,7 +127,7 @@ const installMockUploadPlugin = (
             return;
         }
 
-        const filesToUpload = getCurrentFiles(fileIds);
+        const filesToUpload = fileIds.map(getCurrentFile).filter((file): file is StoryUppyFile => file !== undefined);
         if (filesToUpload.length === 0) {
             return;
         }
@@ -153,7 +145,7 @@ const installMockUploadPlugin = (
             }
 
             const bytesTotal = Number(file.size) || 1;
-            const progressSteps = [0.25, 0.6, 1];
+            const progressSteps = [0.25, 0.6, 0.9];
 
             for (const step of progressSteps) {
                 if (!(await wait(180))) {
@@ -184,7 +176,7 @@ const installMockUploadPlugin = (
                 continue;
             }
 
-            const uploadParameters = await s3UploadStrategy?.getUploadParameters(fileBeforeSuccess);
+            const uploadParameters = await presignedUploadStrategy?.getUploadParameters(fileBeforeSuccess);
             const uploadURL =
                 uploadParameters?.url ||
                 createPreviewUrl(fileBeforeSuccess) ||
@@ -221,7 +213,7 @@ const installMockUploadPlugin = (
     };
 };
 
-const createStoryBundle = ({
+const createStoryIntegration = ({
     allowedFileTypes,
     autoProceed,
     imageEditor,
@@ -229,10 +221,10 @@ const createStoryBundle = ({
 }: {
     allowedFileTypes: string[];
     autoProceed: boolean;
-    imageEditor?: IImageEditorPluginOptions | false;
+    imageEditor?: IUppyImageEditorOptions | false;
     maxNumberOfFiles: number;
-}): IFileUploaderBundle => {
-    return createReactUppyFileUploaderBundle({
+}): IUppyFileUploaderIntegration => {
+    return createReactUppyFileUploaderIntegration({
         uppyOptions: createBaseUppyOptions(autoProceed, allowedFileTypes, maxNumberOfFiles),
         driverOptions: {
             imageEditor,
@@ -248,7 +240,7 @@ const createStoryBundle = ({
     });
 };
 
-const extractPreviewUrl = (result: IFileUploaderResult): string => {
+const extractPreviewUrl = (result: IFileUploaderUploadResult): string => {
     if (result.uploadURL) {
         return result.uploadURL;
     }
@@ -269,49 +261,49 @@ const useStoryDriver = ({
     imageEditor = false,
     maxNumberOfFiles = 1,
     mockMode = 'success',
-    s3UploadStrategy,
+    presignedUploadStrategy,
 }: {
     allowedFileTypes?: string[];
     autoProceed?: boolean;
-    imageEditor?: IImageEditorPluginOptions | false;
+    imageEditor?: IUppyImageEditorOptions | false;
     maxNumberOfFiles?: number;
     mockMode?: StoryMockMode;
-    s3UploadStrategy?: IFileUploaderS3UploadStrategy;
+    presignedUploadStrategy?: IFileUploaderPresignedUploadStrategy;
 } = {}) => {
-    const storyDriver = React.useMemo(() => {
-        const bundle = createStoryBundle({allowedFileTypes, autoProceed, imageEditor, maxNumberOfFiles});
-        const cleanupMockUpload = installMockUploadPlugin(bundle.uppy as UppyWithStoryApi, {
+    const storyIntegration = React.useMemo(() => {
+        const integration = createStoryIntegration({allowedFileTypes, autoProceed, imageEditor, maxNumberOfFiles});
+        const cleanupMockUpload = installMockUploadPlugin(integration.uppy as UppyWithStoryApi, {
             mode: mockMode,
-            s3UploadStrategy,
+            presignedUploadStrategy,
         });
 
         return {
-            driver: bundle.driver,
+            driver: integration.driver,
             cleanup: () => {
                 cleanupMockUpload();
-                bundle.destroy();
+                integration.destroy();
             },
         };
-    }, [allowedFileTypes, autoProceed, imageEditor, maxNumberOfFiles, mockMode, s3UploadStrategy]);
+    }, [allowedFileTypes, autoProceed, imageEditor, maxNumberOfFiles, mockMode, presignedUploadStrategy]);
 
     React.useEffect(() => {
         return () => {
-            storyDriver.cleanup();
+            storyIntegration.cleanup();
         };
-    }, [storyDriver]);
+    }, [storyIntegration]);
 
-    return storyDriver.driver;
+    return storyIntegration.driver;
 };
 
-export const FileInlineManual: IStorybookComponent = () => {
+export const InlineManualUpload: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false});
 
     return (
-        <FileUploaderStoryFrame title="File: inline manual">
+        <FileUploaderStoryFrame title="Inline manual upload">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
-                onSuccess={(result) => {
+                uploadMode="manual"
+                onUploadSuccess={(result) => {
                     // eslint-disable-next-line no-console
                     console.log('success', result);
                 }}
@@ -324,12 +316,12 @@ export const FileInlineManual: IStorybookComponent = () => {
     );
 };
 
-export const FileModalManual: IStorybookComponent = () => {
+export const DriverModalManualUpload: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false});
 
     return (
-        <FileUploaderStoryFrame title="File: button + modal">
-            <FileUploader driver={driver} viewMode="modal" uploadStrategy="manual">
+        <FileUploaderStoryFrame title="Driver modal manual upload">
+            <FileUploader driver={driver} viewMode="modal" uploadMode="manual">
                 {({disabled, open, uploading}) => (
                     <Button
                         variant={ButtonVariant.secondary}
@@ -343,21 +335,21 @@ export const FileModalManual: IStorybookComponent = () => {
     );
 };
 
-export const FileLibraryModalManual: IStorybookComponent = () => {
+export const LibraryModalManualUpload: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false});
 
     return (
-        <FileUploaderStoryFrame title="File: library modal + inline dashboard">
+        <FileUploaderStoryFrame title="Library modal manual upload">
             <FileUploader
                 driver={driver}
                 viewMode="modal"
-                modalRenderer="library"
-                uploadStrategy="manual"
-                dashboardHeight={320}
+                modalProvider="library"
+                uploadMode="manual"
+                contentHeight={320}
                 note="Выберите файл для загрузки внутри модалки"
                 modalTitle="Загрузка файла"
                 modalDescription="Внутри модалки используется inline-режим FileUploader"
-                onSuccess={(result) => {
+                onUploadSuccess={(result) => {
                     // eslint-disable-next-line no-console
                     console.log('library modal success', result);
                 }}
@@ -375,26 +367,26 @@ export const FileLibraryModalManual: IStorybookComponent = () => {
     );
 };
 
-export const FileInlineAuto: IStorybookComponent = () => {
+export const InlineAutoUpload: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: true});
 
     return (
-        <FileUploaderStoryFrame title="File: inline auto">
-            <FileUploader driver={driver} uploadStrategy="auto" />
+        <FileUploaderStoryFrame title="Inline auto upload">
+            <FileUploader driver={driver} uploadMode="auto" />
         </FileUploaderStoryFrame>
     );
 };
 
-export const FileMultiUploadManual: IStorybookComponent = () => {
+export const MultipleFilesManualUpload: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false, maxNumberOfFiles: 3});
 
     return (
-        <FileUploaderStoryFrame title="File: multi upload manual">
+        <FileUploaderStoryFrame title="Multiple files manual upload">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
+                uploadMode="manual"
                 note="Выберите до 3 файлов для загрузки"
-                onSuccess={(result) => {
+                onUploadSuccess={(result) => {
                     // eslint-disable-next-line no-console
                     console.log('multi success', result);
                 }}
@@ -403,7 +395,7 @@ export const FileMultiUploadManual: IStorybookComponent = () => {
     );
 };
 
-export const ImageCropManual: IStorybookComponent = () => {
+export const ImageCrop: IStorybookComponent = () => {
     const driver = useStoryDriver({
         allowedFileTypes: IMAGE_FILE_TYPES,
         autoProceed: false,
@@ -411,10 +403,10 @@ export const ImageCropManual: IStorybookComponent = () => {
     });
 
     return (
-        <FileUploaderStoryFrame title="Image: inline + crop flow">
+        <FileUploaderStoryFrame title="Image crop">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
+                uploadMode="manual"
                 note='Выберите изображение и нажмите "Edit" для обрезки перед загрузкой'
                 uploadButtonText="Загрузить изображение"
             />
@@ -422,14 +414,14 @@ export const ImageCropManual: IStorybookComponent = () => {
     );
 };
 
-export const FileInlineError: IStorybookComponent = () => {
+export const UploadError: IStorybookComponent = () => {
     const driver = useStoryDriver({autoProceed: false, mockMode: 'error'});
 
     return (
-        <FileUploaderStoryFrame title="File: inline error state">
+        <FileUploaderStoryFrame title="Upload error">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
+                uploadMode="manual"
                 onError={(error) => {
                     // eslint-disable-next-line no-console
                     console.error('error', error);
@@ -439,7 +431,7 @@ export const FileInlineError: IStorybookComponent = () => {
     );
 };
 
-export const ImageExternalPreview: IStorybookComponent = () => {
+export const ExternalImagePreview: IStorybookComponent = () => {
     const driver = useStoryDriver({
         allowedFileTypes: IMAGE_FILE_TYPES,
         autoProceed: false,
@@ -448,14 +440,14 @@ export const ImageExternalPreview: IStorybookComponent = () => {
     const [previewUrl, setPreviewUrl] = React.useState<string>('');
 
     return (
-        <FileUploaderStoryFrame title="Image: external preview (host logic)">
+        <FileUploaderStoryFrame title="External image preview">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
+                uploadMode="manual"
                 uploadButtonText="Загрузить изображение"
                 onUploadStart={() => setPreviewUrl('')}
-                onFileRemove={() => setPreviewUrl('')}
-                onSuccess={(result) => setPreviewUrl(extractPreviewUrl(result))}
+                onFileRemoved={() => setPreviewUrl('')}
+                onUploadSuccess={(result) => setPreviewUrl(extractPreviewUrl(result))}
             />
             {previewUrl && (
                 <>
@@ -471,9 +463,9 @@ export const ImageExternalPreview: IStorybookComponent = () => {
     );
 };
 
-export const FileS3PresignExample: IStorybookComponent = () => {
-    const [uploadSession, setUploadSession] = React.useState<IFileUploaderPresignSession | null>(null);
-    const s3UploadStrategy = React.useMemo(() => {
+export const PresignedS3Upload: IStorybookComponent = () => {
+    const [presignSession, setPresignSession] = React.useState<IFileUploaderPresignSession | null>(null);
+    const presignedUploadStrategy = React.useMemo(() => {
         return createFilePresignUploadStrategy({
             intent: 'event_poster',
             entityId: 12345,
@@ -488,34 +480,34 @@ export const FileS3PresignExample: IStorybookComponent = () => {
             },
         });
     }, []);
-    const driver = useStoryDriver({autoProceed: false, s3UploadStrategy});
+    const driver = useStoryDriver({autoProceed: false, presignedUploadStrategy});
 
     return (
-        <FileUploaderStoryFrame title="File: /file/presign/ + S3 PUT example">
+        <FileUploaderStoryFrame title="Presigned S3 upload">
             <FileUploader
                 driver={driver}
-                uploadStrategy="manual"
-                onUploadStart={() => setUploadSession(null)}
-                onSuccess={(result) => {
-                    const session = s3UploadStrategy.getUploadSession?.(result.fileId) || null;
-                    setUploadSession(session);
+                uploadMode="manual"
+                onUploadStart={() => setPresignSession(null)}
+                onUploadSuccess={(result) => {
+                    const session = presignedUploadStrategy.getPresignSession?.(result.fileId) || null;
+                    setPresignSession(session);
                     // eslint-disable-next-line no-console
                     console.log('file presign success', {result, session});
                 }}
-                onFileRemove={(fileId) => {
-                    s3UploadStrategy.clearUploadSession?.(fileId);
-                    setUploadSession(null);
+                onFileRemoved={(fileId) => {
+                    presignedUploadStrategy.clearPresignSession?.(fileId);
+                    setPresignSession(null);
                 }}
             />
-            {uploadSession && (
+            {presignSession && (
                 <>
                     <Brick />
                     <pre style={{whiteSpace: 'pre-wrap'}}>
                         {JSON.stringify(
                             {
-                                session_id: uploadSession.sessionId,
-                                expires_at: uploadSession.expiresAt,
-                                payload: uploadSession.payload,
+                                session_id: presignSession.sessionId,
+                                expires_at: presignSession.expiresAt,
+                                payload: presignSession.payload,
                             },
                             null,
                             2,

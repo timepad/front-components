@@ -13,9 +13,9 @@ import {
     IFileUploaderDriverMountHandle,
     IFileUploaderDriverMountOptions,
     IFileUploaderError,
-    IFileUploaderResult,
+    IFileUploaderUploadResult,
     IFileUploaderFile,
-    IFileUploaderModalTriggerOptions,
+    IFileUploaderTriggerRenderProps,
     IFileUploaderProps,
 } from './FileUploader.types';
 
@@ -30,23 +30,14 @@ const normalizeMountHandle = (
     mountResult: void | (() => void) | IFileUploaderDriverMountHandle,
 ): IFileUploaderDriverMountHandle => {
     if (typeof mountResult === 'function') {
-        return {cleanup: mountResult};
+        return {destroy: mountResult};
     }
 
     return mountResult || {};
 };
 
 const destroyMountHandle = (mountHandle: IFileUploaderDriverMountHandle | null | undefined) => {
-    if (!mountHandle) {
-        return;
-    }
-
-    if (mountHandle.destroy) {
-        mountHandle.destroy();
-        return;
-    }
-
-    mountHandle.cleanup?.();
+    mountHandle?.destroy?.();
 };
 
 const normalizeError = (error: unknown): IFileUploaderError => {
@@ -61,7 +52,7 @@ const normalizeError = (error: unknown): IFileUploaderError => {
     return {message: 'Upload error', cause: error};
 };
 
-const createResult = (file: IFileUploaderFile, response: unknown): IFileUploaderResult => {
+const createUploadResult = (file: IFileUploaderFile, response: unknown): IFileUploaderUploadResult => {
     return {
         fileId: file.id,
         fileName: file.name || file.id,
@@ -93,6 +84,63 @@ const subscribeDriverEvent = <K extends keyof IFileUploaderDriverEventMap>(
     return () => undefined;
 };
 
+type DriverMountMode = 'inline' | 'modal';
+
+interface IUseFileUploaderDriverMountOptions {
+    container: HTMLDivElement | null;
+    driver: IFileUploaderDriver;
+    active: boolean;
+    mode: DriverMountMode;
+    mountOptions: IFileUploaderDriverMountOptions;
+    onUnsupportedMode: (mode: DriverMountMode) => void;
+}
+
+const useFileUploaderDriverMount = ({
+    container,
+    driver,
+    active,
+    mode,
+    mountOptions,
+    onUnsupportedMode,
+}: IUseFileUploaderDriverMountOptions): React.MutableRefObject<IFileUploaderDriverMountHandle | null> => {
+    const mountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
+    const mountOptionsRef = useRef(mountOptions);
+
+    useEffect(() => {
+        mountOptionsRef.current = mountOptions;
+        mountHandleRef.current?.setOptions?.(mountOptions);
+    }, [mountOptions]);
+
+    useEffect(() => {
+        if (!active) {
+            return;
+        }
+
+        if (!container) {
+            return;
+        }
+
+        const mount = mode === 'inline' ? driver.mountInline : driver.mountModal;
+        if (!mount) {
+            onUnsupportedMode(mode);
+            return;
+        }
+
+        const mountHandle = normalizeMountHandle(mount(container, mountOptionsRef.current));
+        mountHandleRef.current = mountHandle;
+
+        return () => {
+            if (mountHandleRef.current === mountHandle) {
+                mountHandleRef.current = null;
+            }
+
+            destroyMountHandle(mountHandle);
+        };
+    }, [active, container, driver, mode, onUnsupportedMode]);
+
+    return mountHandleRef;
+};
+
 /**
  * Абстрактная оболочка для загрузчика файлов.
  *
@@ -104,10 +152,10 @@ const subscribeDriverEvent = <K extends keyof IFileUploaderDriverEventMap>(
  * <FileUploader
  *     driver={driver}
  *     viewMode="modal"
- *     modalRenderer="library"
+ *     modalProvider="library"
  *     modalTitle="Загрузка файла"
- *     uploadStrategy="manual"
- *     onSuccess={(result) => saveFile(result)}
+ *     uploadMode="manual"
+ *     onUploadSuccess={(result) => saveFile(result)}
  * >
  *     {({disabled, open, uploading}) => (
  *         <Button disabled={disabled || uploading} onClick={open} label="Добавить файл" />
@@ -119,9 +167,9 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     children,
     disabled,
     note = DEFAULT_NOTE,
-    dashboardHeight = 360,
+    contentHeight = 360,
     viewMode = 'inline',
-    modalRenderer = 'driver',
+    modalProvider = 'driver',
     modalTitle = DEFAULT_MODAL_TITLE,
     modalDescription,
     modalProps,
@@ -130,57 +178,44 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     uploadButtonVariant = ButtonVariant.primary,
     uploadButtonFixed = true,
     uploadButtonLarge = true,
-    showNativeUploadButton,
-    uploadStrategy = 'manual',
+    showDriverUploadButton,
+    uploadMode = 'manual',
     driver,
     destroyDriverOnUnmount = false,
     onReady,
     onUploadStart,
     onProgress,
-    onSuccess,
+    onUploadSuccess,
     onError,
-    onFileRemove,
+    onFileRemoved,
 }) => {
+    const callbacks = useMemo(
+        () => ({onReady, onUploadStart, onProgress, onUploadSuccess, onError, onFileRemoved}),
+        [onError, onFileRemoved, onProgress, onReady, onUploadStart, onUploadSuccess],
+    );
     const [uploading, setUploading] = useState<boolean>(false);
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const isModalViewMode = viewMode === 'modal';
-    const isDriverModalMode = isModalViewMode && modalRenderer === 'driver';
-    const isLibraryModalMode = isModalViewMode && modalRenderer === 'library';
-    const shouldMountInline = viewMode === 'inline' || (isLibraryModalMode && isModalOpen);
-    const isNativeUploadButtonVisible = uploadStrategy === 'manual' && (showNativeUploadButton ?? isDriverModalMode);
+    const usesDriverModal = isModalViewMode && modalProvider === 'driver';
+    const usesLibraryModal = isModalViewMode && modalProvider === 'library';
+    const shouldMountInline = viewMode === 'inline' || (usesLibraryModal && isModalOpen);
+    const isDriverUploadButtonVisible = uploadMode === 'manual' && (showDriverUploadButton ?? usesDriverModal);
 
-    const [inlineContainerElement, setInlineContainerElement] = useState<HTMLDivElement | null>(null);
-    const inlineMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
-    const modalContainerRef = useRef<HTMLDivElement | null>(null);
-    const modalMountHandleRef = useRef<IFileUploaderDriverMountHandle | null>(null);
+    const [inlineContainer, setInlineContainer] = useState<HTMLDivElement | null>(null);
+    const [modalContainer, setModalContainer] = useState<HTMLDivElement | null>(null);
     const activeUploadsCountRef = useRef<number>(0);
-    const mountOptionsRef = useRef<IFileUploaderDriverMountOptions | null>(null);
-    const missingMountMethodReportedRef = useRef<{inline: boolean; modal: boolean}>({inline: false, modal: false});
-    const callbacksRef = useRef({
-        onReady,
-        onUploadStart,
-        onProgress,
-        onSuccess,
-        onError,
-        onFileRemove,
-    });
+    const unsupportedModeReportedRef = useRef<{inline: boolean; modal: boolean}>({inline: false, modal: false});
+    const callbacksRef = useRef(callbacks);
 
     useEffect(() => {
-        callbacksRef.current = {
-            onReady,
-            onUploadStart,
-            onProgress,
-            onSuccess,
-            onError,
-            onFileRemove,
-        };
-    }, [onError, onFileRemove, onProgress, onReady, onSuccess, onUploadStart]);
+        callbacksRef.current = callbacks;
+    }, [callbacks]);
 
     useEffect(() => {
-        missingMountMethodReportedRef.current = {inline: false, modal: false};
+        unsupportedModeReportedRef.current = {inline: false, modal: false};
         activeUploadsCountRef.current = 0;
         setUploading(false);
-    }, [driver, modalRenderer]);
+    }, [driver, modalProvider]);
 
     const startUploadSession = useCallback(() => {
         activeUploadsCountRef.current += 1;
@@ -197,12 +232,12 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         setUploading(false);
     }, []);
 
-    const reportDriverConfigurationError = useCallback((mode: 'inline' | 'modal') => {
-        if (missingMountMethodReportedRef.current[mode]) {
+    const reportUnsupportedDriverMode = useCallback((mode: 'inline' | 'modal') => {
+        if (unsupportedModeReportedRef.current[mode]) {
             return;
         }
 
-        missingMountMethodReportedRef.current[mode] = true;
+        unsupportedModeReportedRef.current[mode] = true;
         const message = `FileUploader driver must implement mount${
             mode === 'inline' ? 'Inline' : 'Modal'
         } for viewMode="${mode}"`;
@@ -227,19 +262,19 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         };
 
         const onUploadSuccessEvent = (file: IFileUploaderFile, response?: unknown) => {
-            callbacksRef.current.onSuccess?.(createResult(file, response));
-        };
-
-        const onUploadErrorEvent = (_file: IFileUploaderFile | undefined, error: unknown) => {
-            callbacksRef.current.onError?.(normalizeError(error));
+            callbacksRef.current.onUploadSuccess?.(createUploadResult(file, response));
         };
 
         const onErrorEvent = (error: unknown) => {
             callbacksRef.current.onError?.(normalizeError(error));
         };
 
+        const onUploadErrorEvent = (_file: IFileUploaderFile | undefined, error: unknown) => {
+            onErrorEvent(error);
+        };
+
         const onFileRemovedEvent = (file: IFileUploaderFile) => {
-            callbacksRef.current.onFileRemove?.(file.id);
+            callbacksRef.current.onFileRemoved?.(file.id);
         };
 
         const onCompleteEvent = () => {
@@ -261,7 +296,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         };
     }, [driver, finishUploadSession, startUploadSession]);
 
-    const onModalRequestClose = useCallback(() => {
+    const handleModalRequestClose = useCallback(() => {
         setModalOpen(false);
     }, []);
 
@@ -273,11 +308,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         setModalOpen(true);
     }, [disabled]);
 
-    const setInlineContainerRef = useCallback((element: HTMLDivElement | null) => {
-        setInlineContainerElement(element);
-    }, []);
-
-    const onDoneClick = useCallback(() => {
+    const handleDone = useCallback(() => {
         driver.cancelAll?.();
         resetUploadSessions();
 
@@ -287,14 +318,14 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     }, [driver, resetUploadSessions, viewMode]);
 
     const renderModalTrigger = useCallback(() => {
-        const triggerOptions: IFileUploaderModalTriggerOptions = {
+        const triggerProps: IFileUploaderTriggerRenderProps = {
             disabled,
             open: openModal,
             uploading,
         };
 
         if (children) {
-            return children(triggerOptions);
+            return children(triggerProps);
         }
 
         return (
@@ -310,93 +341,30 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
     const mountOptions = useMemo(() => {
         return {
             note,
-            dashboardHeight,
+            contentHeight,
             disabled,
-            showNativeUploadButton: isNativeUploadButtonVisible,
-            doneButtonHandler: onDoneClick,
-            onRequestClose: onModalRequestClose,
+            showDriverUploadButton: isDriverUploadButtonVisible,
+            onDone: handleDone,
+            onRequestClose: handleModalRequestClose,
         };
-    }, [dashboardHeight, disabled, isNativeUploadButtonVisible, note, onDoneClick, onModalRequestClose]);
+    }, [contentHeight, disabled, handleDone, handleModalRequestClose, isDriverUploadButtonVisible, note]);
 
-    useEffect(() => {
-        mountOptionsRef.current = mountOptions;
-    }, [mountOptions]);
-
-    useEffect(() => {
-        if (!shouldMountInline) {
-            destroyMountHandle(inlineMountHandleRef.current);
-            inlineMountHandleRef.current = null;
-            return;
-        }
-
-        const container = inlineContainerElement;
-        if (!container) {
-            return;
-        }
-
-        if (!driver.mountInline) {
-            reportDriverConfigurationError('inline');
-            return;
-        }
-
-        const currentMountOptions = mountOptionsRef.current;
-        if (!currentMountOptions) {
-            return;
-        }
-        const mountHandle = normalizeMountHandle(driver.mountInline(container, currentMountOptions));
-        inlineMountHandleRef.current = mountHandle;
-
-        return () => {
-            if (inlineMountHandleRef.current === mountHandle) {
-                inlineMountHandleRef.current = null;
-            }
-            destroyMountHandle(mountHandle);
-        };
-    }, [driver, inlineContainerElement, reportDriverConfigurationError, shouldMountInline]);
-
-    useEffect(() => {
-        if (!isDriverModalMode) {
-            destroyMountHandle(modalMountHandleRef.current);
-            modalMountHandleRef.current = null;
-            return;
-        }
-
-        const container = modalContainerRef.current;
-        if (!container) {
-            return;
-        }
-
-        if (!driver.mountModal) {
-            reportDriverConfigurationError('modal');
-            return;
-        }
-
-        const currentMountOptions = mountOptionsRef.current;
-        if (!currentMountOptions) {
-            return;
-        }
-        const mountHandle = normalizeMountHandle(driver.mountModal(container, currentMountOptions));
-        modalMountHandleRef.current = mountHandle;
-
-        return () => {
-            if (modalMountHandleRef.current === mountHandle) {
-                modalMountHandleRef.current = null;
-            }
-
-            destroyMountHandle(mountHandle);
-        };
-    }, [driver, isDriverModalMode, reportDriverConfigurationError]);
-
-    useEffect(() => {
-        if (viewMode === 'inline' || isLibraryModalMode) {
-            inlineMountHandleRef.current?.setOptions?.(mountOptions);
-            return;
-        }
-
-        if (isDriverModalMode) {
-            modalMountHandleRef.current?.setOptions?.(mountOptions);
-        }
-    }, [isDriverModalMode, isLibraryModalMode, mountOptions, viewMode]);
+    useFileUploaderDriverMount({
+        container: inlineContainer,
+        driver,
+        active: shouldMountInline,
+        mode: 'inline',
+        mountOptions,
+        onUnsupportedMode: reportUnsupportedDriverMode,
+    });
+    const modalMountHandleRef = useFileUploaderDriverMount({
+        container: modalContainer,
+        driver,
+        active: usesDriverModal,
+        mode: 'modal',
+        mountOptions,
+        onUnsupportedMode: reportUnsupportedDriverMode,
+    });
 
     useEffect(() => {
         if (viewMode !== 'modal' && isModalOpen) {
@@ -406,7 +374,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
 
     useEffect(() => {
         const mountHandle = modalMountHandleRef.current;
-        if (!mountHandle || !isDriverModalMode) {
+        if (!mountHandle || !usesDriverModal) {
             return;
         }
 
@@ -416,15 +384,10 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         }
 
         mountHandle.close?.();
-    }, [isDriverModalMode, isModalOpen]);
+    }, [isModalOpen, modalMountHandleRef, usesDriverModal]);
 
     useEffect(() => {
         return () => {
-            destroyMountHandle(inlineMountHandleRef.current);
-            inlineMountHandleRef.current = null;
-            destroyMountHandle(modalMountHandleRef.current);
-            modalMountHandleRef.current = null;
-
             if (destroyDriverOnUnmount) {
                 driver.destroy?.();
             }
@@ -445,7 +408,7 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         }
     }, [driver, resetUploadSessions]);
 
-    const uploadButtonNode = uploadStrategy === 'manual' && !isNativeUploadButtonVisible && (
+    const uploadButtonNode = uploadMode === 'manual' && !isDriverUploadButtonVisible && (
         <Button
             variant={uploadButtonVariant}
             fixed={uploadButtonFixed}
@@ -470,15 +433,15 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
             <Modal
                 {...restModalProps}
                 isOpen={isModalOpen}
-                onClose={onModalRequestClose}
+                onClose={handleModalRequestClose}
                 className={cx(cnFileUploaderLibraryModal(), modalClassName)}
             >
-                <Modal.Header closeHandler={onModalRequestClose}>
+                <Modal.Header closeHandler={handleModalRequestClose}>
                     {modalTitle && <Modal.Title>{modalTitle}</Modal.Title>}
                     {modalDescription && <Modal.Description>{modalDescription}</Modal.Description>}
                 </Modal.Header>
                 <Modal.Body>
-                    <div ref={setInlineContainerRef} />
+                    <div ref={setInlineContainer} />
                 </Modal.Body>
                 {uploadButtonNode && <Modal.Footer>{uploadButtonNode}</Modal.Footer>}
             </Modal>
@@ -489,24 +452,16 @@ export const FileUploader: React.FC<IFileUploaderProps> = ({
         <div className={cx(cnFileUploader({disabled}), className)}>
             {viewMode === 'inline' && (
                 <>
-                    <div ref={setInlineContainerRef} />
+                    <div ref={setInlineContainer} />
                     {controlsNode}
                 </>
             )}
 
-            {isDriverModalMode && (
-                <>
-                    {renderModalTrigger()}
-                    <div ref={modalContainerRef} />
-                </>
-            )}
+            {isModalViewMode && renderModalTrigger()}
 
-            {isLibraryModalMode && (
-                <>
-                    {renderModalTrigger()}
-                    {renderLibraryModal()}
-                </>
-            )}
+            {usesDriverModal && <div ref={setModalContainer} />}
+
+            {usesLibraryModal && renderLibraryModal()}
         </div>
     );
 };

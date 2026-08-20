@@ -1,4 +1,4 @@
-export {createFilePresignUploadStrategy, createFileUploaderPresignPayload} from './FileUploader.presign';
+export {createFilePresignPayload, createFilePresignUploadStrategy} from './FileUploader.presign';
 export type {
     FileUploaderPassportScanKind,
     FileUploaderPresignIntent,
@@ -6,10 +6,10 @@ export type {
     FileUploaderPresignOptionValue,
     FileUploaderPresignPredicate,
     ICreateFilePresignUploadStrategyOptions,
-    ICreateFileUploaderPresignPayloadOptions,
+    ICreateFilePresignPayloadOptions,
     IFileUploaderPresignPayload,
     IFileUploaderPresignResponse,
     IFileUploaderPresignSession,
-    IFileUploaderS3UploadParameters,
-    IFileUploaderS3UploadStrategy,
+    IFileUploaderPresignedUploadParameters,
+    IFileUploaderPresignedUploadStrategy,
 } from './FileUploader.presign';

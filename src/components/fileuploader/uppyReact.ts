@@ -1,9 +1,9 @@
 export {
-    createReactUppyFileUploaderBundle,
+    createReactUppyFileUploaderIntegration,
     createReactUppyFileUploaderDriver,
-    UPPY_REACT_RENDERER,
+    UPPY_REACT_RENDERER_RUNTIME,
 } from './FileUploader.uppyReact';
 export type {
-    ICreateReactUppyFileUploaderBundleOptions,
+    ICreateReactUppyFileUploaderIntegrationOptions,
     ICreateReactUppyFileUploaderDriverOptions,
 } from './FileUploader.uppyReact';

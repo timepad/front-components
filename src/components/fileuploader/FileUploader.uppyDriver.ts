@@ -7,8 +7,8 @@ import {
     IFileUploaderDriverEventMap,
     IFileUploaderDriverMountHandle,
     IFileUploaderDriverMountOptions,
-    IFileUploaderFile,
 } from './FileUploader.types';
+import {IFileUploaderSourceFile, normalizeFileUploaderFile} from './FileUploader.fileNormalizer';
 
 const DEFAULT_DASHBOARD_PLUGIN_ID = 'FileUploaderDashboard';
 const DEFAULT_IMAGE_EDITOR_PLUGIN_ID = 'ImageEditor';
@@ -24,11 +24,12 @@ type FileUploaderUppyEventName =
 type FileUploaderDriverEventName = keyof IFileUploaderDriverEventMap;
 type UppyEventCallback = (...args: unknown[]) => void;
 type DriverEventCallback = IFileUploaderDriverEventMap[keyof IFileUploaderDriverEventMap];
+type DashboardMountMode = 'inline' | 'modal';
 
 /**
  * Опции Uppy ImageEditor.
  */
-export interface IImageEditorPluginOptions {
+export interface IUppyImageEditorOptions {
     /** Качество итогового изображения после редактирования. */
     quality?: number;
     /** Опции cropper-а внутри ImageEditor. */
@@ -40,7 +41,7 @@ export interface IImageEditorPluginOptions {
 /**
  * Опции Dashboard, которые прокидываются в Uppy Dashboard или @uppy/react Dashboard.
  */
-export interface IFileUploaderDashboardOptions {
+export interface IUppyDashboardOptions {
     /** Текст подсказки внутри Dashboard. */
     note?: string | null;
     /** Блокировка Dashboard. */
@@ -68,7 +69,7 @@ export interface IFileUploaderDashboardOptions {
 /**
  * Базовый конфиг ImageEditor для сценария обрезки изображений.
  */
-export const DEFAULT_IMAGE_EDITOR_OPTIONS: IImageEditorPluginOptions = {
+export const DEFAULT_IMAGE_EDITOR_OPTIONS: IUppyImageEditorOptions = {
     quality: 0.9,
     cropperOptions: {
         viewMode: 1,
@@ -80,16 +81,16 @@ export const DEFAULT_IMAGE_EDITOR_OPTIONS: IImageEditorPluginOptions = {
 /**
  * Способ рендера Dashboard.
  *
- * `uppy` использует vanilla `@uppy/dashboard`.
+ * `vanilla` использует plugin API `@uppy/dashboard`.
  * React runtime передается из отдельного entry point `uppyReact`, чтобы vanilla-драйвер
  * не зависел от `@uppy/react` и `react-dom/client`.
  */
-export type FileUploaderDriverRenderer = 'uppy' | IFileUploaderReactRenderer;
+export type UppyDashboardRenderer = 'vanilla' | IUppyReactRendererRuntime;
 
 /**
  * Runtime React renderer-а, изолированный в отдельном entry point.
  */
-export interface IFileUploaderReactRenderer {
+export interface IUppyReactRendererRuntime {
     type: 'react';
     createRoot: (container: HTMLElement) => IReactRootLike;
     flushSync?: (callback: () => void) => void;
@@ -100,19 +101,19 @@ export interface IFileUploaderReactRenderer {
 /**
  * Опции создания driver-а поверх Uppy.
  */
-export interface ICreateFileUploaderDriverOptions {
+export interface ICreateUppyFileUploaderDriverOptions {
     /** Renderer Dashboard UI. */
-    renderer?: FileUploaderDriverRenderer;
+    dashboardRenderer?: UppyDashboardRenderer;
     /** Базовый id Dashboard plugin-а. */
     dashboardPluginId?: string;
     /** Id ImageEditor plugin-а. */
     imageEditorPluginId?: string;
     /** Конфиг ImageEditor. `false` отключает ImageEditor. */
-    imageEditor?: IImageEditorPluginOptions | false;
+    imageEditor?: IUppyImageEditorOptions | false;
     /** ImageEditor plugin из отдельного entry point `uppyImageEditor`. */
     imageEditorPlugin?: unknown;
     /** Опции Dashboard. */
-    dashboard?: IFileUploaderDashboardOptions;
+    dashboard?: IUppyDashboardOptions;
     /** Дополнительные plugin id для Dashboard. */
     plugins?: string[];
 }
@@ -140,9 +141,9 @@ export interface IUppyLike {
 }
 
 /**
- * Опции создания bundle-а `uppy + driver`.
+ * Опции создания интеграции `uppy + driver`.
  */
-export interface ICreateFileUploaderBundleOptions {
+export interface ICreateUppyFileUploaderIntegrationOptions {
     /** Готовый Uppy-инстанс из проекта. */
     uppy?: IUppyLike;
     /** Опции для создания Uppy, если `uppy` и `createUppy` не переданы. */
@@ -150,29 +151,19 @@ export interface ICreateFileUploaderBundleOptions {
     /** Фабрика Uppy-инстанса из проекта. */
     createUppy?: () => IUppyLike;
     /** Опции driver-а поверх Uppy. */
-    driverOptions?: ICreateFileUploaderDriverOptions;
+    driverOptions?: ICreateUppyFileUploaderDriverOptions;
 }
 
 /**
- * Готовый bundle для подключения `FileUploader`.
+ * Готовая Uppy-интеграция для подключения `FileUploader`.
  */
-export interface IFileUploaderBundle {
+export interface IUppyFileUploaderIntegration {
     /** Uppy-инстанс, созданный или переданный проектом. */
     uppy: IUppyLike;
     /** Абстрактный driver для компонента `FileUploader`. */
     driver: IFileUploaderDriver;
     /** Уничтожает Uppy-инстанс и связанные ресурсы. */
     destroy: () => void;
-}
-
-interface IUppyFileLike {
-    id: string;
-    name?: string;
-    type?: string;
-    size?: number;
-    preview?: string;
-    uploadURL?: string;
-    meta?: Record<string, unknown>;
 }
 
 interface IDashboardPluginLike {
@@ -188,8 +179,8 @@ export interface IReactRootLike {
 
 let dashboardMountCounter = 0;
 
-type IDriverDashboardConfig = Pick<ICreateFileUploaderDriverOptions, 'dashboard' | 'plugins'>;
-type FileUploaderDriverMountMethods = Pick<IFileUploaderDriver, 'mountInline' | 'mountModal'>;
+type IUppyDashboardConfig = Pick<ICreateUppyFileUploaderDriverOptions, 'dashboard' | 'plugins'>;
+type UppyDashboardMountMethods = Pick<IFileUploaderDriver, 'mountInline' | 'mountModal'>;
 
 interface ICreateUppyInstanceOptions {
     uppy?: IUppyLike;
@@ -197,13 +188,13 @@ interface ICreateUppyInstanceOptions {
     createUppy?: () => IUppyLike;
 }
 
-interface ICreateDriverRendererContext {
+interface ICreateDashboardMountsContext {
     uppy: IUppyLike;
-    options: ICreateFileUploaderDriverOptions;
+    options: ICreateUppyFileUploaderDriverOptions;
     registeredImageEditorPluginId: string | null;
 }
 
-type FileUploaderDriverRendererFactory = (context: ICreateDriverRendererContext) => FileUploaderDriverMountMethods;
+type UppyDashboardMountFactory = (context: ICreateDashboardMountsContext) => UppyDashboardMountMethods;
 
 const deferTask = (callback: () => void) => {
     if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
@@ -216,25 +207,9 @@ const deferTask = (callback: () => void) => {
     setTimeout(callback, 0);
 };
 
-const toFileUploaderFile = (file: IUppyFileLike | undefined): IFileUploaderFile | undefined => {
-    if (!file) {
-        return undefined;
-    }
-
-    return {
-        id: file.id,
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        preview: file.preview,
-        uploadURL: file.uploadURL,
-        meta: file.meta,
-    };
-};
-
 const getImageEditorOptions = (
-    imageEditorOptions: IImageEditorPluginOptions | false | undefined,
-): IImageEditorPluginOptions | false => {
+    imageEditorOptions: IUppyImageEditorOptions | false | undefined,
+): IUppyImageEditorOptions | false => {
     if (imageEditorOptions === false || imageEditorOptions === undefined) {
         return false;
     }
@@ -249,7 +224,7 @@ const getImageEditorOptions = (
     };
 };
 
-const createDashboardPluginId = (basePluginId: string, mode: 'inline' | 'modal'): string => {
+const createDashboardPluginId = (basePluginId: string, mode: DashboardMountMode): string => {
     dashboardMountCounter += 1;
     return `${basePluginId}-${mode}-${dashboardMountCounter}`;
 };
@@ -275,26 +250,26 @@ const buildPluginIds = (
 const buildDashboardCommonOptions = (
     mountOptions: IFileUploaderDriverMountOptions,
     pluginIds: string[],
-    dashboardOptions: IFileUploaderDashboardOptions | undefined,
-): IFileUploaderDashboardOptions => {
+    dashboardOptions: IUppyDashboardOptions | undefined,
+): IUppyDashboardOptions => {
     return {
         ...dashboardOptions,
         note: mountOptions.note ?? dashboardOptions?.note,
         disabled: mountOptions.disabled ?? dashboardOptions?.disabled,
         plugins: pluginIds,
-        hideUploadButton: !mountOptions.showNativeUploadButton,
-        doneButtonHandler: mountOptions.doneButtonHandler,
+        hideUploadButton: !mountOptions.showDriverUploadButton,
+        doneButtonHandler: mountOptions.onDone,
     };
 };
 
-const resolveCloseModalOnClickOutside = (dashboardOptions: IFileUploaderDashboardOptions | undefined): boolean => {
+const resolveCloseModalOnClickOutside = (dashboardOptions: IUppyDashboardOptions | undefined): boolean => {
     return dashboardOptions?.closeModalOnClickOutside ?? true;
 };
 
 const ensureImageEditorPlugin = (
     uppy: IUppyLike,
     imageEditorPluginId: string,
-    imageEditorOptions: IImageEditorPluginOptions | false,
+    imageEditorOptions: IUppyImageEditorOptions | false,
     imageEditorPlugin: unknown,
 ): string | null => {
     if (imageEditorOptions === false) {
@@ -322,10 +297,10 @@ const ensureImageEditorPlugin = (
 
 const mountDashboard = (
     uppy: IUppyLike,
-    mode: 'inline' | 'modal',
+    mode: DashboardMountMode,
     container: HTMLElement,
     mountOptions: IFileUploaderDriverMountOptions,
-    config: IDriverDashboardConfig & {dashboardPluginId?: string},
+    config: IUppyDashboardConfig & {dashboardPluginId?: string},
     imageEditorPluginId: string | null,
 ): IDashboardPluginLike => {
     const dashboardPluginId = config.dashboardPluginId || DEFAULT_DASHBOARD_PLUGIN_ID;
@@ -340,7 +315,7 @@ const mountDashboard = (
                   id: runtimeDashboardPluginId,
                   inline: true,
                   target: container,
-                  height: mountOptions.dashboardHeight,
+                  height: mountOptions.contentHeight,
               }
             : {
                   ...commonOptions,
@@ -363,9 +338,9 @@ const mountDashboard = (
 
 const updateDashboard = (
     dashboard: IDashboardPluginLike,
-    mode: 'inline' | 'modal',
+    mode: DashboardMountMode,
     mountOptions: IFileUploaderDriverMountOptions,
-    config: IDriverDashboardConfig,
+    config: IUppyDashboardConfig,
     imageEditorPluginId: string | null,
 ): void => {
     const pluginIds = buildPluginIds(imageEditorPluginId, config.plugins, config.dashboard?.plugins);
@@ -375,7 +350,7 @@ const updateDashboard = (
         dashboard.setOptions({
             ...commonOptions,
             inline: true,
-            height: mountOptions.dashboardHeight,
+            height: mountOptions.contentHeight,
         });
         return;
     }
@@ -399,8 +374,8 @@ const unmountDashboard = (uppy: IUppyLike, dashboard: IDashboardPluginLike | nul
 const createDashboardMountHandle = (
     uppy: IUppyLike,
     dashboard: IDashboardPluginLike,
-    mode: 'inline' | 'modal',
-    config: IDriverDashboardConfig,
+    mode: DashboardMountMode,
+    config: IUppyDashboardConfig,
     imageEditorPluginId: string | null,
 ): IFileUploaderDriverMountHandle => {
     let isDestroyed = false;
@@ -422,7 +397,6 @@ const createDashboardMountHandle = (
 
             updateDashboard(dashboard, mode, nextOptions, config, imageEditorPluginId);
         },
-        cleanup: destroy,
         destroy,
     };
 
@@ -485,8 +459,8 @@ const createDriverEventHandlers = (uppy: IUppyLike) => {
                     return;
                 }
                 case 'upload-success': {
-                    const [uppyFile, response] = args as [IUppyFileLike | undefined, unknown];
-                    const file = toFileUploaderFile(uppyFile);
+                    const [uppyFile, response] = args as [IFileUploaderSourceFile | undefined, unknown];
+                    const file = normalizeFileUploaderFile(uppyFile);
                     if (!file) {
                         return;
                     }
@@ -495,8 +469,8 @@ const createDriverEventHandlers = (uppy: IUppyLike) => {
                     return;
                 }
                 case 'upload-error': {
-                    const [uppyFile, error] = args as [IUppyFileLike | undefined, unknown];
-                    const file = toFileUploaderFile(uppyFile);
+                    const [uppyFile, error] = args as [IFileUploaderSourceFile | undefined, unknown];
+                    const file = normalizeFileUploaderFile(uppyFile);
                     (callback as IFileUploaderDriverEventMap['upload-error'])(file, error);
                     return;
                 }
@@ -506,8 +480,8 @@ const createDriverEventHandlers = (uppy: IUppyLike) => {
                     return;
                 }
                 case 'file-removed': {
-                    const [uppyFile] = args as [IUppyFileLike | undefined];
-                    const file = toFileUploaderFile(uppyFile);
+                    const [uppyFile] = args as [IFileUploaderSourceFile | undefined];
+                    const file = normalizeFileUploaderFile(uppyFile);
                     if (!file) {
                         return;
                     }
@@ -585,10 +559,55 @@ const destroyReactRoot = (state: {root: IReactRootLike; destroyed: boolean}) => 
     });
 };
 
-const createBaseUppyDriver = (
+interface IReactRootState {
+    root: IReactRootLike;
+    destroyed: boolean;
+}
+
+interface IReactMountRenderContext {
+    mountOptions: IFileUploaderDriverMountOptions;
+    render: () => void;
+    rootState: IReactRootState;
+}
+
+type ReactMountControlsFactory = (render: () => void) => Pick<IFileUploaderDriverMountHandle, 'open' | 'close'>;
+
+const createReactMountHandle = (
+    reactRuntime: IUppyReactRendererRuntime,
+    container: HTMLElement,
+    initialMountOptions: IFileUploaderDriverMountOptions,
+    renderDashboard: (context: IReactMountRenderContext) => void,
+    createControls?: ReactMountControlsFactory,
+): IFileUploaderDriverMountHandle => {
+    const rootState: IReactRootState = {root: reactRuntime.createRoot(container), destroyed: false};
+    let currentMountOptions = initialMountOptions;
+
+    const render = () => {
+        if (rootState.destroyed) {
+            return;
+        }
+
+        renderDashboard({mountOptions: currentMountOptions, render, rootState});
+    };
+    const destroy = () => destroyReactRoot(rootState);
+    const mountHandle: IFileUploaderDriverMountHandle = {
+        setOptions: (nextOptions) => {
+            currentMountOptions = nextOptions;
+            render();
+        },
+        destroy,
+        ...createControls?.(render),
+    };
+
+    render();
+
+    return mountHandle;
+};
+
+const buildUppyFileUploaderDriver = (
     uppy: IUppyLike,
-    options: ICreateFileUploaderDriverOptions,
-    createRenderer: FileUploaderDriverRendererFactory,
+    options: ICreateUppyFileUploaderDriverOptions,
+    createDashboardMounts: UppyDashboardMountFactory,
 ): IFileUploaderDriver => {
     const imageEditorPluginId = options.imageEditorPluginId || DEFAULT_IMAGE_EDITOR_PLUGIN_ID;
     const resolvedImageEditorOptions = getImageEditorOptions(options.imageEditor);
@@ -599,14 +618,14 @@ const createBaseUppyDriver = (
         options.imageEditorPlugin,
     );
     const {on, off} = createDriverEventHandlers(uppy);
-    const renderer = createRenderer({
+    const dashboardMounts = createDashboardMounts({
         uppy,
         options,
         registeredImageEditorPluginId,
     });
 
     return {
-        ...renderer,
+        ...dashboardMounts,
         on,
         off,
         upload: async () => {
@@ -621,46 +640,31 @@ const createBaseUppyDriver = (
     };
 };
 
-const createUppyDashboardRenderer: FileUploaderDriverRendererFactory = ({
-    uppy,
-    options,
-    registeredImageEditorPluginId,
-}) => {
+const createVanillaDashboardMounts: UppyDashboardMountFactory = ({uppy, options, registeredImageEditorPluginId}) => {
+    const createMount = (mode: DashboardMountMode) => {
+        return (container: HTMLElement, mountOptions: IFileUploaderDriverMountOptions) => {
+            const dashboard = mountDashboard(
+                uppy,
+                mode,
+                container,
+                mountOptions,
+                options,
+                registeredImageEditorPluginId,
+            );
+
+            return createDashboardMountHandle(uppy, dashboard, mode, options, registeredImageEditorPluginId);
+        };
+    };
+
     return {
-        mountInline: (container, mountOptions) => {
-            const dashboard = mountDashboard(
-                uppy,
-                'inline',
-                container,
-                mountOptions,
-                options,
-                registeredImageEditorPluginId,
-            );
-
-            return createDashboardMountHandle(uppy, dashboard, 'inline', options, registeredImageEditorPluginId);
-        },
-        mountModal: (container, mountOptions) => {
-            const dashboard = mountDashboard(
-                uppy,
-                'modal',
-                container,
-                mountOptions,
-                options,
-                registeredImageEditorPluginId,
-            );
-
-            return createDashboardMountHandle(uppy, dashboard, 'modal', options, registeredImageEditorPluginId);
-        },
+        mountInline: createMount('inline'),
+        mountModal: createMount('modal'),
     };
 };
 
-const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
-    uppy,
-    options,
-    registeredImageEditorPluginId,
-}) => {
-    const runtime = options.renderer;
-    if (!runtime || runtime === 'uppy') {
+const createReactDashboardMounts: UppyDashboardMountFactory = ({uppy, options, registeredImageEditorPluginId}) => {
+    const reactRuntime = options.dashboardRenderer;
+    if (!reactRuntime || reactRuntime === 'vanilla') {
         throw new Error('FileUploader: React renderer runtime is not configured');
     }
 
@@ -672,95 +676,72 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
 
     return {
         mountInline: (container, mountOptions) => {
-            const rootState = {root: runtime.createRoot(container), destroyed: false};
-            let currentOptions = mountOptions;
-
-            const render = () => {
-                if (rootState.destroyed) {
-                    return;
-                }
-
-                const commonProps = getCommonDashboardProps(currentOptions);
-                rootState.root.render(
-                    React.createElement(runtime.DashboardComponent, {
-                        uppy,
-                        ...commonProps,
-                        height: currentOptions.dashboardHeight,
-                    }),
-                );
-            };
-
-            render();
-
-            return {
-                cleanup: () => destroyReactRoot(rootState),
-                setOptions: (nextOptions) => {
-                    currentOptions = nextOptions;
-                    render();
+            return createReactMountHandle(
+                reactRuntime,
+                container,
+                mountOptions,
+                ({mountOptions: currentOptions, rootState}) => {
+                    const commonProps = getCommonDashboardProps(currentOptions);
+                    rootState.root.render(
+                        React.createElement(reactRuntime.DashboardComponent, {
+                            uppy,
+                            ...commonProps,
+                            height: currentOptions.contentHeight,
+                        }),
+                    );
                 },
-                destroy: () => destroyReactRoot(rootState),
-            };
+            );
         },
         mountModal: (container, mountOptions) => {
-            const rootState = {root: runtime.createRoot(container), destroyed: false};
-            let currentOptions = mountOptions;
             let isOpen = false;
             let renderRevision = 0;
 
-            const render = () => {
-                if (rootState.destroyed) {
-                    return;
-                }
+            return createReactMountHandle(
+                reactRuntime,
+                container,
+                mountOptions,
+                ({mountOptions: currentOptions, render, rootState}) => {
+                    renderRevision += 1;
+                    const currentRenderRevision = renderRevision;
+                    const commonProps = getCommonDashboardProps(currentOptions);
+                    const dashboardModal = React.createElement(reactRuntime.DashboardModalComponent, {
+                        uppy,
+                        ...commonProps,
+                        open: isOpen,
+                        onRequestClose: () => {
+                            isOpen = false;
+                            currentOptions.onRequestClose?.();
+                            render();
+                        },
+                        closeModalOnClickOutside: resolveCloseModalOnClickOutside(options.dashboard),
+                    });
 
-                renderRevision += 1;
-                const currentRenderRevision = renderRevision;
-                const commonProps = getCommonDashboardProps(currentOptions);
-                const dashboardModal = React.createElement(runtime.DashboardModalComponent, {
-                    uppy,
-                    ...commonProps,
-                    open: isOpen,
-                    onRequestClose: () => {
-                        isOpen = false;
-                        currentOptions.onRequestClose?.();
+                    deferTask(() => {
+                        if (rootState.destroyed || currentRenderRevision !== renderRevision) {
+                            return;
+                        }
+
+                        if (reactRuntime.flushSync) {
+                            reactRuntime.flushSync(() => {
+                                rootState.root.render(dashboardModal);
+                            });
+                            return;
+                        }
+
+                        rootState.root.render(dashboardModal);
+                    });
+                },
+                (render) => ({
+                    open: () => {
+                        isOpen = true;
                         render();
                     },
-                    closeModalOnClickOutside: resolveCloseModalOnClickOutside(options.dashboard),
-                });
-
-                deferTask(() => {
-                    if (rootState.destroyed || currentRenderRevision !== renderRevision) {
-                        return;
-                    }
-
-                    if (runtime.flushSync) {
-                        runtime.flushSync(() => {
-                            rootState.root.render(dashboardModal);
-                        });
-                        return;
-                    }
-
-                    rootState.root.render(dashboardModal);
-                });
-            };
-
-            render();
-
-            return {
-                cleanup: () => destroyReactRoot(rootState),
-                setOptions: (nextOptions) => {
-                    currentOptions = nextOptions;
-                    render();
-                },
-                open: () => {
-                    isOpen = true;
-                    render();
-                },
-                close: () => {
-                    isOpen = false;
-                    render();
-                },
-                destroy: () => destroyReactRoot(rootState),
-            };
+                    close: () => {
+                        isOpen = false;
+                        render();
+                    },
+                }),
+            );
         },
     };
 };
@@ -781,15 +762,15 @@ const createReactDashboardRenderer: FileUploaderDriverRendererFactory = ({
  */
 export const createUppyFileUploaderDriver = (
     uppy: IUppyLike,
-    options: ICreateFileUploaderDriverOptions = {},
+    options: ICreateUppyFileUploaderDriverOptions = {},
 ): IFileUploaderDriver => {
-    const renderer =
-        !options.renderer || options.renderer === 'uppy' ? createUppyDashboardRenderer : createReactDashboardRenderer;
+    const createDashboardMounts =
+        !options.dashboardRenderer || options.dashboardRenderer === 'vanilla'
+            ? createVanillaDashboardMounts
+            : createReactDashboardMounts;
 
-    return createBaseUppyDriver(uppy, options, renderer);
+    return buildUppyFileUploaderDriver(uppy, options, createDashboardMounts);
 };
-
-export const createFileUploaderDriver = createUppyFileUploaderDriver;
 
 const createUppyInstance = (options: ICreateUppyInstanceOptions): IUppyLike => {
     const uppyConstructor = Uppy as unknown as {new (uppyOptions?: Record<string, unknown>): IUppyLike};
@@ -798,21 +779,23 @@ const createUppyInstance = (options: ICreateUppyInstanceOptions): IUppyLike => {
 };
 
 /**
- * Создает полный bundle для быстрого подключения `FileUploader`.
+ * Создает готовую Uppy-интеграцию для быстрого подключения `FileUploader`.
  *
  * Если проект уже управляет Uppy-инстансом сам, передайте `uppy` или `createUppy`.
  * Если нет, helper создаст Uppy из `uppyOptions`.
  *
  * @example
- * const bundle = createUppyFileUploaderBundle({
+ * const integration = createUppyFileUploaderIntegration({
  *     uppyOptions: {autoProceed: false},
  *     driverOptions: {imageEditor: false},
  * });
  *
- * // Для React renderer-а используйте createReactUppyFileUploaderBundle
+ * // Для React renderer-а используйте createReactUppyFileUploaderIntegration
  * // из отдельного entry point `uppyReact`.
  */
-export const createUppyFileUploaderBundle = (options: ICreateFileUploaderBundleOptions = {}): IFileUploaderBundle => {
+export const createUppyFileUploaderIntegration = (
+    options: ICreateUppyFileUploaderIntegrationOptions = {},
+): IUppyFileUploaderIntegration => {
     const uppy = createUppyInstance(options);
     const driver = createUppyFileUploaderDriver(uppy, options.driverOptions);
 
@@ -824,5 +807,3 @@ export const createUppyFileUploaderBundle = (options: ICreateFileUploaderBundleO
         },
     };
 };
-
-export const createFileUploaderBundle = createUppyFileUploaderBundle;

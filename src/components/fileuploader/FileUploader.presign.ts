@@ -1,4 +1,5 @@
 import type {IFileUploaderFile} from './FileUploader.types';
+import {IFileUploaderSourceFile, normalizeFileUploaderFile} from './FileUploader.fileNormalizer';
 
 const FILE_PRESIGN_ENDPOINT = '/file/presign/';
 const FILE_PRESIGN_DEFAULT_CONTENT_TYPE = 'application/octet-stream';
@@ -90,7 +91,7 @@ export interface IFileUploaderPresignSession<
 /**
  * Опции создания payload-а для `POST /file/presign/`.
  */
-export interface ICreateFileUploaderPresignPayloadOptions<
+export interface ICreateFilePresignPayloadOptions<
     TIntent extends string = FileUploaderPresignIntent,
     TKind extends string = FileUploaderPresignKind,
 > {
@@ -118,7 +119,7 @@ export interface ICreateFileUploaderPresignPayloadOptions<
 export interface ICreateFilePresignUploadStrategyOptions<
     TIntent extends string = FileUploaderPresignIntent,
     TKind extends string = FileUploaderPresignKind,
-> extends ICreateFileUploaderPresignPayloadOptions<TIntent, TKind> {
+> extends ICreateFilePresignPayloadOptions<TIntent, TKind> {
     /** Endpoint presign API. По умолчанию `/file/presign/`. */
     endpoint?: string;
     /** Дополнительные headers для JSON presign-запроса, например CSRF. */
@@ -140,7 +141,7 @@ export interface ICreateFilePresignUploadStrategyOptions<
  * Backend `/file/presign/` возвращает presigned PUT URL, на который uploader
  * отправляет файл напрямую.
  */
-export interface IFileUploaderS3UploadParameters<
+export interface IFileUploaderPresignedUploadParameters<
     TIntent extends string = FileUploaderPresignIntent,
     TKind extends string = FileUploaderPresignKind,
 > {
@@ -161,43 +162,17 @@ export interface IFileUploaderS3UploadParameters<
 /**
  * Стратегия presign-загрузки, которую можно передать upload-плагину проекта.
  */
-export interface IFileUploaderS3UploadStrategy<
+export interface IFileUploaderPresignedUploadStrategy<
     TIntent extends string = FileUploaderPresignIntent,
     TKind extends string = FileUploaderPresignKind,
 > {
     /** Возвращает presign-параметры для файла из конкретной uploader-библиотеки. */
-    getUploadParameters: (file: unknown) => Promise<IFileUploaderS3UploadParameters<TIntent, TKind>>;
+    getUploadParameters: (file: unknown) => Promise<IFileUploaderPresignedUploadParameters<TIntent, TKind>>;
     /** Возвращает сохраненную presign-сессию по файлу или file id. */
-    getUploadSession?: (file: unknown) => IFileUploaderPresignSession<TIntent, TKind> | undefined;
+    getPresignSession?: (file: unknown) => IFileUploaderPresignSession<TIntent, TKind> | undefined;
     /** Удаляет сохраненную presign-сессию, если она больше не нужна. */
-    clearUploadSession?: (file: unknown) => void;
+    clearPresignSession?: (file: unknown) => void;
 }
-
-interface IFileUploaderFileLike {
-    id: string;
-    name?: string;
-    type?: string;
-    size?: number;
-    preview?: string;
-    uploadURL?: string;
-    meta?: Record<string, unknown>;
-}
-
-const toFileUploaderFile = (file: IFileUploaderFileLike | undefined): IFileUploaderFile | undefined => {
-    if (!file) {
-        return undefined;
-    }
-
-    return {
-        id: file.id,
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        preview: file.preview,
-        uploadURL: file.uploadURL,
-        meta: file.meta,
-    };
-};
 
 const resolvePresignOptionValue = async <T>(
     value: FileUploaderPresignOptionValue<T> | undefined,
@@ -220,7 +195,7 @@ const hasPresignIntent = <TIntent extends string>(
 const shouldSendOriginalFilename = async <TIntent extends string>(
     intent: TIntent,
     file: IFileUploaderFile,
-    options: ICreateFileUploaderPresignPayloadOptions<TIntent>,
+    options: ICreateFilePresignPayloadOptions<TIntent>,
 ): Promise<boolean> => {
     if (options.shouldSendOriginalFilename) {
         return options.shouldSendOriginalFilename(intent, file);
@@ -232,7 +207,7 @@ const shouldSendOriginalFilename = async <TIntent extends string>(
 const shouldSendKind = async <TIntent extends string>(
     intent: TIntent,
     file: IFileUploaderFile,
-    options: ICreateFileUploaderPresignPayloadOptions<TIntent>,
+    options: ICreateFilePresignPayloadOptions<TIntent>,
 ): Promise<boolean> => {
     if (options.shouldSendKind) {
         return options.shouldSendKind(intent, file);
@@ -241,12 +216,12 @@ const shouldSendKind = async <TIntent extends string>(
     return hasPresignIntent(options.kindIntents, intent);
 };
 
-const getUploadSessionFileId = (file: unknown): string | undefined => {
+const resolveFileId = (file: unknown): string | undefined => {
     if (typeof file === 'string') {
         return file;
     }
 
-    return toFileUploaderFile(file as IFileUploaderFileLike | undefined)?.id;
+    return normalizeFileUploaderFile(file as IFileUploaderSourceFile | undefined)?.id;
 };
 
 const assertFilePresignResponse = (response: unknown): IFileUploaderPresignResponse => {
@@ -310,12 +285,12 @@ const requestFilePresign = async <
  * `content_type` всегда, `original_filename` и `kind` только по правилам,
  * переданным из проекта.
  */
-export const createFileUploaderPresignPayload = async <
+export const createFilePresignPayload = async <
     TIntent extends string = FileUploaderPresignIntent,
     TKind extends string = FileUploaderPresignKind,
 >(
     file: IFileUploaderFile,
-    options: ICreateFileUploaderPresignPayloadOptions<TIntent, TKind>,
+    options: ICreateFilePresignPayloadOptions<TIntent, TKind>,
 ): Promise<IFileUploaderPresignPayload<TIntent, TKind>> => {
     const intent = await resolvePresignOptionValue(options.intent, file);
     if (!intent) {
@@ -358,11 +333,11 @@ export const createFileUploaderPresignPayload = async <
  *
  * 1. `POST /file/presign/` получает `upload_url`, `session_id`, `expires_at`.
  * 2. Uploader делает прямой `PUT` файла на `upload_url`.
- * 3. Проект забирает `session_id` через `getUploadSession(fileId)` и передает его
+ * 3. Проект забирает `session_id` через `getPresignSession(fileId)` и передает его
  *    при сохранении сущности.
  *
  * @example
- * const uploadStrategy = createFilePresignUploadStrategy({
+ * const presignedUploadStrategy = createFilePresignUploadStrategy({
  *     intent: projectIntent,
  *     entityId: eventId,
  *     originalFilenameIntents: [intentWithOriginalFilename],
@@ -374,29 +349,29 @@ export const createFilePresignUploadStrategy = <
     TKind extends string = FileUploaderPresignKind,
 >(
     options: ICreateFilePresignUploadStrategyOptions<TIntent, TKind>,
-): IFileUploaderS3UploadStrategy<TIntent, TKind> => {
-    const uploadSessions = new Map<string, IFileUploaderPresignSession<TIntent, TKind>>();
+): IFileUploaderPresignedUploadStrategy<TIntent, TKind> => {
+    const presignSessions = new Map<string, IFileUploaderPresignSession<TIntent, TKind>>();
 
     return {
         getUploadParameters: async (file: unknown) => {
-            const mappedFile = toFileUploaderFile(file as IFileUploaderFileLike | undefined);
+            const normalizedFile = normalizeFileUploaderFile(file as IFileUploaderSourceFile | undefined);
 
-            if (!mappedFile) {
+            if (!normalizedFile) {
                 throw new Error('Uploader file is not available');
             }
 
-            const payload = await createFileUploaderPresignPayload(mappedFile, options);
-            const presignResponse = await requestFilePresign(mappedFile, payload, options);
+            const payload = await createFilePresignPayload(normalizedFile, options);
+            const presignResponse = await requestFilePresign(normalizedFile, payload, options);
             const sizeLimitInBytes = presignResponse.size_limit_in_mb
                 ? presignResponse.size_limit_in_mb * BYTES_IN_MEGABYTE
                 : undefined;
 
-            if (sizeLimitInBytes && mappedFile.size && mappedFile.size > sizeLimitInBytes) {
+            if (sizeLimitInBytes && normalizedFile.size && normalizedFile.size > sizeLimitInBytes) {
                 throw new Error(`File size exceeds the ${presignResponse.size_limit_in_mb} MB limit`);
             }
 
             const presignSession: IFileUploaderPresignSession<TIntent, TKind> = {
-                fileId: mappedFile.id,
+                fileId: normalizedFile.id,
                 uploadUrl: presignResponse.upload_url,
                 sessionId: presignResponse.session_id,
                 expiresAt: presignResponse.expires_at,
@@ -404,7 +379,7 @@ export const createFilePresignUploadStrategy = <
                 response: presignResponse,
             };
 
-            uploadSessions.set(mappedFile.id, presignSession);
+            presignSessions.set(normalizedFile.id, presignSession);
 
             return {
                 method: 'PUT',
@@ -418,15 +393,15 @@ export const createFilePresignUploadStrategy = <
                 presignSession,
             };
         },
-        getUploadSession: (file: unknown) => {
-            const fileId = getUploadSessionFileId(file);
+        getPresignSession: (file: unknown) => {
+            const fileId = resolveFileId(file);
 
-            return fileId ? uploadSessions.get(fileId) : undefined;
+            return fileId ? presignSessions.get(fileId) : undefined;
         },
-        clearUploadSession: (file: unknown) => {
-            const fileId = getUploadSessionFileId(file);
+        clearPresignSession: (file: unknown) => {
+            const fileId = resolveFileId(file);
             if (fileId) {
-                uploadSessions.delete(fileId);
+                presignSessions.delete(fileId);
             }
         },
     };
