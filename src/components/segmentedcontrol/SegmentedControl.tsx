@@ -5,6 +5,8 @@ import {Control, ControlId} from './Control';
 import {ControlList} from './ControlList';
 
 import './index.less';
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
 
 interface ISegmentedControlStoreContext {
     activeControlId: string;
@@ -18,7 +20,7 @@ export const SegmentedControlContext = createContext<ISegmentedControlStoreConte
 
 type ControlClickHandler = (ControlId: string) => void;
 
-export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement> {
+export interface ISegmentedControlProps extends HTMLAttributes<HTMLDivElement>, IAdditionalAttributes {
     defaultControlId?: ControlId;
     activeControlId?: ControlId;
     fix?: boolean;
@@ -35,7 +37,7 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
     fix,
     onControlClick,
     className,
-    ...rest
+    ...props
 }: ISegmentedControlProps) => {
     const initialControlId = useMemo(() => defaultControlId, [defaultControlId]);
     const divClasses = cx(component('segmentedcontrol')({fix}), className);
@@ -45,7 +47,7 @@ export const SegmentedControl: FC<React.PropsWithChildren<ISegmentedControlProps
         onControlClick ? onControlClick(ControlId, setCurrentControlId) : setCurrentControlId(ControlId);
 
     return (
-        <div {...rest} className={divClasses}>
+        <div {...props} className={divClasses} data-qa={props['data-qa'] || qaTags.segmentControl}>
             <SegmentedControlContext.Provider
                 value={{
                     activeControlId: currentControlId,

@@ -1,7 +1,9 @@
 import React from 'react';
+import {IAdditionalAttributes} from '../../../../types';
 
 export interface IFormRadioProps
-    extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+    extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+        IAdditionalAttributes {
     text?: string;
     caption?: string;
     small?: boolean;

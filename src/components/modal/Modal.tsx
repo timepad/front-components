@@ -10,6 +10,9 @@ import {Content} from './ModalContent';
 import {ClickOutsideException, ExceptionCn} from './ModalClickOutsideException';
 import './index.less';
 
+import {IAdditionalAttributes} from '../../../types';
+import {qaTags} from '../../services';
+
 const ModalSafeForReact18 = ReactModal as ComponentType<ReactModal['props']>;
 
 const useClickOutside = (
@@ -52,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ReactModal.setAppElement('#root');
 });
 
-export interface IModalProps {
+export interface IModalProps extends IAdditionalAttributes {
     isClean?: boolean;
     className?: string;
     overlayClassName?: string;
@@ -70,19 +73,17 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
     Description: typeof Description;
     Content: typeof Content;
     ClickOutsideException: typeof ClickOutsideException;
-} = (props) => {
-    const {
-        children,
-        isClean,
-        className,
-        overlayClassName,
-        isOpen,
-        blockCloseOnOutsideClick,
-        onClose,
-        parentSelector,
-        ...rest
-    } = props;
-
+} = ({
+    children,
+    isClean,
+    className,
+    overlayClassName,
+    isOpen,
+    blockCloseOnOutsideClick,
+    onClose,
+    parentSelector,
+    ...props
+}) => {
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     useClickOutside(wrapperRef, () => {
@@ -110,10 +111,7 @@ export const Modal: React.FC<React.PropsWithChildren<IModalProps>> & {
 
     //По-другому нет возможности устанавливать data* атрибуты
     const contentRef = (element: HTMLDivElement) => {
-        Object.keys(rest).length &&
-            Object.entries(rest).forEach(([key, value]) => {
-                element?.setAttribute(key, value as string);
-            });
+        element?.setAttribute('data-qa', props['data-qa'] || qaTags.modal);
     };
 
     return (

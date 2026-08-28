@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 import './index.less';
 import {Snackbar} from './Snackbar';
+import {IAdditionalAttributes} from '../../../types';
 
 export type snackbarStateType = 'info' | 'success' | 'error' | 'successWithIcon' | 'errorWithIcon';
 
@@ -10,7 +11,7 @@ export type snackbarButtonType = {
     onClick: () => void;
 };
 
-export interface ISnackbarProps {
+export interface ISnackbarProps extends IAdditionalAttributes {
     state?: snackbarStateType;
     text?: string;
     button?: snackbarButtonType;

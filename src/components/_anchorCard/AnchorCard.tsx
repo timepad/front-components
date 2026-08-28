@@ -4,10 +4,14 @@ import {AnchorCardPoster, IAnchorcardPoster} from './components/AnchorCardPoster
 import {AnchorCardContent, IAnchorCardContent} from './components/AnchorCardContent/AnchorCardContent';
 import './index.less';
 import cx from 'classnames';
+import {qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
-export const AnchorCard: FC<
-    PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>>
-> & {
+interface IAnchorCardProps
+    extends PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>>,
+        IAdditionalAttributes {}
+
+export const AnchorCard: FC<IAnchorCardProps> & {
     Poster: IAnchorcardPoster;
     Content: IAnchorCardContent;
 } = ({children, ...props}) => {
@@ -79,7 +83,7 @@ export const AnchorCard: FC<
     }, [imgSize]);
 
     return (
-        <article {...props} className={cnContainer} ref={ref}>
+        <article {...props} className={cnContainer} ref={ref} data-qa={props['data-qa'] || qaTags.card}>
             {contentInOrder}
         </article>
     );

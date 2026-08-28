@@ -4,6 +4,8 @@ import cx from 'classnames';
 import {component} from '../../services/helpers/classHelpers';
 
 import './index.less';
+import {qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
 export enum ButtonVariant {
     primary = 'primary',
@@ -26,8 +28,9 @@ export enum FixedVariant {
 
 export interface IButtonProps
     extends PropsWithChildren<
-        React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
-    > {
+            React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+        >,
+        IAdditionalAttributes {
     variant?: ButtonVariant;
     label?: string;
     hoverLabel?: string;
@@ -119,6 +122,7 @@ export function Button({onClick, labelColor, ...props}: IButtonProps): JSX.Eleme
             onClick={handleClick}
             className={finalClasses}
             {...buttonProps}
+            data-qa={props['data-qa'] || qaTags.btn}
         >
             {props.children ? (
                 props.children

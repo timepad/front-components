@@ -5,10 +5,14 @@ import {component} from '../../services/helpers/classHelpers';
 import './index.less';
 import {Button, ButtonVariant} from '../button';
 import cx from 'classnames';
+import {qaTags} from '../../services';
+import {IAdditionalAttributes} from '../../../types';
 
 type CloseClickHandler = () => void;
 
-interface IBannerProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface IBannerProps
+    extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+        IAdditionalAttributes {
     theme?: string;
     closeable?: boolean;
     icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
@@ -38,7 +42,7 @@ export const Banner: FC<React.PropsWithChildren<IBannerProps>> = ({
     };
 
     return (
-        <Row className={cx(component('banner')(), className)} {...props}>
+        <Row className={cx(component('banner')(), className)} {...props} data-qa={props['data-qa'] || qaTags.banner}>
             {icon && <Row.Icon className={component('banner', 'icon')()}>{icon}</Row.Icon>}
             <Row.Body className={component('banner', 'content')()}>{children}</Row.Body>
             {closeable && (
@@ -47,6 +51,7 @@ export const Banner: FC<React.PropsWithChildren<IBannerProps>> = ({
                         onClick={() => handleOnCloseClick()}
                         variant={ButtonVariant.transparent}
                         icon={<IconClose24 />}
+                        data-qa={qaTags.btnClose}
                     />
                 </Row.Icon>
             )}

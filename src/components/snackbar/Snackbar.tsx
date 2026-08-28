@@ -6,8 +6,9 @@ import {Button} from '../button';
 import {ISnackbarProps} from './SnackbarProvider';
 import {IconCheck24, IconWarning24} from '../../icons';
 import {component} from '../../services/helpers/classHelpers';
+import {qaTags} from '../../services';
 
-export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button}) => {
+export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({text, state, button, ...props}) => {
     const isSuccessWithIcon = state === 'successWithIcon';
     const isErrorWithIcon = state === 'errorWithIcon';
 
@@ -21,6 +22,7 @@ export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({tex
                     success: isSuccessWithIcon,
                 }),
             )}
+            data-qa={props['data-qa'] || qaTags.snackbar}
         >
             {(isSuccessWithIcon || isErrorWithIcon) && (
                 <div className={component('snackbar', 'icon')()}>
@@ -30,7 +32,12 @@ export const Snackbar: React.FC<React.PropsWithChildren<ISnackbarProps>> = ({tex
 
             <div className="csnackbar__text">{text}</div>
             {button ? (
-                <Button className="csnackbar__button" variant={Button.variant.secondary} onClick={button.onClick}>
+                <Button
+                    className="csnackbar__button"
+                    variant={Button.variant.secondary}
+                    onClick={button.onClick}
+                    data-qa={qaTags.snackbarBtn}
+                >
                     {button.label}
                 </Button>
             ) : null}

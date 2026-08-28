@@ -6,6 +6,7 @@ import {Textarea} from '../Textarea';
 
 import './index.less';
 import {ITextareaProps} from '../Textarea/Textarea';
+import {qaTags} from '../../../services';
 
 export const Text: FC<ITextProps> = ({
     disabled = false,
@@ -29,7 +30,12 @@ export const Text: FC<ITextProps> = ({
             {multiline ? (
                 <Textarea disabled={disabled} ref={textareaRef} {...(props as ITextareaProps)} />
             ) : (
-                <input disabled={disabled} ref={inputRef} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />
+                <input
+                    disabled={disabled}
+                    ref={inputRef}
+                    {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
+                    data-qa={props['data-qa'] || qaTags.input}
+                />
             )}
         </div>
     );
