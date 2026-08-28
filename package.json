@@ -40,6 +40,11 @@
     "@types/react-transition-group": "^4.4.12",
     "@typescript-eslint/eslint-plugin": "4.27.0",
     "@typescript-eslint/parser": "4.27.0",
+    "@uppy/aws-s3": "^5.1.0",
+    "@uppy/core": "^5.2.0",
+    "@uppy/dashboard": "^5.1.1",
+    "@uppy/image-editor": "^4.2.0",
+    "@uppy/react": "^5.2.0",
     "autoprefixer": "^10.4.27",
     "chromatic": "5.9.2",
     "css-loader": "5.2.6",
@@ -67,7 +72,29 @@
     "yup": "0.32.9"
   },
   "peerDependencies": {
+    "@uppy/aws-s3": "^5.1.0",
+    "@uppy/core": "^5.2.0",
+    "@uppy/dashboard": "^5.1.1",
+    "@uppy/image-editor": "^4.2.0",
+    "@uppy/react": "^5.2.0",
     "yup": "0.32.9"
+  },
+  "peerDependenciesMeta": {
+    "@uppy/aws-s3": {
+      "optional": true
+    },
+    "@uppy/core": {
+      "optional": true
+    },
+    "@uppy/dashboard": {
+      "optional": true
+    },
+    "@uppy/image-editor": {
+      "optional": true
+    },
+    "@uppy/react": {
+      "optional": true
+    }
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
